@@ -1,0 +1,518 @@
+
+.body-div{
+
+    width: 1850px;
+    height: 1000px;
+    padding: 20px;
+    position: relative;
+       
+}
+
+.one{
+    background-color: aliceblue;
+    height: 500px;
+    padding: 20px;
+    border: white solid;
+    box-shadow: 3px 2px 5px 2px;
+    display: flex;
+}
+.second{
+    display: flex;
+    gap: 5%;
+    background-color: #011B58;
+    justify-content: center;
+    text-align: center;
+    color: white;
+
+}
+.services{
+    text-align: center;
+}
+.container-one{
+    text-align: center;
+    padding: 5px;
+    border: black solid;
+}
+.body-image{
+    width: 700px;
+    box-shadow: 0px 1px 5px 1px rgb(204, 123, 123);
+    border-radius: 10px;
+
+}
+.company-details{
+    text-align: center;
+    padding: 30px;
+}
+.compay-text{
+    font-size: larger;
+}
+.btn-div{
+display: flex;
+gap: 50px;
+justify-content: center;
+padding: 20px;
+margin-top: 40px;
+
+}
+.second-btn,
+.first-btn{
+    height: 35px;
+    width:90px ;
+    background-color: rgb(136, 2, 2);
+    color:white ;
+    border: none;
+    border-radius: 10px;
+}
+
+.first-btn:hover{
+    background-color:antiquewhite ;
+    color:  rgb(136, 2, 2);
+}
+.second-btn:hover{
+    transform: scale(1.5, 1);
+    transition-duration: 2s; 
+}
+.last-div{
+    display: flex;
+    gap: 150px;
+    justify-content: center;
+    font-size: large;
+    background-color: aliceblue;
+    max-width: 100%;
+    height: 300px;
+    padding: 8px;
+    border-bottom-right-radius: 20px;
+    
+}
+.last-header{
+    text-align: center;
+}
+.all-ul{
+    list-style-type: none;
+    
+}
+.contactform-div{
+    
+    background-color: alihite;
+    padding: 5px;
+    text-align: center;
+    box-shadow: 1px 1px 5px;
+    width: 900px;
+    height: 550px;
+    margin-left: 500px;
+    
+}
+.contact-text{
+    height: 300px;
+    width: 600px;
+}
+.contact-email,
+.contact-name{
+    height: 30px;
+    width: 250px;
+    padding: 5px;
+    margin-bottom: 10px;
+    
+    
+}
+.contact-name{
+    margin-right: 80px;
+
+}
+.contact-btn{
+    width: 100px;
+    height: 30px;
+    margin-top: 10px;
+    border-radius:5px ;
+    background-color: brown;
+    color: white;
+}
+.contact-head{
+    
+    color: brown;
+}
+.newsletter{
+    
+    margin-left: 500px;
+    margin-top: 20px;
+    border-radius: 10px;
+    
+}
+.newsletter-text{
+    height: 50px;
+    width: 800px;
+    
+}
+.newsletter-btn{
+    padding: 18px;
+    width: 100px;
+    background-color: brown;
+    color:white;
+    border-left: 30px;
+    border-start-end-radius: 10px;
+    border-end-end-radius: 10px;
+    
+}
+.couresel-container{
+   
+    background-color: antiquewhite !important;
+  
+}
+.coresel-image{
+    width: 100% !important;
+    height: 700px !important;
+   
+     /* margin-left: 20%;  */
+    
+
+}
+.corel-caption{
+    /* margin-left: 45%; */
+}
+.header-container{
+   
+    color: white !important;
+    /* position: fixed !important; */
+    z-index: 5 !important;
+    width: 100% !important;
+   background-color: whitesmoke;
+}
+.second-header-container{
+    color: white !important;
+}
+.first-body-corel{
+   
+    background-color:  #606060;
+    background-image: url("../images/christian-wiediger-Htfy7TaDBgo-unsplash.jpg");
+    background-size: cover;
+    height: 60vh;
+    display: flex;
+}
+.text-container{
+   
+    width: 100%;
+    display: block !important;
+    
+    margin-top: 5%;
+    justify-content: center;
+    text-align: center;
+}
+.imagebody-container{
+   
+}
+.topimage{
+    width: 100%;
+}
+.body-one-textcontiner{
+    display: flex;
+    width: 100%;
+    text-align: center;
+    gap: 20%;
+    margin-top: 10%;
+    margin-left: 5%;
+}
+.firsttext-contain{
+    color: white;
+}
+.firsttext-contain h1{
+    font-family: 'Alfa Slab One', cursive;
+    font-family: 'Lobster', cursive;
+    font-family: 'Russo One', sans-serif;
+    font-weight: bold;
+    font-size: 70px;
+}
+.secondtext-contain{
+    color: white;
+}
+
+.btn-begin{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    cursor: pointer;
+    width: 150px;
+    height: 50px;
+    background-image: linear-gradient(to top, #D8D9DB 0%, #fff 80%, #FDFDFD 100%);
+    border-radius: 30px;
+    border: 1px solid #8F9092;
+    transition: all 0.2s ease;
+    font-family: "Source Sans Pro", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #606060;
+    text-shadow: 0 1px #fff;
+  }
+  
+  .btn-begin:hover {
+    box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 3px 3px #CECFD1;
+  }
+  
+  .btn-begin:active {
+    box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 5px 3px #999, inset 0 0 30px #aaa;
+  }
+  
+  .btn-begin:focus {
+    box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 5px 3px #999, inset 0 0 30px #aaa;
+  }
+  .btn-begin-container{
+    display: flex;
+    justify-content: center;
+    gap: 3%;
+    margin-top: 5%;
+  }
+
+ 
+/* CSS */
+.button-47 {
+  align-items: center;
+  background: #FFFFFF;
+  border: 0 solid #E2E8F0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-sizing: border-box;
+  color: #1A202C;
+  display: inline-flex;
+  font-family: Inter, sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  height: 56px;
+  justify-content: center;
+  line-height: 24px;
+  overflow-wrap: break-word;
+  padding: 24px;
+  text-decoration: none;
+  width: auto;
+  border-radius: 8px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  margin-top: 13%;
+}
+.border-line{
+    border: white solid 1px;
+    
+
+}
+.oursolutions-line{
+    border: #606060 solid;
+    width: 5%;
+    text-align: center;
+    margin-left:48% ;
+}
+.our-solution-text{
+    text-align: center;
+    justify-content: center;
+    margin-top: 2%;
+}
+.body3-container-all{
+   justify-content: center;
+   text-align: center; 
+   padding: 10px;
+   display: flex;
+   margin-top: 3%;
+  
+}
+
+.body3-main{
+    display: flex;
+    gap: 8%;
+}
+.body3-img1{
+    width: 500px;
+}
+.button-body3-check {
+    border-radius: .25rem;
+    text-transform: uppercase;
+    font-style: normal;
+    font-weight: 400;
+    padding-left: 25px;
+    padding-right: 25px;
+    color: #fff;
+    -webkit-clip-path: polygon(0 0,0 0,100% 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,15px 100%,0 100%);
+    clip-path: polygon(0 0,0 0,100% 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,15px 100%,0 100%);
+    height: 40px;
+    font-size: 0.7rem;
+    line-height: 14px;
+    letter-spacing: 1.2px;
+    transition: .2s .1s;
+    background-image: linear-gradient(90deg,#011B58 , white);
+    border: 0 solid;
+    overflow: hidden;
+    text-align: right;
+  }
+  
+  .button-body3-check:hover {
+    cursor: pointer;
+    transition: all .3s ease-in;
+    padding-right: 30px;
+    padding-left: 30px;
+  }
+  .body3-text-div{
+    margin-top: 4%;
+  }
+  .tittle-text{
+    font-family: 'Alfa Slab One', cursive;
+     /* font-family: 'Lobster', cursive;
+     font-family: 'Russo One', sans-serif; */
+     font-weight: bold;
+     font-size: 40px;
+  }
+
+
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css);
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,800);
+figure.snip1139 {
+  font-family: 'Raleway', Arial, sans-serif;
+  position: relative;
+  overflow: hidden;
+  margin: 10px;
+  min-width: 220px;
+  max-width: 310px;
+  width: 100%;
+  color: #333;
+  text-align: left;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+}
+figure.snip1139 * {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: all 0.35s cubic-bezier(0.25, 0.5, 0.5, 0.9);
+  transition: all 0.35s cubic-bezier(0.25, 0.5, 0.5, 0.9);
+}
+figure.snip1139 img {
+  max-width: 100%;
+  vertical-align: middle;
+}
+figure.snip1139 blockquote {
+  position: relative;
+  background-color: #ffffff;
+  padding: 25px 50px 25px 50px;
+  font-size: 0.8em;
+  font-weight: 500;
+  text-align: left;
+  margin: 0;
+  line-height: 1.6em;
+  font-style: italic;
+}
+figure.snip1139 blockquote:before,
+figure.snip1139 blockquote:after {
+  font-family: 'FontAwesome';
+  content: "\201C";
+  position: absolute;
+  font-size: 50px;
+  opacity: 0.3;
+  font-style: normal;
+}
+figure.snip1139 blockquote:before {
+  top: 25px;
+  left: 20px;
+}
+figure.snip1139 blockquote:after {
+  content: "\201D";
+  right: 20px;
+  bottom: 0;
+}
+figure.snip1139 .arrow {
+  top: 100%;
+  width: 0;
+  height: 0;
+  border-left: 0 solid transparent;
+  border-right: 25px solid transparent;
+  border-top: 25px solid #ffffff;
+  margin: 0;
+  position: absolute;
+}
+figure.snip1139 .author {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 5px 25px;
+  color: #000000;
+  background-color: #ffffff;
+  margin: 0;
+  text-transform: uppercase;
+}
+figure.snip1139 .author h5 {
+  opacity: 0.8;
+  margin: 0;
+  font-weight: 800;
+}
+figure.snip1139 .author h5 span {
+  font-weight: 400;
+  text-transform: none;
+  padding-left: 5px;
+}
+.tesmony-container{
+ display: flex;
+
+ justify-content: center;
+}
+.testmony-head{
+  text-align: center;
+  margin-top: 6%;
+  font-family: 'Alfa Slab One', cursive;
+
+}
+.line-testmony{
+  background-color: #606060;
+  color:#606060;
+  width: 10%;
+  height: 6px;
+  margin-left:45% ;
+  
+}
+.navlink-button{
+  text-decoration: none;
+  color: white;
+  width: 200px !important;
+}
+.signins-container{
+  margin-top: 5% !important;
+}
+.profileimage-img{
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+}
+.checkbtn{
+  margin-left: 3%;
+}
+.navlist-li{
+  cursor: pointer;
+}
+.logo-img{
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+}
+.logo-img2{
+  width: 100px;
+  height: 80px;
+ border-radius: 20px;
+}
+.booking-form-container{
+  margin-top: 10% !important;
+   width: 50%;
+   margin-left: 25%;
+   background-color: #eaecf15b;
+   padding: 10px;
+}
+.bookform-div{
+ 
+  justify-content: center !important;
+ }
+ .imagebooking{
+  margin-left: 20%;
+ }
+ .order-dropdown{
+  position: absolute;
+  display: none !important;
+  position: relative;
+ }
+ 
+ .order-list :hover .order-dropdown{
+  display: block !important;
+ }
+ 
