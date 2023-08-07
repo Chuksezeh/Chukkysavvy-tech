@@ -49,6 +49,7 @@ const ProfilePage=(()=>{
         <li onClick={() =>scrollContact(contactScroll)} ><a >Contact</a></li>
         <li onClick={() =>scrollTes(scrollTesmony)}><a >Feedback</a></li>
         <li><a >Repair Status</a></li>
+        <li><a >Hi! Chukwuka</a></li>
         <li > <i className="order-list" ><BsPersonCircle/></i>
                     
                       <li className="order-dropdown">
@@ -67,15 +68,13 @@ const ProfilePage=(()=>{
       </ul>
     </nav>
 
-    <div className="bg-primary rounded ">
-      <h1>Good product</h1>
-      <h1>Good product</h1>
-      <h1>Good product</h1>
-
-      <h1>Good product</h1>
-      <h1>Good product</h1>
-      <h1>Good product</h1>
-
+    <div className="profileback-container ">
+    
+      {/* <div>yyyyyy</div>
+      <div>yyyyyy</div>
+      <div>yyyyyy</div>
+      <div>yyyyyy</div>
+      <div>yyyyyy</div> */}
 
 
     </div>

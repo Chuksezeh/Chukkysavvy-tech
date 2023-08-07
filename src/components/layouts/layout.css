@@ -93,7 +93,7 @@ color: black;
     position: fixed;
     z-index: 5;
     top: 0 !important;
-    padding-left: 20% !important;
+    padding-left: 10% !important;
   }
   label.logo{
     color: #011B58;
@@ -262,4 +262,10 @@ color: black;
 .navlink-style{
   text-decoration: none;
   color: black;
+}
+.profileback-container{
+  background-image: url("../images/cartracking.jpg");
+  /* background-size: ; */
+  margin-top: 5%;
+  height: 350px !important;
 }
