@@ -19,7 +19,7 @@ const BodyOne = ()=>{
 
       <div className="body-one-textcontiner">
       <div className="firsttext-contain">
-      <h1>ChukkySavvy Tech</h1>
+      <h1>Tech Fix</h1>
       <h3>We bring the services to your door step.</h3>
       <div className="btn-begin-container">
        <NavLink to='/bookingpage' className="navlink-button" > <button className="btn-begin">

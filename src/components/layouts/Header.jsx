@@ -31,7 +31,7 @@ const Header = ()=>{
   const [showBasic, setShowBasic] = useState(false);
     return (
         <>
-      <nav className="nav-container-c">
+      {/* <nav className="nav-container-c">
       <input type="checkbox" id="check"/>
       <label for="check" className="checkbtn">
       <i className="checkbtn"><BsList size={35} /></i>
@@ -45,11 +45,40 @@ const Header = ()=>{
         <li onClick={() =>scrollTes(scrollTesmony)} ><a >Feedback</a></li>
         <NavLink to="/signinpage" className="navlink-style" ><i><BsPersonCircle/></i></NavLink>
         
-       {/* <NavLink to="/signuppage" className="navlink-style"> <li><a >Sign up</a></li></NavLink>  */}
-        
+      
       </ul>
     </nav>
-   
+    */}
+
+
+<div className="nav">
+  <input type="checkbox" id="nav-check"/>
+  <div className="nav-header">
+  </div>
+  <div className="nav-btn">
+    <label for="nav-check">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+  </div>
+  <div>
+    
+    <a>Home</a>
+  </div>
+  
+  <div className="nav-links">
+    <a href="">JsFiddle</a>
+    <a>Home</a>
+    <a>Home</a>
+    <a>Home</a>
+  </div>
+  
+</div>
+
+
+
+
         </>
     )
 }

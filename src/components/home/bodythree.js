@@ -1,7 +1,7 @@
 import { Fade } from "react-awesome-reveal";
 import image1 from "../images/PHONE.jpg";
 import image2 from "../images/laptop.jpeg";
-import image3 from "../images/CCTV4.png";
+import image3 from "../images/tab1.jpg";
 import image4 from "../images/website.png";
  import image5 from "../images/cartracking.jpg";
 import { NavLink } from "react-router-dom";
@@ -63,8 +63,8 @@ const Bodythree = ()=>{
 
                         </div>
                         <div className="body3-image-div">
-                            <h2 className="tittle-text">System/Laptop Repairs/Fixes</h2>
-                            <img src={image2} className="body3-img1" />
+                            <h2 className="tittle-text">Tablet Fixes</h2>
+                            <img src={image3} className="body3-img1" />
                         </div>
 
                     </div>
@@ -77,8 +77,8 @@ const Bodythree = ()=>{
                 <Fade>
                     <div className="body3-main">
                     <div className="body3-image-div">
-                            <h2 className="tittle-text">CCTV Installations/ Monitoring</h2>
-                            <img src={image3} className="body3-img1" />
+                            <h2 className="tittle-text">System/Laptop Repairs/Fixes</h2>
+                            <img src={image2} className="body3-img1" />
                         </div>
 
                         <div className="body3-text-div">
@@ -103,7 +103,7 @@ const Bodythree = ()=>{
 
             </div>
 
-            <div className="body3-container-all">
+            {/* <div className="body3-container-all">
                 <Fade>
                     <div className="body3-main">
                    
@@ -162,7 +162,7 @@ const Bodythree = ()=>{
 
 
 
-            </div>
+            </div> */}
 
 
 

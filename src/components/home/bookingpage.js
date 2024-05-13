@@ -14,7 +14,7 @@ const BookingPage=(()=>{
         <Header/>
 
 
-        <div className='bookform-div'>
+        {/* <div className='bookform-div'>
            
         <Form className='booking-form-container'>
         <img src={image3} className='imagebooking'/>
@@ -88,7 +88,7 @@ const BookingPage=(()=>{
         Submit
       </Button>
     </Form>
-  </div>
+  </div> */}
 
         
         </>
