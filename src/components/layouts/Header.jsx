@@ -62,16 +62,16 @@ const Header = ()=>{
       <span></span>
     </label>
   </div>
-  <div>
+  <div className="logoDiv">
     
-    <a>Home</a>
+    <a>Tech Fix</a>
   </div>
   
   <div className="nav-links">
-    <a href="">JsFiddle</a>
-    <a>Home</a>
-    <a>Home</a>
-    <a>Home</a>
+    <a href="">Home</a>
+    <a>About</a>
+    <a>Services</a>
+    <a>Contact us</a>
   </div>
   
 </div>

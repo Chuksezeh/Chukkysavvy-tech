@@ -1,9 +1,9 @@
 import React, { useRef } from "react"
 import Footer from "./layouts/Footer";
 import Header from "./layouts/Header";
-import BodyOne from "./home/bodyone";
-import Bodytwo from "./home/bodytwo";
-import Bodythree from "./home/bodythree";
+import BodyOne from "./home/homedashboard";
+import Bodytwo from "./home/top-text-component";
+import Bodythree from "./home/services-component";
 import ContactForm from "./home/contactform";
 import Newsletter from "./home/newsletter";
 import Testmony from "./home/tesmony";
@@ -39,7 +39,7 @@ const Home = ()=>{
     return (
         <>
 
-<nav className="nav-container-c">
+{/* <nav className="nav-container-c">
       <input type="checkbox" id="check"/>
       <label for="check" className="checkbtn">
       <i className="checkbtn"><BsList size={35} /></i>
@@ -56,7 +56,9 @@ const Home = ()=>{
       
         
       </ul>
-    </nav>
+    </nav> */}
+
+<Header/>
            
     <div className="first-body-corel">
     

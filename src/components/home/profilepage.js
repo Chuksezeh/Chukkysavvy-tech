@@ -4,7 +4,7 @@ import {BsList, BsPersonCircle} from "react-icons/bs"
 
 import brandlogo from "../images/mybrand.JPEG";
 import { useRef, useState } from "react";
-import Bodythree from "./bodythree";
+import Bodythree from "./services-component";
 import Testmony from "./tesmony";
 import Footer from "../layouts/Footer";
 

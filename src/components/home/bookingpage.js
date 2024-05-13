@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Header from '../layouts/Header';
 import image3 from "../images/laptop.jpeg"
+import Footer from '../layouts/Footer';
 
 
 const BookingPage=(()=>{
@@ -89,6 +90,25 @@ const BookingPage=(()=>{
       </Button>
     </Form>
   </div> */}
+<h1 className='respom'>I want to Fix</h1>
+<div className="wrapper">
+<div className="card">
+		<h3 className="card-title">CARD TITLE</h3>
+		<p className="card-content">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p>
+		<button className="card-btn">READ MORE</button>
+	</div>
+	<div className="card">
+		<h3 className="card-title">CARD TITLE</h3>
+		<p className="card-content">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p>
+		<button className="card-btn">READ MORE</button>
+	</div>
+	<div className="card">
+		<h3 className="card-title">CARD TITLE</h3>
+		<p className="card-content">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p>
+		<button className="card-btn">READ MORE</button>
+	</div>
+</div>
+
 
         
         </>
