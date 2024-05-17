@@ -279,7 +279,7 @@ color: black;
 .nav {
   height: 60px;
   width: 100%;
-  background-color: #333333;
+  background-color: #011B58;
   position: relative;
 }
 
@@ -300,7 +300,7 @@ color: black;
 
 .nav-links {
   display: inline;
-  margin-left: 50%;
+  margin-left: 60%;
   font-size: 18px;
   color: white;
  
@@ -325,10 +325,6 @@ color: black;
 .nav > #nav-check {
   display: none;
 }
-
-
-
-
 h1{
   text-align: center;
   color: #4181ee;
@@ -392,12 +388,35 @@ h1{
   background: #FFF;
 }
 
+@media(max-width: 1700px){
+  .nav-links {
+    display: inline;
+    margin-left: 50%;
+    font-size: 18px;
+    color: white;
+  
+    width: 40%;
+   
+  
+  }
+}
+@media(max-width: 1200px){
+  .nav-links {
+    display: inline;
+    margin-left: 40%;
+    font-size: 18px;
+    color: white;
+  
+    width: 50%;
+   
+  
+  }
+}
 
 
 
 
-
-@media (max-width:600px) {
+@media (max-width:900px) {
   .nav > .nav-btn {
     display: inline-block;
     position: absolute;

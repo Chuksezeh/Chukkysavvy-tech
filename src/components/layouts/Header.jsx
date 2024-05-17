@@ -70,8 +70,8 @@ const Header = ()=>{
   <div className="nav-links">
     <a href="">Home</a>
     <a>About</a>
-    <a>Services</a>
-    <a>Contact us</a>
+    <a  onClick={() =>scrollBottom(scrollRef)}>Services</a>
+    <a onClick={() =>scrollTes(scrollTesmony)}>Feedback</a>
   </div>
   
 </div>
