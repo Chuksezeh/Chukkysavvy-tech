@@ -524,7 +524,7 @@ figure.snip1139 .author h5 span {
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
 }
 
-.card {
+/* .card {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -534,7 +534,7 @@ figure.snip1139 .author h5 span {
   background-clip: border-box;
   border: 0 solid rgba(0,0,0,.125);
   border-radius: .25rem;
-}
+} */
 
 .card-body {
   flex: 1 1 auto;
@@ -1798,6 +1798,10 @@ padding: 5px;
     
      
   }
+  .containerJob_CardS{
+    display: flex;
+    flex-wrap: wrap ;
+  }
   .messageTextDISDiv:hover{
       background-color: #f7f5f5;
   }
@@ -1903,6 +1907,152 @@ padding: 5px;
   #form-control_TEXTarea{
       height: 300px;
   }
+
+
+
+  .navCover {
+    width: 250px;
+    height: 100%;
+    background-color: #f8f7f7;
+    position: fixed;
+  }
+  
+  .navCover ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .navCover li {
+    display: block;
+    padding-left: 6px;
+  }
+  
+  .navCover button {
+    display: block;
+    border: none;
+    padding: 10px;
+    width: 95%;
+    border-radius: 5px;
+    text-align: left;
+    text-decoration: none;
+    background-color: inherit;
+  }
+  
+  .navCover button:hover {
+    background-color: #e8e4e2;
+    cursor: pointer;
+  }
+  
+  .navCover ul button:focus {
+    background-color: #ffefe5;
+    color: #a81f00;
+  }
+  
+  .navCover svg {
+    margin-right: 2px;
+  }
+  
+  #add-task-btn {
+    color: #a81f00;
+    font-weight: bold;
+  }
+  
+  #add-task-btn i {
+    font-size: 20px;
+  }
+  
+  .menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Align items with space between */
+   }
+  
+  .menu p {
+    font-size: 0.9rem;
+    padding-left: 1rem;
+    font-weight: 500;
+  }
+  
+  .menu button {
+    display: inline-block;
+    width: auto;
+    border-radius: 5px;
+    text-decoration: none;
+    background-color: inherit;
+  }
+  
+  .menu button:focus {
+    transform: rotate(90deg);
+    transition: transform 0.3s ease;
+  }
+  .displayCover-profile{
+    display: flex !important;
+  }
+  .displayCover-board{
+    margin-top: 20% !important;
+   
+  }
+  
+  body{
+    margin-top:20px;
+    color: #1a202c;
+    text-align: left;
+    background-color: #e2e8f0;    
+}
+.main-body {
+    padding: 15px;
+}
+.card {
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 0 solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+}
+
+.card-body {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1rem;
+}
+
+.gutters-sm {
+    margin-right: -8px;
+    margin-left: -8px;
+}
+
+.gutters-sm>.col, .gutters-sm>[class*=col-] {
+    padding-right: 8px;
+    padding-left: 8px;
+}
+.mb-3, .my-3 {
+    margin-bottom: 1rem!important;
+}
+
+.bg-gray-300 {
+    background-color: #e2e8f0;
+}
+.h-100 {
+    height: 100%!important;
+}
+.shadow-none {
+    box-shadow: none!important;
+}
+
+
+
+  
+
+
   
 
 

@@ -32,7 +32,7 @@ const Bodythree = ()=>{
                             <p> GGHSQDDDDHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</p>
                             <p> GGHSQDDDDHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</p>
                             <p> GGHSQDDDDHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</p>
-                            <NavLink to='/profilepage' className="navlink-button" > <button className="button-body3-check">
+                            <NavLink to='/user-profile' className="navlink-button" > <button className="button-body3-check">
                                 Book Now
                             </button></NavLink>
 

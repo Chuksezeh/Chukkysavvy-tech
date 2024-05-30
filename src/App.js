@@ -6,6 +6,7 @@ import SignInPage from './components/home/signinpage';
 import SignUpPage from './components/home/signuppage';
 import ProfilePage from './components/home/profilepage';
 import BookingPage from './components/home/bookingpage';
+import UserMainProfile from './components/home/user-main-profile';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route path="/signuppage" element={<SignUpPage/>}></Route>
       <Route path="/profilepage" element={<ProfilePage/>}></Route>
       <Route path="/bookingpage" element={<BookingPage/>}></Route>
+      <Route path="/user-profile" element={<UserMainProfile/>}></Route>
 
 
     </Routes>
