@@ -21,23 +21,33 @@ const BodyOne = ()=>{
       <div className="firsttext-contain">
       <h1>Tech Fix</h1>
       <h3>We bring the services to your door step.</h3>
-      <div className="btn-begin-container">
-       <NavLink to='/bookingpage' className="navlink-button" > <button className="btn-begin">
-       Get Started
-      </button></NavLink>
-     
-
-        </div>
       
-
-      <p>
-        
-        </p>  
-      </div>
+      
+     </div>
       <div className="secondtext-contain">
         <h2>ddddddddddddddddddddddd</h2>
         <h2>ddddddddddddddddddddddd</h2>
-      </div>
+</div>
+
+
+<div className="btn-begin-container">
+
+        <div>
+        <NavLink to='/bookingpage' className="navlink-button" > <button className="btn-begin">
+       Repair A Device
+      </button></NavLink>
+     
+        </div>
+        
+        <div>
+        <NavLink to='/bookingpage' className="navlink-button" > <button className="btn-begin">
+       Buy A Device
+      </button></NavLink>
+     
+        </div>
+      
+
+        </div>
    
         </div>
 

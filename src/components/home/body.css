@@ -204,12 +204,12 @@ margin-top: 40px;
     width: 100%;
 }
 .body-one-textcontiner{
-    display: flex;
+    /* display: flex; */
     width: 100%;
     text-align: center;
-    gap: 20%;
-    margin-top: 10%;
-    margin-left: 5%;
+  
+     margin-top: 2%;
+   
 }
 .firsttext-contain{
     color: white;
@@ -520,9 +520,9 @@ figure.snip1139 .author h5 span {
  .main-body {
   padding: 15px;
 }
-.card {
+/* .card {
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
-}
+} */
 
 /* .card {
   position: relative;
@@ -2000,12 +2000,16 @@ padding: 5px;
     text-align: left;
     background-color: #e2e8f0;    
 }
+.main-breadcrumb{
+  background-color:#F7F3F0 ;
+  padding: 10px;
+}
 .main-body {
     padding: 15px;
 }
-.card {
+/* .card {
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
-}
+} */
 
 .card {
     position: relative;
@@ -2013,10 +2017,18 @@ padding: 5px;
     flex-direction: column;
     min-width: 0;
     word-wrap: break-word;
-    background-color: #fff;
+    background-color: #FFFFFF !important;
     background-clip: border-box;
     border: 0 solid rgba(0,0,0,.125);
     border-radius: .25rem;
+}
+.side-all-cover{
+  background-color: #FFFFFF !important;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06)
+
+}
+.side-all{
+ 
 }
 
 .card-body {
@@ -2028,6 +2040,7 @@ padding: 5px;
 .gutters-sm {
     margin-right: -8px;
     margin-left: -8px;
+   
 }
 
 .gutters-sm>.col, .gutters-sm>[class*=col-] {
