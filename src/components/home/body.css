@@ -985,7 +985,6 @@ background-color: #1D3C34;
 .card-titleed{
   color: white;
 }
-
 .searchBtN:hover{
   background-color: #d0ee27;
 }
@@ -997,6 +996,20 @@ background-color: #1D3C34;
   border: none;
   
 }
+.fixLine{
+  border: #011B58 2px solid;
+  width: 100px;
+  margin-left: 48%;
+}
+.fixText{
+  text-align: center;
+  padding: 10px;
+}
+.fixlineDiv{
+  justify-content: center !important;
+  text-align: center;
+}
+
 
 #searchBtNId{
   width: 150px;

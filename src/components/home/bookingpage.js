@@ -3,8 +3,13 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Header from '../layouts/Header';
-import image3 from "../images/laptop.jpeg"
+import ipadImage from "../images/tab1.jpg"
 import Footer from '../layouts/Footer';
+import iphoneImage from '../images/iphone4.jpg';
+import samsung from '../images/samsung.png';
+import otherPhones from '../images/other-phones.jpg';
+import laptop from '../images/laptops1.avif';
+
 
 
 const BookingPage=(()=>{
@@ -91,22 +96,42 @@ const BookingPage=(()=>{
     </Form>
   </div> */}
 <h1 className='respom'>I want to Fix</h1>
+<div className='fixText'> To get started on your repair, please select the option that closely matches your device </div>
+<div className='fixlineDiv'>
+  <div className='fixLine' ></div>
+</div>
+
 <div className="wrapper">
 <div className="card">
-		<h3 className="card-title">CARD TITLE</h3>
-		<p className="card-content">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p>
+		<h3 className="card-title" style={{fontWeight: 'bold', width: '250px'}}>Iphone</h3>
+	<img className='' src={iphoneImage} />
 		<button className="card-btn">READ MORE</button>
 	</div>
 	<div className="card">
-		<h3 className="card-title">CARD TITLE</h3>
-		<p className="card-content">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p>
+		<h3 className="card-title" style={{fontWeight: 'bold'}}>Samsung</h3>
+    <img src={samsung}/>
+		{/* <p className="card-content">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p> */}
 		<button className="card-btn">READ MORE</button>
 	</div>
 	<div className="card">
-		<h3 className="card-title">CARD TITLE</h3>
-		<p className="card-content">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p>
+		<h3 className="card-title" style={{fontWeight: 'bold'}}>Ipad</h3>
+    <img className='' src={ipadImage}/>
+		{/* <p className="card-content">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p> */}
 		<button className="card-btn">READ MORE</button>
 	</div>
+  <div className="card">
+		<h3 className="card-title" style={{fontWeight: 'bold'}}>Other phones</h3>
+    <img className='' src={otherPhones}/>
+		{/* <p className="card-content">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p> */}
+		<button className="card-btn">READ MORE</button>
+	</div>
+	<div className="card">
+		<h3 className="card-title" style={{fontWeight: 'bold'}}>Laptops</h3>
+    <img className='' src={laptop}/>
+		{/* <p className="card-content">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p> */}
+		<button className="card-btn">READ MORE</button>
+	</div>
+	
 </div>
 
 
