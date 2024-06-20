@@ -9,11 +9,16 @@ import iphoneImage from '../images/iphone4.jpg';
 import samsung from '../images/samsung.png';
 import otherPhones from '../images/other-phones.jpg';
 import laptop from '../images/laptops1.avif';
+import { useNavigate } from 'react-router-dom';
 
 
 
 const BookingPage=(()=>{
+const navigate = useNavigate()
 
+const handleDetailsIphone = (()=>{
+     navigate("/details-book-Iphone")
+})
 
     return (
         <>
@@ -102,7 +107,7 @@ const BookingPage=(()=>{
 </div>
 
 <div className="wrapper">
-<div className="card">
+   <div className="card" onClick={handleDetailsIphone()}>
 		<h3 className="card-title" style={{fontWeight: 'bold', width: '250px'}}>Iphone</h3>
 	<img className='' src={iphoneImage} />
 		<button className="card-btn">READ MORE</button>

@@ -25,8 +25,8 @@ const BodyOne = ()=>{
       
      </div>
       <div className="secondtext-contain">
-        <h2>ddddddddddddddddddddddd</h2>
-        <h2>ddddddddddddddddddddddd</h2>
+        <h2 className="home-text-we-offer">We offer full-service professional repairs & data recovery services for  cell phones, tablets and computers. We are here for all your repair & data recovery needs. Any brand, any problem.</h2>
+        
 </div>
 
 
