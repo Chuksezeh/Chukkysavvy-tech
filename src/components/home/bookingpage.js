@@ -9,7 +9,7 @@ import iphoneImage from '../images/iphone4.jpg';
 import samsung from '../images/samsung.png';
 import otherPhones from '../images/other-phones.jpg';
 import laptop from '../images/laptops1.avif';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 
 
@@ -107,10 +107,10 @@ const handleDetailsIphone = (()=>{
 </div>
 
 <div className="wrapper">
-   <div className="card" onClick={handleDetailsIphone()}>
+   <div className="card" >
 		<h3 className="card-title" style={{fontWeight: 'bold', width: '250px'}}>Iphone</h3>
 	<img className='' src={iphoneImage} />
-		<button className="card-btn">READ MORE</button>
+	<NavLink to="/details-book-Iphone">	<button className="card-btn">READ MORE</button></NavLink>
 	</div>
 	<div className="card">
 		<h3 className="card-title" style={{fontWeight: 'bold'}}>Samsung</h3>
