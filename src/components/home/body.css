@@ -191,6 +191,12 @@ form .form-row .textarea{
 .iphone-detaials-image{
   width: 500px;
 }
+.card-hold{
+  background-color: #007b5e;
+}
+.card-man {
+  width: 100% !important;
+}
 
 .one{
     background-color: aliceblue;
@@ -207,8 +213,23 @@ form .form-row .textarea{
     justify-content: center;
     text-align: center;
     color: white;
-
 }
+.card-covers{
+  display: flex;
+ gap: 5%;
+  box-shadow: 1px 0px 1px 1px;
+  margin-top: 2%;
+}
+.cardimagess{
+  width: 200px
+}
+/* .cardtext-book{
+  width: 30%;
+}
+.cardbtn-book{
+  width: 30%;
+} */
+
 .services{
     text-align: center;
 }

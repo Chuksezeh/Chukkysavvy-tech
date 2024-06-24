@@ -4,6 +4,10 @@ import { Form } from "react-router-dom";
 import { Button, Row } from "react-bootstrap";
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
+import Card from 'react-bootstrap/Card';
+import rep1 from '../images/rep1.jpg';
+import Footer from "../layouts/Footer";
+
 
 
 const DetailsBookIphone = (()=>{
@@ -63,6 +67,40 @@ const DetailsBookIphone = (()=>{
       <Button variant="secondary" onClick={handleShowshowSignUp}>
         Sign in
       </Button>
+
+
+<div className="card-hol">
+<div className="card-covers">
+   <div className="cardimage-book p-3">
+      <img className="cardimagess" src= {rep1}/>
+   </div>
+   <div className="cardtext-book p-3">
+      <h4>In-Store Appointment</h4> 
+   If youd like to setup an in-store appointment to have your device repaired or assessed, choose this option. 
+   This is the quickest way to get a repair done.</div>
+   <div className="cardbtn-book p-3"> 
+       <button>Select</button>
+   </div>
+
+
+</div>
+
+<div className="card-covers">
+   <div className="cardimage-book p-3">
+      <img className="cardimagess" src= {rep1}/>
+   </div>
+   <div className="cardtext-book p-3">
+      <h4>Free Pickup by Courier </h4> 
+      We offer free pickup city-wide if you are unable to come to our store. If youd like to arrange for your device to be picked up, please choose a time and day youd 
+      like for us to call to arrange this and we will give you a call.</div>
+   <div className="cardbtn-book p-3"> 
+       <button>Select</button>
+   </div>
+
+
+</div>
+
+</div>
      <div className="bookRepair-form">
     
 
@@ -172,7 +210,7 @@ const DetailsBookIphone = (()=>{
           </Button>
         </Modal.Footer>
       </Modal>
-
+<Footer/>
 
 
 </>
