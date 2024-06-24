@@ -6,6 +6,7 @@ import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Card from 'react-bootstrap/Card';
 import rep1 from '../images/rep1.jpg';
+import rep2 from '../images/tecd.jpeg';
 import Footer from "../layouts/Footer";
 
 
@@ -79,22 +80,66 @@ const DetailsBookIphone = (()=>{
    If youd like to setup an in-store appointment to have your device repaired or assessed, choose this option. 
    This is the quickest way to get a repair done.</div>
    <div className="cardbtn-book p-3"> 
-       <button>Select</button>
+       <button className="picckBtn">Select</button>
    </div>
-
-
 </div>
+<div className="containers">
+     
+     <h3 className="signtext">Please provide these required details</h3>
+     <form >
+        <div className="form-row">
+           <div className="input-data">
+              <input type="text" required/>
+              <div className="underline"></div>
+              <label for="">Device model</label>
+           </div>
+           <div className="input-data">
+              <input type="text" required/>
+              <div className="underline"></div>
+              <label for="">Last Name</label>
+           </div>
+           
+        </div>
+        <div className="form-row">
+           <div className="input-data">
+              <input type="text" required/>
+              <div className="underline"></div>
+              <label for="">Phone number</label>
+           </div>
+           <div className="input-data">
+              <input type="text" required/>
+              <div className="underline"></div>
+              <label for="">Email</label>
+           </div>
+        </div>
+        <div className="form-row">
+           <div className="input-data">
+              <input type="text" required/>
+              <div className="underline"></div>
+              <label for="">Password</label>
+           </div>
+           <div className="input-data">
+              <input type="text" required/>
+              <div className="underline"></div>
+              <label for="">Confirm password</label>
+           </div>
+        </div>
+        <button className="picckBtn">Submit</button>
+     </form>
+     </div>
+
+
 
 <div className="card-covers">
    <div className="cardimage-book p-3">
-      <img className="cardimagess" src= {rep1}/>
+      <img className="cardimagess" src= {rep2}/>
    </div>
    <div className="cardtext-book p-3">
       <h4>Free Pickup by Courier </h4> 
       We offer free pickup city-wide if you are unable to come to our store. If youd like to arrange for your device to be picked up, please choose a time and day youd 
       like for us to call to arrange this and we will give you a call.</div>
    <div className="cardbtn-book p-3"> 
-       <button>Select</button>
+       <button className="picckBtn">Select</button>
    </div>
 
 
@@ -116,7 +161,8 @@ const DetailsBookIphone = (()=>{
          Sign up
       </div></Modal.Title>
         </Modal.Header>
-        <Modal.Body> <div className="containers">
+        <Modal.Body> 
+         <div className="containers">
      
       <div className="signtext">Sign up to save your information for faster booking and seamless repair tracking</div>
       <form >
@@ -156,10 +202,10 @@ const DetailsBookIphone = (()=>{
                <label for="">Confirm password</label>
             </div>
          </div>
-         {/* <button className="sign-btn">Sign up</button> */}
-        
       </form>
-      </div></Modal.Body>
+      </div>
+
+      </Modal.Body>
         <Modal.Footer>
           {/* <Button variant="secondary" onClick={handleClose}>
             Close

@@ -30,6 +30,13 @@ body{
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+.picckBtn{
+  padding: 10px;
+  border: none;
+  background-color: #011B58;
+  color: white;
+  border-radius: 5px;
+}
 .signtext{
   text-align: center;
 }
@@ -216,8 +223,8 @@ form .form-row .textarea{
 }
 .card-covers{
   display: flex;
- gap: 5%;
-  box-shadow: 1px 0px 1px 1px;
+   gap: 5%;
+  box-shadow: 0px 1px 5px 1px;
   margin-top: 2%;
 }
 .cardimagess{
