@@ -110,31 +110,31 @@ const handleDetailsIphone = (()=>{
    <div className="card" >
 		<h3 className="card-title" style={{fontWeight: 'bold', width: '250px'}}>Iphone</h3>
 	<img className='' src={iphoneImage} />
-	<NavLink to="/details-book-Iphone">	<button className="card-btn">READ MORE</button></NavLink>
+	<NavLink to="/details-book-Iphone">	<button className="card-btn">SELECT</button></NavLink>
 	</div>
 	<div className="card">
 		<h3 className="card-title" style={{fontWeight: 'bold'}}>Samsung</h3>
     <img src={samsung}/>
 		{/* <p className="card-content">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p> */}
-		<button className="card-btn">READ MORE</button>
+		<button className="card-btn">SELECT</button>
 	</div>
 	<div className="card">
 		<h3 className="card-title" style={{fontWeight: 'bold'}}>Ipad</h3>
     <img className='' src={ipadImage}/>
 		{/* <p className="card-content">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p> */}
-		<button className="card-btn">READ MORE</button>
+		<button className="card-btn">SELECT</button>
 	</div>
   <div className="card">
 		<h3 className="card-title" style={{fontWeight: 'bold'}}>Other phones</h3>
     <img className='' src={otherPhones}/>
 		{/* <p className="card-content">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p> */}
-		<button className="card-btn">READ MORE</button>
+		<button className="card-btn">SELECT</button>
 	</div>
 	<div className="card">
 		<h3 className="card-title" style={{fontWeight: 'bold'}}>Laptops</h3>
     <img className='' src={laptop}/>
 		{/* <p className="card-content">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p> */}
-		<button className="card-btn">READ MORE</button>
+		<button className="card-btn">SELECT</button>
 	</div>
 	
 </div>
