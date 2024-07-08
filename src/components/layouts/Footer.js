@@ -4,8 +4,8 @@ import "./layout.css"
 const Footer = () => {
     return (
         <>
-    <section id="footer" className="sec-footer">
-    <div className="container">
+    <section id="footer" className="sec-footer moveTop">
+    <div className="container ">
       <div className="row text-center text-xs-center text-sm-left text-md-left">
         <div className="col-xs-12 col-sm-4 col-md-4">
           <h5>Quick links</h5>

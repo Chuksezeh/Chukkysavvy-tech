@@ -24,10 +24,18 @@ const DetailsBookIphone = (()=>{
 
 
     const [isVisible, setIsVisible] = useState(false);
+    const [isVisiblePickUp, setIsVisiblePickUp] = useState(false);
 
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
+    setIsVisiblePickUp(false)
   };
+
+  const toggleVisibilityPickUp = ()=>{
+   setIsVisiblePickUp(!isVisiblePickUp)
+   setIsVisible(false);
+}
+
 
     return(
 
@@ -39,7 +47,7 @@ const DetailsBookIphone = (()=>{
         {/* <div className='fixlineDiv'>
   <div className='fixLine' ></div>
 </div> */}
-         <div className="iphone-detaials-cover">
+         <div className="iphone-detaials-cover container" >
            <div className="iphone-detaials-cover-image">
              <img className="iphone-detaials-image" src={iphoneImage}/>
         </div>
@@ -47,7 +55,7 @@ const DetailsBookIphone = (()=>{
                <div className="text-about-details tickHead" style={{fontWeight:"bold"}}>Get your broken iPhone device
                  quickly and professionally repaired at TecFix.</div>
            
-              <div className="text-about-details">Our trained technicians with years of
+              <div className="text-about-details container">Our trained technicians with years of
                  experience can perform most iPhone repairs the same day.  We have the tools and the
                   knowledge to fix iPhone issues such as: cracked or non-working screens, liquid damage,
                    intermittent or
@@ -55,7 +63,7 @@ const DetailsBookIphone = (()=>{
 
                  <div className="text-about-details tickHead" style={{fontWeight:"bold"}}>Premium vs cheap aftermarket iPhone screens.</div>
            
-              <div className="text-about-details">We only use premium quality screens because cheap aftermarket
+              <div className="text-about-details  container">We only use premium quality screens because cheap aftermarket
                  screens have a high chance of showing unattractive white spots or discolouration and may appear
                   less bright than premium quality screens. For your iPhone repair, we highly recommend not going for
                    the cheapest price in the city for this reason. At Techyfix, you will be paying for premium quality parts 
@@ -87,20 +95,30 @@ const DetailsBookIphone = (()=>{
       <h4>In-Store Appointment</h4> 
    If youd like to setup an in-store appointment to have your device repaired or assessed, choose this option. 
    This is the quickest way to get a repair done.</div>
-   <div className="cardbtn-book p-3"> 
-       <button className="picckBtn" onClick={toggleVisibility}>Select</button>
-   </div>
+   <button className="picckBtn  p-3" onClick={toggleVisibility}> {!isVisible ? "Select" : "Hide"} </button>
+   
 </div>
 
+
+
 {isVisible && (
-       <div className="containers" >
+<div className="container">
+	<header className="header">
+		
+	</header>
+	<div className="form-wrap">
+   <p id="description" className="text-center">
+   Please provide required details and locate our store
+		</p>	
+		<form id="survey-form">
      
-       <h3 className="signtext">Please provide these required details</h3>
-       <form >
-          <div className="form-row">
-             <div className="input-data">
-               <select className="iphoneOption">
-                 <option>Choose...</option>
+			<div className="row">
+
+         <div className="col-md-6">
+					<div className="form-group">
+						<label>Choose iphone model</label>
+						<select id="dropdown" name="role" className="form-control" required>
+                   <option disabled>Choose...</option>
                  <option>Iphone 4</option>
                  <option>Iphone 4S</option>
                  <option>Iphone 5</option>
@@ -140,51 +158,51 @@ const DetailsBookIphone = (()=>{
                  <option>Iphone 15 Pro</option>
                  <option>Iphone 15 Plus</option>
                  <option>Iphone 15 Pro Max</option>
-                 
-                 <option>Iphone 8</option>
-                 <option>Iphone 8 Plus</option>
+               
                </select>
-                <div className="underline"></div>
-                {/* <label for="">Iphone model</label> */}
-             </div>
-             <div className="input-data">
-                <input type="datetime-local" required  placeholder="Reservation time"/>
-                <div className="underline"></div>
-                {/* <label for="">Reservation time</label> */}
-             </div>
-             
-          </div>
-         
-          {/* <div className="form-row">
-             <div className="input-data">
-                <input type="text" required/>
-                <div className="underline"></div>
-                <label for="">Password</label>
-             </div>
-             <div className="input-data">
-                <input type="text" required/>
-                <div className="underline"></div>
-                <label for="">Confirm password</label>
-             </div>
-          </div> */}
-          <div className="form-row">
-             <div className="input-data">
-                <textarea  className="iphoneOption textIphoneArea" placeholder="Please describe your requirement in detail" type="text" required/>
-                <div className="underline"></div>
-                {/* <label for="">Please describe your requirement in detail</label> */}
-             </div>
-             {/* <div className="input-data">
-                <input type="text" required/>
-                <div className="underline"></div>
-                <label for="">Email</label>
-             </div> */}
-          </div>
-          <button className="picckBtn">Submit</button>
-       </form>
+					
+					</div>
+				</div>
+
+				<div className="col-md-6">
+					<div className="form-group">
+						<label id="name-label" for="name">Reservation date and time</label>
+						<input type="datetime-local" required  id="name" placeholder="Enter your name" className="form-control" />
+					</div>
+				</div>
+				<div className="row">
+				<div className="col-md-12">
+					<div className="form-group">
+						<label id="number-label" for="number">Select service store </label>
+						<select id="dropdown" name="role" className="form-control" required>
+                   <option disabled>Choose...</option>
+                 <option>Main store</option>
+                 <option>Branch</option>
+                </select>
+					</div>
+				</div>
+				
+			</div>
        </div>
+			<div className="row">
+				<div className="col-md-12">
+					<div className="form-group">
+						<label>Details</label>
+						<textarea  id="comments" className="form-control" name="comment" placeholder="Please describe your requirement in details, for direct diagnosis and immediate fix" ></textarea>
+					</div>
+				</div>
+			</div>
+			
+			<div className="row">
+				<div className="col-md-4">
+				 <button className="picckBtn">Submit</button>
+				</div>
+			</div>
+
+		</form>
+	</div>	
+</div>
       )}
-
-
 
 
 
@@ -196,19 +214,120 @@ const DetailsBookIphone = (()=>{
       <h4>Free Pickup by Courier </h4> 
       We offer free pickup city-wide if you are unable to come to our store. If youd like to arrange for your device to be picked up, please choose a time and day youd 
       like for us to call to arrange this and we will give you a call.</div>
-   <div className="cardbtn-book p-3"> 
-       <button className="picckBtn">Select</button>
-   </div>
-
+      <button className="picckBtn p-3" onClick={toggleVisibilityPickUp}> {!isVisiblePickUp ? "Select" : "Hide"} </button>
+   
 
 </div>
 
 </div>
-     <div className="bookRepair-form">
-    
+     
+{isVisiblePickUp && (
+
+<div className="container">
+	<header className="header">
+		
+	</header>
+	<div className="form-wrap">
+   <p id="description" className="text-center">
+   Please provide required details for pickup/delivery
+   
+		</p>	
+		<form id="survey-form">
+     
+			<div className="row">
+
+         <div className="col-md-6">
+					<div className="form-group">
+						<label>Choose iphone model</label>
+						<select id="dropdown" name="role" className="form-control" required>
+                   <option disabled>Choose...</option>
+                 <option>Iphone 4</option>
+                 <option>Iphone 4S</option>
+                 <option>Iphone 5</option>
+                 <option>Iphone 5S</option>
+                 <option>Iphone 5C</option>
+                 <option>Iphone 6</option>
+                 <option>Iphone 6Plus</option>
+                 <option>Iphone 6S</option>
+                 <option>Iphone 6S Plus</option>
+                 <option>SE(1st generation)</option>
+                 <option>Iphone 7 </option>
+                 <option>Iphone 7 Plus</option>
+                 <option>Iphone 8</option>
+                 <option>Iphone 8 Plus</option>
+                 <option>Iphone X</option>
+                 <option>Iphone XS</option>
+                 <option>Iphone XR</option>
+                 <option>Iphone XS Max</option>
+                 <option>Iphone 11</option>
+                 <option>Iphone 11 Pro</option>
+                 <option>Iphone 11 Pro Max</option>
+                 <option>Iphone SE(2nd generation)</option>
+                 <option>Iphone 12 </option>
+                 <option>Iphone 12 mini</option>
+                 <option>Iphone 12 Pro </option>
+                 <option>Iphone 12 Pro Max</option>
+                 <option>Iphone 13 </option>
+                 <option>Iphone 13 mini</option>
+                 <option>Iphone 13 Pro</option>
+                 <option>Iphone 13 Pro Max</option>
+                 <option>Iphone SE(3rd generation)</option>
+                 <option>Iphone 14</option>
+                 <option>Iphone 14 Pro</option>
+                 <option>Iphone 14 Plus</option>
+                 <option>Iphone 14 Pro Max</option>
+                 <option>Iphone 15</option>
+                 <option>Iphone 15 Pro</option>
+                 <option>Iphone 15 Plus</option>
+                 <option>Iphone 15 Pro Max</option>
+               </select>
+					
+					</div>
+				</div>
+
+				<div className="col-md-6">
+					<div className="form-group">
+						<label id="name-label" for="name">Reservation date and time</label>
+						<input type="datetime-local" required  id="name" placeholder="Enter your name" className="form-control" />
+					</div>
+				</div>
+				<div className="row">
+				<div className="col-md-6">
+					<div className="form-group">
+						<label id="number-label" for="number">Pick up address</label>
+						<input type="text" required   placeholder="Enter detailed address" className="form-control" />
+					</div>
+				</div>
+            <div className="col-md-6">
+					<div className="form-group">
+						<label id="number-label" for="number">Phone number</label>
+						<input type="text" required   placeholder="Enter phone number" className="form-control" />
+					</div>
+				</div>
+				
+			</div>
+       </div>
+			<div className="row">
+				<div className="col-md-12">
+					<div className="form-group">
+						<label>Details</label>
+						<textarea  id="comments" className="form-control" name="comment" placeholder="Please describe your requirement in details, for direct diagnosis and immediate fix" ></textarea>
+					</div>
+				</div>
+			</div>
+			
+			<div className="row">
+				<div className="col-md-4">
+				 <button className="picckBtn">Submit</button>
+				</div>
+			</div>
+
+		</form>
+	</div>	
+</div>
+      )}
 
 
-    </div>
 
 </div>
     
@@ -314,6 +433,7 @@ const DetailsBookIphone = (()=>{
           </Button>
         </Modal.Footer>
       </Modal>
+      
 <Footer/>
 
 

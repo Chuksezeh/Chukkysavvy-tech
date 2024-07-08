@@ -14,6 +14,7 @@ body{
 }
 
 
+
 .fdiv{
     background-color: rgb(107, 58, 58);
     padding: 5px;
@@ -24,6 +25,9 @@ body{
   margin-left: 20px; 
  padding-top:15px;
  color: white;
+}
+.moveTop{
+margin-top: 5% !important;
 }
 
 .uli{
@@ -191,6 +195,7 @@ color: black;
   @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
   .sec-footer {
     padding: 60px 0;
+    
 }
 
 .sec-footer .section-title {
