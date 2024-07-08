@@ -14,12 +14,20 @@ import Footer from "../layouts/Footer";
 const DetailsBookIphone = (()=>{
     const [show, setShow] = useState(false);
     const [showSignUp, setSignUp] = useState(false);
+    const [showBookForm, setShowBookForm] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
     const handleCloseshowSignUp = () => setSignUp(false);
     const handleShowshowSignUp = () => setSignUp(true);
+
+
+    const [isVisible, setIsVisible] = useState(false);
+
+  const toggleVisibility = () => {
+    setIsVisible(!isVisible);
+  };
 
     return(
 
@@ -80,98 +88,103 @@ const DetailsBookIphone = (()=>{
    If youd like to setup an in-store appointment to have your device repaired or assessed, choose this option. 
    This is the quickest way to get a repair done.</div>
    <div className="cardbtn-book p-3"> 
-       <button className="picckBtn">Select</button>
+       <button className="picckBtn" onClick={toggleVisibility}>Select</button>
    </div>
 </div>
-<div className="containers">
+
+{isVisible && (
+       <div className="containers" >
      
-     <h3 className="signtext">Please provide these required details</h3>
-     <form >
-        <div className="form-row">
-           <div className="input-data">
-             <select className="iphoneOption">
-               <option>Choose...</option>
-               <option>Iphone 4</option>
-               <option>Iphone 4S</option>
-               <option>Iphone 5</option>
-               <option>Iphone 5S</option>
-               <option>Iphone 5C</option>
-               <option>Iphone 6</option>
-               <option>Iphone 6Plus</option>
-               <option>Iphone 6S</option>
-               <option>Iphone 6S Plus</option>
-               <option>SE(1st generation)</option>
-               <option>Iphone 7 </option>
-               <option>Iphone 7 Plus</option>
-               <option>Iphone 8</option>
-               <option>Iphone 8 Plus</option>
-               <option>Iphone X</option>
-               <option>Iphone XS</option>
-               <option>Iphone XR</option>
-               <option>Iphone XS Max</option>
-               <option>Iphone 11</option>
-               <option>Iphone 11 Pro</option>
-               <option>Iphone 11 Pro Max</option>
-               <option>Iphone SE(2nd generation)</option>
-               <option>Iphone 12 </option>
-               <option>Iphone 12 mini</option>
-               <option>Iphone 12 Pro </option>
-               <option>Iphone 12 Pro Max</option>
-               <option>Iphone 13 </option>
-               <option>Iphone 13 mini</option>
-               <option>Iphone 13 Pro</option>
-               <option>Iphone 13 Pro Max</option>
-               <option>Iphone SE(3rd generation)</option>
-               <option>Iphone 14</option>
-               <option>Iphone 14 Pro</option>
-               <option>Iphone 14 Plus</option>
-               <option>Iphone 14 Pro Max</option>
-               <option>Iphone 15</option>
-               <option>Iphone 15 Pro</option>
-               <option>Iphone 15 Plus</option>
-               <option>Iphone 15 Pro Max</option>
-               
-               <option>Iphone 8</option>
-               <option>Iphone 8 Plus</option>
-             </select>
-              <div className="underline"></div>
-              {/* <label for="">Iphone model</label> */}
-           </div>
-           <div className="input-data">
-              <input type="datetime-local" required  placeholder="Reservation time"/>
-              <div className="underline"></div>
-              {/* <label for="">Reservation time</label> */}
-           </div>
-           
-        </div>
-       
-        {/* <div className="form-row">
-           <div className="input-data">
-              <input type="text" required/>
-              <div className="underline"></div>
-              <label for="">Password</label>
-           </div>
-           <div className="input-data">
-              <input type="text" required/>
-              <div className="underline"></div>
-              <label for="">Confirm password</label>
-           </div>
-        </div> */}
-        <div className="form-row">
-           <div className="input-data">
-              <textarea  className="iphoneOption textIphoneArea" placeholder="Please describe your requirement in detail" type="text" required/>
-              <div className="underline"></div>
-              {/* <label for="">Please describe your requirement in detail</label> */}
-           </div>
-           {/* <div className="input-data">
-              <input type="text" required/>
-              <div className="underline"></div>
-              <label for="">Email</label>
-           </div> */}
-        </div>
-        <button className="picckBtn">Submit</button>
-     </form>
-     </div>
+       <h3 className="signtext">Please provide these required details</h3>
+       <form >
+          <div className="form-row">
+             <div className="input-data">
+               <select className="iphoneOption">
+                 <option>Choose...</option>
+                 <option>Iphone 4</option>
+                 <option>Iphone 4S</option>
+                 <option>Iphone 5</option>
+                 <option>Iphone 5S</option>
+                 <option>Iphone 5C</option>
+                 <option>Iphone 6</option>
+                 <option>Iphone 6Plus</option>
+                 <option>Iphone 6S</option>
+                 <option>Iphone 6S Plus</option>
+                 <option>SE(1st generation)</option>
+                 <option>Iphone 7 </option>
+                 <option>Iphone 7 Plus</option>
+                 <option>Iphone 8</option>
+                 <option>Iphone 8 Plus</option>
+                 <option>Iphone X</option>
+                 <option>Iphone XS</option>
+                 <option>Iphone XR</option>
+                 <option>Iphone XS Max</option>
+                 <option>Iphone 11</option>
+                 <option>Iphone 11 Pro</option>
+                 <option>Iphone 11 Pro Max</option>
+                 <option>Iphone SE(2nd generation)</option>
+                 <option>Iphone 12 </option>
+                 <option>Iphone 12 mini</option>
+                 <option>Iphone 12 Pro </option>
+                 <option>Iphone 12 Pro Max</option>
+                 <option>Iphone 13 </option>
+                 <option>Iphone 13 mini</option>
+                 <option>Iphone 13 Pro</option>
+                 <option>Iphone 13 Pro Max</option>
+                 <option>Iphone SE(3rd generation)</option>
+                 <option>Iphone 14</option>
+                 <option>Iphone 14 Pro</option>
+                 <option>Iphone 14 Plus</option>
+                 <option>Iphone 14 Pro Max</option>
+                 <option>Iphone 15</option>
+                 <option>Iphone 15 Pro</option>
+                 <option>Iphone 15 Plus</option>
+                 <option>Iphone 15 Pro Max</option>
+                 
+                 <option>Iphone 8</option>
+                 <option>Iphone 8 Plus</option>
+               </select>
+                <div className="underline"></div>
+                {/* <label for="">Iphone model</label> */}
+             </div>
+             <div className="input-data">
+                <input type="datetime-local" required  placeholder="Reservation time"/>
+                <div className="underline"></div>
+                {/* <label for="">Reservation time</label> */}
+             </div>
+             
+          </div>
+         
+          {/* <div className="form-row">
+             <div className="input-data">
+                <input type="text" required/>
+                <div className="underline"></div>
+                <label for="">Password</label>
+             </div>
+             <div className="input-data">
+                <input type="text" required/>
+                <div className="underline"></div>
+                <label for="">Confirm password</label>
+             </div>
+          </div> */}
+          <div className="form-row">
+             <div className="input-data">
+                <textarea  className="iphoneOption textIphoneArea" placeholder="Please describe your requirement in detail" type="text" required/>
+                <div className="underline"></div>
+                {/* <label for="">Please describe your requirement in detail</label> */}
+             </div>
+             {/* <div className="input-data">
+                <input type="text" required/>
+                <div className="underline"></div>
+                <label for="">Email</label>
+             </div> */}
+          </div>
+          <button className="picckBtn">Submit</button>
+       </form>
+       </div>
+      )}
+
+
 
 
 
