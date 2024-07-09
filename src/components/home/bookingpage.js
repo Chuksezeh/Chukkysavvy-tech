@@ -107,11 +107,13 @@ const handleDetailsIphone = (()=>{
 </div>
 
 <div className="wrapper">
+<NavLink to="/details-book-Iphone">
    <div className="card" >
 		<h3 className="card-title" style={{fontWeight: 'bold', width: '250px'}}>Iphone</h3>
 	<img className='' src={iphoneImage} />
-	<NavLink to="/details-book-Iphone">	<button className="card-btn">SELECT</button></NavLink>
+	{/* <button className="card-btn">SELECT</button> */}
 	</div>
+  </NavLink>
 	<div className="card">
 		<h3 className="card-title" style={{fontWeight: 'bold'}}>Samsung</h3>
     <img src={samsung}/>

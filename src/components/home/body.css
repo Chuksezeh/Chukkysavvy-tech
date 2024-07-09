@@ -1456,7 +1456,7 @@ border: none;
   padding: 5px;  */
 }
 .form-group label{
-  font-weight: bold;
+  /* font-weight: bold; */
 }
 
 .meeting-action{
