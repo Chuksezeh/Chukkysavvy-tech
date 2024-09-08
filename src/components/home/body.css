@@ -554,7 +554,7 @@ margin-top: 40px;
     background-color:  #606060;
     background-image: url("../images/christian-wiediger-Htfy7TaDBgo-unsplash.jpg");
     background-size: cover;
-    height: 60vh;
+    /* height: 60vh; */
     display: flex;
 }
 .text-container{
@@ -632,6 +632,7 @@ margin-top: 40px;
     justify-content: center;
     gap: 3%;
     margin-top: 5%;
+    padding: 10px;
   }
 
  
@@ -1370,8 +1371,11 @@ background-color: #1D3C34;
 }
 .fixLine{
   border: #011B58 2px solid;
-  width: 100px;
-  margin-left: 48%;
+   width: 100px; 
+   margin: 0 auto;
+  /* padding-left: 30% ;
+  padding-right: 30%; */
+  
 }
 .fixText{
   text-align: center;
@@ -2400,12 +2404,17 @@ padding: 5px;
     position: relative;
     display: flex;
     flex-direction: column;
+    width: 300px;
     min-width: 0;
     word-wrap: break-word;
     background-color: #FFFFFF !important;
     background-clip: border-box;
     border: 0 solid rgba(0,0,0,.125);
     border-radius: .25rem;
+}
+.card-mg{
+  width: 250px;
+  
 }
 .side-all-cover{
   background-color: #FFFFFF !important;

@@ -1,17 +1,17 @@
-import Header from "../layouts/Header"
-import iphoneImage from '../images/iphone4.jpg';
-import { Form } from "react-router-dom";
+import { useState } from "react";
+import Footer from "../layouts/Footer";
+import samsung from '../images/samsung.png';
 import { Button, Row } from "react-bootstrap";
-import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-import Card from 'react-bootstrap/Card';
 import rep1 from '../images/rep1.jpg';
 import rep2 from '../images/tecd.jpeg';
-import Footer from "../layouts/Footer";
+import Header from "../layouts/Header";
+import otherPhones from '../images/other-phones.jpg';
 
 
 
-const DetailsBookIphone = (()=>{
+const OtherPhonesDetails = (()=>{
+
     const [show, setShow] = useState(false);
     const [showSignUp, setSignUp] = useState(false);
     const [showBookForm, setShowBookForm] = useState(false);
@@ -36,33 +36,33 @@ const DetailsBookIphone = (()=>{
    setIsVisible(false);
 }
 
-
     return(
 
-<>
-<Header/>
+        <>
+        
+        <Header/>
 
 <div className="container">
         
         <div className='fixlineDiv'>
-        <h2 className="iphone-d">Iphones</h2>
+        <h2 className="iphone-d">Other Phones</h2>
         <div className='fixLine' ></div>
         </div>
          <div className="iphone-detaials-cover container" >
            <div className="iphone-detaials-cover-image">
-             <img className="iphone-detaials-image" src={iphoneImage}/>
+             <img className="iphone-detaials-image" src={otherPhones}/>
         </div>
         <div className="iphone-detaials-cover-text">
-               <div className="text-about-details tickHead" style={{fontWeight:"bold"}}>Get your broken iPhone device
-                 quickly and professionally repaired at TecFix.</div>
+               <div className="text-about-details tickHead" style={{fontWeight:"bold"}}>Get your broken phone device
+                 quickly and professionally repaired at Chukkytech.</div>
            
               <div className="text-about-details container">Our trained technicians with years of
-                 experience can perform most iPhone repairs the same day.  We have the tools and the
-                  knowledge to fix iPhone issues such as: cracked or non-working screens, liquid damage,
+                 experience can perform most phone repairs the same day.  We have the tools and the
+                  knowledge to fix Samsung issues such as: cracked or non-working screens, liquid damage,
                    intermittent or
-                 no charging, mic issues, speaker issues and more! Book your same-day iPhone repair today!</div>
+                 no charging, mic issues, speaker issues and more! Book your same-day phone repair today!</div>
 
-                 <div className="text-about-details tickHead" style={{fontWeight:"bold"}}>Premium vs cheap aftermarket iPhone screens.</div>
+                 <div className="text-about-details tickHead" style={{fontWeight:"bold"}}>Premium vs cheap aftermarket phone screens.</div>
            
               <div className="text-about-details  container">We only use premium quality screens because cheap aftermarket
                  screens have a high chance of showing unattractive white spots or discolouration and may appear
@@ -117,51 +117,9 @@ const DetailsBookIphone = (()=>{
 
          <div className="col-md-6">
 					<div className="form-group">
-						<label>Choose iphone model</label>
-						<select id="dropdown" name="role" className="form-control" required>
-                   <option disabled>Choose...</option>
-                 <option>Iphone 4</option>
-                 <option>Iphone 4S</option>
-                 <option>Iphone 5</option>
-                 <option>Iphone 5S</option>
-                 <option>Iphone 5C</option>
-                 <option>Iphone 6</option>
-                 <option>Iphone 6Plus</option>
-                 <option>Iphone 6S</option>
-                 <option>Iphone 6S Plus</option>
-                 <option>SE(1st generation)</option>
-                 <option>Iphone 7 </option>
-                 <option>Iphone 7 Plus</option>
-                 <option>Iphone 8</option>
-                 <option>Iphone 8 Plus</option>
-                 <option>Iphone X</option>
-                 <option>Iphone XS</option>
-                 <option>Iphone XR</option>
-                 <option>Iphone XS Max</option>
-                 <option>Iphone 11</option>
-                 <option>Iphone 11 Pro</option>
-                 <option>Iphone 11 Pro Max</option>
-                 <option>Iphone SE(2nd generation)</option>
-                 <option>Iphone 12 </option>
-                 <option>Iphone 12 mini</option>
-                 <option>Iphone 12 Pro </option>
-                 <option>Iphone 12 Pro Max</option>
-                 <option>Iphone 13 </option>
-                 <option>Iphone 13 mini</option>
-                 <option>Iphone 13 Pro</option>
-                 <option>Iphone 13 Pro Max</option>
-                 <option>Iphone SE(3rd generation)</option>
-                 <option>Iphone 14</option>
-                 <option>Iphone 14 Pro</option>
-                 <option>Iphone 14 Plus</option>
-                 <option>Iphone 14 Pro Max</option>
-                 <option>Iphone 15</option>
-                 <option>Iphone 15 Pro</option>
-                 <option>Iphone 15 Plus</option>
-                 <option>Iphone 15 Pro Max</option>
-               
-               </select>
-					
+						<label>Phone model</label>
+                  <input  required  id="name" placeholder="E.g Tecno bb2" className="form-control" />
+						
 					</div>
 				</div>
 
@@ -239,50 +197,8 @@ const DetailsBookIphone = (()=>{
 
          <div className="col-md-6">
 					<div className="form-group">
-						<label>Choose iphone model</label>
-						<select id="dropdown" name="role" className="form-control" required>
-                   <option disabled>Choose...</option>
-                 <option>Iphone 4</option>
-                 <option>Iphone 4S</option>
-                 <option>Iphone 5</option>
-                 <option>Iphone 5S</option>
-                 <option>Iphone 5C</option>
-                 <option>Iphone 6</option>
-                 <option>Iphone 6Plus</option>
-                 <option>Iphone 6S</option>
-                 <option>Iphone 6S Plus</option>
-                 <option>SE(1st generation)</option>
-                 <option>Iphone 7 </option>
-                 <option>Iphone 7 Plus</option>
-                 <option>Iphone 8</option>
-                 <option>Iphone 8 Plus</option>
-                 <option>Iphone X</option>
-                 <option>Iphone XS</option>
-                 <option>Iphone XR</option>
-                 <option>Iphone XS Max</option>
-                 <option>Iphone 11</option>
-                 <option>Iphone 11 Pro</option>
-                 <option>Iphone 11 Pro Max</option>
-                 <option>Iphone SE(2nd generation)</option>
-                 <option>Iphone 12 </option>
-                 <option>Iphone 12 mini</option>
-                 <option>Iphone 12 Pro </option>
-                 <option>Iphone 12 Pro Max</option>
-                 <option>Iphone 13 </option>
-                 <option>Iphone 13 mini</option>
-                 <option>Iphone 13 Pro</option>
-                 <option>Iphone 13 Pro Max</option>
-                 <option>Iphone SE(3rd generation)</option>
-                 <option>Iphone 14</option>
-                 <option>Iphone 14 Pro</option>
-                 <option>Iphone 14 Plus</option>
-                 <option>Iphone 14 Pro Max</option>
-                 <option>Iphone 15</option>
-                 <option>Iphone 15 Pro</option>
-                 <option>Iphone 15 Plus</option>
-                 <option>Iphone 15 Pro Max</option>
-               </select>
-					
+               <label>Samsung model</label>
+               <input  required  id="name" placeholder="E.g Galaxy S8+" className="form-control" />
 					</div>
 				</div>
 
@@ -437,11 +353,9 @@ const DetailsBookIphone = (()=>{
       
 <Footer/>
 
-
-</>
-
+        
+        </>
     )
-
 })
 
-export default DetailsBookIphone
+export default OtherPhonesDetails
