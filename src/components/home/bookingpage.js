@@ -10,6 +10,7 @@ import samsung from '../images/samsung.png';
 import otherPhones from '../images/other-phones.jpg';
 import laptop from '../images/laptops1.avif';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 
 
@@ -29,6 +30,24 @@ const navigateOtherPhones = (()=>{
 
   navigate("/other-phones-details")
 })
+
+const navigateLaptopDetails = (()=>{
+navigate("/laptop-details")
+})
+
+
+
+const scrolltop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
+  useEffect(() => {
+    scrolltop();
+  }, []);
+
 
     return (
         <>
@@ -75,9 +94,12 @@ const navigateOtherPhones = (()=>{
 		{/* <p className="card-content">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p> */}
 		
 	</div>
-	<div className="card">
+	<div className="card" onClick={navigateLaptopDetails}>
 		<h3 className="card-title" style={{fontWeight: 'bold'}}>Laptops</h3>
-    <img className='' src={laptop}/>
+	
+		<img className='' src={laptop}/>
+		
+   
 		{/* <p className="card-content">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p> */}
 		<button className="card-btn">SELECT</button>
 	</div>

@@ -1,0 +1,24 @@
+.header-bar{
+  background-color: whitesmoke;
+  border-radius: 10px;
+  padding: 10px;
+}
+.nowsidecontainer{
+  margin-top: 6%;
+  background-color: #041e5c;
+}
+.shift-nav{
+  margin-left: 20px !important;
+  
+}
+.action-bar{
+  list-style-type: none;
+  margin-left: 3%;
+}
+
+
+/* body{
+  font-family: 'Lato', sans-serif;
+  color: #202020;
+} */
+

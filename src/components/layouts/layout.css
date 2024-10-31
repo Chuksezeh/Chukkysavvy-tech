@@ -25,6 +25,7 @@ body{
   margin-left: 20px; 
  padding-top:15px;
  color: white;
+ cursor: pointer;
 }
 .moveTop{
 margin-top: 5% !important;
@@ -279,7 +280,9 @@ color: black;
 }
 
 
-
+.logo-SElf{
+  width: 40px;
+}
 
 .nav {
   height: 60px;
@@ -310,9 +313,10 @@ color: black;
   color: white;
  
   width: 30%;
- 
-
-}
+ }
+ .nav-links a {
+  cursor: pointer;
+ }
 
 .nav > .nav-links > a {
   display: inline-block;

@@ -2,15 +2,17 @@ import React, { useRef, useState } from "react";
 import logo from "./../images/my.jpg";
 
 import {PiListPlusThin} from "react-icons/pi";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { BsFillPersonFill, BsList, BsPersonCircle } from "react-icons/bs";
-import brandlogo from "../images/mybrand.JPEG";
+import brandlogo from "../images/CHUKKY-BRAND-BACKGROUND.png";
 
 const Header = ()=>{
 
   const scrollRef = useRef(); 
   const scrollTesmony = useRef();
   const contactScroll = useRef();
+
+  const navigate = useNavigate();
 
   const scrollBottom = (e) => {
     e.current.scrollIntoView({
@@ -29,6 +31,15 @@ const Header = ()=>{
   };
 
   const [showBasic, setShowBasic] = useState(false);
+
+
+  const navigateHome = (()=>{
+    navigate('/') 
+  })
+
+  const navigateAdmin = (()=>{
+    navigate("/admin-login")
+  })
     return (
         <>
       {/* <nav className="nav-container-c">
@@ -62,16 +73,17 @@ const Header = ()=>{
       <span></span>
     </label>
   </div>
-  <div className="logoDiv">
+  <div className="logoDiv" onClick={navigateHome}>
     
-    <a>Chukkytech</a>
+    <a> <img src={brandlogo} className="logo-SElf"/> Chukkytech</a>
   </div>
   
   <div className="nav-links">
-    <a href="">Home</a>
+    <a  onClick={navigateHome} >Home</a>
     <a>About</a>
     <a  onClick={() =>scrollBottom(scrollRef)}>Services</a>
     <a onClick={() =>scrollTes(scrollTesmony)}>Feedback</a>
+    <a onClick={navigateAdmin}>Admin</a>
   </div>
   
 </div>

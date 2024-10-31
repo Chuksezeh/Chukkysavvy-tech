@@ -1,0 +1,31 @@
+.setbtnDiv{
+  
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+}
+.picckBtnDiv{
+    width: 50%;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #011B58;
+    color: white;
+   
+}
+
+.picckBtnDiv:hover{
+   
+    background-color: #0b39a5;
+    
+   
+}
+.changetxtBACk{
+    background-color: #B3B3B3;
+    color: #011B58;
+    border: none;
+}
+
+.changetxtBACk:hover{
+    background-color: #7a7777;
+    
+}

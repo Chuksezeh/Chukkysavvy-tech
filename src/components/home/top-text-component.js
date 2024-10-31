@@ -1,26 +1,27 @@
 import React from "react";
 
-const Bodytwo = ()=>{
+const TopTextComponent = ()=>{
     return(
         <>
 
             <div className="second">
-                <div className="">
+                <div className="text-about-sec">
                     <h2>Your Solution Hub</h2>
-                    <p>We Provide Hardware and Software Solutions to must of your related tech Issues</p>
+                    <p>We Provide Hardware and Software Solutions to Most of Your  Tech Related Issues</p>
                 </div>
                 <div className="border-line"></div>
-                <div>
-                    <span>rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr</span><br/>
-                    <span>rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr</span><br/>
-                    <span>rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr</span>
+                <div className="text-about-sec">
+                    <h2 className="chukName">Chukkytech</h2>
+                You don’t have to spend a fortune or be there in person 
+                to restore your device’s original quality. With our 
+                convenient home and office pickup and delivery options, we’ve got you covered!
                 </div>
                
-                <div>
+                {/* <div>
 
                     <button className="button-47" role="button">About us</button>
 
-                </div>
+                </div> */}
 
 
             </div>
@@ -28,4 +29,4 @@ const Bodytwo = ()=>{
     )
 }
 
-export default Bodytwo
+export default TopTextComponent

@@ -22,6 +22,11 @@ body{
   padding-right: 20%; */
   }
 
+  .headSignin{
+    display: flex;
+    gap: 2%;
+  }
+
 
 
   .container{
@@ -29,11 +34,11 @@ body{
     width: 100%;
   }
   
-  h1{
+  /* h1{
     font-weight: 700;
     font-size: 45px;
     font-family: 'Roboto', sans-serif;
-  }
+  } */
   
   .header{
     margin-bottom: 80px;
@@ -336,8 +341,10 @@ form .form-row .textarea{
   margin-top: 2%;
 }
 .home-text-we-offer{
-  padding-left: 10%;
-  padding-right: 10%;
+  margin-left: 5%;
+  font-size: 25px;
+  padding-right: 50%;
+ 
 }
 .iphone-detaials-cover{
   display: flex;
@@ -358,6 +365,13 @@ form .form-row .textarea{
 .card-man {
   width: 100% !important;
 }
+.text-about-sec{
+  width: 50%;
+}
+/* .chukName{
+  font-size: 25px;
+  font-weight: 600;
+} */
 
 .one{
     background-color: aliceblue;
@@ -370,10 +384,12 @@ form .form-row .textarea{
 .second{
     display: flex;
     gap: 5%;
-    background-color: #011B58;
+    background-color: #162444;
     justify-content: center;
-    text-align: center;
+    /* text-align: center; */
     color: white;
+    padding-left: 5%;
+    padding-right: 5%;
 }
 .card-covers{
   display: flex;
@@ -575,21 +591,30 @@ margin-top: 40px;
 .body-one-textcontiner{
     /* display: flex; */
     width: 100%;
-    text-align: center;
+    /* text-align: center; */
   
      margin-top: 2%;
+     height: 60vh;
    
 }
 .firsttext-contain{
     color: white;
+    margin-left: 5%;
+    margin-top: 3%;
 }
-.firsttext-contain h1{
-    font-family: 'Alfa Slab One', cursive;
-    font-family: 'Lobster', cursive;
+.firsttext-contain h3{
+    
     font-family: 'Russo One', sans-serif;
     font-weight: bold;
-    font-size: 70px;
+    font-size: 30px;
+    
 }
+.firsttext-contain h2{
+  font-size: 60px;
+  font-weight: 800;
+}
+
+
 .secondtext-contain{
     color: white;
 }
@@ -629,38 +654,69 @@ margin-top: 40px;
   }
   .btn-begin-container{
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     gap: 3%;
     margin-top: 5%;
-    padding: 10px;
+    margin-left: 5%;
+    /* padding: 10px; */
   }
 
  
 /* CSS */
-.button-47 {
-  align-items: center;
-  background: #FFFFFF;
-  border: 0 solid #E2E8F0;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+
+/* CSS */
+.button-50 {
+  appearance: button;
+  background-color: white;
+  background-image: none;
+  width: 300px;
+  height: 60px;
+  border: 1px solid #000;
+  border-radius: 4px;
+  box-shadow: #011B58 4px 4px 0 0,white 4px 4px 0 1px;
   box-sizing: border-box;
-  color: #1A202C;
-  display: inline-flex;
-  font-family: Inter, sans-serif;
-  font-size: 1rem;
-  font-weight: 700;
-  height: 56px;
-  justify-content: center;
-  line-height: 24px;
-  overflow-wrap: break-word;
-  padding: 24px;
-  text-decoration: none;
-  width: auto;
-  border-radius: 8px;
+  color: black;
   cursor: pointer;
+  display: inline-block;
+  font-family: ITCAvantGardeStd-Bk,Arial,sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 20px;
+  margin: 0 5px 10px 0;
+  overflow: visible;
+  padding: 20px 40px;
+  text-align: center;
+  text-transform: none;
+  touch-action: manipulation;
   user-select: none;
   -webkit-user-select: none;
-  touch-action: manipulation;
-  margin-top: 13%;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.button-50:focus {
+  text-decoration: none;
+}
+
+.button-50:hover {
+  text-decoration: none;
+}
+
+.button-50:active {
+  box-shadow: rgba(0, 0, 0, .125) 0 3px 5px inset;
+  outline: 0;
+}
+
+.button-50:not([disabled]):active {
+  box-shadow: #fff 2px 2px 0 0, #000 2px 2px 0 1px;
+  transform: translate(2px, 2px);
+}
+
+@media (min-width: 768px) {
+  .button-50 {
+    padding: 12px 50px;
+  }
 }
 .border-line{
     border: white solid 1px;
@@ -680,7 +736,7 @@ margin-top: 40px;
 }
 .body3-container-all{
    justify-content: center;
-   text-align: center; 
+   /* text-align: center;  */
    padding: 10px;
    display: flex;
    margin-top: 3%;
@@ -689,7 +745,7 @@ margin-top: 40px;
 
 .body3-main{
     display: flex;
-    gap: 8%;
+   justify-content: center;
 }
 .body3-img1{
     width: 500px;
@@ -721,8 +777,19 @@ margin-top: 40px;
     padding-right: 30px;
     padding-left: 30px;
   }
+  .body3-image-div{
+    width: 50%;
+    /* background-color: #00bcd9; */
+    justify-content: center;
+    text-align: center;
+  }
   .body3-text-div{
     margin-top: 4%;
+    width: 50%;
+    padding-right: 10%;
+    font-size: 20px;
+    /* background-color: #007b5e; */
+    /* padding: 30px; */
   }
   .tittle-text{
     font-family: 'Alfa Slab One', cursive;
@@ -730,6 +797,17 @@ margin-top: 40px;
      font-family: 'Russo One', sans-serif; */
      font-weight: bold;
      font-size: 40px;
+  }
+  .centerTextDiVImage{
+    /* background-color: #17759C; */
+    /* justify-content: start;
+    text-align: start; */
+  }
+  .centerTextDiV{
+    justify-content: end !important;
+    /* text-align: end; */
+    /* background-color: #007b5e; */
+    padding-left: 10%;
   }
 
 
@@ -2453,6 +2531,37 @@ padding: 5px;
 }
 .shadow-none {
     box-shadow: none!important;
+}
+
+
+
+/* CSS */
+.button-43 {
+  background-image: linear-gradient(-180deg, #37AEE2 0%, #1E96C8 100%);
+  border-radius: .5rem;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  display: flex;
+  font-size: 16px;
+  justify-content: center;
+  padding: 1rem 1.75rem;
+  text-decoration: none;
+  width: 50%;
+  border: 0;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-43:hover {
+  background-image: linear-gradient(-180deg, #1D95C9 0%, #17759C 100%);
+}
+
+@media (min-width: 768px) {
+  .button-43 {
+    padding: 1rem 2rem;
+  }
 }
 
 

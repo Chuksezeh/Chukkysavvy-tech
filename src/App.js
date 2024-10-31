@@ -11,22 +11,53 @@ import DetailsBookIphone from './components/home/details-book-iphone';
 import SamsungDetails from './components/home/samsung-details';
 import IpadDetails from './components/home/ipad-details';
 import OtherPhonesDetails from './components/home/other-phones-details';
+import LaptopBookDetails from './components/home/laptop-book-details';
+import AdminDashboard from './components/Admin/adminDashboard';
+import UserDashBoard from './components/UserDashboard/userDashboard';
+import UserTable from './components/Admin/userTable/userTable';
+import AdminMainDashboard from './components/Admin/adminMainDashboard/adminMainDashboard';
+import CreateUser from './components/Admin/CreateUser/createUser';
+import AdminLoginPage from './components/Admin/LoginInterface/adminLogin';
+import UserLogin from './components/layouts/UserLoginPage/userlogin';
+import UserSignUp from './components/layouts/UserSignup/userSignup';
+import AccountOverView from './components/UserDashboard/UserAccountComponents/accountOverView';
+import RepairOrders from './components/UserDashboard/UserAccountComponents/repairOrders';
+// import AdminDashbord from './components/Admin/adminDashbord/adminDash';
+
 
 function App() {
   return (
     <>
-
+  
     <Routes basename="/">
       <Route path="/" element={<Home/>}></Route>
       <Route path="/signinpage" element={<SignInPage/>}></Route>
       <Route path="/signuppage" element={<SignUpPage/>}></Route>
       <Route path="/profilepage" element={<ProfilePage/>}></Route>
       <Route path="/bookingpage" element={<BookingPage/>}></Route>
-      <Route path="/user-profile" element={<UserMainProfile/>}></Route>
+      {/* <Route path="/user-profile" element={<UserMainProfile/>}></Route> */}
       <Route path="/details-book-Iphone" element={<DetailsBookIphone/>}></Route>
       <Route path="/samsung-details" element={<SamsungDetails/>}></Route>
       <Route path="/ipad-details" element={<IpadDetails/>}></Route>
       <Route path="/other-phones-details" element={<OtherPhonesDetails/>}></Route>
+      <Route path="/laptop-details" element={<LaptopBookDetails/>}></Route>
+      <Route path="/admin-dashboard" element={<AdminDashboard/>}></Route>
+      <Route path="/user-dashboard" element={<UserDashBoard/>}></Route>
+      <Route path="/user-table" element={<UserTable/>}></Route>
+      <Route path="/admin-dashboard-card" element={<AdminMainDashboard/>}></Route>
+      <Route path="/create-user" element={<CreateUser/>}></Route>
+      <Route path="/admin-login" element={<AdminLoginPage/>}></Route>
+      <Route path="/user-login" element={<UserLogin/>}></Route>
+      <Route path="/user-signup" element={<UserSignUp/>}></Route>
+      <Route path="/user-profile" element={<AccountOverView/>}></Route>
+      <Route path="/repair-orders" element={<RepairOrders/>}></Route>
+
+    
+    
+      
+
+  
+
 
 
     </Routes>

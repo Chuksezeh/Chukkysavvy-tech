@@ -6,6 +6,9 @@ import Modal from 'react-bootstrap/Modal';
 import rep1 from '../images/rep1.jpg';
 import rep2 from '../images/tecd.jpeg';
 import Header from "../layouts/Header";
+import SignUpSignIn from "./singupSignIn/signup-signin";
+import InstoreRepairForm from "../layouts/InstoreRepairForm/instoreREpair";
+import PickupRepairForm from "../layouts/PickupRepairForm/pickuprepair";
 
 
 const SamsungDetails = (()=>{
@@ -26,12 +29,22 @@ const SamsungDetails = (()=>{
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
     setIsVisiblePickUp(false)
+
+   //  const targetElement = document.getElementById('instoreformSection');
+   //  if (targetElement && isVisible) {
+   //    targetElement.scrollIntoView({ behavior: 'smooth' });
+   //  }
   };
 
   const toggleVisibilityPickUp = ()=>{
    setIsVisiblePickUp(!isVisiblePickUp)
    setIsVisible(false);
 }
+
+const handleScrollInstoreForm = (()=>{
+
+   
+})
 
 
 
@@ -78,12 +91,8 @@ const SamsungDetails = (()=>{
     </div>
 
      <h3 className="head-bookRepair">BOOK A REPAIR OR A FREE IN-STORE ASSESSMENT</h3>  
-     <Button variant="secondary" onClick={handleShow}>
-        Sign up
-      </Button>
-      <Button variant="secondary" onClick={handleShowshowSignUp}>
-        Sign in
-      </Button>
+
+    <SignUpSignIn/>
 
 
 <div className="card-hol">
@@ -102,63 +111,8 @@ const SamsungDetails = (()=>{
 
 
 {isVisible && (
-<div className="container">
-	<header className="header">
-		
-	</header>
-	<div className="form-wrap">
-   <p id="description" className="text-center">
-   Please provide required details and locate our store
-		</p>	
-		<form id="survey-form">
-     
-			<div className="row">
-
-         <div className="col-md-6">
-					<div className="form-group">
-						<label>Samsung model</label>
-                  <input  required  id="name" placeholder="E.g Galaxy S8+" className="form-control" />
-						
-					</div>
-				</div>
-
-				<div className="col-md-6">
-					<div className="form-group">
-						<label id="name-label" for="name">Reservation date and time</label>
-						<input type="datetime-local" required  id="name" placeholder="Enter your name" className="form-control" />
-					</div>
-				</div>
-				<div className="row">
-				<div className="col-md-12">
-					<div className="form-group">
-						<label id="number-label" for="number">Select service store </label>
-						<select id="dropdown" name="role" className="form-control" required>
-                   <option disabled>Choose...</option>
-                 <option>Main store</option>
-                 <option>Branch</option>
-                </select>
-					</div>
-				</div>
-				
-			</div>
-       </div>
-			<div className="row">
-				<div className="col-md-12">
-					<div className="form-group">
-						<label>Details</label>
-						<textarea  id="comments" className="form-control" name="comment" placeholder="Please describe your requirement in details, for direct diagnosis and immediate fix" ></textarea>
-					</div>
-				</div>
-			</div>
-			
-			<div className="row">
-				<div className="col-md-4">
-				 <button className="picckBtn">Submit</button>
-				</div>
-			</div>
-
-		</form>
-	</div>	
+   <div id="instoreformSection">
+<InstoreRepairForm />
 </div>
       )}
 
@@ -181,66 +135,7 @@ const SamsungDetails = (()=>{
      
 {isVisiblePickUp && (
 
-<div className="container">
-	<header className="header">
-		
-	</header>
-	<div className="form-wrap">
-   <p id="description" className="text-center">
-   Please provide required details for pickup/delivery
-   
-		</p>	
-		<form id="survey-form">
-     
-			<div className="row">
-
-         <div className="col-md-6">
-					<div className="form-group">
-               <label>Samsung model</label>
-               <input  required  id="name" placeholder="E.g Galaxy S8+" className="form-control" />
-					</div>
-				</div>
-
-				<div className="col-md-6">
-					<div className="form-group">
-						<label id="name-label" for="name">Reservation date and time</label>
-						<input type="datetime-local" required  id="name" placeholder="Enter your name" className="form-control" />
-					</div>
-				</div>
-				<div className="row">
-				<div className="col-md-6">
-					<div className="form-group">
-						<label id="number-label" for="number">Pick up address</label>
-						<input type="text" required   placeholder="Enter detailed address" className="form-control" />
-					</div>
-				</div>
-            <div className="col-md-6">
-					<div className="form-group">
-						<label id="number-label" for="number">Phone number</label>
-						<input type="text" required   placeholder="Enter phone number" className="form-control" />
-					</div>
-				</div>
-				
-			</div>
-       </div>
-			<div className="row">
-				<div className="col-md-12">
-					<div className="form-group">
-						<label>Details</label>
-						<textarea  id="comments" className="form-control" name="comment" placeholder="Please describe your requirement in details, for direct diagnosis and immediate fix" ></textarea>
-					</div>
-				</div>
-			</div>
-			
-			<div className="row">
-				<div className="col-md-4">
-				 <button className="picckBtn">Submit</button>
-				</div>
-			</div>
-
-		</form>
-	</div>	
-</div>
+<PickupRepairForm/>
       )}
 
 
@@ -248,107 +143,7 @@ const SamsungDetails = (()=>{
 </div>
     
 
-      <Modal show={show} onHide={handleClose} size="lg" >
-        <Modal.Header closeButton>
-          <Modal.Title> <div className="text">
-         Sign up
-      </div></Modal.Title>
-        </Modal.Header>
-        <Modal.Body> 
-         <div className="containers">
-     
-      <div className="signtext">Sign up to save your information for faster booking and seamless repair tracking</div>
-      <form >
-         <div className="form-row">
-            <div className="input-data">
-               <input type="text" required/>
-               <div className="underline"></div>
-               <label for="">First Name</label>
-            </div>
-            <div className="input-data">
-               <input type="text" required/>
-               <div className="underline"></div>
-               <label for="">Last Name</label>
-            </div>
-         </div>
-         <div className="form-row">
-            <div className="input-data">
-               <input type="text" required/>
-               <div className="underline"></div>
-               <label for="">Phone number</label>
-            </div>
-            <div className="input-data">
-               <input type="text" required/>
-               <div className="underline"></div>
-               <label for="">Email</label>
-            </div>
-         </div>
-         <div className="form-row">
-            <div className="input-data">
-               <input type="text" required/>
-               <div className="underline"></div>
-               <label for="">Password</label>
-            </div>
-            <div className="input-data">
-               <input type="text" required/>
-               <div className="underline"></div>
-               <label for="">Confirm password</label>
-            </div>
-         </div>
-      </form>
-      </div>
-
-      </Modal.Body>
-        <Modal.Footer>
-          {/* <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button> */}
-          <Button variant="primary" onClick={handleClose}>
-            Sign up
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
-
-
-
-
-      <Modal show={showSignUp} onHide={handleCloseshowSignUp} size="lg">
-        <Modal.Header closeButton>
-          <Modal.Title>  <div className="text">
-         Sign in
-      </div></Modal.Title>
-        </Modal.Header>
-        <Modal.Body>  <div className="containers">
-     
-      <div className="signtext">Sign in for faster booking and seamless repair tracking</div>
-      <form >
-         <div className="form-row">
-            <div className="input-data">
-               <input type="text" required/>
-               <div className="underline"></div>
-               <label for="">Email</label>
-            </div>
-            <div className="input-data">
-               <input type="text" required/>
-               <div className="underline"></div>
-               <label for="">password</label>
-            </div>
-         </div>
-        
-         {/* <button className="sign-btn">Sign in</button> */}
-        
-      </form>
-      </div></Modal.Body>
-        <Modal.Footer>
-          {/* <Button variant="secondary" onClick={handleCloseshowSignUp}>
-            Close
-          </Button> */}
-          <Button variant="primary" onClick={handleCloseshowSignUp}>
-            Sign in
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      
       
 <Footer/>
 

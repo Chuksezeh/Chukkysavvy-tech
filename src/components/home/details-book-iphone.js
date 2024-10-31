@@ -1,6 +1,6 @@
 import Header from "../layouts/Header"
 import iphoneImage from '../images/iphone4.jpg';
-import { Form } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 import { Button, Row } from "react-bootstrap";
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
@@ -8,6 +8,7 @@ import Card from 'react-bootstrap/Card';
 import rep1 from '../images/rep1.jpg';
 import rep2 from '../images/tecd.jpeg';
 import Footer from "../layouts/Footer";
+import SignUpSignIn from "./singupSignIn/signup-signin";
 
 
 
@@ -15,12 +16,21 @@ const DetailsBookIphone = (()=>{
     const [show, setShow] = useState(false);
     const [showSignUp, setSignUp] = useState(false);
     const [showBookForm, setShowBookForm] = useState(false);
+    const [showPickUpForm, setShowPickUpForm]= useState(false);
+
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
     const handleCloseshowSignUp = () => setSignUp(false);
     const handleShowshowSignUp = () => setSignUp(true);
+
+    const handleShowPickUpForm = () => setShowPickUpForm(true);
+    const handleClosePickupForm = () => setShowPickUpForm(false);
+
+   
+
+
 
 
     const [isVisible, setIsVisible] = useState(false);
@@ -29,12 +39,18 @@ const DetailsBookIphone = (()=>{
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
     setIsVisiblePickUp(false)
+    handleShow()
   };
 
   const toggleVisibilityPickUp = ()=>{
    setIsVisiblePickUp(!isVisiblePickUp)
    setIsVisible(false);
+   handleShowPickUpForm()
 }
+
+{/* <Button variant="primary" onClick={handleShow}>
+Launch static backdrop modal
+</Button> */}
 
 
     return(
@@ -79,13 +95,7 @@ const DetailsBookIphone = (()=>{
     </div>
 
      <h3 className="head-bookRepair">BOOK A REPAIR OR A FREE IN-STORE ASSESSMENT</h3>  
-     <Button variant="secondary" onClick={handleShow}>
-        Sign up
-      </Button>
-      <Button variant="secondary" onClick={handleShowshowSignUp}>
-        Sign in
-      </Button>
-
+    <SignUpSignIn/>
 
 <div className="card-hol">
 <div className="card-covers">
@@ -102,12 +112,22 @@ const DetailsBookIphone = (()=>{
 
 
 
-{isVisible && (
-<div className="container">
-	<header className="header">
-		
-	</header>
-	<div className="form-wrap">
+<Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+           
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Order for Instore Repair</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <div className="container">
+	
+	<div className="form-wra">
    <p id="description" className="text-center">
    Please provide required details and locate our store
 		</p>	
@@ -194,16 +214,25 @@ const DetailsBookIphone = (()=>{
 				</div>
 			</div>
 			
-			<div className="row">
+			{/* <div className="row">
 				<div className="col-md-4">
 				 <button className="picckBtn">Submit</button>
 				</div>
-			</div>
+			</div> */}
 
 		</form>
 	</div>	
 </div>
-      )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary">Continue</Button>
+        </Modal.Footer>
+      </Modal>
+
+
 
 
 
@@ -221,14 +250,24 @@ const DetailsBookIphone = (()=>{
 </div>
 
 </div>
-     
-{isVisiblePickUp && (
 
-<div className="container">
-	<header className="header">
-		
-	</header>
-	<div className="form-wrap">
+
+<Modal
+        show={showPickUpForm}
+        onHide={handleClosePickupForm}
+        backdrop="static"
+        keyboard={false}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+           
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Order For Pickup</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <div className="container">
+
+	<div className="form-wra">
    <p id="description" className="text-center">
    Please provide required details for pickup/delivery
    
@@ -317,123 +356,36 @@ const DetailsBookIphone = (()=>{
 				</div>
 			</div>
 			
-			<div className="row">
+			{/* <div className="row">
 				<div className="col-md-4">
 				 <button className="picckBtn">Submit</button>
 				</div>
-			</div>
+			</div> */}
 
 		</form>
 	</div>	
 </div>
-      )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClosePickupForm}>
+            Close
+          </Button>
+          <Button variant="primary">Continue</Button>
+        </Modal.Footer>
+      </Modal>
 
+
+
+
+
+
+     
 
 
 </div>
     
 
-      <Modal show={show} onHide={handleClose} size="lg" >
-        <Modal.Header closeButton>
-          <Modal.Title> <div className="text">
-         Sign up
-      </div></Modal.Title>
-        </Modal.Header>
-        <Modal.Body> 
-         <div className="containers">
-     
-      <div className="signtext">Sign up to save your information for faster booking and seamless repair tracking</div>
-      <form >
-         <div className="form-row">
-            <div className="input-data">
-               <input type="text" required/>
-               <div className="underline"></div>
-               <label for="">First Name</label>
-            </div>
-            <div className="input-data">
-               <input type="text" required/>
-               <div className="underline"></div>
-               <label for="">Last Name</label>
-            </div>
-         </div>
-         <div className="form-row">
-            <div className="input-data">
-               <input type="text" required/>
-               <div className="underline"></div>
-               <label for="">Phone number</label>
-            </div>
-            <div className="input-data">
-               <input type="text" required/>
-               <div className="underline"></div>
-               <label for="">Email</label>
-            </div>
-         </div>
-         <div className="form-row">
-            <div className="input-data">
-               <input type="text" required/>
-               <div className="underline"></div>
-               <label for="">Password</label>
-            </div>
-            <div className="input-data">
-               <input type="text" required/>
-               <div className="underline"></div>
-               <label for="">Confirm password</label>
-            </div>
-         </div>
-      </form>
-      </div>
-
-      </Modal.Body>
-        <Modal.Footer>
-          {/* <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button> */}
-          <Button variant="primary" onClick={handleClose}>
-            Sign up
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
-
-
-
-
-      <Modal show={showSignUp} onHide={handleCloseshowSignUp} size="lg">
-        <Modal.Header closeButton>
-          <Modal.Title>  <div className="text">
-         Sign in
-      </div></Modal.Title>
-        </Modal.Header>
-        <Modal.Body>  <div className="containers">
-     
-      <div className="signtext">Sign in for faster booking and seamless repair tracking</div>
-      <form >
-         <div className="form-row">
-            <div className="input-data">
-               <input type="text" required/>
-               <div className="underline"></div>
-               <label for="">Email</label>
-            </div>
-            <div className="input-data">
-               <input type="text" required/>
-               <div className="underline"></div>
-               <label for="">password</label>
-            </div>
-         </div>
-        
-         {/* <button className="sign-btn">Sign in</button> */}
-        
-      </form>
-      </div></Modal.Body>
-        <Modal.Footer>
-          {/* <Button variant="secondary" onClick={handleCloseshowSignUp}>
-            Close
-          </Button> */}
-          <Button variant="primary" onClick={handleCloseshowSignUp}>
-            Sign in
-          </Button>
-        </Modal.Footer>
-      </Modal>
+    
       
 <Footer/>
 
