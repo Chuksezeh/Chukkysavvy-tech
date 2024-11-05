@@ -11,8 +11,8 @@ const UserDashBoard = (()=>{
 
 	const menuItems = [
 		{ name: 'My Account', path: '/user-profile' },
-		{ name: 'Orders', path: "/repair-orders" },
-		{ name: 'Services', path: '/services' },
+		{ name: 'Device Repair Orders', path: "/repair-orders" },
+		{ name: 'Purchase Orders', path: '/services' },
 		{ name: 'Contact', path: '/contact' }
 	  ];
   

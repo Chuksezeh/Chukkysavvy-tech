@@ -6,7 +6,7 @@
   }
   .dropSetSHow{
     position: absolute;
-    background-color: #2b4faa;
+    background-color: #6c7274;
     list-style-type: none;
     padding: 20px;
     border-radius: 5px;
@@ -18,8 +18,16 @@
 }
 .dropSetSHow li{
  cursor: pointer;
+ /* margin-top: 5px; */
+ padding: 5px;
 
 }
+.dropSetSHow li:hover{
+  cursor: pointer;
+  margin-top: 5px;
+  background-color: rgba(0, 0, 0, 0.418);
+ 
+ }
 
   
   table{

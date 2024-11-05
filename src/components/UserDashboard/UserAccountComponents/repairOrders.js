@@ -1,6 +1,11 @@
 import { useState } from "react";
 import UserDashBoard from "../userDashboard"
 import "../userDashboard.css"
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import TrackProgress from "../TrackProgress/trrackProgress";
+import TrackBtn from "../TrackProgress/trackerButton";
+
 
 
 
@@ -12,6 +17,12 @@ const RepairOrders = (()=>{
   
       setShowDropDown(!showDropDown)
     }
+
+
+    const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
 
     return(
@@ -33,10 +44,10 @@ const RepairOrders = (()=>{
       <table>
         <thead>
           <tr className="table-headers">
-            <th>Name</th>
-            <th>Number</th>
-            <th>Email</th>
-            <th>Address</th>
+            <th>Device name/ Brand</th>
+            <th>Book Date time</th>
+            <th>Device Fault</th>
+            <th>Repair Status</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -46,18 +57,12 @@ const RepairOrders = (()=>{
             <th className="mobile-header">Number</th><td>2489</td>
             <th className="mobile-header">Market rate</th><td>€12.35</td>
             <th className="mobile-header">Weight</th><td>5%</td>
-            <th className="mobile-header-action">  <button className="btn btn-primary" onClick={handleShowDropDown}> Action
+            <th className="mobile-header-action">  <button className="btn btn-primary"
+              onClick={handleShow}> Track Order
             </button>
-              {
-                showDropDown &&
+             
 
-                <ul className="dropSetSHow">
-                  <li>View user</li>
-                  <li>Suspend user</li>
-                  <li style={{ color: "red" }}>Delete user</li>
-                </ul>
-              }
-
+               
 
             </th><td>   </td>
 
@@ -94,7 +99,27 @@ const RepairOrders = (()=>{
 				</div>
 			</div>
 			
-		</div>     
+		</div>  
+
+
+      <Modal show={show} onHide={handleClose} size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title>Device Repair Tracking Progress</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+
+
+<TrackBtn/>
+
+
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          
+        </Modal.Footer>
+      </Modal>   
 		     
         
         

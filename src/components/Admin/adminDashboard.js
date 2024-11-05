@@ -91,6 +91,14 @@ const navigateCreateUser = ()=>{
 
   navigate("/create-user")
 }
+const navigateUserRepairOrder = ()=>{
+
+  navigate("/user-repair-orders")
+}
+
+const navigateProductOrder = ()=>{
+  navigate("/product-orders")
+}
 
 
   return (
@@ -149,23 +157,29 @@ const navigateCreateUser = ()=>{
           <NavItem eventKey="3">
             <NavIcon>
             <GoListOrdered  className="side-main-icon"/>
-              
             </NavIcon>
             <NavText>
-              Repair Order
+            Orders
             </NavText>
             
             <NavItem eventKey="3-1">
               <NavText className="move-side">
-                <li className="shift-nav" onClick={navigateUserTable }>
+                <li className="shift-nav" onClick={navigateUserRepairOrder }>
                   <IoIosPeople className="inicon" size={18}/>     
-                  <span className="ml-5"> View Repair Order</span>
+                  <span className="ml-5"> Repair Order</span>
                   </li>
               </NavText>
+              
             </NavItem>
+            <NavItem eventKey="3-2">
+              <NavText>
+                <li className="shift-nav" onClick={navigateProductOrder }>
+                  <IoPersonAddOutline className="inicon" size={16}/>     
+                  <span className="ml-5">Product Order</span> </li>
+              </NavText>
            
           </NavItem>
-
+          </NavItem>
 
 
          

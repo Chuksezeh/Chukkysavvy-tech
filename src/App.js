@@ -22,6 +22,9 @@ import UserLogin from './components/layouts/UserLoginPage/userlogin';
 import UserSignUp from './components/layouts/UserSignup/userSignup';
 import AccountOverView from './components/UserDashboard/UserAccountComponents/accountOverView';
 import RepairOrders from './components/UserDashboard/UserAccountComponents/repairOrders';
+import NavtrackRepair from './components/layouts/NavTracking/navTrackRepair';
+import RepairOrderTable from './components/Admin/OrderTable/userRepairOrder';
+import ProductOrderTable from './components/Admin/OrderTable/userProductOrder';
 // import AdminDashbord from './components/Admin/adminDashbord/adminDash';
 
 
@@ -51,16 +54,13 @@ function App() {
       <Route path="/user-signup" element={<UserSignUp/>}></Route>
       <Route path="/user-profile" element={<AccountOverView/>}></Route>
       <Route path="/repair-orders" element={<RepairOrders/>}></Route>
+      <Route path="/track-repair" element={<NavtrackRepair/>}></Route>
+      <Route path="/user-repair-orders" element={<RepairOrderTable/>}></Route>
+      <Route path="/product-orders" element={<ProductOrderTable/>}></Route>
 
     
     
-      
-
-  
-
-
-
-    </Routes>
+      </Routes>
     
    
     

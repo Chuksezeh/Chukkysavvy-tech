@@ -40,6 +40,22 @@ const Header = ()=>{
   const navigateAdmin = (()=>{
     navigate("/admin-login")
   })
+  const navigateUserLogin = (()=>{
+    navigate("/user-login")
+  })
+  const navigateSignUp = (()=>{
+    navigate("/user-signUp")
+  })
+
+  const navigateTracking = (()=>{
+    navigate("/track-repair")
+  })
+
+
+
+
+
+
     return (
         <>
       {/* <nav className="nav-container-c">
@@ -80,10 +96,10 @@ const Header = ()=>{
   
   <div className="nav-links">
     <a  onClick={navigateHome} >Home</a>
-    <a>About</a>
-    <a  onClick={() =>scrollBottom(scrollRef)}>Services</a>
-    <a onClick={() =>scrollTes(scrollTesmony)}>Feedback</a>
-    <a onClick={navigateAdmin}>Admin</a>
+    <a onClick={navigateTracking}>Track  repair</a>
+    <a  onClick={navigateUserLogin}>Login</a>
+    <a onClick={navigateSignUp}>signUp</a>
+    <a onClick={ navigateAdmin}>Admin</a>
   </div>
   
 </div>

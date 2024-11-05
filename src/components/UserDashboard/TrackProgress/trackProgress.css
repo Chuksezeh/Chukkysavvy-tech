@@ -1,7 +1,8 @@
 .hh-grayBox {
 	background-color: #F8F8F8;
+    width: 100%;
 	margin-bottom: 20px;
-	padding: 35px;
+	/* padding: 35px; */
   margin-top: 20px;
 }
 .pt45{padding-top:45px;}
@@ -73,3 +74,98 @@
 }
 .order-tracking:first-child:before{display: none;}
 .order-tracking.completed:before{background-color: #27aa80;}
+
+
+
+
+
+
+
+
+
+.app {
+	text-align: center;
+	margin-top: 50px;
+  }
+  
+  .progress-container {
+	display: flex;
+	align-items: center;
+	position: relative;
+	width: 80%;
+	margin: 0 auto;
+  }
+  
+  .stage {
+	text-align: center;
+	flex: 1;
+	position: relative;
+  }
+  
+  .icon-container {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background-color: #e0e0e0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0 auto;
+	color: #555;
+	font-size: 1.5em;
+  }
+  
+  .stage.active .icon-container {
+	background-color: #4caf50;
+	color: #fff;
+  }
+  
+  .stage span {
+	margin-top: 10px;
+	display: block;
+	color: #555;
+  }
+  
+  .stage.active span {
+	font-weight: bold;
+	color: #4caf50;
+  }
+  
+  .arrow {
+	width: 30px;
+	height: 2px;
+	background-color: #ccc;
+	position: absolute;
+	top: 20px;
+	right: -15px;
+  }
+  
+  .stage.active + .arrow {
+	background-color: #4caf50;
+  }
+  
+  .progress-bar {
+	position: absolute;
+	top: 20px;
+	left: 0;
+	height: 4px;
+	background-color: #4caf50;
+	z-index: -1;
+	transition: width 0.3s ease;
+  }
+  
+  .controls button {
+	margin: 10px;
+	padding: 10px 20px;
+	border: none;
+	color: white;
+	background-color: #4caf50;
+	cursor: pointer;
+	border-radius: 5px;
+  }
+  
+  .controls button:disabled {
+	background-color: #bdbdbd;
+	cursor: not-allowed;
+  }
+  
