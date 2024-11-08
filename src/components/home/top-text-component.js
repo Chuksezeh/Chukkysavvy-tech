@@ -1,4 +1,5 @@
 import React from "react";
+import logoImage from "../images/CHUKKY-BRAND-BACKGROUND.png"
 
 const TopTextComponent = ()=>{
     return(
@@ -6,12 +7,15 @@ const TopTextComponent = ()=>{
 
             <div className="second">
                 <div className="text-about-sec">
-                    <h2>Your Solution Hub</h2>
+                    <h4 className="chukName">Your Solution Hub</h4>
                     <p>We Provide Hardware and Software Solutions to Most of Your  Tech Related Issues</p>
                 </div>
                 <div className="border-line"></div>
                 <div className="text-about-sec">
-                    <h2 className="chukName">Chukkytech</h2>
+
+                    <div>
+                        <img src={logoImage} className="logo-img-setText"/> 
+                        </div>
                 You don’t have to spend a fortune or be there in person 
                 to restore your device’s original quality. With our 
                 convenient home and office pickup and delivery options, we’ve got you covered!

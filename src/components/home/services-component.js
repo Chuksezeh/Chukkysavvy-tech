@@ -31,10 +31,11 @@ const ServicesComponent = ()=>{
                            phone needs a simple fix or a more complex repair,
                          we're here to help. Book your same-day phone repair with us today and experience fast,
                           reliable service you can trust! <br/><b/> <br/><b/>
+                          <div className="jkBTn">
                             <NavLink to='/bookingpage' className="navlink-button" > <button className="button-43" role="button">
                                 Book Now
                             </button></NavLink>
-
+                            </div>
                             
 
 
@@ -48,10 +49,10 @@ const ServicesComponent = ()=>{
              <div className="body3-container-all">
                 <Fade>
                     <div className="body3-main">
-                       {/* <div className="body3-image-div">
+                       <div className="body3-image-div centerTextDiVImage showMobSize">
                             <h2 className="tittle-text">Tablet Fixes</h2>
                             <img src={image3} className="body3-img1" />
-                        </div> */}
+                        </div>
                         <div className="body3-text-div centerTextDiV">
                         Our trained technicians, equipped with years of hands-on experience, are 
                         committed to restoring your iPad to its best condition. Most iPad repairs
@@ -63,12 +64,13 @@ const ServicesComponent = ()=>{
                           Book your same-day iPad repair today and experience efficient, expert service tailored to meet all your repair needs!
 
                         <br/><b/> <br/><b/>
-                            <NavLink to='/bookingpage' className="navlink-button" > <button className="button-43" role="button">
+                        <div className="jkBTn">
+<NavLink to='/bookingpage' className="navlink-button" > <button className="button-43" role="button">
                                 Book Now
                             </button></NavLink>
-
                             </div>
-                            <div className="body3-image-div centerTextDiVImage">
+                            </div>
+                            <div className="body3-image-div centerTextDiVImage hideMobSize">
                             <h2 className="tittle-text">Tablet Fixes</h2>
                             <img src={image3} className="body3-img1" />
                         </div>
@@ -122,11 +124,12 @@ const ServicesComponent = ()=>{
                          your computer’s hardware or software-related issues. We can help with 
                          corrupted operating systems, software issues, failed hardware components, 
                          computer upgrades for slow computers, and more! Book a computer repair today! <br/><b/> <br/><b/>
+                           <div className="jkBTn"> 
                             <NavLink to='/bookingpage' className="navlink-button" > <button className="button-43" role="button">
                                 Book Now
                             </button></NavLink>
 
-                            
+                            </div>
 
 
                         </div>

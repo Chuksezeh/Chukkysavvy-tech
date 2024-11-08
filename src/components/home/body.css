@@ -340,6 +340,9 @@ form .form-row .textarea{
   text-align: center;
   margin-top: 2%;
 }
+.showMobSize{
+  display: none;
+}
 .home-text-we-offer{
   margin-left: 5%;
   font-size: 25px;
@@ -367,6 +370,7 @@ form .form-row .textarea{
 }
 .text-about-sec{
   width: 50%;
+  padding: 10px;
 }
 /* .chukName{
   font-size: 25px;
@@ -568,7 +572,7 @@ margin-top: 40px;
 .first-body-corel{
    
     background-color:  #606060;
-    background-image: url("../images/christian-wiediger-Htfy7TaDBgo-unsplash.jpg");
+    background-image: url("https://img.freepik.com/premium-photo/photo-apple-product-lineup_1055425-23713.jpg");
     background-size: cover;
     /* height: 60vh; */
     display: flex;
@@ -585,6 +589,10 @@ margin-top: 40px;
 .imagebody-container{
    
 }
+.logo-img-setText{
+  width: 50px;
+}
+
 .topimage{
     width: 100%;
 }
@@ -592,8 +600,8 @@ margin-top: 40px;
     /* display: flex; */
     width: 100%;
     /* text-align: center; */
-  
-     margin-top: 2%;
+    background-color: #000000af;
+     margin-top: 0;
      height: 60vh;
    
 }
@@ -2620,6 +2628,15 @@ padding: 5px;
       width: 80%;
       padding: 5px;
   }
+  .body-one-textcontiner{
+    /* display: flex; */
+    width: 100%;
+    /* text-align: center; */
+  
+     margin-top: 2%;
+     height:  auto;
+   
+}
 }
 
 
@@ -2642,6 +2659,9 @@ padding: 5px;
  }
  .offcanvas{
   width: 80% !important;
+}
+.body-one-textcontiner{
+  padding: 5px;
 }
 
 
@@ -2704,6 +2724,53 @@ padding: 5px;
   .iphone-detaials-cover{
     display: grid;
   }
+
+  .home-text-we-offer{
+    margin-left: 5%;
+    font-size: 25px;
+    padding-right: 10%;
+   
+  }
+  .body3-main{
+    display: grid !important;
+  }
+  .body3-image-div{
+    width: 100%;
+    /* background-color: #00bcd9; */
+    justify-content: center !important;
+    text-align: center !important;
+  }
+  .body3-text-div{
+    margin-top: 4%;
+    width: 100%;
+    padding-right: 0;
+    font-size: 20px;
+    padding: 10px;
+    justify-content: center !important;
+    /* text-align: center !important; */
+    /* background-color: #007b5e; */
+    /* padding: 30px; */
+  }
+  .navlink-button{
+    background-color: #000000;
+  }
+  .jkBTn .navlink-button button{
+    background-color: #000;
+    margin: 0 auto;
+  }
+  .hideMobSize{
+    display: none;
+  }
+  .showMobSize{
+    display: block;
+  }
+  .tesmony-container{
+    display: grid;
+    grid-template-columns: auto auto;
+   
+    justify-content: center;
+   }
+  
  
 }
 
@@ -2719,6 +2786,7 @@ padding: 5px;
     right: 0px;
     top: 0px;
   }
+  
   .nav_Central > .nav-btn > label {
     display: inline-block;
     width: 50px;
@@ -2835,6 +2903,97 @@ padding: 5px;
       border-radius: 5px;
       margin-top: -10%;
     }
+    .home-text-we-offer{
+      margin-left: 5%;
+      font-size: 18px;
+      padding-right: 5%;
+     
+    }
+    .firsttext-contain h3{
+    
+      font-family: 'Russo One', sans-serif;
+      font-weight: bold;
+      font-size: 25px;
+      
+  }
+  .firsttext-contain h2{
+    font-size: 30px;
+    font-weight: 800;
+  }
+
+  .button-50 {
+    appearance: button;
+    background-color: white;
+    background-image: none;
+    width: 170px;
+    height: 60px;
+    border: 1px solid #000;
+    border-radius: 4px;
+    box-shadow: #011B58 4px 4px 0 0,white 4px 4px 0 1px;
+    box-sizing: border-box;
+    color: black;
+    cursor: pointer;
+    display: inline-block;
+    font-family: ITCAvantGardeStd-Bk,Arial,sans-serif;
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 20px;
+    margin: 0 5px 10px 0;
+    overflow: visible;
+    padding: 10px 10px;
+    
+    text-transform: none;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  .text-about-sec{
+    font-size: 12px;
+  }
+  .chukName{
+    font-size: 20px;
+  }
+  .body3-image-div{
+    width: 100%;
+    /* background-color: #00bcd9; */
+    justify-content: center !important;
+    text-align: center !important;
+  }
+  .body3-text-div{
+    margin-top: 4%;
+    width: 100%;
+    padding-right: 0;
+    font-size: 20px;
+    padding: 10px;
+    justify-content: center !important;
+    /* text-align: center !important; */
+    /* background-color: #007b5e; */
+    /* padding: 30px; */
+  }
+  .body3-img1{
+    width: 300px;
+}
+.tesmony-container{
+  display: grid;
+  grid-template-columns: auto ;
+ 
+  justify-content: center;
+ }
+ .btn-begin-container{
+  display: flex;
+  /* justify-content: center; */
+  gap: 3%;
+  margin-top: 5%;
+  margin-left: auto;
+  padding: 0;
+}
+.button-50{
+  /* width: -400px !important; */
+}
+  
+  
    
   
   
