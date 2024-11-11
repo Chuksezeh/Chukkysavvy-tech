@@ -25,13 +25,21 @@ import RepairOrders from './components/UserDashboard/UserAccountComponents/repai
 import NavtrackRepair from './components/layouts/NavTracking/navTrackRepair';
 import RepairOrderTable from './components/Admin/OrderTable/userRepairOrder';
 import ProductOrderTable from './components/Admin/OrderTable/userProductOrder';
+import { useState } from 'react';
+import { UserProvider } from './components/UserDashboard/userConytext';
 // import AdminDashbord from './components/Admin/adminDashbord/adminDash';
 
 
 function App() {
+
+  const [user, setUser] = useState(null);
+
+  const handleLoginSuccess = (userData) => {
+    setUser(userData); // Store user data in state
+  };
   return (
     <>
-  
+    
     <Routes basename="/">
       <Route path="/" element={<Home/>}></Route>
       <Route path="/signinpage" element={<SignInPage/>}></Route>
@@ -45,14 +53,14 @@ function App() {
       <Route path="/other-phones-details" element={<OtherPhonesDetails/>}></Route>
       <Route path="/laptop-details" element={<LaptopBookDetails/>}></Route>
       <Route path="/admin-dashboard" element={<AdminDashboard/>}></Route>
-      <Route path="/user-dashboard" element={<UserDashBoard/>}></Route>
+      <Route path="/user-dashboard" element={<UserDashBoard  user={user}/>}></Route>
       <Route path="/user-table" element={<UserTable/>}></Route>
       <Route path="/admin-dashboard-card" element={<AdminMainDashboard/>}></Route>
       <Route path="/create-user" element={<CreateUser/>}></Route>
       <Route path="/admin-login" element={<AdminLoginPage/>}></Route>
-      <Route path="/user-login" element={<UserLogin/>}></Route>
+      <Route path="/user-login" element={<UserLogin />}></Route>
       <Route path="/user-signup" element={<UserSignUp/>}></Route>
-      <Route path="/user-profile" element={<AccountOverView/>}></Route>
+      <Route path="/user-profile" element={<AccountOverView />}></Route>
       <Route path="/repair-orders" element={<RepairOrders/>}></Route>
       <Route path="/track-repair" element={<NavtrackRepair/>}></Route>
       <Route path="/user-repair-orders" element={<RepairOrderTable/>}></Route>

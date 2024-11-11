@@ -1,24 +1,50 @@
 import { useState } from "react";
 import Header from "../layouts/Header";
 import "./userDashboard.css"
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
+// import { useUser } from "./userConytext";
+// import { auth, googleProvider } from "../../Configfile/firebaseConfig";
 
 
 
 const UserDashBoard = (()=>{
 
 	const [activeIndex, setActiveIndex] = useState(0);
+	// const { user } = useUser();
 
 	const menuItems = [
 		{ name: 'My Account', path: '/user-profile' },
 		{ name: 'Device Repair Orders', path: "/repair-orders" },
 		{ name: 'Purchase Orders', path: '/services' },
-		{ name: 'Contact', path: '/contact' }
+		{ name: 'Contact', path: '/contact' },
+		{ name: 'Logout', path: '/contact' }
 	  ];
   
 	  const handleItemClick = (index) => {
 		setActiveIndex(index);
 	  };
+	  const { uid } = useParams();
+	  const location = useLocation();
+	  const {googleData } = location.state || {};
+	//   const { setUser } = useUser();
+
+	  const navigate = useNavigate();
+
+
+
+
+	//   const handleSignOut = async () => {
+	// 	try {
+	// 	  await auth.signOut();
+	// 	//   setUser(null);
+	// 	//   navigate("/user-login");
+	// 	} catch (error) {
+	// 	  console.error("Error signing out:", error);
+	// 	}
+	//   };
+	
+
+	//   console.log("logData>>>>>>>>>", user)
 
     return(
 
@@ -47,6 +73,7 @@ const UserDashBoard = (()=>{
            {item.name} 
           </li></Link>
         ))}
+		{/* <li onClick={handleSignOut}></li> */}
       </ul>
 			</nav>
 		</div>
