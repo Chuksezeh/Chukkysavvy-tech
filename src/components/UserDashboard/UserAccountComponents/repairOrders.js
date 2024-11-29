@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import TrackProgress from "../TrackProgress/trrackProgress";
 import TrackBtn from "../TrackProgress/trackerButton";
+import { PiPhoneIncomingDuotone } from "react-icons/pi";
 
 
 
@@ -38,68 +39,44 @@ const RepairOrders = (()=>{
 				<div className="panel-head">
 					Repair Order
 				</div>
-                <hr/>
-				<div className="panel-body">
-                <p className="showINfoP">Click the names to see more data.</p>
-      <table>
-        <thead>
-          <tr className="table-headers">
-            <th>Device name/ Brand</th>
-            <th>Book Date time</th>
-            <th>Device Fault</th>
-            <th>Repair Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>PlayCo Group Universal Flex</td>
-            <th className="mobile-header">Number</th><td>2489</td>
-            <th className="mobile-header">Market rate</th><td>€12.35</td>
-            <th className="mobile-header">Weight</th><td>5%</td>
-            <th className="mobile-header-action">  <button className="btn btn-primary"
-              onClick={handleShow}> Track Order
-            </button>
-             
+                
+				
 
-               
+                <table className="tableInerSet">
 
-            </th><td>   </td>
+<thead>
+<tr >
+            <th scope="col" >Device name/ Brand</th>
+            <th scope="col">Book Date time</th>
+            <th scope="col">Device Fault</th>
+            <th scope="col">Repair Status</th>
+            <th scope="col">Action</th>
+            
+          </tr>
+</thead>
+<tbody>
+ 
+      <tr >
+        <td data-label="Device name/ Brand" >Samsung</td>
+        <td data-label=" Book Date time" > 9/8/2023 </td>
+        <td data-label="Device Fault"> compressed</td>
+        <td data-label="Repair Status"> Picked</td>
+       <td data-label="Details"> <PiPhoneIncomingDuotone size={30}  /> </td>
+      </tr>
+      
+  
+</tbody>
+</table>
 
-          </tr>
-          <tr>
-            <td>House of Dedgeny EUR Flex</td>
-            <th className="mobile-header">Number</th><td>5478</td>
-            <th className="mobile-header">Market rate</th><td>€42.68	</td>
-            <th className="mobile-header">Weight</th><td>2%</td>
-            <th className="mobile-header">Value</th><td>€4,676.02</td>
-          </tr>
-          <tr>
-            <td>PlayCo Group Local</td>
-            <th className="mobile-header">Number</th><td>123</td>
-            <th className="mobile-header">Market rate</th><td>€147.36</td>
-            <th className="mobile-header">Weight</th><td>3%</td>
-            <th className="mobile-header">Value</th><td>€543.76</td>
-          </tr>
-         
-          <tr>
-            <td>PlayCo Group Universal Med</td>
-            <th className="mobile-header">Number</th><td>7812</td>
-            <th className="mobile-header">Market rate</th><td>€54.86</td>
-            <th className="mobile-header">Weight</th><td>8%</td>
-            <th className="mobile-header">Value</th><td>€34,285.31</td>
-          </tr>
-          {/* <tr className='total'>
-      <th>Total</th>
-      <td className="total-val" colspan="4">€1,134,860.04</td>
-    </tr> */}
-        </tbody>
-      </table>
 
+
+
+
+     
 				</div>
 			</div>
 			
-		</div>  
+		 
 
 
       <Modal show={show} onHide={handleClose} size="lg">

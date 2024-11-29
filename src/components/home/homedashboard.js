@@ -43,7 +43,7 @@ const HomeDashBoard = () => {
           </div>
 
           <div>
-            <NavLink to='/bookingpage' className="navlink-button" > <button className="button-50" role="button">
+            <NavLink to='/buy-products' className="navlink-button" > <button className="button-50" role="button">
               Buy A Device
             </button></NavLink>
 

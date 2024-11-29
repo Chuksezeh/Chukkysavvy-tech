@@ -27,6 +27,7 @@ import RepairOrderTable from './components/Admin/OrderTable/userRepairOrder';
 import ProductOrderTable from './components/Admin/OrderTable/userProductOrder';
 import { useState } from 'react';
 import { UserProvider } from './components/UserDashboard/userConytext';
+import BuyProducts from './components/BuyProducts/buyLanding';
 // import AdminDashbord from './components/Admin/adminDashbord/adminDash';
 
 
@@ -65,6 +66,7 @@ function App() {
       <Route path="/track-repair" element={<NavtrackRepair/>}></Route>
       <Route path="/user-repair-orders" element={<RepairOrderTable/>}></Route>
       <Route path="/product-orders" element={<ProductOrderTable/>}></Route>
+      <Route path="/buy-products" element={<BuyProducts/>}></Route>
 
     
     

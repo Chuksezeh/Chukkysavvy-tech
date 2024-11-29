@@ -1,9 +1,29 @@
+import { useLocation } from "react-router-dom";
 import UserDashBoard from "../userDashboard"
+import { useState } from "react";
+import { auth } from "../../Configfile/firebaseConfig";
 
 
 
 const AccountOverView = (()=>{
 
+	const [userData, setUserData] = useState("");
+
+	const location = useLocation();
+	const { user } = location.state || {};
+
+	// console.log("user>>>>>>>",user);
+
+
+	// const handleSignOut = async () => {
+	// 	try {
+	// 	  await auth.signOut();
+	// 	  setUserData(null)
+	// 	} catch (error) {
+	// 	  console.error("Error signing out:", error);
+	// 	}
+	//   };
+	
 
 
     return(
@@ -23,6 +43,7 @@ const AccountOverView = (()=>{
 				<div className="panel-body">
 					<p>Chukwuka Ezeh</p>
                     <p>chuksintellectual@gmail.com</p>
+					{/* <button onClick={handleSignOut}>logout</button> */}
 				</div>
 			</div>
 			{/* <div className="panel-wrapper">

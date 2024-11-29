@@ -111,12 +111,12 @@ const UserSignUp = (()=>{
 						</div>
 
 
-                        <div className="row">
+                        {/* <div className="row">
 							<div className="col-md-4 setbtnDiv">
                             <p style={{"fontWeight":"bold", fontSize:"20px"}}>Or</p>
                                 <button className="picckBtnDiv changetxtBACk" type="button"> <span><FcGoogle size={30}/></span>  Continue with Google</button>
 							</div>
-						</div>
+						</div> */}
 
                         
 

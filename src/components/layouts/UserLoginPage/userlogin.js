@@ -4,18 +4,18 @@ import Header from "../Header";
 import { FcGoogle } from "react-icons/fc";
 import { auth, googleProvider } from "../../Configfile/firebaseConfig";
 import { useState } from "react";
-import { useUser } from "../../UserDashboard/userConytext";
+// import { useUser } from "../../UserDashboard/userConytext";
 
 
 
-const UserLogin = (({ onLoginSuccess })=>{
+const UserLogin = (()=>{
 
-
+  const [user, setUser] = useState(null);
   const [googleUser, setGoogleUser] = useState(null);
 
 const navigate = useNavigate();
-const { setUser } = useUser();
-const history = useLocation();
+// const { setUser } = useUser();
+// const history = useLocation();
 
 
 const navigateSignUp = (()=>{
@@ -29,22 +29,22 @@ const navigateUserProfile = (()=>{
 
 
 
-  const handleGoogleSignIn = async () => {
-    try {
-      const result = await auth.signInWithRedirect(googleProvider); 
-      const userData = result.user;
-      setUser(userData); // Set user data in context
-      navigateUserProfile();
-      console.log("User signed in with Google:", userData.uid);
-    } catch (error) {
-      console.error("Error signing in with Google:", error);
-    }
-  };
+const handleGoogleSignIn = async () => {
+  try {
+    const result = await  auth.signInWithRedirect(googleProvider);
+    setUser(result.user);
+    navigateUserProfile()
+    // navigate('/user-profile', { state: { user } });
+    console.log("User signed in with Google:", result.user);
+  } catch (error) {
+    console.error("Error signing in with Google:", error);
+  }
+};
 
   const handleSignOut = async () => {
     try {
       await auth.signOut();
-      setUser(null);
+      // setUser(null);
     } catch (error) {
       console.error("Error signing out:", error);
     }
@@ -71,7 +71,7 @@ const navigateUserProfile = (()=>{
             <div className="message">Not registered? <a href="#"> <span onClick={navigateSignUp}> Create 
             an account</span></a></div>
             <br/>
-            <button >login</button>
+            <button onClick={navigateUserProfile} >login</button>
             
           </form>
 

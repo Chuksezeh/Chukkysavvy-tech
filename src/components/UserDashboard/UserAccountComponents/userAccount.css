@@ -1,75 +1,330 @@
-.hh-grayBox {
-	background-color: #F8F8F8;
-	margin-bottom: 20px;
-	padding: 35px;
-  margin-top: 20px;
-}
-.pt45{padding-top:45px;}
-.order-tracking{
-	text-align: center;
-	width: 33.33%;
-	position: relative;
-	display: block;
-}
-.order-tracking .is-complete{
-	display: block;
-	position: relative;
-	border-radius: 50%;
-	height: 30px;
-	width: 30px;
-	border: 0px solid #AFAFAF;
-	background-color: #f7be16;
+
+
+
+#invoice-POS{
+	box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);
+	padding:2mm;
 	margin: 0 auto;
-	transition: background 0.25s linear;
-	-webkit-transition: background 0.25s linear;
-	z-index: 2;
-}
-.order-tracking .is-complete:after {
+	width: 100%;
+	background: #FFF;
+	
+	
+  ::selection {background: #f31544; color: #FFF;}
+  ::moz-selection {background: #f31544; color: #FFF;}
+  h1{
+	font-size: 1.5em;
+	color: #222;
+  }
+  h2{font-size: .9em;}
+  h3{
+	font-size: 1.2em;
+	font-weight: 300;
+	line-height: 2em;
+  }
+  p{
+	font-size: .7em;
+	color: #666;
+	line-height: 1.2em;
+  }
+   
+  #top, #mid,#bot{ /* Targets all id with 'col-' */
+	border-bottom: 1px solid #EEE;
+  }
+  .logu{
+	width: 80px;
+  
+  }
+  .loguDiv{
+	justify-content: center;
+	text-align: center;
+	background-color: #DDE6ED;
+  }
+  .divHeadvitel{
+	font-size: 25px;
+  }
+  .divHeadetail{
+	font-size: 20px;
+  }
+ 
+  .info{
 	display: block;
-	position: absolute;
-	content: '';
-	height: 14px;
-	width: 7px;
-	top: -2px;
-	bottom: 0;
-	left: 5px;
-	margin: auto 0;
-	border: 0px solid #AFAFAF;
-	border-width: 0px 2px 2px 0;
-	transform: rotate(45deg);
-	opacity: 0;
-}
-.order-tracking.completed .is-complete{
-	border-color: #27aa80;
-	border-width: 0px;
-	background-color: #27aa80;
-}
-.order-tracking.completed .is-complete:after {
-	border-color: #fff;
-	border-width: 0px 3px 3px 0;
-	width: 7px;
-	left: 11px;
-	opacity: 1;
-}
-.order-tracking p {
-	color: #A4A4A4;
-	font-size: 16px;
-	margin-top: 8px;
-	margin-bottom: 0;
-	line-height: 20px;
-}
-.order-tracking p span{font-size: 14px;}
-.order-tracking.completed p{color: #000;}
-.order-tracking::before {
-	content: '';
-	display: block;
-	height: 3px;
-	width: calc(100% - 40px);
-	background-color: #f7be16;
-	top: 13px;
-	position: absolute;
-	left: calc(-50% + 20px);
-	z-index: 0;
-}
-.order-tracking:first-child:before{display: none;}
-.order-tracking.completed:before{background-color: #27aa80;}
+	float:left;
+	margin-left: 0;
+  }
+  .title{
+	float: right;
+  }
+  .title p{text-align: right;} 
+  table{
+	width: 100%;
+	border-collapse: collapse;
+  }
+  td{
+	padding: 5px 0 5px 15px;
+	font-size: 25px;
+	border: 1px solid #EEE
+  }
+  .tabletitle{
+	padding: 5px;
+	font-size: .5em;
+	background: #EEE;
+  }
+  .service{border-bottom: 1px solid #EEE;}
+  .item{width: 24mm;}
+  .itemtext{font-size: .5em;}
+  
+  #legalcopy{
+	margin-top: 5mm;
+  }
+  }
+  
+  .walletTopH{
+  
+  }
+  .wTuRn {
+  background-color: #F1F1F4;
+  padding: 10px;
+  border-radius: 10px;
+  }
+  
+  .W-amountDiv{
+	  display: flex;
+	  gap: 4%;
+	  
+  }
+  .W-amountDivAll{
+	  margin-top: 2%; 
+  }
+  .W-amount{
+	  font-size: 25px;
+	  font-weight: 800;
+  }
+  .allTopUPDiv{
+	  display: flex;
+	  text-align: center;
+	 justify-content: space-around;
+	  margin-top: 5%;
+	  
+  }
+  .recenttranStext{
+	  font-size: 20px;
+	  margin-top: 2%;
+  }
+  .eachStatemt, .caRRy_top {
+	  background-color:  #FFFF;
+	  /* width: 200px; */
+		box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
+		padding: 10px;
+		cursor: pointer;
+		border-radius: 10px;
+  }
+  .eachStatemt p{
+	  font-size: 18px;
+  }
+  .caRRy_top p{
+	  font-size: 18px; 
+  }
+  .text-red{
+	  color: red;
+  }
+  .comSample{
+	  color: green;
+  }
+  .headBOsttap{
+	  font-size: 20px !important;
+	 font-weight: 800;
+  }
+  .fmPushInputamount{
+	  width: 100%;
+	  height: 60px;
+	  background-color: #FFFF;
+	  border: 2px solid #DEE2E6 ;
+	  border-radius: 5px;
+	 ;
+  }
+  .waletALert{
+	padding: 15px !important;
+  }
+  
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+  }
+  .sestAnother-receipt{
+	  width: 100% !important;
+  }
+  .WProceedBtn{
+	  background-color: #163EA4;
+	  padding: 8px;
+	  color: white;
+	  border-radius: 5px;
+  }
+  
+  .tableInerSet {
+	  border: 1px solid #ccc;
+	  border-collapse: collapse;
+	  margin: 0;
+	  padding: 0;
+	  width: 100%;
+	  table-layout: fixed;
+	}
+	
+	.tableInerSet caption {
+	  font-size: 1.5em;
+	  margin: .5em 0 .75em;
+	}
+	
+	.tableInerSet tr {
+	  background-color: #f8f8f8;
+	  border: 1px solid #ddd;
+	  padding: .35em;
+	}
+	
+	.tableInerSet th,
+	.tableInerSet td {
+	  padding: .625em;
+	  text-align: center;
+	}
+	
+	.tableInerSet th {
+	  font-size: .85em;
+	  letter-spacing: .1em;
+	  text-transform: uppercase;
+	}
+	.fullSetBack{
+	  background-color: #FFFF;
+	  width: 50px;
+	}
+  
+  
+  
+	.loaderRefresh {
+	  width: 28px;
+	  height: 28px;
+	  display: inline-block;
+	  position: relative;
+	  border-width: 3px 2px 3px 2px;
+	  border-style: solid dotted solid dotted;
+	  border-color: black rgba(255, 255, 255,0.3) rgb(21, 21, 105) rgba(151, 107, 93, 0.3);
+	  border-radius: 50%;
+	  box-sizing: border-box;
+	  animation: 1s rotate linear infinite;
+   }
+   .loaderRefresh:before , .loaderRefresh:after{
+	  content: '';
+	  top: 0;
+	  left: 0;
+	  position: absolute;
+	  /* border: 2px solid transparent; */
+	  border-bottom-color:rgb(21, 21, 105);
+	  transform: translate(-10px, 19px) rotate(-35deg);
+	}
+   .loaderRefresh:after {
+	  border-color: black #0000 #0000 #0000 ;
+	  transform: translate(32px, 3px) rotate(-35deg);
+	}
+	 @keyframes rotate {
+	  100%{    transform: rotate(360deg)}
+	}
+	.W-PEndingDiv{
+  margin-top: 2%;
+	}
+	.w-FullDiv{
+	  display: flex;
+	  gap: 20%;
+	  
+	}
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+	
+	@media screen and (max-width: 600px) {
+	  .tableInerSet {
+		border: 0;
+	  }
+	
+	  .tableInerSet caption {
+		font-size: 1.3em;
+	  }
+	  
+	  .tableInerSet thead {
+		border: none;
+		clip: rect(0 0 0 0);
+		height: 1px;
+		margin: -1px;
+		overflow: hidden;
+		padding: 0;
+		position: absolute;
+		width: 1px;
+	  }
+	  
+	  .tableInerSet tr {
+		border-bottom: 3px solid #ddd;
+		display: block;
+		margin-bottom: .625em;
+	  }
+	  
+	  .tableInerSet td {
+		border-bottom: 1px solid #ddd;
+		display: block;
+		font-size: .8em;
+		text-align: right;
+	  }
+	  
+	  .tableInerSet td::before {
+		/*
+		* aria-label has no advantage, it won't be read inside a .tableInerSet
+		content: attr(aria-label);
+		*/
+		content: attr(data-label);
+		float: left;
+		font-weight: bold;
+		text-transform: uppercase;
+	  }
+	  
+	  .tableInerSet td:last-child {
+		border-bottom: 0;
+	  }
+	  .eachStatemt p{
+		font-size: 12px;
+	}
+	.caRRy_top p{
+		font-size: 12px; 
+	}
+  
+	 
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

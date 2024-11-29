@@ -98,8 +98,8 @@ const Header = ()=>{
     <a  onClick={navigateHome} >Home</a>
     <a onClick={navigateTracking}>Track  repair</a>
     <a  onClick={navigateUserLogin}>Login</a>
-    <a onClick={navigateSignUp}>signUp</a>
-    {/* <a onClick={ navigateAdmin}>Admin</a> */}
+    {/* <a onClick={navigateSignUp}>signUp</a> */}
+    <a onClick={ navigateAdmin}>Admin</a>
   </div>
   
 </div>
