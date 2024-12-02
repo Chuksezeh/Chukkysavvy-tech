@@ -7,10 +7,11 @@ import { Link, NavLink, useLocation, useNavigate, useParams } from "react-router
 
 
 
-const UserDashBoard = (()=>{
+const UserDashBoard = (() => {
 
 	const [activeIndex, setActiveIndex] = useState(0);
 	// const { user } = useUser();
+	const [showMenu, setShowMenu] = useState(true)
 
 	const menuItems = [
 		{ name: 'My Account', path: '/user-profile' },
@@ -18,17 +19,17 @@ const UserDashBoard = (()=>{
 		{ name: 'Purchase Orders', path: '/services' },
 		{ name: 'Contact', path: '/contact' },
 		{ name: 'Logout', path: '/contact' }
-	  ];
-  
-	  const handleItemClick = (index) => {
+	];
+
+	const handleItemClick = (index) => {
 		setActiveIndex(index);
-	  };
-	  const { uid } = useParams();
-	  const location = useLocation();
-	  const {googleData } = location.state || {};
+	};
+	const { uid } = useParams();
+	const location = useLocation();
+	const { googleData } = location.state || {};
 	//   const { setUser } = useUser();
 
-	  const navigate = useNavigate();
+	const navigate = useNavigate();
 
 
 
@@ -42,48 +43,47 @@ const UserDashBoard = (()=>{
 	// 	  console.error("Error signing out:", error);
 	// 	}
 	//   };
-	
+
 
 	//   console.log("logData>>>>>>>>>", user)
 
-    return(
+	return (
 
 
 
-        <>
-        
-        <Header/>
-        {/* <header className="header-user-prof">
-		<div className="logo">Xero<span>Source</span></div>
-	</header> */}
-	<div className="nav-btn-control">Menu</div>
-	<div className="container-Userprof">
-		
-		<div className="sidebar-User-prof">
-			<nav>
-				<a href="#" className="aControlUser">Hello! <span>Chuks</span></a>
-				<ul>
-        {menuItems.map((item, index) => (
-			 <Link to={item.path} className="navlink-style">
-          <li
-            key={index}
-            onClick={() => handleItemClick(index)}
-            className={activeIndex === index ? 'active' : ''}
-          >
-           {item.name} 
-          </li></Link>
-        ))}
-		{/* <li onClick={handleSignOut}></li> */}
-      </ul>
-			</nav>
-		</div>
+		<>
 
-		
-	</div>
+			<Header />
 
-        
-        </>
-    )
+			{/* <div className="nav-btn-control"  >Menu</div> */}
+			<div className="container-Userprof">
+			
+				<div className="sidebar-User-prof">
+					
+					<nav>
+						<a href="#" className="aControlUser">Hello! <span>Chuks</span></a>
+
+
+
+						<ul>
+							
+
+							{menuItems.map((item, index) => (
+								<Link to={item.path} className="navlink-style">
+									<li
+										key={index}
+										onClick={() => handleItemClick(index)}
+										className={activeIndex === index ? 'active' : ''}>
+										{item.name}
+									</li></Link>
+							))}
+
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</>
+	)
 })
 
 export default UserDashBoard
