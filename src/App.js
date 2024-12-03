@@ -28,6 +28,7 @@ import ProductOrderTable from './components/Admin/OrderTable/userProductOrder';
 import { useState } from 'react';
 import { UserProvider } from './components/UserDashboard/userConytext';
 import BuyProducts from './components/BuyProducts/buyLanding';
+import AccountOverMobile from './components/UserDashboard/UserAccountComponents/accountOverMobile';
 // import AdminDashbord from './components/Admin/adminDashbord/adminDash';
 
 
@@ -62,6 +63,7 @@ function App() {
       <Route path="/user-login" element={<UserLogin />}></Route>
       <Route path="/user-signup" element={<UserSignUp/>}></Route>
       <Route path="/user-profile" element={<AccountOverView />}></Route>
+      <Route path="/user-profile-dashboard" element={<AccountOverMobile />}></Route>
       <Route path="/repair-orders" element={<RepairOrders/>}></Route>
       <Route path="/track-repair" element={<NavtrackRepair/>}></Route>
       <Route path="/user-repair-orders" element={<RepairOrderTable/>}></Route>

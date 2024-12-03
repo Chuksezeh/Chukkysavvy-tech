@@ -159,17 +159,16 @@ color: black;
     .checkbtn{
       display: block;
     }
-    ul{
+    /* ul{
       position: fixed;
       width: 50%;
       height: 100vh;
       background: #2c3e50;
       top: 80px;
-      left: -100%;
-      /* text-align: center; */
+    
       transition: all .5s;
       overflow-x: hidden !important;
-    }
+    } */
     .nav-container-c ul li{
       display: block;
       margin: 50px 0;

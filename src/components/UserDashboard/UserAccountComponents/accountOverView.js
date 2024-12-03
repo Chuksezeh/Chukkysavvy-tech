@@ -1,19 +1,21 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import UserDashBoard from "../userDashboard"
 import { useState } from "react";
 import { auth } from "../../Configfile/firebaseConfig";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 
 
 const AccountOverView = (()=>{
 
 	const [userData, setUserData] = useState("");
+	const [showMenu, setShowMenu] = useState(false);
 
 	const location = useLocation();
 	const { user } = location.state || {};
 
 	// console.log("user>>>>>>>",user);
-
+	
 
 	// const handleSignOut = async () => {
 	// 	try {
@@ -24,16 +26,25 @@ const AccountOverView = (()=>{
 	// 	}
 	//   };
 	
-
+const handleShowMenu = (()=>{
+	setShowMenu(true)
+})
 
     return(
 
 <>
 
-
-     <UserDashBoard/>
+   <UserDashBoard />
+ 
+		 
+	
+ 
+ 
+         
+   
 <div className="main-content">
-			<h4>Dashboard</h4>
+	
+			
 			
 			<div className="panel-wrapper">
 				<div className="panel-head">
