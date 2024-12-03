@@ -46,6 +46,7 @@ const RepairOrders = (()=>{
 
 <thead>
 <tr >
+<th scope="col" >Order number</th>
             <th scope="col" >Device name/ Brand</th>
             <th scope="col">Book Date time</th>
             <th scope="col">Device Fault</th>
@@ -57,11 +58,12 @@ const RepairOrders = (()=>{
 <tbody>
  
       <tr >
+      <td data-label="Order number" >009786766g</td>
         <td data-label="Device name/ Brand" >Samsung</td>
         <td data-label=" Book Date time" > 9/8/2023 </td>
         <td data-label="Device Fault"> compressed</td>
         <td data-label="Repair Status"> Picked</td>
-       <td data-label="Details"> <PiPhoneIncomingDuotone size={30}  /> </td>
+       <td data-label="Details"> <button className="t-orderbtn" onClick={handleShow}>Track order</button> </td>
       </tr>
       
   

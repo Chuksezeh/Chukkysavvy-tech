@@ -121,6 +121,9 @@
   .eachStatemt p{
 	  font-size: 18px;
   }
+  .t-orderbtn{
+z-index: 100 !important;
+  }
   .caRRy_top p{
 	  font-size: 18px; 
   }
