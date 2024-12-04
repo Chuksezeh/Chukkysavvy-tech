@@ -1,11 +1,11 @@
 import { useLocation, useNavigate } from "react-router-dom";
-// import "./userlogin.css"
+
 import Header from "../Header";
 import { FcGoogle } from "react-icons/fc";
 import { auth, googleProvider } from "../../Configfile/firebaseConfig";
 import { useState } from "react";
 // import { useUser } from "../../UserDashboard/userConytext";
-
+import "./userLogin.css";
 
 
 const UserLogin = (()=>{
@@ -51,15 +51,13 @@ const handleGoogleSignIn = async () => {
   };
 
 
-
-
-    return(
+ return(
 
         <>
 <Header/>
 
 
-<div className="login-page">
+<div className="login-page-LOGi">
         
         <div className="form">
           <p className="titleAdLogin">User login</p>
