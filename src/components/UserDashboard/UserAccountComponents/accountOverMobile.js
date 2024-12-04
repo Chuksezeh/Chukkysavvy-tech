@@ -35,7 +35,7 @@ const handleShowMenu = (()=>{
     return(
 
 <>
-
+      <Header/>
    <div className="tec-main-Hide">
    <UserDashBoard />
    </div>

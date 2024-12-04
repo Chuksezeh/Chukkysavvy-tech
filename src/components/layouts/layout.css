@@ -26,6 +26,8 @@ body{
  padding-top:15px;
  color: white;
  cursor: pointer;
+ position: absolute;
+
 }
 .moveTop{
 margin-top: 5% !important;
@@ -44,6 +46,9 @@ margin-top: 5% !important;
 }
 .uli li:hover{
 color: black;
+}
+.logoDiv-Allset{
+
 }
 
 
@@ -283,25 +288,26 @@ color: black;
   width: 40px;
 }
 
-.nav {
+.nav-main-NAv {
   /* height: 60px; */
   width: 100%;
   background-color: #011B58;
   position: block;
+  height: 50px;
 }
 
-.nav > .nav-header {
-  display: inline;
+.nav-main-NAv > .nav-header {
+  /* display: inline; */
 }
 
-.nav > .nav-header > .nav-title {
-  display: inline-block;
+.nav-main-NAv > .nav-header > .nav-title {
+  /* display: inline-block; */
   font-size: 22px;
   color: #fff;
   padding: 10px 10px 10px 10px;
 }
 
-.nav > .nav-btn {
+.nav-main-NAv > .nav-btn {
   display: none;
 }
 
@@ -310,14 +316,14 @@ color: black;
   margin-left: 40%;
   font-size: 18px;
   color: white;
- 
   width: 30%;
+
  }
  .nav-links a {
   cursor: pointer;
  }
 
-.nav > .nav-links > a {
+.nav-main-NAv > .nav-links > a {
   display: inline-block;
   padding: 13px 10px 13px 10px;
   text-decoration: none;
@@ -326,17 +332,17 @@ color: black;
  
 }
 
-.nav > .nav-links > a:hover {
+.nav-main-NAv > .nav-links > a:hover {
   background-color: rgba(0, 0, 0, 0.3);
 }
 
-.nav > #nav-check {
+.nav-main-NAv > #nav-check {
   display: none;
 }
-h1{
+/* h1{
   text-align: center;
   color: #4181ee;
-}
+} */
 .wrapper{
   display: flex;
   justify-content: center;
@@ -436,32 +442,37 @@ h1{
 
 
 @media (max-width:900px) {
-  .nav > .nav-btn {
+  .nav-main-NAv > .nav-btn {
     display: inline-block;
     position: absolute;
     right: 0px;
+    z-index: 1000 !important;
     top: 0px;
     background-color: #333;
   }
-  .nav > .nav-btn > label {
+  .nav-main-NAv > .nav-btn > label {
     display: inline-block;
     width: 50px;
     height: 50px;
     padding: 13px;
   }
-  .nav > .nav-btn > label:hover,.nav  #nav-check:checked ~ .nav-btn > label {
+  .nav-main-NAv > .nav-btn > label:hover,.nav  #nav-check:checked ~ .nav-btn > label {
     background-color: rgba(0, 0, 0, 0.3);
   }
-  .nav > .nav-btn > label > span {
+  .nav-main-NAv > .nav-btn > label > span {
     display: block;
     width: 25px;
     height: 10px;
     border-top: 2px solid #eee;
   }
-  .nav > .nav-links {
+  .nav-btn:hover .nav-links{
+      display: block !important;
+  }
+  .nav-main-NAv > .nav-links {
     position: fixed;
     display: block;
     width: 100%;
+    z-index: 200 !important;
     background-color: #333;
     height: 0px;
     transition: all 0.3s ease-in;
@@ -469,16 +480,21 @@ h1{
     top: 50px;
     margin-left: 0px;
   }
-  .nav > .nav-links > a {
+  .nav-main-NAv > .nav-links > a {
     display: block;
     width: 100%;
     
   }
-  .nav > #nav-check:not(:checked) ~ .nav-links {
+  .nav-main-NAv > #nav-check:not(:checked) ~ .nav-links {
     height: 0px;
   }
-  .nav > #nav-check:checked ~ .nav-links {
+  .nav-main-NAv > #nav-check:checked ~ .nav-links {
     height: calc(100vh - 50px);
     overflow-y: auto;
+  }
+  .nav-main-NAv {
+ 
+   
+    height: 60px !important;
   }
 }

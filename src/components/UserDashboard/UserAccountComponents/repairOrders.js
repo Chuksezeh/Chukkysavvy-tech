@@ -8,6 +8,9 @@ import TrackBtn from "../TrackProgress/trackerButton";
 import { PiPhoneIncomingDuotone } from "react-icons/pi";
 import { MdKeyboardBackspace } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import Header from "../../layouts/Header";
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
 
 
 
@@ -37,7 +40,7 @@ const handleNavigateDashboard = (()=>{
 
     <>
 
-      
+      <Header/>
       <div className="tec-main-Hide">
         <UserDashBoard />
       </div>
@@ -46,7 +49,15 @@ const handleNavigateDashboard = (()=>{
       <div onClick={() => navigate(-1)}> <MdKeyboardBackspace size={35}  /> </div>
         {/* <h4>Orders</h4> */}
 
-        <div className="panel-wrapper">
+
+        <Tabs
+      defaultActiveKey="home"
+      id="fill-tab-example"
+      className="mb-3"
+      fill
+    >
+      <Tab eventKey="home" title="Repair Order">
+      <div className="panel-wrapper">
           <div className="panel-head">
             Repair Order
           </div>
@@ -61,7 +72,7 @@ const handleNavigateDashboard = (()=>{
                 <th scope="col">Book Date time</th>
                 <th scope="col">Device Fault</th>
                 <th scope="col">Repair Status</th>
-                <th scope="col">Action</th>
+                
 
               </tr>
             </thead>
@@ -72,21 +83,26 @@ const handleNavigateDashboard = (()=>{
                 <td data-label=" Book Date time" > 9/8/2023 </td>
                 <td data-label="Device Fault"> compressed</td>
                 <td data-label="Repair Status"> Picked</td>
-                <td data-label="Details"> <button>Track order
-                  </button> </td>
+                <td > 
+     <button class="button-15" role="button" onClick={handleShow}>Track Order</button>
+
+</td>
               </tr>
 
 
             </tbody>
           </table>
+     </div>
+      </Tab>
+      <Tab eventKey="profile" title="Repair Order History">
+        Tab content for Profile
+      </Tab>
+      
+       </Tabs>
 
+</div>
 
-
-
-
-
-        </div>
-      </div>
+      
 
 
 

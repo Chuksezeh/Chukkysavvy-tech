@@ -60,7 +60,7 @@ const UserDashBoard = (() => {
 
 		<>
 
-			<Header />
+			{/* <Header /> */}
 
 			{/* <div className="nav-btn-control"  >Menu</div> */}
 			<div className="container-Userprof">

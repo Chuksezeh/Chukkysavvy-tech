@@ -12,6 +12,7 @@
 	position: relative;
 	display: block;
 }
+
 .order-tracking .is-complete{
 	display: block;
 	position: relative;
@@ -167,5 +168,14 @@
   .controls button:disabled {
 	background-color: #bdbdbd;
 	cursor: not-allowed;
+  }
+
+  @media(max-width: 640px ){
+	.setDtoNAme{
+		font-size: 10px;
+	  }
+	  .setDtoNAmeDate{
+		font-size: 8px;
+	  }
   }
   

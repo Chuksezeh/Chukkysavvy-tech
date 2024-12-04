@@ -78,17 +78,18 @@ const Header = ()=>{
     */}
 
 
-<div className="nav">
+<div className="nav-main-NAv">
   <input type="checkbox" id="nav-check"/>
   <div className="nav-header">
   </div>
-  <div className="nav-btn">
+  <div className="nav-btn" >
     <label for="nav-check">
       <span></span>
       <span></span>
       <span></span>
     </label>
   </div>
+  
   <div className="logoDiv" onClick={navigateHome}>
     
     <a> <img src={brandlogo} className="logo-SElf"/> Chukkytech</a>
@@ -98,11 +99,9 @@ const Header = ()=>{
     <a  onClick={navigateHome} >Home</a>
     <a onClick={navigateTracking}>Track  repair</a>
     <a  onClick={navigateUserLogin}>Login</a>
-    {/* <a onClick={navigateSignUp}>signUp</a> */}
     <a onClick={ navigateAdmin}>Admin</a>
   </div>
-  
-</div>
+ </div>
 
 
 

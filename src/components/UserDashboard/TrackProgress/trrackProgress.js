@@ -11,10 +11,10 @@ import { FaClipboardList, FaTruckPickup, FaTools, FaTruckMoving, FaCheckCircle }
 const TrackProgress = ({ currentStage })=>{
 	const stages = [
 		{ name: "Ordered", icon: <FaClipboardList />, date: "09/05/2025" },
-		{ name: "Picked", icon: <FaTruckPickup /> },
-		{ name: "Fixing", icon: <FaTools /> },
-		{ name: "Delivery", icon: <FaTruckMoving /> },
-		{ name: "Delivered", icon: <FaCheckCircle /> },
+		{ name: "Picked", icon: <FaTruckPickup />  , date: "09/05/2025"},
+		{ name: "Fixing", icon: <FaTools /> , date: "09/05/2025" },
+		{ name: "Delivery", icon: <FaTruckMoving /> , date: "09/05/2025" },
+		{ name: "Delivered", icon: <FaCheckCircle /> , date: "09/05/2025" },
 	  ];
 
 
@@ -29,8 +29,8 @@ const TrackProgress = ({ currentStage })=>{
       {stages.map((stage, index) => (
         <div key={index} className={`stage ${index <= currentStage ? 'active' : ''}`}>
           <div className="icon-container">{stage.icon}</div>
-          <span>{stage.name}</span>
-		  <p> {stage.date} </p>
+          <span className="setDtoNAme">{stage.name}</span>
+		  <p className="setDtoNAmeDate"> {stage.date} </p>
           {index < stages.length - 1 && <div className="arrow" />}
         </div>
       ))}
