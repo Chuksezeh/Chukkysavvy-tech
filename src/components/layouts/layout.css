@@ -448,7 +448,7 @@ color: black;
     right: 0px;
     z-index: 1000 !important;
     top: 0px;
-    background-color: #333;
+    background-color: #011B58;
   }
   .nav-main-NAv > .nav-btn > label {
     display: inline-block;
@@ -473,7 +473,7 @@ color: black;
     display: block;
     width: 100%;
     z-index: 200 !important;
-    background-color: #333;
+    background-color: #011B58;
     height: 0px;
     transition: all 0.3s ease-in;
     overflow-y: hidden;
