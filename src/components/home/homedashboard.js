@@ -39,6 +39,9 @@ const HomeDashBoard = () => {
             <NavLink to='/bookingpage' className="navlink-button" > <button className="button-50" role="button">
               Repair A Device
             </button></NavLink>
+            
+
+  
 
           </div>
 

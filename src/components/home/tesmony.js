@@ -8,39 +8,43 @@ const Testmony =(()=>{
         <>
         <section className="tesmony-container">
 <figure className="snip1139">
-  <blockquote>Sometimes I think the surest sign that intelligent life exists elsewhere in the universe is that none of it has tried to contact us.
+<blockquote>I couldn’t be happier with Chukkytech! My phone was repaired quickly, and it’s working
+   like new. The real-time tracking feature kept me informed every step of the way. Highly recommend their services!
     <div className="arrow"></div>
   </blockquote>
-  <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample3.jpg" alt="sample3"/>
+  {/* <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample3.jpg" alt="sample3"/> */}
   <div className="author">
-    <h5>Pelican Steve <span>- LittleThemes</span></h5>
+    <h5>Peter James <span>- Excellent Service and Quality Repairs</span></h5>
   </div>
 </figure>
 <figure className="snip1139 hover">
-  <blockquote>I don't need to compromise on my principles, because they don't have the slightest bearing on what happens to me anyway.
+  <blockquote>Chukkytech made my life so much easier with their door pickup and delivery service. 
+    I didn’t have to leave my home, and my laptop was repaired and returned in no time. Fantastic experience!
     <div className="arrow"></div>
   </blockquote>
-  <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample47.jpg" alt="sample47"/>
+  {/* <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample47.jpg" alt="sample47"/> */}
   <div className="author">
-    <h5>Max Conversion<span>- LittleThemes</span></h5>
+    <h5>Chukwudi Ezema<span>- Convenient Doorstep Service</span></h5>
   </div>
 </figure>
 <figure className="snip1139">
-  <blockquote>That's the problem with nature, something's always stinging you or oozing mucous all over you. Let's go and watch TV.
+  <blockquote>Chukkytech is my go-to for gadget repairs. They’re professional, prompt, 
+    and use only high-quality parts. I trust them with all my devices and have never been disappointed.
     <div className="arrow"></div>
   </blockquote>
-  <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample17.jpg" alt="sample17"/>
+  {/* <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample17.jpg" alt="sample17"/> */}
   <div className="author">
-    <h5>Eleanor Faint<span>- LittleThemes</span></h5>
+    <h5>Muhammad Umar<span>- Reliable and Professional</span></h5>
   </div>
 </figure>
 <figure className="snip1139 hover">
-  <blockquote>I don't need to compromise on my principles, because they don't have the slightest bearing on what happens to me anyway.
+  <blockquote>From the diagnosis to the repair completion, Chukkytech kept everything transparent. 
+    The tracking system is amazing, and their customer support is top-notch. My tablet has never worked better!
     <div className="arrow"></div>
   </blockquote>
-  <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample47.jpg" alt="sample47"/>
+  {/* <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample47.jpg" alt="sample47"/> */}
   <div className="author">
-    <h5>Max Conversion<span>- LittleThemes</span></h5>
+    <h5>Taiwo Olayinka<span>- Transparent and Trustworthy</span></h5>
   </div>
 </figure>
 </section>

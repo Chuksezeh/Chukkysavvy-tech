@@ -1,0 +1,22 @@
+.whatsapp-btnbbt{
+    background-color: #25D366;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+}
+.whatsapp-btn-tink{
+    display: flex;
+    gap: 5px;
+}
+.whatsapp-btn-call{
+    background-color: grey;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    color: white; 
+}

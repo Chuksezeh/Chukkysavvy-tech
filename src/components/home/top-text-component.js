@@ -8,7 +8,7 @@ const TopTextComponent = ()=>{
             <div className="second">
                 <div className="text-about-sec">
                     <h4 className="chukName">Your Solution Hub</h4>
-                    <p>We Provide Hardware and Software Solutions to Most of Your  Tech Related Issues</p>
+                    <p>We Provide Hardware and Software Solutions to Most of your Gadget Issues</p>
                 </div>
                 <div className="border-line"></div>
                 <div className="text-about-sec">

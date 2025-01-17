@@ -29,6 +29,8 @@ import { useState } from 'react';
 import { UserProvider } from './components/UserDashboard/userConytext';
 import BuyProducts from './components/BuyProducts/buyLanding';
 import AccountOverMobile from './components/UserDashboard/UserAccountComponents/accountOverMobile';
+import PrivacyPolicy from './components/layouts/PrivacyPolicy/privacyPolicy';
+import TermsAndConditions from './components/layouts/TermsAndConditions/termsAndConditon';
 // import AdminDashbord from './components/Admin/adminDashbord/adminDash';
 
 
@@ -69,6 +71,8 @@ function App() {
       <Route path="/user-repair-orders" element={<RepairOrderTable/>}></Route>
       <Route path="/product-orders" element={<ProductOrderTable/>}></Route>
       <Route path="/buy-products" element={<BuyProducts/>}></Route>
+      <Route path="/privacy-policy" element={<PrivacyPolicy/>}></Route>
+      <Route path="/terms-conditions" element={<TermsAndConditions/>}></Route>
 
     
     

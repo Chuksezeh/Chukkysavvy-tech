@@ -30,10 +30,8 @@ const UserSignUp = (()=>{
 
         
     <div className="container">
-				<header className="header">
-
-				</header>
-				<div className="form-wr">
+				
+				<div className="form-wr mt-5">
 					<p id="description" className="text-center">
 						Sign Up
 
@@ -42,21 +40,21 @@ const UserSignUp = (()=>{
 
 						<div className="row">
 
-							<div className="col-md-6">
+							<div className="col-md-12">
 								<div className="form-group">
-									<label>First Name</label>
-									<input required id="name" placeholder="E.g Ipad 1" className="form-control" />
+									<label>Full Name</label>
+									<input required id="name" placeholder="Enter your full name" type="text" className="form-control" />
 								</div>
 							</div>
 
-							<div className="col-md-6">
+							<div className="col-md-12">
 								<div className="form-group">
-									<label id="name-label" for="name">Last Name</label>
-									<input required id="name" placeholder="Enter your name" className="form-control" />
+									<label id="name-label" for="name">Email Address</label>
+									<input required id="name" placeholder="Enter your email address" type="email" className="form-control" />
 								</div>
 							</div>
-							<div className="row">
-								<div className="col-md-6">
+							
+								{/* <div className="col-md-6">
 									<div className="form-group">
 										<label id="number-label" for="number">Phone Number</label>
 										<input type="text" required placeholder="Enter detailed address" className="form-control" />
@@ -67,24 +65,23 @@ const UserSignUp = (()=>{
 										<label id="number-label" for="number">Email</label>
 										<input type="text" required placeholder="Enter phone number" className="form-control" />
 									</div>
-								</div>
+								</div> */}
 
-							</div>
-							<div className="row">
-								<div className="col-md-6">
+							
+						<div className="col-md-12">
 									<div className="form-group">
 										<label id="number-label" for="number">Password</label>
-										<input type="text" required placeholder="Enter detailed address" className="form-control" />
+										<input type="password" required placeholder="Create password"  className="form-control" />
 									</div>
 								</div>
-								<div className="col-md-6">
+								<div className="col-md-12">
 									<div className="form-group">
 										<label id="number-label" for="number">Confirm Password</label>
-										<input type="text" required placeholder="Enter phone number" className="form-control" />
+										<input type="password" required placeholder="Confirm password" className="form-control" />
 									</div>
 								</div>
 
-							</div>
+							
 
 
 							

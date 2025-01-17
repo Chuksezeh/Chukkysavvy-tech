@@ -49,7 +49,7 @@ const ServicesComponent = ()=>{
              <div className="body3-container-all">
                 <Fade>
                     <div className="body3-main">
-                       <div className="body3-image-div centerTextDiVImage showMobSize">
+                       <div className="body3-image-div centerTextDiVImage showMobSize ">
                             <h2 className="tittle-text">Tablet Fixes</h2>
                             <img src={image3} className="body3-img1" />
                         </div>
@@ -70,7 +70,7 @@ const ServicesComponent = ()=>{
                             </button></NavLink>
                             </div>
                             </div>
-                            <div className="body3-image-div centerTextDiVImage hideMobSize">
+                            <div className="body3-image-div centerTextDiVImage hideMobSize seeAdjustImage">
                             <h2 className="tittle-text">Tablet Fixes</h2>
                             <img src={image3} className="body3-img1" />
                         </div>
@@ -80,36 +80,7 @@ const ServicesComponent = ()=>{
              </div>
 
 
-            {/* <div className="body3-container-all">
-                <Fade>
-                    <div className="body3-main">
-                       
-                        <div className="body3-text-div">
-                            <p> GGHSQDDDDHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</p>
-                            <p> GGHSQDDDDHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</p>
-                            <p> GGHSQDDDDHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</p>
-                            <p> GGHSQDDDDHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</p>
-                            <p> GGHSQDDDDHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</p>
-                            <p> GGHSQDDDDHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</p>
-                            <p> GGHSQDDDDHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</p>
-                            <p> GGHSQDDDDHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</p>
-                            <NavLink to='/bookingpage' className="navlink-button" > <button className="button-body3-check">
-                              Book Now
-                            </button></NavLink>
-
-                        </div>
-                        <div className="body3-image-div">
-                            <h2 className="tittle-text">Tablet Fixes</h2>
-                            <img src={image3} className="body3-img1" />
-                        </div>
-
-                    </div>
-                </Fade>
-
-
-
-            </div> */}
-
+            
 
 <div className="body3-container-all">
                 <Fade>
@@ -140,70 +111,7 @@ const ServicesComponent = ()=>{
 
            
 
-            {/* <div className="body3-container-all">
-                <Fade>
-                    <div className="body3-main">
-                   
-
-                        <div className="body3-text-div">
-                            <p> GGHSQDDDDHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</p>
-                            <p> GGHSQDDDDHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</p>
-                            <p> GGHSQDDDDHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</p>
-                            <p> GGHSQDDDDHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</p>
-                            <p> GGHSQDDDDHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</p>
-                            <p> GGHSQDDDDHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</p>
-                            <p> GGHSQDDDDHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</p>
-                            <p> GGHSQDDDDHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</p>
-                            <NavLink to='/bookingpage' className="navlink-button" ><button className="button-body3-check">
-                                Book Now
-                            </button></NavLink>
-
-                        </div>
-                        <div className="body3-image-div">
-                            <h2 className="tittle-text">Website/ App Development</h2>
-                            <img src={image4} className="body3-img1" />
-                        </div>
-                        
-                    </div>
-                </Fade>
-
-
-
-            </div>
-            <div className="body3-container-all">
-                <Fade>
-                    <div className="body3-main">
-                   
-                    <div className="body3-image-div">
-                            <h2 className="tittle-text">Car Tracking Services</h2>
-                            <img src={image5} className="body3-img1" />
-                        </div>
-                        
-                        <div className="body3-text-div">
-                            <p> GGHSQDDDDHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</p>
-                            <p> GGHSQDDDDHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</p>
-                            <p> GGHSQDDDDHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</p>
-                            <p> GGHSQDDDDHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</p>
-                            <p> GGHSQDDDDHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</p>
-                            <p> GGHSQDDDDHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</p>
-                            <p> GGHSQDDDDHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</p>
-                            <p> GGHSQDDDDHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</p>
-                            <NavLink to='/bookingpage' className="navlink-button" > <button className="button-body3-check">
-                                Book Now
-                            </button></NavLink>
-
-                        </div>
-                       
-                    </div>
-                </Fade>
-
-
-
-            </div> */}
-
-
-
-
+           
 
  
  

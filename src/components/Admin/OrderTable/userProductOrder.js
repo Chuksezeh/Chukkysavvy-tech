@@ -1,5 +1,6 @@
 import { useState } from "react";
 import AdminDashboard from "../adminDashboard";
+import "./userRepairOrder.css"
 
 
 const ProductOrderTable = (()=>{
@@ -30,8 +31,10 @@ const ProductOrderTable = (()=>{
       </div>
 
 
-      <p className="showINfoP">Click the names to see more data.</p>
-      <table>
+     <div className="controlADMinorder_tb">
+
+   
+      <table >
         <thead>
           <tr className="table-headers">
             <th>Device name/ model no</th>
@@ -77,7 +80,7 @@ const ProductOrderTable = (()=>{
         </tbody>
       </table>
 
-
+      </div>
 
 
 

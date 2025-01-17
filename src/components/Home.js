@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import Footer from "./layouts/Footer";
 import Header from "./layouts/Header";
 import Testmony from "./home/tesmony";
@@ -29,6 +29,17 @@ const Home = () => {
       behavior: "smooth"
     });
   };
+
+  const scrolltop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
+  useEffect(() => {
+    scrolltop();
+  }, []);
 
 
   return (

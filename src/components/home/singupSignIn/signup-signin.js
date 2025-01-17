@@ -39,7 +39,7 @@ const SignUpSignIn = (()=>{
     return(
 
         <>
-         <div className="headSignin">
+         {/* <div className="headSignin">
                <div>
                   <Button style={{ background: "#011B58" }} onClick={navigateSignUp}>
                      Sign up
@@ -51,7 +51,7 @@ const SignUpSignIn = (()=>{
                   </Button>
                </div>
 
-            </div>
+            </div> */}
 
 
          

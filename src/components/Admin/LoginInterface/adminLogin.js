@@ -24,8 +24,10 @@ const navigateAdminDashboard = (()=>{
     <p className="titleAdLogin">Admin Login</p>
     
     <form className="login-form">
-      <input type="text" placeholder="username"/>
-      <input type="password" placeholder="password"/>
+      <label>Email Address</label>
+      <input type="email" placeholder="Enter email address"/>
+       <label>Password</label>
+      <input type="password" placeholder="Enter password"/>
       <button onClick={navigateAdminDashboard}>login</button>
       {/* <p className="message">Not registered? <a href="#">Create an account</a></p> */}
     </form>

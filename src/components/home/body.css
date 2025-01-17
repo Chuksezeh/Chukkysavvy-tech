@@ -26,6 +26,12 @@ body{
     display: flex;
     gap: 2%;
   }
+  .arrange-yup{
+    background-color: aliceblue;
+  }
+  .cl-text{
+    color: rgb(201, 12, 12);
+  }
 
 
 
@@ -180,10 +186,15 @@ body{
 .picckBtn{
   padding: 10px;
   border: none;
+  height: 80px;
+  width: 200px;
   background-color: #011B58;
   color: white;
   border-radius: 5px;
   margin-top: 5%;
+}
+.picckBtn:hover{
+  background-color: #0e3ca8;
 }
 .signtext{
   text-align: center;
@@ -555,6 +566,9 @@ margin-top: 40px;
     
 
 }
+.cl-textHEAd{
+  font-weight: bold;
+}
 .corel-caption{
     /* margin-left: 45%; */
 }
@@ -571,8 +585,8 @@ margin-top: 40px;
 }
 .first-body-corel{
    
-    background-color:  #606060;
-    background-image: url("https://img.freepik.com/premium-photo/photo-apple-product-lineup_1055425-23713.jpg");
+    background-color:  #6060609f;
+    background-image: url("../images/iphone-image.jpg");
     background-size: cover;
     /* height: 60vh; */
     display: flex;
@@ -675,8 +689,9 @@ margin-top: 40px;
 
 /* CSS */
 .button-50 {
-  appearance: button;
-  background-color: white;
+  appearance: none;
+  backface-visibility: hidden;
+  background-color: #2f80ed;
   background-image: none;
   width: 300px;
   height: 60px;
@@ -684,7 +699,7 @@ margin-top: 40px;
   border-radius: 4px;
   box-shadow: #011B58 4px 4px 0 0,white 4px 4px 0 1px;
   box-sizing: border-box;
-  color: black;
+  color: white;
   cursor: pointer;
   display: inline-block;
   font-family: ITCAvantGardeStd-Bk,Arial,sans-serif;
@@ -717,19 +732,25 @@ margin-top: 40px;
 }
 
 .button-50:not([disabled]):active {
-  box-shadow: #fff 2px 2px 0 0, #000 2px 2px 0 1px;
+  box-shadow: #2f80ed 2px 2px 0 0, #000 2px 2px 0 1px;
   transform: translate(2px, 2px);
 }
 
 @media (min-width: 768px) {
   .button-50 {
     padding: 12px 50px;
+  background-color: #2f80ed !important;
+  color: white;
   }
+  
 }
 .border-line{
     border: white solid 1px;
     
 
+}
+.respom{
+  text-align: center;
 }
 .oursolutions-line{
     border: #606060 solid;
@@ -754,6 +775,7 @@ margin-top: 40px;
 .body3-main{
     display: flex;
    justify-content: center;
+
 }
 .body3-img1{
     width: 500px;
@@ -824,11 +846,12 @@ margin-top: 40px;
 figure.snip1139 {
   font-family: 'Raleway', Arial, sans-serif;
   position: relative;
-  overflow: hidden;
+  /* overflow: hidden; */
   margin: 10px;
   min-width: 220px;
   max-width: 310px;
   width: 100%;
+  
   color: #333;
   text-align: left;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
@@ -852,6 +875,7 @@ figure.snip1139 blockquote {
   font-weight: 500;
   text-align: left;
   margin: 0;
+  margin-bottom: 20%;
   line-height: 1.6em;
   font-style: italic;
 }
@@ -1199,6 +1223,100 @@ figure.snip1139 .author h5 span {
       transform: rotate(360deg);
   }
   } 
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  /* CSS */
+  .button-65 {
+    appearance: none;
+    backface-visibility: hidden;
+    background-color: #2f80ed;
+    border-radius: 10px;
+    border-style: none;
+    box-shadow: none;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Inter,-apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    height: 55px;
+    letter-spacing: normal;
+    line-height: 1.5;
+    outline: none;
+    overflow: hidden;
+    padding: 14px 30px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    transform: translate3d(0, 0, 0);
+    transition: all .3s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: top;
+    white-space: nowrap;
+  }
+  
+  .button-65:hover {
+    background-color: #1366d6;
+    box-shadow: rgba(0, 0, 0, .05) 0 5px 30px, rgba(0, 0, 0, .05) 0 1px 4px;
+    opacity: 1;
+    transform: translateY(0);
+    transition-duration: .35s;
+  }
+  
+  .button-65:hover:after {
+    opacity: .5;
+  }
+  
+  .button-65:active {
+    box-shadow: rgba(0, 0, 0, .1) 0 3px 6px 0, rgba(0, 0, 0, .1) 0 0 10px 0, rgba(0, 0, 0, .1) 0 1px 4px -1px;
+    transform: translateY(2px);
+    transition-duration: .35s;
+  }
+  
+  .button-65:active:after {
+    opacity: 1;
+  }
+  
+  @media (min-width: 768px) {
+    .button-65 {
+      padding: 14px 22px;
+      width: 176px;
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
 
 
@@ -1470,6 +1588,7 @@ background-color: #1D3C34;
 .fixlineDiv{
   justify-content: center !important;
   text-align: center;
+  margin-top: 2%;
 }
 
 
@@ -2572,6 +2691,11 @@ padding: 5px;
   }
 }
 
+.seeAdjustImage{
+  /* background-color: #007b5e !important; */
+  justify-content: start;
+  text-align: start;
+}
 
 
   
@@ -2653,6 +2777,10 @@ padding: 5px;
   width: 100px;
   height: 50px;
   display: none;
+ }
+ .picckBtn{
+  height: auto;
+  width: auto;
  }
  .profile_page_Cover{
    margin-top: 2%;

@@ -9,6 +9,8 @@ import rep1 from '../images/rep1.jpg';
 import rep2 from '../images/tecd.jpeg';
 import Footer from "../layouts/Footer";
 import SignUpSignIn from "./singupSignIn/signup-signin";
+import { FaWhatsapp } from "react-icons/fa";
+import ChatComponent from "../layouts/contactComponent/chatComponent";
 
 
 
@@ -98,15 +100,39 @@ Launch static backdrop modal
     <SignUpSignIn/>
 
 <div className="card-hol">
+
+<div className="card-covers">
+   <div className="cardimage-book p-3">
+      <img className="cardimagess" src= {rep2}/>
+   </div>
+   <div className="cardtext-book p-3">
+      <h4 className="cl-textHEAd">Pickup, Repair and Deliver </h4> 
+      We offer free pickup city-wide if you are unable to come to our store. If youd like to arrange for
+       your device to be picked up, please choose a time and day you would 
+      like us to contact you for Pickup and quick fix
+      <p className="cl-text">Please chat or call us for detail explanation and the pricing for the fixing service. We are available 24/7    </p>
+      <ChatComponent/>
+      
+      </div>
+
+      <button className="picckBtn p-3" onClick={toggleVisibilityPickUp}> Order Now </button>
+   
+
+</div>
+
 <div className="card-covers">
    <div className="cardimage-book p-3">
       <img className="cardimagess" src= {rep1}/>
    </div>
    <div className="cardtext-book p-3">
-      <h4>In-Store Appointment</h4> 
+      <h4 className="cl-textHEAd">In-Store Appointment</h4> 
    If youd like to setup an in-store appointment to have your device repaired or assessed, choose this option. 
-   This is the quickest way to get a repair done.</div>
-   <button className="picckBtn  p-3" onClick={toggleVisibility}> {!isVisible ? "Select" : "Hide"} </button>
+   This is the quickest way to get a repair done.
+   <p className="cl-text">Please chat or call us for detail explanation, reservation and the pricing for the fixing service. We are available 24/7    </p>
+      <ChatComponent/>
+   
+   </div>
+   <button className="picckBtn  p-3" onClick={toggleVisibility}> Reserve Now</button>
    
 </div>
 
@@ -179,6 +205,10 @@ Launch static backdrop modal
                  <option>Iphone 15 Pro</option>
                  <option>Iphone 15 Plus</option>
                  <option>Iphone 15 Pro Max</option>
+                 <option>Iphone 16</option>
+                 <option>Iphone 16 Pro</option>
+                 <option>Iphone 16 Plus</option>
+                 <option>Iphone 16 Pro Max</option>
                
                </select>
 					
@@ -236,18 +266,7 @@ Launch static backdrop modal
 
 
 
-<div className="card-covers">
-   <div className="cardimage-book p-3">
-      <img className="cardimagess" src= {rep2}/>
-   </div>
-   <div className="cardtext-book p-3">
-      <h4>Free Pickup by Courier </h4> 
-      We offer free pickup city-wide if you are unable to come to our store. If youd like to arrange for your device to be picked up, please choose a time and day youd 
-      like for us to call to arrange this and we will give you a call.</div>
-      <button className="picckBtn p-3" onClick={toggleVisibilityPickUp}> {!isVisiblePickUp ? "Select" : "Hide"} </button>
-   
 
-</div>
 
 </div>
 
@@ -380,7 +399,12 @@ Launch static backdrop modal
 
 
      
-
+<br/>
+<br/> 
+<br/>
+<br/>   
+<br/>
+ 
 
 </div>
     

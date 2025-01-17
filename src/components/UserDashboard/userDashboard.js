@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Header from "../layouts/Header";
 import "./userDashboard.css";
+import { FaUser } from "react-icons/fa6";
+
 import { IoIosArrowForward } from "react-icons/io";
 import { Link, NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
 // import { useUser } from "./userConytext";
@@ -17,11 +19,12 @@ const UserDashBoard = (() => {
 	
 
 	const menuItems = [
-		{ name: 'My Account', path: '/user-profile-dashboard',icon: <IoIosArrowForward /> },
+		{ name: 'My Account', path: '/user-profile-dashboard',icon: <IoIosArrowForward />, sideIcon: <FaUser />
+		},
 		{ name: 'Device Repair Orders', path: "/repair-orders" ,icon: <IoIosArrowForward />},
-		{ name: 'Purchase Orders', path: '/services',icon: <IoIosArrowForward /> },
-		{ name: 'Contact', path: '/contact',icon: <IoIosArrowForward /> },
-		{ name: 'Logout', path: '/contact',icon: <IoIosArrowForward /> }
+		{ name: 'Purchase Orders', path: '',icon: <IoIosArrowForward /> },
+		{ name: 'Contact', path: '',icon: <IoIosArrowForward /> },
+		{ name: 'Logout', path: '/',icon: <IoIosArrowForward /> }
 	];
 
 	const handleItemClick = (index) => {
@@ -81,6 +84,7 @@ const UserDashBoard = (() => {
 										onClick={() => handleItemClick(index)}
 										className={activeIndex === index ? 'active' : ''}
 										>
+										{/* <span> {item.sideIcon}</span> */}
 										<span className="setIconDivSideB">
 										<span>{item.name}</span>
 										<span> {item.icon}</span>

@@ -28,9 +28,45 @@ const RepairOrderTable = (()=>{
         </ul>
       </div>
 
+      <div className="container">
+    <h5>Search order</h5>
+    <div className="row">
+        <div className="col-6">
+            <div className="input-group">
+                <input className="form-control border-secondary py-2" type="search" defaultValue="Search by order number, device name"/>
+                <div className="input-group-append">
+                    <button className="btn btn-outline-secondary h-100 w-100" type="button">
+                        <i className="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div className="col-6">
+            <div className="input-group">
+              
 
-      <p className="showINfoP">Click the names to see more data.</p>
-      <table>
+               <select className="form-control border-secondary py-2" type="search" defaultValue="Serach by order number, device name">
+                  <option>Select Status</option> 
+                  <option>Picked up</option> 
+                  <option>delivering</option> 
+                  <option>Fixing</option> 
+                  <option>delivered</option> 
+                  <option>Cancelled</option> 
+               </select>
+
+                {/* <div className="input-group-append">
+                    <button className="btn btn-outline-secondary h-100 w-100" type="button">
+                        <i className="fa fa-search"></i>
+                    </button>
+                </div> */}
+            </div>
+        </div>
+    </div>
+</div>
+      
+      <div className="controlADMinorder_tb">
+       
+       <table>
         <thead>
           <tr className="table-headers">
             <th>Device name/ model no</th>
@@ -40,17 +76,18 @@ const RepairOrderTable = (()=>{
             <th>User name</th>
             <th>Address</th>
             <th>Action</th>
+           
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>PlayCo Group Universal Flex</td>
-            <th className="mobile-header">Number</th><td>2489</td>
-            <th className="mobile-header">Market rate</th><td>€12.35</td>
-            <th className="mobile-header">Number</th><td>Picked</td>
-            <th className="mobile-header">Picked</th><td>8774uju</td>
-            <th className="mobile-header">Weight</th><td>5%</td>
-            <th className="mobile-header-action">  <button className="btn btn-primary" onClick={handleShowDropDown}> Action
+            <td data-label="Device name/ Brand">PlayCo </td>
+            <td data-label="Order number">2489</td>
+            <td data-label="Device fault">All fault, the screen is</td>
+            <td data-label="Status">Picked</td>
+             <td data-label="User name">8774uju</td>
+            <td data-label="Address">5%</td>
+              <button className="btn btn-primary sm-w-100" onClick={handleShowDropDown}> Action
             </button>
               {
                 showDropDown &&
@@ -67,7 +104,7 @@ const RepairOrderTable = (()=>{
               }
 
 
-            </th><td>   </td>
+          
 
           </tr>
           
@@ -78,7 +115,7 @@ const RepairOrderTable = (()=>{
         </tbody>
       </table>
 
-
+      </div>
 
 
 

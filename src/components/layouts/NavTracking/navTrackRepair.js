@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import TrackBtn from "../../UserDashboard/TrackProgress/trackerButton";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import ServicesComponent from "../../home/services-component";
+import Footer from "../Footer";
 
 const NavtrackRepair = (()=>{
 
@@ -41,6 +43,8 @@ const NavtrackRepair = (()=>{
 </form> 
 </div> 
 </div>
+ <ServicesComponent/>
+
 
     
     <Modal show={showTrackOrder} onHide={handleCloseTrackOrder} size="lg">
@@ -61,6 +65,8 @@ const NavtrackRepair = (()=>{
       
     </Modal.Footer>
   </Modal>   
+
+  <Footer/>
          
         
         

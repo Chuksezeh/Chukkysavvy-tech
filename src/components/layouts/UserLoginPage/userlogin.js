@@ -6,6 +6,7 @@ import { auth, googleProvider } from "../../Configfile/firebaseConfig";
 import { useState } from "react";
 // import { useUser } from "../../UserDashboard/userConytext";
 import "./userLogin.css";
+import { useForm, SubmitHandler } from "react-hook-form"
 
 
 const UserLogin = (()=>{
@@ -16,7 +17,12 @@ const UserLogin = (()=>{
 const navigate = useNavigate();
 // const { setUser } = useUser();
 // const history = useLocation();
-
+const {
+  register,
+  handleSubmit,
+  watch,
+  formState: { errors },
+} = useForm();
 
 const navigateSignUp = (()=>{
   navigate("/user-signup")
@@ -63,8 +69,10 @@ const handleGoogleSignIn = async () => {
           <p className="titleAdLogin">User login</p>
           
           <form className="login-form">
-            <input type="text" placeholder="username"/>
-            <input type="password" placeholder="password"/>
+            <label >Email Address</label>
+            <input type="email"  placeholder="Enter your email address"/>
+            <label >Password</label>
+            <input type="password" placeholder="Enter your password"/>
             <div>Forgot your password?</div>
             <div className="message">Not registered? <a href="#"> <span onClick={navigateSignUp}> Create 
             an account</span></a></div>
@@ -73,9 +81,9 @@ const handleGoogleSignIn = async () => {
             
           </form>
 
-          <p style={{"fontWeight":"bold", fontSize:"20px"}}>Or</p>
+          {/* <p style={{"fontWeight":"bold", fontSize:"20px"}}>Or</p>
 
-           <button className="google-btn" type="button" onClick={handleGoogleSignIn}> <span><FcGoogle size={30}/></span>  Continue with Google</button>
+           <button className="google-btn" type="button" onClick={handleGoogleSignIn}> <span><FcGoogle size={30}/></span>  Continue with Google</button> */}
 
         </div>
       </div>   

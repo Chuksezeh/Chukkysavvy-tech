@@ -9,6 +9,8 @@ import otherPhones from '../images/laptops1.avif';
 import SignUpSignIn from "./singupSignIn/signup-signin";
 import InstoreRepairForm from "../layouts/InstoreRepairForm/instoreREpair";
 import PickupRepairForm from "../layouts/PickupRepairForm/pickuprepair";
+import { Button, Modal } from "react-bootstrap";
+import ChatComponent from "../layouts/contactComponent/chatComponent";
 
 
 const LaptopBookDetails = (() => {
@@ -16,17 +18,27 @@ const LaptopBookDetails = (() => {
  
    const [isVisible, setIsVisible] = useState(false);
    const [isVisiblePickUp, setIsVisiblePickUp] = useState(false);
+   const [showPickUpForm, setShowPickUpForm]= useState(false);
+   const [show, setShow] = useState(false);
+
+   const handleShowPickUpForm = () => setShowPickUpForm(true);
+   const handleClosePickupForm = () => setShowPickUpForm(false);
+
+
+   const handleClose = () => setShow(false);
+   const handleShow = () => setShow(true);
 
    const toggleVisibility = () => {
       setIsVisible(!isVisible);
       setIsVisiblePickUp(false)
-   };
-
-   const toggleVisibilityPickUp = () => {
-      setIsVisiblePickUp(!isVisiblePickUp)
-      setIsVisible(false);
-   }
-
+      handleShow()
+    };
+  
+    const toggleVisibilityPickUp = ()=>{
+     setIsVisiblePickUp(!isVisiblePickUp)
+     setIsVisible(false);
+     handleShowPickUpForm()
+  }
 
 
    return (
@@ -78,42 +90,91 @@ const LaptopBookDetails = (() => {
                   <div className="cardtext-book p-3">
                      <h4>In-Store Appointment</h4>
                      If youd like to setup an in-store appointment to have your device repaired or assessed, choose this option.
-                     This is the quickest way to get a repair done.</div>
-                  <button className="picckBtn  p-3" onClick={toggleVisibility}> {!isVisible ? "Select" : "Hide"} </button>
+                     This is the quickest way to get a repair done.
+                     <p className="cl-text">Please chat or call us for detail explanation and the pricing for the fixing service. We are available 24/7    </p>
+                   <ChatComponent/>
+      
+                  </div>
 
+                  <button className="picckBtn p-3" onClick={toggleVisibilityPickUp}> Order Now </button>
                </div>
 
-
-
-               {isVisible && (
-                 <InstoreRepairForm/>
-               )}
-
-
-
-               <div className="card-covers">
+            <div className="card-covers">
                   <div className="cardimage-book p-3">
                      <img className="cardimagess" src={rep2} />
                   </div>
                   <div className="cardtext-book p-3">
                      <h4>Free Pickup by Courier </h4>
                      We offer free pickup city-wide if you are unable to come to our store. If youd like to arrange for your device to be picked up, please choose a time and day youd
-                     like for us to call to arrange this and we will give you a call.</div>
-                  <button className="picckBtn p-3" onClick={toggleVisibilityPickUp}> {!isVisiblePickUp ? "Select" : "Hide"} </button>
+                     like for us to call to arrange this and we will give you a call.
+                     <p className="cl-text">Please chat or call us for detail explanation, reservation and the pricing for the fixing service. We are available 24/7    </p>
+      <ChatComponent/>
+   
+   </div>
+   <button className="picckBtn  p-3" onClick={toggleVisibility}> Reserve Now</button>
 
 
                </div>
 
             </div>
 
-            {isVisiblePickUp && (
-
-              <PickupRepairForm/>
-            )}
-
-
+           
+            <br/>
+<br/> 
+<br/>
+<br/>   
+<br/>
 
          </div>
+
+         <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+           
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Order for Instore Repair</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          
+        <InstoreRepairForm/>
+
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary">Continue</Button>
+        </Modal.Footer>
+      </Modal>
+
+
+      <Modal
+        show={showPickUpForm}
+        onHide={handleClosePickupForm}
+        backdrop="static"
+        keyboard={false}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+           
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Order For Pickup</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <PickupRepairForm/>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClosePickupForm}>
+            Close
+          </Button>
+          <Button variant="primary">Continue</Button>
+        </Modal.Footer>
+      </Modal>
 
 
 
