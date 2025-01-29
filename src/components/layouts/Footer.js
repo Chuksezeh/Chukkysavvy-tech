@@ -69,7 +69,7 @@ const Footer = () => {
                                 </i></a>
                                 <a href="#"><i ><FaInstagram  size={30}/>
                                 </i></a>
-                                <a href="#"><i ><FaYoutube   size={30}/>
+                                <a href="https://www.youtube.com/channel/UCs2Pew4i6lGiVkjTJEZ5o-g"><i ><FaYoutube   size={30}/>
                                 </i></a>
 
                             </div>
