@@ -3,7 +3,10 @@ import Header from "../Header";
 import "./userSignup.css";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { chukkytechAxios } from "../../Utility/axios";
+import Footer from "../Footer";
+import { Alert } from "bootstrap";
 
 
 let renderCount = 0;
@@ -11,6 +14,11 @@ let renderCount = 0;
 
 
 const UserSignUp = (() => {
+
+	const [show, setShow] = useState(true);
+	const [loading, setLoading] = useState(false);
+	const [successMessage, setSuccessMessage] = useState(false);
+	const [errorMessage, setErrorMessage] = useState(false);
 
 	const {
 		register,
@@ -33,12 +41,39 @@ const UserSignUp = (() => {
 		navigate("/user-login")
 	}
 
-	const handleSubmitRegistration = ((data) => {
+	const scrolltop = () => {
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth',
+		});
+	};
 
-		console.log("testingname", data)
+	useEffect(() => {
+		scrolltop();
+	}, []);
 
+	const handleSubmitData = async data => {
+		setLoading(true);
 
-	})
+		console.log('data', data);
+
+		await chukkytechAxios
+			.post('/registration', data)
+			.then(res => {
+				console.log('res', res);
+				setLoading(false);
+
+				// reset();
+				// scrolltop();
+				setSuccessMessage(true);
+			})
+			.catch(err => {
+				console.log('err', err);
+				setLoading(false);
+				setErrorMessage(true);
+
+			});
+	};
 
 
 
@@ -55,9 +90,9 @@ const UserSignUp = (() => {
 
 					</p>
 					<form id="survey-form " onSubmit={handleSubmit((data, event) => {
-
+                            
 						console.log('seedataNow', data);
-						handleSubmitRegistration(data);
+						handleSubmitData(data);
 					})}>
 
 						<div className="row">
@@ -65,7 +100,7 @@ const UserSignUp = (() => {
 							<div className="col-md-12">
 								<div className="form-group">
 									<label>First Name</label>
-									<input id="name" placeholder="Enter your full name" type="text" className="form-control"
+									<input id="name" placeholder="Enter first full name" type="text" className="form-control"
 										{...register("firstName", {
 											required: 'First name is required',
 											maxLength: {},
@@ -77,8 +112,8 @@ const UserSignUp = (() => {
 							<div className="col-md-12">
 								<div className="form-group">
 									<label>Last Name</label>
-									<input id="name" placeholder="Enter your full name" type="text" className="form-control"
-										{...register("lastn  Name", {
+									<input id="name" placeholder="Enter your last name" type="text" className="form-control"
+										{...register("lastName", {
 											required: 'Last name is required',
 											maxLength: {},
 										})} />
@@ -146,6 +181,33 @@ const UserSignUp = (() => {
 						</div>
 						<div style={{ fontSize: "20px" }}>Already have an account? <span style={{ color: "blue", cursor: "pointer" }} onClick={navigateLogin}>Login</span> </div>
 
+						{
+
+							successMessage &&
+							<div className="container mt-2">
+								<div className="row">
+
+									<div className="col-sm-12">
+										<div className="alert fade alert-simple alert-success alert-dismissible text-left font__family-montserrat font__size-16 font__weight-light brk-library-rendered rendered show">
+											<button type="button" className="close font__size-18" data-dismiss="alert">
+												<span aria-hidden="true"><a>
+													<i className="fa fa-times greencross"></i>
+												</a></span>
+												<span className="sr-only">Close</span>
+											</button>
+											<i className="start-icon far fa-check-circle faa-tada animated"></i>
+											<strong className="font__weight-semibold" style={{ color: "white" }}>Well done!</strong> You have successfully registered.
+										</div>
+									</div>
+
+
+
+								</div>
+							</div>
+
+
+						}
+
 
 
 
@@ -160,7 +222,10 @@ const UserSignUp = (() => {
 
 						<div className="row">
 							<div className="col-md-4 setbtnDiv">
-								<button className="picckBtnDiv" type="submit">Submit</button>
+								{
+									loading ? <button className="picckBtnDiv" > <span class="loader"></span></button> : <button className="picckBtnDiv" type="submit">Submit</button>
+								}
+
 							</div>
 						</div>
 
@@ -180,7 +245,10 @@ const UserSignUp = (() => {
 					</form>
 				</div>
 			</div>
-
+			<br />
+			<br />
+			<br />
+			<Footer />
 
 
 		</>

@@ -1,40 +1,77 @@
-import "./productBuy.css";
-
-import Header from "../layouts/Header";
-import { useNavigate } from "react-router-dom";
 
 
+import "./productDetail.css";
+import img1 from "../../images/laptop.jpeg";
 
 
-const BuyProducts = (()=>{
 
-  const navigate = useNavigate();
+import "owl.carousel/dist/assets/owl.carousel.css";
+import "owl.carousel/dist/assets/owl.theme.default.css";
+import Header from "../../layouts/Header";
+import Footer from "../../layouts/Footer";
 
-const navigateProductCart = (()=>{
-      navigate("/product-cart")
-})
 
-const navigateProductDetails = (()=>{
-  navigate("/product-details")
-})
+const ProductDetailPage = (()=>{
+
+   
 
 
     return(
+       <>
+   <Header/>
+
+<div className="container">
+<div>Product Detail</div>
+
+ <div className=" contain-fluid mt-5">
+
+    <div>
+
+        <img className="img-fluidT" src={img1}/>
+    </div>
+    <div className="detailTEXtAll">
+        <h3>ASUS TUF FX505DT Gaming Laptop- 15.6", 120Hz Full HD, AMD</h3>
+        <p>Be the first to view this product</p>
+         <div className="pricedetailPageContainer"> 
+         <h2 style={{"color":"red", "fontSize":"30px", "fontWeight":"bold"}}>#30,000</h2>
+           <h4 className="instockTExt">IN STOCK</h4>
+         </div>
+         <hr/>
+         <h3>Description</h3>
+         <p>
+         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod 
+         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
+         quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+         </p>
+         <ul>
+           <div style={{"fontWeight":"bold", fontSize:"20px"}}> About this item</div> 
+            <li>Nvidia GeForce GTX 1650 4GB graphics (base: 1395MHz, Boost: 1560MHz, TDP: 50W)</li>
+            <li>AMD Ryzen 5 3 Quad-core AMD Ryzen 5 r5-3550h processor </li>
+            <li>15.6” 120Hz full HD (1920x1080) IPS-type display</li>
+            <li>256GB NVMe SSD | 8GB DDR4 RAM | Windows 10 Home</li>
+            <li>Durable gaming laptop with MIL-STD-810 military standard construction</li>
+            <li>Dual fans with anti-dust technology | RGB backlit Keyboard rated for 20-million keystroke durability</li>
+         </ul>
+         <button className="button-Send" role="button">Add to Cart</button>
+
+        
 
 
-        <>
+        
+    </div>
+ </div>
 
-        <Header/>
 
+</div>
 
-        <div>
-{/* <h3 className="" style={{textAlign: "center", marginTop:"5%"}}>COMING SOON...</h3> */}
-
+<section>
+    
 <div className="container-fluid bg-trasparent my-4 p-3" style={{position:"relative"}}>
+<h2>Related Products</h2>
   <div className="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
     <div className="col hp">
       <div className="card  shadow-sm">
-        <a target="_blank" onClick={navigateProductDetails}>
+        <a target="_blank" >
           <img src="https://m.media-amazon.com/images/I/81gK08T6tYL._AC_SL1500_.jpg" className="card-img-top" alt="product.title" />
         </a>
 
@@ -53,7 +90,7 @@ const navigateProductDetails = (()=>{
 
           <div className="d-grid gap-2 my-4">
 
-            <a href="#" className="btn btn-warning bold-btn" style={{color:"white", fontSize:"15px", padding:"5px"}} onClick={navigateProductCart}>add to cart</a>
+            <a href="#" className="btn btn-warning bold-btn" style={{color:"white", fontSize:"15px", padding:"5px"}} >add to cart</a>
 
           </div>
           <div className="clearfix mb-1">
@@ -181,12 +218,13 @@ const navigateProductDetails = (()=>{
   </div>
 </div>
 
-        </div>
-        
-        
+
+</section>
+
+<Footer/>
         
         </>
     )
 })
 
-export default BuyProducts
+export default ProductDetailPage

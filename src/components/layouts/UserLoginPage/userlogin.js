@@ -7,6 +7,7 @@ import { useState } from "react";
 // import { useUser } from "../../UserDashboard/userConytext";
 import "./userLogin.css";
 import { useForm, SubmitHandler } from "react-hook-form"
+import useGetData from "../../Utility/getFunction";
 
 
 const UserLogin = (()=>{
@@ -55,6 +56,10 @@ const handleGoogleSignIn = async () => {
       console.error("Error signing out:", error);
     }
   };
+
+  const { data: registerData, isPending: registerDataIsPending, error } = useGetData('/registration');
+
+  console.log("registrationData", registerData)
 
 
  return(

@@ -5,6 +5,7 @@ import {PiListPlusThin} from "react-icons/pi";
 import { NavLink, useNavigate } from "react-router-dom";
 import { BsFillPersonFill, BsList, BsPersonCircle } from "react-icons/bs";
 import brandlogo from "../images/CHUKKY-BRAND-BACKGROUND.png";
+import { MdOutlineShoppingCart } from "react-icons/md";
 
 const Header = ()=>{
 
@@ -49,7 +50,12 @@ const Header = ()=>{
 
   const navigateTracking = (()=>{
     navigate("/track-repair")
+  });
+
+  const navigateShoppingCart = (()=>{
+    navigate("/product-cart")
   })
+
 
 
 
@@ -100,6 +106,7 @@ const Header = ()=>{
     <a onClick={navigateTracking}>Track  repair</a>
     <a  onClick={navigateUserLogin}>Login</a>
     <a onClick={ navigateAdmin}>Admin</a>
+    <span className="badgeMain" onClick={navigateShoppingCart}><span>  <MdOutlineShoppingCart  /></span>  My Cart <span className="badge0">2</span></span>
   </div>
  </div>
 
