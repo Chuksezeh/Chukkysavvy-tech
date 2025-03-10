@@ -92,6 +92,9 @@
 	  gap: 4%;
 	  
   }
+  .panel-head{
+	font-weight: 900;
+  }
   .W-amountDivAll{
 	  margin-top: 2%; 
   }

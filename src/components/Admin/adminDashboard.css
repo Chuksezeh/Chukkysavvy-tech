@@ -6,6 +6,7 @@
 .nowsidecontainer{
   margin-top: 6%;
   background-color: #041e5c;
+  height: auto !important;
 }
 .shift-nav{
   margin-left: 20px !important;

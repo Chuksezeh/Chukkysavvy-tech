@@ -56,6 +56,16 @@ const Header = ()=>{
     navigate("/product-cart")
   })
 
+  const navigateProfilePage = (()=>{
+
+    navigate("/user-profile")
+  })
+
+
+  
+  const userInfo = localStorage.getItem('userInfo');
+  const userData = JSON.parse(userInfo);
+
 
 
 
@@ -96,7 +106,7 @@ const Header = ()=>{
     </label>
   </div>
   
-  <div className="logoDiv" onClick={navigateHome}>
+  <div className="logoDiv" onClick={navigateHome}>       
     
     <a> <img src={brandlogo} className="logo-SElf"/> Chukkytech</a>
   </div>
@@ -104,9 +114,12 @@ const Header = ()=>{
   <div className="nav-links">
     <a  onClick={navigateHome} >Home</a>
     <a onClick={navigateTracking}>Track  repair</a>
-    <a  onClick={navigateUserLogin}>Login</a>
+    {
+      userData ? <a  onClick={navigateProfilePage}>My Account</a> : <a  onClick={navigateUserLogin}>Login</a>
+    }
+    
     <a onClick={ navigateAdmin}>Admin</a>
-    <span className="badgeMain" onClick={navigateShoppingCart}><span>  <MdOutlineShoppingCart  /></span>  My Cart <span className="badge0">2</span></span>
+    {/* <span className="badgeMain" onClick={navigateShoppingCart}><span>  <MdOutlineShoppingCart  /></span>  My Cart <span className="badge0">2</span></span> */}
   </div>
  </div>
 

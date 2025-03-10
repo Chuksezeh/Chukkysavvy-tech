@@ -19,6 +19,7 @@ const UserSignUp = (() => {
 	const [loading, setLoading] = useState(false);
 	const [successMessage, setSuccessMessage] = useState(false);
 	const [errorMessage, setErrorMessage] = useState(false);
+	const [errMessage, setErrMessage] = useState("");
 
 	const {
 		register,
@@ -58,19 +59,20 @@ const UserSignUp = (() => {
 		console.log('data', data);
 
 		await chukkytechAxios
-			.post('/registration', data)
+			.post('auth/register', data)
 			.then(res => {
 				console.log('res', res);
 				setLoading(false);
-
-				// reset();
-				// scrolltop();
 				setSuccessMessage(true);
+				setTimeout(() => {
+					navigate("/user-login");
+				}, 4000);
 			})
 			.catch(err => {
 				console.log('err', err);
 				setLoading(false);
 				setErrorMessage(true);
+				setErrMessage(err.response?.data)
 
 			});
 	};
@@ -90,7 +92,7 @@ const UserSignUp = (() => {
 
 					</p>
 					<form id="survey-form " onSubmit={handleSubmit((data, event) => {
-                            
+						event.target.reset()
 						console.log('seedataNow', data);
 						handleSubmitData(data);
 					})}>
@@ -167,7 +169,8 @@ const UserSignUp = (() => {
 										{...register("password_repeat", {
 											required: 'Confirm password',
 											validate: value => value === password.current || "The password does not match"
-										})} />
+										})} 
+										/>
 									<span className="cum-error">{errors.password_repeat?.message}</span>
 
 								</div>
@@ -188,15 +191,10 @@ const UserSignUp = (() => {
 								<div className="row">
 
 									<div className="col-sm-12">
-										<div className="alert fade alert-simple alert-success alert-dismissible text-left font__family-montserrat font__size-16 font__weight-light brk-library-rendered rendered show">
-											<button type="button" className="close font__size-18" data-dismiss="alert">
-												<span aria-hidden="true"><a>
-													<i className="fa fa-times greencross"></i>
-												</a></span>
-												<span className="sr-only">Close</span>
-											</button>
+										<div className="alert fade  alert-success alert-dismissible text-left font__family-montserrat font__size-16 font__weight-light brk-library-rendered rendered show">
+
 											<i className="start-icon far fa-check-circle faa-tada animated"></i>
-											<strong className="font__weight-semibold" style={{ color: "white" }}>Well done!</strong> You have successfully registered.
+											<strong className="font__weight-semibold" style={{ color: "white" }}>Well done!</strong> Registration successfull. <span style={{ color: "blue", cursor: "pointer" }} onClick={navigateLogin}>Login</span>
 										</div>
 									</div>
 
@@ -207,6 +205,27 @@ const UserSignUp = (() => {
 
 
 						}
+
+						{
+
+							errorMessage &&
+							<div className="container mt-2">
+								<div className="row">
+
+									<div class="col-sm-12">
+										<div className="alert   alert-danger  " role="alert" >
+
+											<span> {errMessage.message}   </span>
+
+										</div>
+									</div>
+
+
+
+								</div>
+							</div>
+                          }
+
 
 
 

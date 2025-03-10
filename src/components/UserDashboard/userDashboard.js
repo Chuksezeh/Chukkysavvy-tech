@@ -1,106 +1,109 @@
-import { useState } from "react";
-import Header from "../layouts/Header";
-import "./userDashboard.css";
+import { useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa6";
-
 import { IoIosArrowForward } from "react-icons/io";
-import { Link, NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
-// import { useUser } from "./userConytext";
-// import { auth, googleProvider } from "../../Configfile/firebaseConfig";
-import { IoPerson } from "react-icons/io5";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import "./userDashboard.css";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+
+const UserDashBoard = () => {
+    const [activeIndex, setActiveIndex] = useState(0);
+    const [showMenu, setShowMenu] = useState(true);
+    const navigate = useNavigate();
+    
+    const userInfo = localStorage.getItem("userInfo");
+    const userData = JSON.parse(userInfo);
 
 
+    const [show, setShow] = useState(false);
 
-const UserDashBoard = (() => {
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
-	const [activeIndex, setActiveIndex] = useState(0);
-	// const { user } = useUser();
-	const [showMenu, setShowMenu] = useState(true)
-	
+    const menuItems = [
+        { name: "My Account", path: "/user-profile-dashboard", icon: <IoIosArrowForward />, sideIcon: <FaUser /> },
+        { name: "Device Repair Orders", path: "/repair-orders", icon: <IoIosArrowForward /> },
+        { name: "Purchase Orders", path: "/user-product-orders", icon: <IoIosArrowForward /> },
+        // { name: "Contact", path: "", icon: <IoIosArrowForward /> },
+        { name: "Logout", path: "", icon: <IoIosArrowForward /> }
+    ];
 
-	const menuItems = [
-		{ name: 'My Account', path: '/user-profile-dashboard',icon: <IoIosArrowForward />, sideIcon: <FaUser />
-		},
-		{ name: 'Device Repair Orders', path: "/repair-orders" ,icon: <IoIosArrowForward />},
-		{ name: 'Purchase Orders', path: '',icon: <IoIosArrowForward /> },
-		{ name: 'Contact', path: '',icon: <IoIosArrowForward /> },
-		{ name: 'Logout', path: '/',icon: <IoIosArrowForward /> }
-	];
+    useEffect(() => {
+        if (!userData) {
+            navigate("/");
+        }
+    }, [userData]); // React when userData changes
 
-	const handleItemClick = (index) => {
-		setActiveIndex(index);
-		setShowMenu(false)
-	};
-	const { uid } = useParams();
-	const location = useLocation();
-	const { googleData } = location.state || {};
-	//   const { setUser } = useUser();
+    const handleItemClick = (index) => {
+        setActiveIndex(index);
+         if(activeIndex === 3){
+            setShow(true)
+         }else{
+            return
+         }
 
-	const navigate = useNavigate();
+        };
 
-        const handleMenu = (()=>{
-			setShowMenu(false)
-        })
+        useEffect(()=>{
+            handleItemClick();  
 
+        },[activeIndex])
 
+    console.log("activeindex", activeIndex)
 
-	//   const handleSignOut = async () => {
-	// 	try {
-	// 	  await auth.signOut();
-	// 	//   setUser(null);
-	// 	//   navigate("/user-login");
-	// 	} catch (error) {
-	// 	  console.error("Error signing out:", error);
-	// 	}
-	//   };
+         const handleLogOut = ()=>{
+         localStorage.removeItem("userInfo");
+            setTimeout(() => navigate("/"), 500); // Ensure cleanup before navigating
+          
+        
 
 
-	//   console.log("logData>>>>>>>>>", user)
-
-	return (
+    }
 
 
+ 
 
-		<>
+    return (
+        <>
+         
+        <div className="container-Userprof">
+            <div className="sidebar-User-prof">
+                <nav>
+                    <a href="#" className="aControlUser">
+                        Hello! <span>{userData?.firstName}</span>
+                    </a>
+                    <ul className="marUlshift">
+                        {menuItems.map((item, index) => (
+                            <Link to={item.path} className="navlink-style" key={index}>
+                                <li onClick={() => handleItemClick(index)} className={activeIndex === index ? "active" : ""}>
+                                    <span className="setIconDivSideB">
+                                        <span>{item.name}</span>
+                                        <span>{item.icon}</span>
+                                    </span>
+                                </li>
+                            </Link>
+                        ))}
+                    </ul>
+                </nav>
+            </div>
+        </div>
 
-			{/* <Header /> */}
+        <Modal show={show} onHide={handleClose} animation={false}   centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Proceed Logout</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to logout? click logout to continue</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="" style={{backgroundColor:"red", color:"white"}} onClick={handleLogOut}>
+            Logout
+          </Button>
+        </Modal.Footer>
+      </Modal>
+        </>
+    );
+};
 
-			{/* <div className="nav-btn-control"  >Menu</div> */}
-			<div className="container-Userprof">
-			
-				<div className="sidebar-User-prof">
-					
-					<nav>
-						<a href="#" className="aControlUser">Hello! <span>Chuks</span></a>
-						 
-						   
-                           <ul style={{color:"white"}} className="marUlshift">
-							
-							
-                              {menuItems.map((item, index) => (
-								    <Link to={item.path} className="navlink-style">
-									    <li
-										key={index}
-										onClick={() => handleItemClick(index)}
-										className={activeIndex === index ? 'active' : ''}
-										>
-										{/* <span> {item.sideIcon}</span> */}
-										<span className="setIconDivSideB">
-										<span>{item.name}</span>
-										<span> {item.icon}</span>
-
-										</span>
-										 
-									</li>
-									</Link>
-							))}
-
-						</ul>
-					</nav>
-				</div>
-			</div>
-		</>
-	)
-})
-
-export default UserDashBoard
+export default UserDashBoard;

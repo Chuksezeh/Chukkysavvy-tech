@@ -35,8 +35,6 @@ const DetailsBookIphone = (()=>{
    
 
 
-
-
     const [isVisible, setIsVisible] = useState(false);
     const [isVisiblePickUp, setIsVisiblePickUp] = useState(false);
 
@@ -183,7 +181,7 @@ Launch static backdrop modal
            
       >
         <Modal.Header closeButton>
-          <Modal.Title>Order For Pickup</Modal.Title>
+          <Modal.Title>Device Repair Pickup Order</Modal.Title>
         </Modal.Header>
         <Modal.Body>
        <IphoneInstoreRepair/>

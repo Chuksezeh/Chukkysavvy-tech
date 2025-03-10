@@ -8,6 +8,8 @@ import { useState } from "react";
 import "./userLogin.css";
 import { useForm, SubmitHandler } from "react-hook-form"
 import useGetData from "../../Utility/getFunction";
+import { chukkytechAxios } from "../../Utility/axios";
+import Footer from "../Footer";
 
 
 const UserLogin = (()=>{
@@ -18,6 +20,10 @@ const UserLogin = (()=>{
 const navigate = useNavigate();
 // const { setUser } = useUser();
 // const history = useLocation();
+const [loading, setLoading] = useState(false);
+	const [successMessage, setSuccessMessage] = useState(false);
+	const [errorMessage, setErrorMessage] = useState(false);
+  const [errMessage, setErrMessage] = useState("");
 const {
   register,
   handleSubmit,
@@ -57,9 +63,38 @@ const handleGoogleSignIn = async () => {
     }
   };
 
-  const { data: registerData, isPending: registerDataIsPending, error } = useGetData('/registration');
 
-  console.log("registrationData", registerData)
+  const handleSubmitLoginData = async data => {
+		setLoading(true);
+
+		console.log('data', data);
+
+		await chukkytechAxios
+			.post('auth/userLogin', data)
+			.then(res => {
+				console.log('res', res);
+				setLoading(false);
+				setSuccessMessage(true);
+        if(res.statusText === "OK"){
+          localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('userInfo', JSON.stringify(res.data));
+          navigate("/user-profile")
+           }
+       
+				
+			})
+			.catch(err => {
+				console.log('err', err);
+				setLoading(false);
+				setErrorMessage(true);
+        setErrMessage(err.response?.data)
+
+			});
+	};
+
+  // const { data: registerData, isPending: registerDataIsPending, error } = useGetData('/registration');
+
+  
 
 
  return(
@@ -73,16 +108,55 @@ const handleGoogleSignIn = async () => {
         <div className="form">
           <p className="titleAdLogin">User login</p>
           
-          <form className="login-form">
-            <label >Email Address</label>
-            <input type="email"  placeholder="Enter your email address"/>
-            <label >Password</label>
-            <input type="password" placeholder="Enter your password"/>
-            <div>Forgot your password?</div>
+          <form className="login-form" onSubmit={handleSubmit((data, event) => {
+                          
+						console.log('seedataNow', data);
+            handleSubmitLoginData(data);
+					})}>
+            <p >Email Address</p>
+            <input type="email"  placeholder="Enter your email address" {...register("email", {
+											required: 'Email is required',
+											maxLength: {},
+										})} />
+                    <span className="cum-error">{errors.email?.message}</span>
+            <p >Password</p>
+            <input type="password" placeholder="Enter your password" {...register("password", {
+											required: 'password is required',
+											maxLength: {},
+										})} />
+                    <span className="cum-error">{errors.email?.message}</span>
+            <div style={{cursor:"pointer"}}>Forgot your password?</div>
             <div className="message">Not registered? <a href="#"> <span onClick={navigateSignUp}> Create 
             an account</span></a></div>
             <br/>
-            <button onClick={navigateUserProfile} >login</button>
+
+            {
+
+errorMessage &&
+<div className="container mt-2">
+  <div className="row">
+
+  <div class="col-sm-12">
+        <div className="alert   alert-danger  " role="alert" >
+          
+                <span> {errMessage.message}   </span>
+         
+        </div>
+      </div>
+
+
+
+  </div>
+</div>
+
+
+}
+
+
+            {
+									loading ? <button > <span class="loader"></span></button> : <button  type="submit">Login</button>
+								}
+            {/* <button type="submit" >login</button> */}
             
           </form>
 
@@ -91,7 +165,10 @@ const handleGoogleSignIn = async () => {
            <button className="google-btn" type="button" onClick={handleGoogleSignIn}> <span><FcGoogle size={30}/></span>  Continue with Google</button> */}
 
         </div>
-      </div>   
+      </div>  
+
+
+      <Footer/> 
         
         </>
     )

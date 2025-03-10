@@ -33,6 +33,8 @@ import PrivacyPolicy from './components/layouts/PrivacyPolicy/privacyPolicy';
 import TermsAndConditions from './components/layouts/TermsAndConditions/termsAndConditon';
 import ProductCart from './components/BuyProducts/ProductCart/productCart';
 import ProductDetailPage from './components/BuyProducts/productDetailpage/productDetail';
+import NoFoundPage from './components/404page/404page';
+import ProductOrders from './components/UserDashboard/UserAccountComponents/productOrders';
 // import AdminDashbord from './components/Admin/adminDashbord/adminDash';
 
 
@@ -75,8 +77,10 @@ function App() {
       <Route path="/buy-products" element={<BuyProducts/>}></Route>
       <Route path="/product-cart" element={<ProductCart/>}></Route>
       <Route path="/privacy-policy" element={<PrivacyPolicy/>}></Route>
+      <Route path="/404" element={<NoFoundPage/>}></Route>
       <Route path="/product-details" element={<ProductDetailPage/>}></Route>
       <Route path="/terms-conditions" element={<TermsAndConditions/>}></Route>
+      <Route path="/user-product-orders" element={<ProductOrders/>}></Route>
    </Routes>
     
    

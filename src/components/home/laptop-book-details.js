@@ -148,7 +148,7 @@ const LaptopBookDetails = (() => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary">Continue</Button>
+        
         </Modal.Footer>
       </Modal>
 
@@ -163,7 +163,7 @@ const LaptopBookDetails = (() => {
            
       >
         <Modal.Header closeButton>
-          <Modal.Title>Order For Pickup</Modal.Title>
+          <Modal.Title>Device Repair Pickup Order</Modal.Title>
         </Modal.Header>
         <Modal.Body>
         <PickupRepairForm/>
@@ -172,7 +172,7 @@ const LaptopBookDetails = (() => {
           <Button variant="secondary" onClick={handleClosePickupForm}>
             Close
           </Button>
-          <Button variant="primary">Continue</Button>
+         
         </Modal.Footer>
       </Modal>
 
