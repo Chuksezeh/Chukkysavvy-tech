@@ -35,7 +35,7 @@ const RepairOrderTable = () => {
   const handleCloseDetails = () => setShowDetails(false);
   const handleShowDetails = () => setShowDetails(true);
 
-  const userInfo = localStorage.getItem('userInfo');
+  const userInfo = localStorage.getItem('adminsInfo');
   const userData = JSON.parse(userInfo);
 
 const handleGetDetails = ((item)=>{
@@ -97,9 +97,12 @@ console.log("Latest Orders:", latestOrders);
       setProgressStatus("delivered")
     } else if (e.target.value === "cancel") {
       setProgressStatus("cancel")
+    } else if (e.target.value === "irreparable") {
+      setProgressStatus("irreparable")
+    } else if (e.target.value === "settled") {
+      setProgressStatus("settled")
     }
 
-    
 
   })
   // console.log("checkvalue", progressStatus)
@@ -126,7 +129,7 @@ console.log("Latest Orders:", latestOrders);
         userId: itemData?.userId,
         repairOrderId:itemData?.repairOrderId,
         repairOrderType: itemData?.repairOrderType,
-        userId: userData?.userId,
+        userId: itemData?.userId,
         status: progressStatus,
         repairOrderCode: itemData?.repairOrderCode
       };
@@ -208,11 +211,11 @@ console.log("Latest Orders:", latestOrders);
                 type="search"
                 defaultValue="Search by order number, device name"
               />
-              <div className="input-group-append">
+              {/* <div className="input-group-append">
                 <button className="btn btn-outline-secondary h-100 w-100" type="button">
                   <i className="fa fa-search"></i>
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="col-6">
@@ -312,6 +315,8 @@ errorMessage &&
                   <option value="fixing">Fixing</option>
                   <option value="fixed">Fixed</option>
                   <option value="delivered">Delivered</option>
+                  <option value="irreparable">Unable to Repair</option>
+                  <option value="settled">Settled</option>
                   <option value="cancel">Cancel</option>
                 </select>
               </td>
@@ -374,6 +379,16 @@ errorMessage &&
           {
             progressStatus === "cancel" && <div>
               <p> Are you sure you want to <span style={{ fontWeight: "bold" }}>Cancel</span> this order? </p>
+            </div>
+          }
+            {
+            progressStatus === "irreparable" && <div>
+              <p> Are you sure you want to <span style={{ fontWeight: "bold" }}>Mark this order as "Unable to Repair"?</span>  </p>
+            </div>
+          }
+            {
+            progressStatus === "settled" && <div>
+              <p> Are you sure you want to <span style={{ fontWeight: "bold" }}>settle </span> this order </p>
             </div>
           }
     </Modal.Body>

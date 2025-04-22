@@ -17,6 +17,7 @@ import { FaClipboardList, FaTruckPickup, FaTools, FaTruckMoving, FaCheckCircle }
 import Receipt from "../../layouts/Receipt/repairOrderReceipt";
 import chukkyLogo from "../../images/CHUKKY-BRAND-BACKGROUND-removebg-preview.png"
 import Footer from "../../layouts/Footer";
+import { FaArrowDownWideShort } from "react-icons/fa6";
 
 
 
@@ -26,6 +27,9 @@ const RepairOrders = (() => {
   const [showDropDown, setShowDropDown] = useState("");
   const [noRecentOrder, setNoRecentOrder] = useState(false);
   const [noOrderHistory, setNoOrderHistory] = useState(false)
+  const [itemData, setItemData] = useState({});
+  const [progressStatus, setProgressStatus] = useState(false);
+
 
   const [orderData, setOrderData] = useState("");
   const [showResult, setShowResult] = useState(false);
@@ -60,46 +64,46 @@ const RepairOrders = (() => {
 
   const getRepairData = repairOrders[0]
 
-  console.log("data>>>>>jjfj", getRepairData)
+  console.log("data>>>>>jjfj", orderCode)
 
 
-   // Sort repairOrders by createdDateTime to get the latest status
-    const sortedOrders = [...repairOrders].sort((a, b) => new Date(a.createdDateTime) - new Date(b.createdDateTime));
-  
-    // Get the latest status update
-    const latestOrder = sortedOrders[sortedOrders.length - 1];
-  
-    // Define the stages and their corresponding statuses
-    const stages = [
-        { name: "Ordered", status: "Processing", icon: <FaClipboardList />, date: null },
-        { name: "Picked", status: "pickedUp", icon: <FaTruckPickup />, date: null },
-        { name: "Fixing", status: "fixing", icon: <FaTools />, date: null },
-        { name: "Delivery", status: "outForDelivery", icon: <FaTruckMoving />, date: null },
-        { name: "Delivered", status: "delivered", icon: <FaCheckCircle />, date: null },
-    ];
-  
-    // Map status updates to the stages
-    const updatedStages = stages.map((stage) => {
-        const matchingOrder = sortedOrders.find((order) => order.status === stage.status);
-        return {
-            ...stage,
-            date: matchingOrder ? matchingOrder.createdDateTime : null,
-            isActive: latestOrder?.status === stage.status, // Highlight latest status
-        };
-    });
-  
-    const handleShowTrackOrder = ((code)=>{
-      setOrderCode(code)
-       setShowTrackOrder(true) 
-    })
+  // Sort repairOrders by createdDateTime to get the latest status
+  const sortedOrders = [...repairOrders].sort((a, b) => new Date(a.createdDateTime) - new Date(b.createdDateTime));
+
+  // Get the latest status update
+  const latestOrder = sortedOrders[sortedOrders.length - 1];
+
+  // Define the stages and their corresponding statuses
+  const stages = [
+    { name: "Ordered", status: "Processing", icon: <FaClipboardList />, date: null },
+    { name: "Picked", status: "pickedUp", icon: <FaTruckPickup />, date: null },
+    { name: "Fixing", status: "fixing", icon: <FaTools />, date: null },
+    { name: "Delivery", status: "outForDelivery", icon: <FaTruckMoving />, date: null },
+    { name: "Delivered", status: "delivered", icon: <FaCheckCircle />, date: null },
+  ];
+
+  // Map status updates to the stages
+  const updatedStages = stages.map((stage) => {
+    const matchingOrder = sortedOrders.find((order) => order.status === stage.status);
+    return {
+      ...stage,
+      date: matchingOrder ? matchingOrder.createdDateTime : null,
+      isActive: latestOrder?.status === stage.status, // Highlight latest status
+    };
+  });
+
+  const handleShowTrackOrder = ((code) => {
+    setOrderCode(code)
+    setShowTrackOrder(true)
+  })
 
 
- 
+
 
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
- 
+
 
 
   const getLatestRepairOrders = (orders) => {
@@ -134,14 +138,47 @@ const RepairOrders = (() => {
 
   console.log("Latest Orders Object>>>>>>>>>:", filterActiveOrders);
 
-const showDetails = (item)=> {
-  setOrderData(item)
-  setShowResult(true)
-}
+  const showDetails = (item) => {
+    setOrderData(item)
+    setShowResult(true)
+  }
 
-const handleCloseResult = ()=> setShowResult(false)
+  const handleCloseResult = () => setShowResult(false)
 
-  
+
+
+  const handleUpdateKeys = ((e, item) => {
+      
+    if(e.target.value === "view"){
+      showDetails()
+      }else if(e.target.value === "action")
+        return
+      else{
+        handleShowTrackOrder(itemData?.orderCode);
+      }
+    
+    
+     if (e.target.value === "pickedUp") {
+      setProgressStatus("pickedUp")
+    } else if (e.target.value === "fixing") {
+      setProgressStatus("fixing")
+    } else if (e.target.value === "fixed") {
+      setProgressStatus("fixed")
+    } else if (e.target.value === "delivered") {
+      setProgressStatus("delivered")
+    } else if (e.target.value === "cancel") {
+      setProgressStatus("cancel")
+    }
+
+    
+
+  })
+  const handleGetDetails = ((item)=>{
+    setItemData(item);
+
+})
+
+
 
   return (
 
@@ -184,13 +221,13 @@ const handleCloseResult = ()=> setShowResult(false)
                     <th>Created date</th>
                     <th>Phone number</th>
                     <th>Pickup Address</th>
-                    <th>Status</th>
+                    <th>Action</th>
                     {/* <th>Action</th> */}
                   </tr>
                 </thead>
                 <tbody>
                   {filterActiveOrders &&
-                   filterActiveOrders.map((item) => (
+                    filterActiveOrders.map((item) => (
                       <tr key={item.repairOrderCode}>
                         <td data-label="Repair Order Code"> {item.repairOrderCode} </td>
                         <td data-label="Device name">{item.deviceType} </td>
@@ -205,7 +242,22 @@ const handleCloseResult = ()=> setShowResult(false)
                         <td>
 
 
-                          <button class="button-15" role="button" onClick={()=> handleShowTrackOrder(item.repairOrderCode)}>Track Order</button>
+                          {/* <button class="button-15" role="button" onClick={()=> handleShowTrackOrder(item.repairOrderCode)}>
+                             */}
+
+                          <select className="form-control border-secondary" onChange={handleUpdateKeys} onClick={() => handleGetDetails(item)} >
+
+                            <option value="">Action</option>
+                            <option value="track"   >Track order</option>
+
+                            <option value="view">View order </option>
+                            <option value="cancel" style={{ color: "red" }}>Cancel order</option>
+
+                          </select>
+
+
+
+                          {/* </button> */}
 
                         </td>
                       </tr>
@@ -225,7 +277,7 @@ const handleCloseResult = ()=> setShowResult(false)
 
 
               {
-                filterActiveOrders.length === 0  && !isPending && <h2 className="" style={{ textAlign: "center", padding: "10px" }}  >No Recent Order Placed</h2>
+                filterActiveOrders.length === 0 && !isPending && <h2 className="" style={{ textAlign: "center", padding: "10px" }}  >No Recent Order Placed</h2>
               }
 
 
@@ -238,7 +290,7 @@ const handleCloseResult = ()=> setShowResult(false)
 
           </Tab>
           <Tab eventKey="profile" title="Repair Order History">
-          <div className="panel-wrapper">
+            <div className="panel-wrapper">
               <div className="panel-head">
                 Repair Order History
               </div>
@@ -297,7 +349,7 @@ const handleCloseResult = ()=> setShowResult(false)
 
 
               {
-                filterOrderHistory.length === 0 && !isPending &&  <h2 className="" style={{ textAlign: "center", padding: "10px" }}  >No Order History Yet</h2>
+                filterOrderHistory.length === 0 && !isPending && <h2 className="" style={{ textAlign: "center", padding: "10px" }}  >No Order History Yet</h2>
               }
 
 
@@ -311,8 +363,8 @@ const handleCloseResult = ()=> setShowResult(false)
       </div>
 
 
-      
-   
+
+
 
 
       <Modal show={showResult} onHide={handleCloseResult} size="lg">
@@ -322,7 +374,7 @@ const handleCloseResult = ()=> setShowResult(false)
         <Modal.Body>
 
 
-        <Receipt orderData={orderData} chukkyLogo={chukkyLogo}/>
+          <Receipt orderData={orderData} chukkyLogo={chukkyLogo} />
 
 
         </Modal.Body>
@@ -342,11 +394,11 @@ const handleCloseResult = ()=> setShowResult(false)
         </Modal.Header>
         <Modal.Body>
 
-        {
-                repairOrdersPending && <div className="" style={{ width: "100%", justifyContent: "center", textAlign: "center" }}>
-                  <span style={{ margin: "0 auto" }} className="loader-come"></span>
+          {
+            repairOrdersPending && <div className="" style={{ width: "100%", justifyContent: "center", textAlign: "center" }}>
+              <span style={{ margin: "0 auto" }} className="loader-come"></span>
 
-                </div>}
+            </div>}
 
           {
 

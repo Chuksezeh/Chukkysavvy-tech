@@ -55,11 +55,15 @@ const UserSignUp = (() => {
 
 	const handleSubmitData = async data => {
 		setLoading(true);
-
+           const userData = {
+			...data,
+			userType: "User",
+			status: "Active"
+		   }
 		console.log('data', data);
 
 		await chukkytechAxios
-			.post('auth/register', data)
+			.post('/auth/registeration', userData)
 			.then(res => {
 				console.log('res', res);
 				setLoading(false);

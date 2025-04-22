@@ -1,6 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import Header from "../../layouts/Header";
 import "./adminLogin.css";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { chukkytechAxios } from "../../Utility/axios";
 
 
 const AdminLoginPage  = ()=>{
@@ -8,9 +11,51 @@ const AdminLoginPage  = ()=>{
 const navigate = useNavigate();
 
 
+const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(false);
+  const [errMessage, setErrMessage] = useState("");
+const {
+  register,
+  handleSubmit,
+  watch,
+  formState: { errors },
+} = useForm();
+
+
 const navigateAdminDashboard = (()=>{
   navigate("/admin-dashboard-card")
 })
+
+
+const handleSubmitLoginData = async data => {
+  setLoading(true);
+
+  console.log('data', data);
+
+  await chukkytechAxios
+    .post('auth/loginAdminUser', data)
+    .then(res => {
+      console.log('res', res);
+      setLoading(false);
+      setSuccessMessage(true);
+      if(res.statusText === "OK"){
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('adminsInfo', JSON.stringify(res.data));
+        navigate("/admin-dashboard-card")
+         }
+     
+      
+    })
+    .catch(err => {
+      console.log('err', err);
+      setLoading(false);
+      setErrorMessage(true);
+      setErrMessage(err.response?.data)
+
+    });
+};
+
 
 
  return(
@@ -18,17 +63,36 @@ const navigateAdminDashboard = (()=>{
 
 <Header/>
 
-     <div className="login-page">
+  <div className="login-page">
         
   <div className="form">
     <p className="titleAdLogin">Admin Login</p>
     
-    <form className="login-form">
+    <form className="login-form"  onSubmit={handleSubmit((data, event) => {
+                          
+                          console.log('seedataNow', data);
+                          handleSubmitLoginData(data);
+                        })}>
       <label>Email Address</label>
-      <input type="email" placeholder="Enter email address"/>
+      <input type="email" placeholder="Enter email address"
+      
+      {...register("email", {
+        required: 'Email is required',
+        maxLength: {},
+      })} />
+      <span className="cum-error">{errors.email?.message}</span>
        <label>Password</label>
-      <input type="password" placeholder="Enter password"/>
-      <button onClick={navigateAdminDashboard}>login</button>
+      <input type="password" placeholder="Enter password"
+      
+      {...register("password", {
+        required: 'password is required',
+        maxLength: {},
+      })} />
+      <span className="cum-error">{errors.email?.message}</span>
+     
+      {
+									loading ? <button > <span class="loader"></span></button> : <button  type="submit">Login</button>
+								}
       {/* <p className="message">Not registered? <a href="#">Create an account</a></p> */}
     </form>
   </div>

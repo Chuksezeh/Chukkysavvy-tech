@@ -101,6 +101,26 @@ const navigateProductOrder = ()=>{
 }
 
 
+const userInfo = localStorage.getItem("adminsInfo");
+const userData = JSON.parse(userInfo);
+useEffect(() => {
+  if (!userData) {
+      navigate("/");
+  }
+}, [userData]); // React when userData changes
+
+
+
+const handleLogOut = ()=>{
+  localStorage.removeItem("userInfo");
+     setTimeout(() => navigate("/admin-login"), 500); // Ensure cleanup before navigating
+   
+ }
+
+
+
+
+
   return (
 
     <>
@@ -189,7 +209,7 @@ const navigateProductOrder = ()=>{
               {/* <BiLogOut className="logoutdownicon" size={30} /> */}
             </NavIcon>
             <NavText
-            //  onClick={() => setLgShow(true)}
+             onClick={() => handleLogOut()}
             >
               Log out
             </NavText>

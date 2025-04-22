@@ -55,10 +55,7 @@ const UserDashBoard = () => {
          localStorage.removeItem("userInfo");
             setTimeout(() => navigate("/"), 500); // Ensure cleanup before navigating
           
-        
-
-
-    }
+        }
 
 
  
