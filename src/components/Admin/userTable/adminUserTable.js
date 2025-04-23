@@ -6,7 +6,7 @@ import moment from "moment";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-const UserTable = () => {
+const AdminUserPage = () => {
   const [showDropDown, setShowDropDown] = useState("");
   const [pendingUser, setPendingUser] = useState(false);
   const [allUsers, setAllUsers] = useState([]);
@@ -34,7 +34,7 @@ const UserTable = () => {
   const fetchUsers = async () => {
     setPendingUser(true);
     try {
-      const response = await chukkytechAxios.get("auth/getAllUsers");
+      const response = await chukkytechAxios.get("auth/getAllAdminUsers");
       setAllUsers(response.data);
       setPendingUser(false);
     } catch (error) {
@@ -46,6 +46,9 @@ const UserTable = () => {
   useEffect(() => {
     fetchUsers();
   }, []);
+
+
+  console.log("adminUssr<>>>>", allUsers)
 
   // Filter users based on search term
   const filteredUsers = allUsers.filter(user => {
@@ -106,7 +109,7 @@ const UserTable = () => {
     console.log('data', sendData);
   
     await chukkytechAxios
-      .put(`auth/updateUserStatus/${userItem.userId}`, sendData)
+      .put(`auth/updateAdminStatus/${userItem.userId}`, sendData)
       .then(res => {
         console.log('res', res);
         setLoadingStatus(false);
@@ -123,11 +126,13 @@ const UserTable = () => {
   
       });
   };
+  console.log('duserItem.userId', userItem.userId);
+
 
   const handleDeleteUser = async data => {
     setLoadingStatus(true);
      await chukkytechAxios
-      .delete(`auth/deleteUser/${userItem.userId}`)
+      .delete(`auth/deleteAdminUser/${userItem.userId}`)
       .then(res => {
         console.log('res', res);
         setLoadingStatus(false);
@@ -152,7 +157,7 @@ const UserTable = () => {
       <AdminDashboard />
       <div className="header-bar">
         <ul className="action-bar">
-          <li>Home / Users / <span className="addash"> View Users </span></li>
+          <li>Home / Users / <span className="addash"> View Admin Users </span></li>
         </ul>
       </div>
       
@@ -243,8 +248,13 @@ errorMessage &&
                   <td data-label="First name">{data.firstName}</td>
                   <td data-label="Last name">{data.lastName}</td>
                   <td data-label="Email">{data.email}</td>
-                  <td data-label="Email">{data.status}</td>
-                  <td data-label="Date registered">{moment(data.createdDateTime).format("lll")}</td>
+                  <td data-label="Status">{data.status}</td>
+                  <td data-label="Date registered">
+                    {/* {moment(data.createdDateTime).format("lll")} */}
+                       {data.createdDateTime
+                       }
+
+                  </td>
                   <td>
                     <select className="form-control border-secondary" onChange={handleChangeAction} onClick={()=>handleGetData(data)}>
                       <option>Action</option>
@@ -385,4 +395,4 @@ errorMessage &&
   );
 };
 
-export default UserTable;
+export default AdminUserPage;

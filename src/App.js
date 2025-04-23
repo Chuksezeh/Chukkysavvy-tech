@@ -35,6 +35,8 @@ import ProductCart from './components/BuyProducts/ProductCart/productCart';
 import ProductDetailPage from './components/BuyProducts/productDetailpage/productDetail';
 import NoFoundPage from './components/404page/404page';
 import ProductOrders from './components/UserDashboard/UserAccountComponents/productOrders';
+import AdminUserPage from './components/Admin/userTable/adminUserTable';
+import AdminLocations from './components/Admin/admin-locations';
 // import AdminDashbord from './components/Admin/adminDashbord/adminDash';
 
 
@@ -81,6 +83,8 @@ function App() {
       <Route path="/product-details" element={<ProductDetailPage/>}></Route>
       <Route path="/terms-conditions" element={<TermsAndConditions/>}></Route>
       <Route path="/user-product-orders" element={<ProductOrders/>}></Route>
+      <Route path="/admin-user" element={<AdminUserPage/>}></Route>
+      <Route path="/admin-service-locations" element={<AdminLocations/>}></Route>
    </Routes>
     
    

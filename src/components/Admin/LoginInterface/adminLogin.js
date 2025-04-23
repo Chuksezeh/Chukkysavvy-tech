@@ -93,7 +93,26 @@ const handleSubmitLoginData = async data => {
       {
 									loading ? <button > <span class="loader"></span></button> : <button  type="submit">Login</button>
 								}
-      {/* <p className="message">Not registered? <a href="#">Create an account</a></p> */}
+    {errorMessage &&
+<div className="container mt-2">
+  <div className="row">
+
+  <div class="col-sm-12">
+        <div className="alert   alert-danger  " role="alert" >
+          
+                <span> {errMessage?.message || "Something went wrong, Please try again later"}   </span>
+         
+        </div>
+      </div>
+
+
+
+  </div>
+</div>
+
+
+}
+
     </form>
   </div>
 </div>   

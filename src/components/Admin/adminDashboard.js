@@ -1,240 +1,162 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import Header from "../layouts/Header";
-import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
+import SideNav, { Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import './adminDashboard.css';
 import "./adminDashboard.scss";
-import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import React, { useEffect, useState } from 'react';
-import { FaHome } from "react-icons/fa";
+import { FaHome, FaBars } from "react-icons/fa";
 import { SlPeople } from "react-icons/sl";
 import { IoIosPeople } from "react-icons/io";
 import { IoPersonAddOutline } from "react-icons/io5";
 import { GoListOrdered } from "react-icons/go";
+import { MdOutlineLogout } from "react-icons/md";
+import { FaLocationDot, FaMagnifyingGlassLocation } from "react-icons/fa6";
 
+const AdminDashboard = () => {
+    const navigate = useNavigate();
 
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 760);
+    const [sidebarVisible, setSidebarVisible] = useState(!isMobile);
 
+    const handleResize = () => {
+        const isNowMobile = window.innerWidth < 760;
+        setIsMobile(isNowMobile);
+        setSidebarVisible(!isNowMobile); // Hide sidebar by default on mobile
+    };
 
-const AdminDashboard = (() => {
+    useEffect(() => {
+        window.addEventListener("resize", handleResize);
+        handleResize();
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
+    const userInfo = localStorage.getItem("adminsInfo");
+    const userData = JSON.parse(userInfo);
 
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 760);
+    useEffect(() => {
+        if (!userData) {
+            navigate("/");
+        }
+    }, [userData]);
 
-  useEffect(() => {
-  const handleResize = () => {
-  setIsMobile(window.innerWidth < 760);
-  };
-  
-  window.addEventListener('resize', handleResize);
-  handleResize(); // Call handler right away so state gets updated with initial window size
-  
-  return () => window.removeEventListener('resize', handleResize);
-  }, []);
-  
-  const handleClick = (e) => {
-  const siblings = Array.from(e.target.parentNode.children).filter(
-  (child) => child !== e.target
-  );
-  
-  siblings.forEach((sibling) => {
-  sibling.style.display = 'inline-block';
-  setTimeout(() => {
-  sibling.style.transform = 'translateY(0)';
-  }, 0);
-  });
-  
-  document.querySelectorAll('tr td:first-child').forEach((cell) => {
-  if (cell !== e.target) {
-  const otherSiblings = Array.from(cell.parentNode.children).filter(
-  (child) => child !== cell
-  );
-  otherSiblings.forEach((sibling) => {
-  sibling.style.display = 'none';
-  sibling.style.transform = 'translateY(-9999px)';
-  });
-  }
-  });
-  };
-  
-  useEffect(() => {
-  if (isMobile) {
-  document.querySelectorAll('tr td:first-child').forEach((cell) => {
-  cell.addEventListener('click', handleClick);
-  });
-  } else {
-  document.querySelectorAll('tr td:first-child').forEach((cell) => {
-  cell.removeEventListener('click', handleClick);
-  const siblings = Array.from(cell.parentNode.children).filter(
-  (child) => child !== cell
-  );
-  siblings.forEach((sibling) => {
-  sibling.style.display = '';
-  sibling.style.transform = '';
-  });
-  });
-  }
-  }, [isMobile]);
-  
-const navigate = useNavigate();
+    const handleLogOut = () => {
+        localStorage.removeItem("userInfo");
+        setTimeout(() => navigate("/admin-login"), 500);
+    };
 
-const navigateUserTable = ()=>{
-
-  navigate("/user-table")
-}
-
-const navigateAminMainDashoard = ()=>{
-
-  navigate("/admin-dashboard-card")
-}
-
-const navigateCreateUser = ()=>{
-
-  navigate("/create-user")
-}
-const navigateUserRepairOrder = ()=>{
-
-  navigate("/user-repair-orders")
-}
-
-const navigateProductOrder = ()=>{
-  navigate("/product-orders")
-}
-
-
-const userInfo = localStorage.getItem("adminsInfo");
-const userData = JSON.parse(userInfo);
-useEffect(() => {
-  if (!userData) {
-      navigate("/");
-  }
-}, [userData]); // React when userData changes
-
-
-
-const handleLogOut = ()=>{
-  localStorage.removeItem("userInfo");
-     setTimeout(() => navigate("/admin-login"), 500); // Ensure cleanup before navigating
-   
- }
-
-
-
-
-
-  return (
-
-    <>
-
-      <Header />
-
-
-
-
-      <SideNav
-        onSelect={(selected) => {
-          // Add your code here
-        }}
-        className="nowsidecontainer"
-      >
-        <SideNav.Toggle />
-        <SideNav.Nav defaultSelected="home"  >
-          <NavItem eventKey="home">
-            <NavIcon >
-              <FaHome onClick={navigateAminMainDashoard} className="side-main-icon"/> 
-            </NavIcon>
-            <NavText>
-              <NavLink to="/admin-dashboard-card " className="admindash-nav"><li className="dashbbb">Dashboard</li></NavLink>
-            </NavText>
-          </NavItem>
-
-<span></span>
-
-          <NavItem eventKey="2">
-            <NavIcon>
-              <SlPeople className="side-main-icon" /> 
-            </NavIcon>
-            <NavText>
-              Users
-            </NavText>
-            
-            <NavItem eventKey="2-2">
-              <NavText className="move-side">
-                <li className="shift-nav" onClick={navigateUserTable }>
-                  <IoIosPeople className="inicon" size={18}/>     
-                  <span className="ml-5"> View users</span>
-                  </li>
-              </NavText>
-            </NavItem>
-            <NavItem eventKey="2-3">
-              <NavText>
-                <li className="shift-nav" onClick={navigateCreateUser }>
-                  <IoPersonAddOutline className="inicon" size={16}/>     
-                  <span className="ml-5">  Create user</span> </li>
-              </NavText>
-            </NavItem>
-          </NavItem>
-
-          <NavItem eventKey="3">
-            <NavIcon>
-            <GoListOrdered  className="side-main-icon"/>
-            </NavIcon>
-            <NavText>
-            Orders
-            </NavText>
-            
-            <NavItem eventKey="3-1">
-              <NavText className="move-side">
-                <li className="shift-nav" onClick={navigateUserRepairOrder }>
-                  <IoIosPeople className="inicon" size={18}/>     
-                  <span className="ml-5"> Repair Order</span>
-                  </li>
-              </NavText>
-              
-            </NavItem>
-            <NavItem eventKey="3-2">
-              <NavText>
-                <li className="shift-nav" onClick={navigateProductOrder }>
-                  <IoPersonAddOutline className="inicon" size={16}/>     
-                  <span className="ml-5">Product Order</span> </li>
-              </NavText>
-           
-          </NavItem>
-          </NavItem>
-
-
-         
-
-          <NavItem eventKey="9">
-            <NavIcon >
-              {/* <BiLogOut className="logoutdownicon" size={30} /> */}
-            </NavIcon>
-            <NavText
-             onClick={() => handleLogOut()}
-            >
-              Log out
-            </NavText>
-
-
-          </NavItem>
-
-
-
-
-
-
-
-
-
-        </SideNav.Nav>
-      </SideNav>
+    const toggleSidebar = () => {
+        setSidebarVisible(!sidebarVisible);
+    };
 
    
 
 
-    </>
 
+    return (
+        <>
+        <Header/>
+            {/* Hamburger icon on mobile */}
+            {isMobile && (
+                <div className="hamburger-icon" onClick={toggleSidebar} style={{ padding: "10px", cursor: "pointer", background: "#eee" }}>
+                    <FaBars size={24} />
+                </div>
+            )}
 
-  )
-})
+            {/* Sidebar */}
+            {sidebarVisible && (
+                <SideNav className="nowsidecontainer">
+                    <SideNav.Toggle />
+                    <SideNav.Nav defaultSelected="home">
+                        <NavItem eventKey="home">
+                            <NavIcon>
+                                <FaHome onClick={() => navigate("/admin-dashboard-card")} className="side-main-icon" />
+                            </NavIcon>
+                            <NavText>
+                                <NavLink to="/admin-dashboard-card" className="admindash-nav"><li className="dashbbb">Dashboard</li></NavLink>
+                            </NavText>
+                        </NavItem>
 
-export default AdminDashboard
+                        <NavItem eventKey="2">
+                            <NavIcon><SlPeople className="side-main-icon" /></NavIcon>
+                            <NavText>Users</NavText>
+                            <NavItem eventKey="2-2">
+                                <NavText className="move-side">
+                                    <li className="shift-nav" onClick={() => navigate("/user-table")}>
+                                        <IoIosPeople className="inicon" size={18} />
+                                        <span className="ml-5">View users</span>
+                                    </li>
+                                </NavText>
+                            </NavItem>
+                            <NavItem eventKey="2-3">
+                                <NavText className="move-side">
+                                    <li className="shift-nav" onClick={() => navigate("/admin-user")}>
+                                        <IoIosPeople className="inicon" size={18} />
+                                        <span className="ml-5">View admin users</span>
+                                    </li>
+                                </NavText>
+                            </NavItem>
+                            <NavItem eventKey="2-4">
+                                <NavText>
+                                    <li className="shift-nav" onClick={() => navigate("/create-user")}>
+                                        <IoPersonAddOutline className="inicon" size={16} />
+                                        <span className="ml-5">Create user</span>
+                                    </li>
+                                </NavText>
+                            </NavItem>
+                        </NavItem>
+
+                        <NavItem eventKey="3">
+                            <NavIcon><GoListOrdered className="side-main-icon" /></NavIcon>
+                            <NavText>Orders</NavText>
+                            <NavItem eventKey="3-1">
+                                <NavText className="move-side">
+                                    <li className="shift-nav" onClick={() => navigate("/user-repair-orders")}>
+                                        <IoIosPeople className="inicon" size={18} />
+                                        <span className="ml-5">Repair Order</span>
+                                    </li>
+                                </NavText>
+                            </NavItem>
+                            <NavItem eventKey="3-2">
+                                <NavText>
+                                    <li className="shift-nav" onClick={() => navigate("/product-orders")}>
+                                        <IoPersonAddOutline className="inicon" size={16} />
+                                        <span className="ml-5">Product Order</span>
+                                    </li>
+                                </NavText>
+                            </NavItem>
+                        </NavItem>
+
+                        <NavItem eventKey="4">
+                            <NavIcon> <FaLocationDot className="side-main-icon"/>  </NavIcon>
+                            <NavText>Locations</NavText>
+                            <NavItem eventKey="4-1">
+                                <NavText className="move-side">
+                                    <li className="shift-nav" onClick={() => navigate("/admin-service-locations")}>
+                                        <FaMagnifyingGlassLocation className="inicon" size={18} />
+                                        <span className="ml-5">Location</span>
+                                    </li>
+                                </NavText>
+                            </NavItem>
+                            {/* <NavItem eventKey="3-2">
+                                <NavText>
+                                    <li className="shift-nav" onClick={() => navigate("/product-orders")}>
+                                        <IoPersonAddOutline className="inicon" size={16} />
+                                        <span className="ml-5">Product Order</span>
+                                    </li>
+                                </NavText>
+                            </NavItem> */}
+                        </NavItem>
+
+                        <NavItem eventKey="9">
+                        <NavIcon> <MdOutlineLogout className="side-main-icon"/>  </NavIcon>
+                            <NavText onClick={handleLogOut}>Log out</NavText>
+                        </NavItem>
+                    </SideNav.Nav>
+                </SideNav>
+            )}
+        </>
+    );
+};
+
+export default AdminDashboard;

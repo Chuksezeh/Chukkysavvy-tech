@@ -207,17 +207,25 @@ showMainModal &&
 
 
             <div className="col-md-6">
-                <div className="form-group">
-                    <label id="name-label" for="name">Reservation date and time</label>
-                    <input type="datetime-local" id="name" placeholder="Enter your name" className="form-control"
-                        {...register("reserveDate", {
-                            required: 'Reservation date is required',
-                            maxLength: {},
-                        })}
-                    />
-                    <span className="cum-error">{errors.reserveDate?.message}</span>
-                </div>
-            </div>
+  <div className="form-group">
+    <label id="name-label" htmlFor="name">Reservation date and time</label>
+    <input 
+      type="datetime-local" 
+      id="name" 
+      placeholder="Select date and time" 
+      className="form-control"
+      min={new Date().toISOString().slice(0, 16)} // This disables past dates
+      {...register("reserveDate", {
+        required: 'Reservation date is required',
+        validate: {
+          futureDate: (value) => 
+            new Date(value) > new Date() || 'Please select a future date and time'
+        }
+      })}
+    />
+    <span className="cum-error">{errors.reserveDate?.message}</span>
+  </div>
+</div>
             <div className="col-md-6">
                 <div className="form-group">
                     <label id="number-label" for="number">Phone number</label>

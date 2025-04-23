@@ -202,37 +202,51 @@ console.log("Latest Orders:", latestOrders);
       </div>
 
       <div className="container">
-        <h5>Search order</h5>
+        <h4 style={{textAlign:"center"}}>Search order</h4>
+        <span>Search by orderCode</span>
         <div className="row">
+        
           <div className="col-6">
+           
             <div className="input-group">
               <input
                 className="form-control border-secondary py-2"
                 type="search"
                 defaultValue="Search by order number, device name"
               />
-              {/* <div className="input-group-append">
-                <button className="btn btn-outline-secondary h-100 w-100" type="button">
-                  <i className="fa fa-search"></i>
-                </button>
-              </div> */}
+             
             </div>
           </div>
           <div className="col-6">
             <div className="input-group">
+              {/* <span>Search by status</span> */}
               <select className="form-control border-secondary py-2" >
                 <option>Select Status</option>
-                <option>Picked up</option>
-                <option>Delivering</option>
-                <option>Fixing</option>
-                <option>Delivered</option>
-                <option>Cancelled</option>
+                <option value="pickedUp">Picked up</option>
+                <option value="fixing">Fixing</option>
+                <option value="fixed">Fixed</option>
+                <option value="delivered"> Delivered</option>
+                <option value="irreparable"> Cannot fix</option>
+                <option value="cancel"> Cancelled</option>
+                <option value="settled">Settled</option>
               </select>
             </div>
           </div>
         </div>
+            <p></p>
+            <span>Select order type</span>
+        <div className="col-12">
+            <div className="input-group">
+              <select className="form-control border-secondary py-2" >
+                <option>Select order type</option>
+                <option value="pickUp"> Pickup</option>
+                <option value="instoreApointment">Instore Apointment</option>
+                
+              </select>
+            </div>
+          </div>
       </div>
-
+      
 
       {
 
@@ -252,8 +266,6 @@ successMessage &&
 
   </div>
 </div>
-
-
 }
 
 {
