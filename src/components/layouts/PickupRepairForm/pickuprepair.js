@@ -12,7 +12,9 @@ import { IoCheckmarkDoneOutline } from "react-icons/io5";
 import Receipt from "../Receipt/repairOrderReceipt";
 import { Button } from "react-bootstrap";
 
-
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import useGetData from "../../Utility/getFunction";
 
 
 
@@ -22,15 +24,14 @@ let renderCount = 0;
 
 const PickupRepairForm = (() => {
 
+    const { register, handleSubmit, setValue, reset,
+        watch, formState: { errors, isDirty, isValid  } } = useForm({
+        defaultValues: {
+          reserveDate: null,
+        }
+      });
+      const [reserveDate, setReserveDate] = useState(null);
 
-
-    const {
-        register,
-        handleSubmit,
-        reset,
-        watch,
-        formState: { errors, isDirty, isValid },
-    } = useForm();
     renderCount++;
     const [loading, setLoading] = useState(false);
     const [successMessage, setSuccessMessage] = useState(false);
@@ -51,12 +52,15 @@ const PickupRepairForm = (() => {
 
     const navigateLogin = () =>  navigate("/user-login");
 
+   
 
     const handleClose = () => setShow(false);
 
     const handleOpen = () =>{
           setShow(true);
     }
+
+    const { data, isPendinge, error } = useGetData('location/getAllLocations')
 
     const userInfo = localStorage.getItem('userInfo');
     const userData = JSON.parse(userInfo);
@@ -163,16 +167,24 @@ showMainModal &&
 
 
             <div className="col-md-6">
-                <div className="form-group">
-                    <label id="name-label" for="name">Reservation date and time</label>
-                    <input type="datetime-local" id="name" placeholder="Enter your name" className="form-control"
-                        {...register("reserveDate", {
-                            required: 'Reservation date is required',
-                            maxLength: {},
-                        })}
-                    />
-                    <span className="cum-error">{errors.reserveDate?.message}</span>
-                </div>
+              <div className="form-group">
+                <label htmlFor="reserveDate">Reservation date and time</label>
+                <DatePicker
+                  selected={reserveDate}
+                  onChange={(date) => {
+                    setReserveDate(date);
+                    setValue("reserveDate", date); // set value for react-hook-form
+                  }}
+                  showTimeSelect
+                  timeFormat="hh:mm aa"
+                  timeIntervals={15}
+                  dateFormat="MMMM d, yyyy h:mm aa"
+                  minDate={new Date()}
+                  className="form-control"
+                  placeholderText="Select date and time"
+                />
+                <span className="cum-error">{errors.reserveDate?.message}</span>
+              </div>
             </div>
             <div className="col-md-6">
                 <div className="form-group">

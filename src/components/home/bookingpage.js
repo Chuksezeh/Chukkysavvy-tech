@@ -11,6 +11,7 @@ import otherPhones from '../images/other-phones.jpg';
 import laptop from '../images/laptops1.avif';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import Goback from '../layouts/goBack';
 
 
 
@@ -60,8 +61,8 @@ const scrolltop = () => {
 <div className='fixlineDiv'>
   <div className='fixLine' ></div>
 </div>
-
 <div className="wrapper">
+<Goback/>
 
    <div className="card" >
    <NavLink to="/details-book-Iphone">

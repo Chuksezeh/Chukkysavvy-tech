@@ -380,8 +380,9 @@ form .form-row .textarea{
   width: 100% !important;
 }
 .text-about-sec{
-  width: 50%;
-  padding: 10px;
+  width: 100%;
+ text-align: center;
+  /* justify-content: space-around; */
 }
 /* .chukName{
   font-size: 25px;
@@ -397,14 +398,14 @@ form .form-row .textarea{
     display: flex;
 }
 .second{
-    display: flex;
+    /* display: flex; */
     gap: 5%;
     background-color: #162444;
     justify-content: center;
     /* text-align: center; */
     color: white;
-    padding-left: 5%;
-    padding-right: 5%;
+    /* padding-left: 5%;
+    padding-right: 5%; */
 }
 .card-covers{
   display: flex;

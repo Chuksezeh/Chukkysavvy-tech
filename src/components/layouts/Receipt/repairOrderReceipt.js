@@ -76,13 +76,17 @@ const Receipt = ({ orderData, chukkyLogo }) => {
                   <td className="tableitem"><p className="itemtext">{orderData.repairOrderType}</p></td>
                 </tr>
                 <tr className="service">
+                  <td className="tableitem"><p className="itemtext">Address pickup/center</p></td>
+                  <td className="tableitem"><p className="itemtext">{orderData.pickUpAddress}</p></td>
+                </tr>
+                <tr className="service">
                   <td className="tableitem"><p className="itemtext">Due Reserved Date Time</p></td>
                   <td className="tableitem"><p className="itemtext">{moment(orderData.reserveDate).format("lll")}</p></td>
                 </tr>
-                {/* <tr className="service">
+                <tr className="service">
                   <td className="tableitem"><p className="itemtext">Booked On</p></td>
-                  <td className="tableitem"><p className="itemtext">{moment(orderData.reserveDate).format("lll")}</p></td>
-                </tr> */}
+                  <td className="tableitem"><p className="itemtext">{moment(orderData.createdDateTime).format("lll")}</p></td>
+                </tr>
 
                 <tr className="service">
                   <td className="tableitem"><p className="itemtext">Status</p></td>

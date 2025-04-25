@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AdminDashboard from "../adminDashboard";
 import useGetData from "../../Utility/getFunction";
 import { chukkytechAxios } from "../../Utility/axios";
@@ -14,13 +14,33 @@ const RepairOrderTable = () => {
   const [successTex, setSuccessText] = useState("");
   const [errMessage, setErrMessage] = useState("");
   const [itemData, setItemData] = useState({});
+  const [data, setData] = useState([]);
+   
+  const [isPending, setIsPending] = useState(true);
   
 
   const handleShowDropDown = (orderId) => {
     setShowDropDown((prev) => (prev === orderId ? null : orderId));
   };
 
-  const { data, isPending, error } = useGetData("adminRepair/getAllRepairOrder");
+
+  const fetchAdminRepairOrder = async () => {
+    setIsPending(true);
+      try {
+        const response = await chukkytechAxios.get("adminRepair/getAllRepairOrder");
+        setData(response.data);
+        setIsPending(false);
+      } catch (error) {
+        setIsPending(false);
+        console.error('Error fetching tracking:', error);
+      }
+    };
+
+    useEffect(()=>{
+      fetchAdminRepairOrder()
+    },[]);
+
+  // const { data, isPending, error } = useGetData("adminRepair/getAllRepairOrder");
   const [loading, setLoading] = useState(false);
 
   const [progressStatus, setProgressStatus] = useState("");
@@ -138,9 +158,7 @@ console.log("Latest Orders:", latestOrders);
 
       const res = await chukkytechAxios.post('repair/repairorder', deviceData);
       const result = res.data;
-
-      console.log("API response:", result);
-
+   
       setLoading(false);
       setOrderData(result?.repairOrder);
       setSuccessText(res?.data?.message);
@@ -149,7 +167,7 @@ console.log("Latest Orders:", latestOrders);
       setTimeout(() => {
         setSuccessMessage(false);
       }, 4000);
-     
+      fetchAdminRepairOrder()
 
     } catch (err) {
       console.error("API error:", err);

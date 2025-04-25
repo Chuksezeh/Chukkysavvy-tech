@@ -1,5 +1,5 @@
 import Header from "../layouts/Header";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Footer from "../layouts/Footer";
 import samsung from '../images/samsung.png';
 
@@ -11,6 +11,7 @@ import InstoreRepairForm from "../layouts/InstoreRepairForm/instoreREpair";
 import PickupRepairForm from "../layouts/PickupRepairForm/pickuprepair";
 import { Button, Modal } from "react-bootstrap";
 import ChatComponent from "../layouts/contactComponent/chatComponent";
+import Goback from "../layouts/goBack";
 
 
 const LaptopBookDetails = (() => {
@@ -41,11 +42,23 @@ const LaptopBookDetails = (() => {
   }
 
 
+  const scrolltop = () => {
+   window.scrollTo({
+     top: 0,
+     behavior: 'smooth',
+   })
+ }
+ useEffect(() => {
+   scrolltop()
+ }, [])
+
+
    return (
 
       <>
          <Header />
          <div className="container">
+         <Goback/>
 
             <div className='fixlineDiv'>
                <h2 className="iphone-d">Laptops/Desktops</h2>

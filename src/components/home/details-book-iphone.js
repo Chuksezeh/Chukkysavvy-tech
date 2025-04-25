@@ -2,7 +2,7 @@ import Header from "../layouts/Header"
 import iphoneImage from '../images/iphone4.jpg';
 import { Form, useNavigate } from "react-router-dom";
 import { Button, Row } from "react-bootstrap";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Card from 'react-bootstrap/Card';
 import rep1 from '../images/rep1.jpg';
@@ -13,6 +13,7 @@ import { FaWhatsapp } from "react-icons/fa";
 import ChatComponent from "../layouts/contactComponent/chatComponent";
 import IphonePickupREpair from "../layouts/IphonePickupRepairForm/iphonePickupRepair";
 import IphoneInstoreRepair from "../layouts/IphoneInstoreRepairForm/iphoneInstoreRepair";
+import Goback from "../layouts/goBack";
 
 
 
@@ -53,7 +54,15 @@ const DetailsBookIphone = (()=>{
 {/* <Button variant="primary" onClick={handleShow}>
 Launch static backdrop modal
 </Button> */}
-
+const scrolltop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  })
+}
+useEffect(() => {
+  scrolltop()
+}, [])
 
     return(
 
@@ -61,7 +70,8 @@ Launch static backdrop modal
 <Header/>
 
 <div className="container">
-        
+<Goback/>
+
         <div className='fixlineDiv'>
         <h2 className="iphone-d">Iphones</h2>
         <div className='fixLine' ></div>

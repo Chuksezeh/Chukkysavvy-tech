@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Footer from "../layouts/Footer";
 import samsung from '../images/samsung.png';
 import { Button, Row } from "react-bootstrap";
@@ -10,6 +10,7 @@ import SignUpSignIn from "./singupSignIn/signup-signin";
 import InstoreRepairForm from "../layouts/InstoreRepairForm/instoreREpair";
 import PickupRepairForm from "../layouts/PickupRepairForm/pickuprepair";
 import ChatComponent from "../layouts/contactComponent/chatComponent";
+import Goback from "../layouts/goBack";
 
 
 const SamsungDetails = (()=>{
@@ -47,6 +48,18 @@ const SamsungDetails = (()=>{
      handleShowPickUpForm()
   }
   
+  
+
+  const scrolltop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
+  }
+  useEffect(() => {
+    scrolltop()
+  }, [])
+
 
 const handleScrollInstoreForm = (()=>{
 
@@ -62,7 +75,8 @@ const handleScrollInstoreForm = (()=>{
 <Header/>
 
 <div className="container">
-        
+<Goback/>
+
         <div className='fixlineDiv'>
         <h2 className="iphone-d">Samsung</h2>
         <div className='fixLine' ></div>

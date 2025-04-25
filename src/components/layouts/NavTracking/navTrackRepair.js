@@ -10,12 +10,15 @@ import Footer from "../Footer";
 import useGetData from "../../Utility/getFunction";
 import { FaClipboardList, FaTruckPickup, FaTools, FaTruckMoving, FaCheckCircle } from 'react-icons/fa';
 import moment from "moment";
+import { chukkytechAxios } from "../../Utility/axios";
 
 const NavtrackRepair = (()=>{
 
     const [showTrackOrder, setShowTrackOrder] = useState("");
 
     const [orderCode, setOrderCode] = useState("");
+    const [isPendingTracking, setIsPendingTracking] = useState(false)
+    const [data, setData] = useState([]);
 
 
     const navigate = useNavigate();
@@ -28,9 +31,19 @@ const NavtrackRepair = (()=>{
         setOrderCode( e.target.value)  
       })
 
-const { data , isPending, error } = useGetData(`repair/getRepairOrderCode/${orderCode}`);
+// const { data , isPending, error } = useGetData(`repair/getRepairOrderCode/${orderCode}`);
 
-
+ const fetchTrackingDetails = async () => {
+  setIsPendingTracking(true);
+    try {
+      const response = await chukkytechAxios.get(`repair/getRepairOrderCode/${orderCode}`);
+      setData(response.data);
+      setIsPendingTracking(false);
+    } catch (error) {
+      setIsPendingTracking(false);
+      console.error('Error fetching tracking:', error);
+    }
+  };
 // const stages = [
 //   { name: "Ordered", icon: <FaClipboardList />, date: "09/05/2025" },
 //   { name: "Picked", icon: <FaTruckPickup />  , date: "09/05/2025"},
@@ -76,7 +89,7 @@ const repairOrders = data?.repairOrders || []; // Ensure it's always an array
   });
 
   const handleShowTrackOrder = (()=>{
-
+    fetchTrackingDetails();
     
     setShowTrackOrder(true) 
   })
@@ -107,6 +120,7 @@ const repairOrders = data?.repairOrders || []; // Ensure it's always an array
       <Modal.Title>Device Repair Tracking Progress</Modal.Title>
     </Modal.Header>
     <Modal.Body>
+      {isPendingTracking && <div style={{justifyContent:"center", textAlign:"center"}}> <span class="loader-circle"></span>   </div> }
 
 {
 

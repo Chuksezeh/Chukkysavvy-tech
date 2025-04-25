@@ -18,6 +18,7 @@ import Receipt from "../../layouts/Receipt/repairOrderReceipt";
 import chukkyLogo from "../../images/CHUKKY-BRAND-BACKGROUND-removebg-preview.png"
 import Footer from "../../layouts/Footer";
 import { FaArrowDownWideShort } from "react-icons/fa6";
+import { chukkytechAxios } from "../../Utility/axios";
 
 
 
@@ -29,7 +30,8 @@ const RepairOrders = (() => {
   const [noOrderHistory, setNoOrderHistory] = useState(false)
   const [itemData, setItemData] = useState({});
   const [progressStatus, setProgressStatus] = useState(false);
-
+  const [historyData, setHistoryData] = useState({});
+const [showHistoryModal, setShowHistoryModal] = useState(false)
 
   const [orderData, setOrderData] = useState("");
   const [showResult, setShowResult] = useState(false);
@@ -39,12 +41,30 @@ const RepairOrders = (() => {
 
   const [orderCode, setOrderCode] = useState("");
 
+  const [repairOrdersPending, setRepairOrdersPending] = useState(false);
+  const [repairOrdersTracking, setRepairOrdersTracking] = useState([]);
+
   const userInfo = localStorage.getItem('userInfo');
   const userData = JSON.parse(userInfo);
 
-  const { data: repairOrdersTracking, isPending: repairOrdersPending, error: repairOrdersError } = useGetData(`repair/getRepairOrderCode/${orderCode}`);
+  // const { data: repairOrdersTracking, isPending: repairOrdersPending, error: repairOrdersError } = useGetData(`repair/getRepairOrderCode/${itemData?.orderCode}`);
 
   const { data, isPending, error } = useGetData(`repair/getUserRepairOrders/${userData?.userId}`);
+  
+  const fetchTrackingDetails = async () => {
+    setRepairOrdersPending(true);
+      try {
+        const response = await chukkytechAxios.get(`repair/getRepairOrderCode/${itemData?.repairOrderCode}`);
+        setRepairOrdersTracking(response.data);
+        setRepairOrdersPending(false);
+      } catch (error) {
+        setRepairOrdersPending(false);
+        console.error('Error fetching tracking:', error);
+      }
+    };
+
+
+
 
 
   const handleShowDropDown = () => {
@@ -95,6 +115,7 @@ const RepairOrders = (() => {
   const handleShowTrackOrder = ((code) => {
     setOrderCode(code)
     setShowTrackOrder(true)
+    fetchTrackingDetails(); 
   })
 
 
@@ -136,29 +157,38 @@ const RepairOrders = (() => {
 
   const filterOrderHistory = latestOrders && latestOrders.filter((order) => order.status === "delivered" || order.status === "cancel");
 
-  console.log("Latest Orders Object>>>>>>>>>:", filterActiveOrders);
+
 
   const showDetails = (item) => {
-    setOrderData(item)
-    setShowResult(true)
+     setOrderData(itemData)
+     setShowResult(true)
+     
+    
   }
+
+  const handleShowDetails = ((item)=>{
+     setHistoryData(item)
+       setShowHistoryModal(true)
+  })
 
   const handleCloseResult = () => setShowResult(false)
 
+ 
 
 
   const handleUpdateKeys = ((e, item) => {
-      
+    console.log("Latest>>>>>>>>>mm:",  e.target.value);
     if(e.target.value === "view"){
-      showDetails()
-      }else if(e.target.value === "action")
-        return
-      else{
+        showDetails()
+        setShowHistoryModal(false)
+      }else if(e.target.value === "track"){
+        setShowTrackOrder(true)
+        
         handleShowTrackOrder(itemData?.orderCode);
+      }else{
+        setShowHistoryModal(true)
       }
-    
-    
-     if (e.target.value === "pickedUp") {
+    if (e.target.value === "pickedUp") {
       setProgressStatus("pickedUp")
     } else if (e.target.value === "fixing") {
       setProgressStatus("fixing")
@@ -175,7 +205,7 @@ const RepairOrders = (() => {
   })
   const handleGetDetails = ((item)=>{
     setItemData(item);
-
+    console.log("mggg>>>>>", itemData)
 })
 
 
@@ -220,7 +250,7 @@ const RepairOrders = (() => {
                     <th>Order due date</th>
                     <th>Created date</th>
                     <th>Phone number</th>
-                    <th>Pickup Address</th>
+                    <th>Address pickup/center</th>
                     <th>Action</th>
                     {/* <th>Action</th> */}
                   </tr>
@@ -248,10 +278,10 @@ const RepairOrders = (() => {
                           <select className="form-control border-secondary" onChange={handleUpdateKeys} onClick={() => handleGetDetails(item)} >
 
                             <option value="">Action</option>
-                            <option value="track"   >Track order</option>
-
                             <option value="view">View order </option>
-                            <option value="cancel" style={{ color: "red" }}>Cancel order</option>
+                            <option value="track">Track order</option>
+                           
+                            {/* <option value="cancel" style={{ color: "red" }}>Cancel order</option> */}
 
                           </select>
 
@@ -307,7 +337,7 @@ const RepairOrders = (() => {
                     <th>Order due date</th>
                     <th>Created date</th>
                     <th>Phone number</th>
-                    <th>Pickup Address</th>
+                    <th>Address pickup/center</th>
                     <th>Status</th>
                     {/* <th>Action</th> */}
                   </tr>
@@ -329,7 +359,7 @@ const RepairOrders = (() => {
                         <td>
 
 
-                          <button class="button-15" role="button" onClick={() => showDetails(item)} >View Details</button>
+                          <button class="button-15" role="button" onClick={() =>handleShowDetails(item)} >View Details</button>
 
                         </td>
                       </tr>
@@ -374,12 +404,31 @@ const RepairOrders = (() => {
         <Modal.Body>
 
 
-          <Receipt orderData={orderData} chukkyLogo={chukkyLogo} />
+          <Receipt orderData={orderData } chukkyLogo={chukkyLogo} />
 
 
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseResult}>
+            Close
+          </Button>
+
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={showHistoryModal} onHide={()=>setShowHistoryModal(false)} size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title>Device History Repair Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+
+
+          <Receipt orderData={historyData } chukkyLogo={chukkyLogo} />
+
+
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={()=>setShowHistoryModal(false)}>
             Close
           </Button>
 
@@ -415,7 +464,7 @@ const RepairOrders = (() => {
                       <div key={index} style={{ color: stage.isActive ? "green" : "gray", fontWeight: stage.isActive ? "bold" : "revert" }}>
                         <span className="icon-container">{stage.icon}</span>
                         <p>{stage.name}</p>
-                        <p>{stage.date ? moment(stage.date).format("lll") : "Pending"}</p>
+                        <p>{stage.date ? moment(stage.date).format("lll") : "Pending..."}</p>
                         <hr />
                       </div>
                     ))}
