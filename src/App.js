@@ -37,6 +37,8 @@ import NoFoundPage from './components/404page/404page';
 import ProductOrders from './components/UserDashboard/UserAccountComponents/productOrders';
 import AdminUserPage from './components/Admin/userTable/adminUserTable';
 import AdminLocations from './components/Admin/admin-locations';
+import ManageComments from './components/Admin/manageComment/commentTable';
+import FindLocation from './components/layouts/location/findLocation';
 // import AdminDashbord from './components/Admin/adminDashbord/adminDash';
 
 
@@ -85,6 +87,8 @@ function App() {
       <Route path="/user-product-orders" element={<ProductOrders/>}></Route>
       <Route path="/admin-user" element={<AdminUserPage/>}></Route>
       <Route path="/admin-service-locations" element={<AdminLocations/>}></Route>
+      <Route path="/manage-comments" element={<ManageComments/>}></Route>
+      <Route path="/find-location" element={<FindLocation/>}></Route>
    </Routes>
     
    

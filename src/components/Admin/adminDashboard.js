@@ -11,7 +11,7 @@ import { IoIosPeople } from "react-icons/io";
 import { IoPersonAddOutline } from "react-icons/io5";
 import { GoListOrdered } from "react-icons/go";
 import { MdOutlineLogout } from "react-icons/md";
-import { FaLocationDot, FaMagnifyingGlassLocation } from "react-icons/fa6";
+import { FaComment, FaLocationDot, FaMagnifyingGlassLocation } from "react-icons/fa6";
 
 const AdminDashboard = () => {
     const navigate = useNavigate();
@@ -138,15 +138,22 @@ const AdminDashboard = () => {
                                     </li>
                                 </NavText>
                             </NavItem>
-                            {/* <NavItem eventKey="3-2">
-                                <NavText>
-                                    <li className="shift-nav" onClick={() => navigate("/product-orders")}>
-                                        <IoPersonAddOutline className="inicon" size={16} />
-                                        <span className="ml-5">Product Order</span>
+                           
+                        </NavItem>
+                        <NavItem eventKey="5">
+                            <NavIcon> <FaComment className="side-main-icon"/>  </NavIcon>
+                            <NavText onClick={() => navigate("/manage-comments")}>Manage comments</NavText>
+                            {/* <NavItem eventKey="4-1">
+                                <NavText className="move-side">
+                                    <li className="shift-nav" onClick={() => navigate("/admin-service-locations")}>
+                                        <FaMagnifyingGlassLocation className="inicon" size={18} />
+                                        <span className="ml-5">Location</span>
                                     </li>
                                 </NavText>
                             </NavItem> */}
+                           
                         </NavItem>
+
 
                         <NavItem eventKey="9">
                         <NavIcon> <MdOutlineLogout className="side-main-icon"/>  </NavIcon>

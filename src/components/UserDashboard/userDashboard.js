@@ -36,9 +36,12 @@ const UserDashBoard = () => {
     }, [userData]); // React when userData changes
 
     const handleItemClick = (index) => {
+        console.log("log", index)
         setActiveIndex(index);
          if(activeIndex === 3){
             setShow(true)
+         } if(activeIndex === 4){
+            handleShow();
          }else{
             return
          }

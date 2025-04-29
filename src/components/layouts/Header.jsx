@@ -61,7 +61,9 @@ const Header = ()=>{
     navigate("/user-profile")
   })
 
-
+const navigateFindLocation = (()=>{
+  navigate("/find-location")
+})
   
   const userInfo = localStorage.getItem('userInfo');
   const userData = JSON.parse(userInfo);
@@ -114,6 +116,7 @@ const Header = ()=>{
   <div className="nav-links">
     <a  onClick={navigateHome} >Home</a>
     <a onClick={navigateTracking}>Track  repair</a>
+    <a onClick={navigateFindLocation}>Find location</a>
     {
       userData ? <a  onClick={navigateProfilePage}>My Account</a> : <a  onClick={navigateUserLogin}>Login</a>
     }

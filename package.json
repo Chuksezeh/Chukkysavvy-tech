@@ -4,7 +4,8 @@
   "private": true,
   "dependencies": {
     "@coreui/coreui": "^5.1.2",
-    "@coreui/react": "^5.4.0",
+    "@coreui/coreui-pro": "^5.11.0",
+    "@coreui/react": "^5.5.0",
     "@emotion/react": "^11.11.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",

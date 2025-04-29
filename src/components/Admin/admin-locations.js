@@ -4,6 +4,8 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { chukkytechAxios } from "../Utility/axios";
 import { useForm } from "react-hook-form";
+import { ButtonGroup, DropdownButton,Dropdown} from "react-bootstrap";
+import moment from "moment";
 // import AdminDashboard from "../adminDashboard";
 // import "./userRepairOrder.css"
 
@@ -21,10 +23,14 @@ const AdminLocations = (() => {
     const [showModal, setShowModal] = useState(false)
     const [loading, setLoading] = useState(false);
     const [successMessage, setSuccessMessage] = useState(false);
+    const [successText, setSuccessText] = useState("");
     const [errorMessage, setErrorMessage] = useState(false);
     const [errMessage, setErrMessage] = useState("");
     const [pendingLocation, setPendingLocation] = useState(true);
     const [allLocations, setAllLocations] = useState([]);
+    const [showEditModal, setShowEditModal] = useState(false)
+    const [locationData, setLocationData] = useState({})
+    const [showDelete, setShowDelete] = useState(false);
 
     const fetchLocation = async () => {
 
@@ -45,7 +51,6 @@ const AdminLocations = (() => {
     console.log('fetchLocation', allLocations);
 
 
-
     const handleSubmitData = async data => {
         setLoading(true);
 
@@ -61,6 +66,7 @@ const AdminLocations = (() => {
                 console.log('res', res);
                 setLoading(false);
                 setSuccessMessage(true);
+                setSuccessText(res.data.message)
                 setShowModal(false)
                 fetchLocation();
 
@@ -78,6 +84,114 @@ const AdminLocations = (() => {
     const handleShowModal = (() => {
         setShowModal(true)
     })
+
+const handleShowDropDown = ((data)=>{
+    setLocationData(data)
+
+})
+
+const handleSubmitEdit = async (data) => {
+    setLoading(true);
+    setErrorMessage(false);
+
+    try {
+       
+        const payload = {
+            locationId: locationData.locationId 
+        };
+
+        // Compare each field with original data and include only if changed
+        if (data.locationName !== locationData.locationName) {
+            payload.locationName = data.locationName;
+        }
+        if (data.locationAddress !== locationData.locationAddress) {
+            payload.locationAddress = data.locationAddress;
+        }
+        if (data.phone !== locationData.phone) {
+            payload.phone = data.phone;
+        }
+        if (data.shopName !== locationData.shopName) {
+            payload.shopName = data.shopName;
+        }
+        if (data.longitude !== locationData.longitude) {
+            payload.longitude = data.longitude;
+        }
+        if (data.latitude !== locationData.latitude) {
+            payload.latitude = data.latitude;
+        }
+
+        // Only send the request if at least one field was changed
+        if (Object.keys(payload).length > 1) { // More than just the ID
+            const response = await chukkytechAxios.put(`location/updateLocation/${locationData.locationId}`, payload);
+            
+            console.log('Update successful', response);
+            setLoading(false);
+            setSuccessMessage(true);
+            setSuccessText(response?.data?.message)
+            setShowEditModal(false);
+            fetchLocation(); // Refresh the locations list
+        } else {
+            setLoading(false);
+            setShowEditModal(false); // Close modal if no changes were made
+        }
+        
+    } catch (err) {
+        console.error('Update error', err);
+        setLoading(false);
+        setErrorMessage(true);
+        setErrMessage(err.response?.data || { message: "Failed to update location" });
+    }
+};
+
+    const handleShowModalEdit = (() => {
+        showEditModal(true)
+    })
+
+
+
+    const handleSubmitDelete = async () => {
+        if (!locationData?.locationId) {
+            setErrorMessage(true);
+            setErrMessage("No location selected for deletion");
+            return;
+        }
+    
+        setLoading(true);
+        setErrorMessage(false);
+        setSuccessMessage(false);
+    
+        try {
+            const response = await chukkytechAxios.delete(
+                `location/deleteLocation/${locationData.locationId}`
+            );
+    
+            setSuccessMessage(true);
+            setSuccessText(response.data.message || "Location deleted successfully");
+            setShowDelete(false)
+          
+            await fetchLocation();
+         
+            setShowDelete(false);
+            
+            
+        } catch (err) {
+            console.error('Deletion failed:', err);
+            
+            const errorMsg = err.response?.data?.message || 
+                            err.response?.data?.error || 
+                            "Failed to delete comment";
+            
+            setErrorMessage(true);
+            setErrMessage(errorMsg);
+            
+        } finally {
+            setLoading(false);
+        }
+    };
+    
+   
+
+
 
 
     return (
@@ -98,7 +212,7 @@ const AdminLocations = (() => {
             <div className="container">
 
 
-                <h5>Search User</h5>
+                <h5>Search Locations</h5>
                 <div className="row">
                     <div className="col-12">
                         <form className="input-group">
@@ -130,7 +244,7 @@ const AdminLocations = (() => {
                                 <i className="start-icon far fa-check-circle faa-tada animated"></i>
                                 <strong className="font__weight-semibold" style={{ color: "white" }}>Well done!</strong>
 
-                                <span>  Location created succesfully  </span>
+                                <span>  {successText}  </span>
                             </div>
                         </div>
 
@@ -172,16 +286,30 @@ const AdminLocations = (() => {
                                     <td data-label="Location address"> {data.locationAddress} </td>
                                     <td data-label="Shop name"> {data.shopName} </td>
                                     <td data-label="status"> {data.status} </td>
-                                    <td data-label="Created date">  {data.createdDateTime} </td>
+                                    <td data-label="Created date">  {moment(data.createdDateTime).format("lll")}  </td>
                                     <td data-label="Longitude">{data.longitude} </td>
                                     <td data-label="Latitude"> {data.latitude} </td>
                                     <td>
-                                        <select className="form-control border-secondary">
-                                            <option>Action</option>
+                                    {[DropdownButton].map((DropdownType, idx) => (
+                                            <DropdownType
+                                                as={ButtonGroup}
+                                                key={idx}
+                                                id={`dropdown-button-drop-${idx}`}
+                                                size="lg"
+                                                title="Action"
+                                                onClick={()=>handleShowDropDown(data)}
 
-                                            <option value="delete">Update location</option>
-                                            <option value="delete">Delete location</option>
-                                        </select>
+                                            >
+                                                {/* <Dropdown.Item eventKey="1">View user</Dropdown.Item> */}
+
+                                                <Dropdown.Item eventKey="3" onClick={()=>setShowEditModal(true)}>
+                                                 Edit location
+
+                                                </Dropdown.Item>
+                                                <Dropdown.Divider />
+                                                <Dropdown.Item eventKey="4" style={{ color: "red" }} onClick={()=>setShowDelete(true)}>Delete location</Dropdown.Item>
+                                            </DropdownType>
+                                        ))}
                                     </td>
                                 </tr>
 
@@ -323,6 +451,161 @@ const AdminLocations = (() => {
                         Close
                     </Button>
 
+
+                </Modal.Footer>
+            </Modal>
+
+
+            <Modal show={showEditModal} onHide={() => setShowEditModal(false)} size="lg">
+    <Modal.Header closeButton>
+        <Modal.Title>Edit Location</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>
+        <form id="edit-location-form" onSubmit={handleSubmit(handleSubmitEdit)}>
+            <div className="row">
+                <div className="col-md-12">
+                    <div className="form-group">
+                        <label>Location Name</label>
+                        <input 
+                             
+                            placeholder="Enter location name, eg. Wuse, Kubwa" 
+                            className="form-control"
+                            defaultValue={locationData?.locationName}
+                            {...register("locationName")} 
+                        />
+                    </div>
+                </div>
+
+                <div className="col-md-12">
+                    <div className="form-group">
+                        <label htmlFor="locationAddress">Location Address</label>
+                        <input 
+                            id="locationAddress" 
+                            placeholder="Enter location address" 
+                            className="form-control"
+                            defaultValue={locationData?.locationAddress}
+                            {...register("locationAddress")} 
+                        />
+                    </div>
+                </div>
+                
+                <div className="row">
+                    <div className="col-md-6">
+                        <div className="form-group">
+                            <label htmlFor="phone">Center Phone Number</label>
+                            <input 
+                                id="phone"
+                                placeholder="Enter phone number" 
+                                className="form-control"
+                                defaultValue={locationData?.phone}
+                                {...register("phone")} 
+                            />
+                        </div>
+                    </div>
+                    <div className="col-md-6">
+                        <div className="form-group">
+                            <label htmlFor="shopName">Shop / plaza name, no.</label>
+                            <input 
+                                id="shopName"
+                                type="text" 
+                                placeholder="Enter shop name"  
+                                defaultValue={locationData?.shopName}   
+                                className="form-control"
+                                {...register("shopName")} 
+                            />
+                        </div>
+                    </div>
+                </div>
+                
+                <hr />
+                
+                <div className="row">
+                    <div className="col-md-6">
+                        <div className="form-group">
+                            <label htmlFor="longitude">Longitude</label>
+                            <input 
+                                id="longitude"
+                                placeholder="Enter Longitude" 
+                                className="form-control"
+                                defaultValue={locationData?.longitude} 
+                                {...register("longitude")} 
+                            />
+                        </div>
+                    </div>
+                    <div className="col-md-6">
+                        <div className="form-group">
+                            <label htmlFor="latitude">Latitude</label>
+                            <input 
+                                id="latitude"
+                                type="text" 
+                                placeholder="Enter latitude" 
+                                defaultValue={locationData?.latitude} 
+                                className="form-control"
+                                {...register("latitude")} 
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="row">
+                <div className="col-md-4">
+                    {loading ? (
+                        <button className="btn btn-primary p-2" disabled>
+                            <span className="loader"></span> Updating...
+                        </button>
+                    ) : (
+                        <button className="btn btn-primary p-2" type="submit">
+                            Update Location
+                        </button>
+                    )}
+                </div>
+            </div>
+
+            {errorMessage && (
+                <div className="container mt-2">
+                    <div className="row">
+                        <div className="col-sm-12">
+                            <div className="alert alert-danger" role="alert">
+                                <span>{errMessage?.message || "Something went wrong, please try again"}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </form>
+    </Modal.Body>
+    <Modal.Footer>
+        <Button variant="secondary" onClick={() => setShowEditModal(false)}>
+            Close
+        </Button>
+    </Modal.Footer>
+</Modal>
+
+
+           <Modal show={showDelete} onHide={() => setShowDelete(false)} size="">
+                <Modal.Header closeButton>
+                    <Modal.Title>Delete location</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+
+
+                    <div>Are you sure you want to delete this location?</div>
+
+
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowDelete(false)}>
+                        Close
+                    </Button>
+
+                    {
+                        loading ? <Button className="btn btn-primary" variant="primary" >
+                            <span className="loader"></span>
+                        </Button> : <Button style={{ background: "red" }}  onClick={handleSubmitDelete}>
+                        Delete
+                        </Button>
+                    }
 
                 </Modal.Footer>
             </Modal>

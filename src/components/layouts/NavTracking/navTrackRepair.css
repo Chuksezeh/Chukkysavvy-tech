@@ -154,6 +154,13 @@
 .order-tracking:first-child:before{display: none;}
 .order-tracking.completed:before{background-color: #27aa80;}
 
-
+@media(max-width:700px){
+  .searchForm {
+    position: relative;
+    width: 80% !important;
+    background: var(--color-brand);
+    border-radius: var(--rad);
+  }
+}
 
 

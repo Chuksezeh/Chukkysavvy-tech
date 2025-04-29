@@ -11,6 +11,7 @@ import useGetData from "../../Utility/getFunction";
 import { FaClipboardList, FaTruckPickup, FaTools, FaTruckMoving, FaCheckCircle } from 'react-icons/fa';
 import moment from "moment";
 import { chukkytechAxios } from "../../Utility/axios";
+import { IoCheckmarkDoneOutline } from "react-icons/io5";
 
 const NavtrackRepair = (()=>{
 
@@ -74,9 +75,13 @@ const repairOrders = data?.repairOrders || []; // Ensure it's always an array
       { name: "Ordered", status: "Processing", icon: <FaClipboardList />, date: null },
       { name: "Picked", status: "pickedUp", icon: <FaTruckPickup />, date: null },
       { name: "Fixing", status: "fixing", icon: <FaTools />, date: null },
-      { name: "Delivery", status: "outForDelivery", icon: <FaTruckMoving />, date: null },
+      { name: "Fixed", status: "fixed", icon: <FaTruckMoving />, date: null },
       { name: "Delivered", status: "delivered", icon: <FaCheckCircle />, date: null },
+      { name: "Settled", status: "settled", icon: <IoCheckmarkDoneOutline />, date: null },
   ];
+
+  // <FcCancel />
+
 
   // Map status updates to the stages
   const updatedStages = stages.map((stage) => {

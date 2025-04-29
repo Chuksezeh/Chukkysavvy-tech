@@ -27,7 +27,7 @@ const useGetData = (url) => {
         })
         .catch(error => {
           setError(error.message)
-          setIsPending(true)
+          setIsPending(false)
           console.log(error)
         })
     }, [url]);

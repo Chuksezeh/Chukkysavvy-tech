@@ -92,18 +92,22 @@ const Receipt = ({ orderData, chukkyLogo }) => {
                   <td className="tableitem"><p className="itemtext">Status</p></td>
                   {
                     orderData.status === "cancel" ?  <td className="tableitem"><p className="itemtext"> <span style={{color:"red"}}>Canceled</span> on  {moment(orderData.createdDateTime).format("lll")}</p></td>:
-                    <td className="tableitem"><p className="itemtext" style={{fontStyle:''}}> <span style={{color:"green"}}> {orderData.status} </span>  on  {moment(orderData.createdDateTime).format("lll")}</p></td>
+                    <td className="tableitem"><p className="itemtext" style={{fontStyle:''}}> <span style={{color:"green", textTransform:"capitalize"}}> { orderData.status === "irreparable" ? <span style={{color:"red"}}>Cannot be Fixed</span>: <span> {orderData.status} </span> }   </span>  :  {moment(orderData.createdDateTime).format("lll")}</p></td>
                   }
                  
+                </tr>
+                <tr className="service">
+                  <td className="tableitem"><p className="itemtext">Device Issue Description</p></td>
+                  <td className="tableitem"><p className="itemtext">{orderData.details}</p></td>
                 </tr>
               </tbody>
             </table>
 
             {/* Issue Description */}
-            <div>
+            {/* <div>
               <h5>Device Issue Description</h5>
               <span>{orderData.details}</span>
-            </div>
+            </div> */}
           </div>
         </div>
         </div>
