@@ -5,6 +5,7 @@ import { auth } from "../../Configfile/firebaseConfig";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Header from "../../layouts/Header";
 import Footer from "../../layouts/Footer";
+import UserDashBoardComponent from "./userDashboardComponent";
 
 
 
@@ -35,11 +36,13 @@ const AccountOverView = (() => {
 						Account Overview
 					</div>
 					<hr />
-					<div className="panel-body">
+					{/* <div className="panel-body">
 					<p> {userData?.firstName} {userData?.lastName} </p>
 					<p> {userData?.email}  </p>
-						{/* <button onClick={handleSignOut}>logout</button> */}
-					</div>
+						
+					</div> */}
+                   <UserDashBoardComponent/>
+
 				</div>
 				
 			</div>

@@ -38,11 +38,14 @@ const UserDashBoard = () => {
     const handleItemClick = (index) => {
         console.log("log", index)
         setActiveIndex(index);
-         if(activeIndex === 3){
+        if(activeIndex === 2){
+            // setShow(true)
+         }else if(activeIndex === 3){
             setShow(true)
-         } if(activeIndex === 4){
+         }else if(activeIndex === 4){
             handleShow();
-         }else{
+         }
+         else{
             return
          }
 

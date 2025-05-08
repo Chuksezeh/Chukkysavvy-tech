@@ -6,6 +6,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { MdKeyboardBackspace } from "react-icons/md";
 import Header from "../../layouts/Header";
 import Footer from "../../layouts/Footer";
+import UserDashBoardComponent from "./userDashboardComponent";
 
 
 
@@ -51,11 +52,13 @@ const AccountOverMobile = (() => {
 						Account Overview
 					</div>
 					<hr />
-					<div className="panel-body">
+					{/* <div className="panel-body">
 						<p> {userData.firstName} {userData.lastName} </p>
 						<p> {userData.email}  </p>
-						{/* <button onClick={handleSignOut}>logout</button> */}
-					</div>
+						
+					</div> */}
+
+					  <UserDashBoardComponent/>
 				</div>
 
 			</div>

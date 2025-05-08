@@ -328,14 +328,14 @@ const handleSubmitComment = async (data) => {
         >
           <Tab eventKey="home" title="Repair Order">
             <div className="panel-wrapper">
-              <div className="panel-head">
+              <h3 className="panel-head">
                 Repair Order
-              </div>
+              </h3>
 
 
-              <table>
+              <table >
                 <thead>
-                  <tr className="table-headers">
+                  <tr className="table-headers" >
                     <th>Repair Order Code</th>
                     <th>Device name</th>
                     <th>Device model</th>
@@ -416,9 +416,9 @@ const handleSubmitComment = async (data) => {
           </Tab>
           <Tab eventKey="profile" title="Repair Order History">
             <div className="panel-wrapper">
-              <div className="panel-head">
+              <h3 className="panel-head">
                 Repair Order History
-              </div>
+              </h3>
 
 
               <table>

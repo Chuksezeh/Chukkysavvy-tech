@@ -1,5 +1,5 @@
 /* styles.css */
-@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
+/* @import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
 
 * {
   box-sizing: border-box;
@@ -12,12 +12,17 @@ body {
   font-family: Montserrat, sans-serif;
   margin: 0;
   background-color: whitesmoke;
-}
+} */
 
 .styled-list {
   list-style: none;
   counter-reset: list;
   padding: 0 1rem;
+}
+.liNum-cloc{
+    text-align: right;
+    font-weight: 600;
+
 }
 
 .styled-list li {
@@ -52,6 +57,7 @@ body {
 
 .styled-list li h3 {
   display: flex;
+  padding: 5px;
   align-items: baseline;
   margin: 0 0 1rem;
   color: rgb(70 70 70);
@@ -75,6 +81,7 @@ body {
 .styled-list li p {
   margin: 0;
   line-height: 1.6;
+  padding: 5px;
 }
 
 @media (min-width: 40em) {
@@ -91,4 +98,30 @@ body {
   .styled-list li h3::before {
     margin-right: 1.5rem;
   }
+}
+@media(max-width: 640px){
+    .styled-list li h3 {
+      
+        padding: 20px;
+       
+      }
+      .styled-list li {
+        --stop: calc(100% / var(--length) * var(--i));
+        --l: 62%;
+        --l2: 88%;
+        --h: calc((var(--i) - 1) * (180 / var(--length)));
+        --c1: hsl(var(--h), 71%, var(--l));
+        --c2: hsl(var(--h), 71%, var(--l2));
+        
+        position: relative;
+        counter-increment: list;
+       width: 100% !important;
+        margin: 2rem auto;
+        /* padding: 2rem 1rem 1rem; */
+        box-shadow: 0.1rem 0.1rem 1.5rem rgba(0, 0, 0, 0.0);
+        border-radius: 0.25rem;
+        overflow: hidden;
+        background-color: white;
+      }
+      
 }

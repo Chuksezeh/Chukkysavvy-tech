@@ -243,7 +243,7 @@ errorMessage &&
                   <td data-label="First name">{data.firstName}</td>
                   <td data-label="Last name">{data.lastName}</td>
                   <td data-label="Email">{data.email}</td>
-                  <td data-label="Email">{data.status}</td>
+                  <td data-label="Status">{data.status}</td>
                   <td data-label="Date registered">{moment(data.createdDateTime).format("lll")}</td>
                   <td>
                     <select className="form-control border-secondary" onChange={handleChangeAction} onClick={()=>handleGetData(data)}>

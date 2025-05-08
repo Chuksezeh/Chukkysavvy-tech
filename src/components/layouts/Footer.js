@@ -81,11 +81,11 @@ const Footer = () => {
                                 <h3>Useful Links</h3>
                             </div>
                             <ul>
-                                <li><a href="#">Home</a></li>
+                                <li><a href="/">Home</a></li>
                                
                                 <li> <Link to="/privacy-policy"><a >Privacy policy</a></Link>  </li>
                                
-                                <li><a href="#">About us</a></li>
+                                <li><a href="/find-location">Find locations</a></li>
                                 <li><a href="#">Our Services</a></li>
                                 <li> <Link to="/terms-conditions">  <a >Terms & Condition</a></Link> </li>
                                 <li><a href="#">Contact us</a></li>
@@ -117,8 +117,8 @@ const Footer = () => {
             <div className="container">
                 <div className="row">
                     <div className=" text-center ">
-                        <div className="copyright-text">
-                            <p>Copyright &copy; 2025, All Right Reserved <a >chukkytech</a></p>
+                        <div className="copyright-text" >
+                            <p style={{textAlign:"center", justifyContent:"center"}}>Copyright &copy; 2025, All Right Reserved <a >chukkytech</a></p>
                         </div>
                     </div>
                    
