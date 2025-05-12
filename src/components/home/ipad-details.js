@@ -94,7 +94,7 @@ const IpadDetails =(()=>{
            
               <div className="text-about-details  container">We only use premium quality screens because cheap aftermarket
                  screens have a high chance of showing unattractive white spots or discolouration and may appear
-                  less bright than premium quality screens. For your iPhone repair, we highly recommend not going for
+                  less bright than premium quality screens. For your Ipad repair, we highly recommend not going for
                    the cheapest price in the city for this reason. At Chukkytech, you will be paying for premium quality parts 
                    and at a fair & affordable price.
 
@@ -178,9 +178,7 @@ const IpadDetails =(()=>{
 
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
+          
          
         </Modal.Footer>
       </Modal>
@@ -202,10 +200,7 @@ const IpadDetails =(()=>{
         <PickupRepairForm/>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClosePickupForm}>
-            Close
-          </Button>
-         
+          
         </Modal.Footer>
       </Modal>
 

@@ -63,6 +63,8 @@ const Home = () => {
       <div ref={scrollTesmony}>
         <Testmony />
       </div>
+      <br/>
+      <br/>
 
       <div ref={contactScroll}>
         <Footer />

@@ -56,13 +56,15 @@ const scrolltop = () => {
 
 
      
-<h1 className='respom mt-3'>I want to Fix</h1>
+<h1 className='respom '>I want to Fix</h1>
 <div className='fixText'> To get started on your repair, please select the option that closely matches your device </div>
 <div className='fixlineDiv'>
   <div className='fixLine' ></div>
 </div>
+<div style={{justifyContent:"center", textAlign:"center"}}> <Goback/></div>
 <div className="wrapper">
-<Goback/>
+ 
+    
 
    <div className="card" >
    <NavLink to="/details-book-Iphone">

@@ -33,7 +33,9 @@
 }
 .searchStuff-gen{
     display: block;
-    background: var(--color-dark)
+    background: var(--color-dark);
+    padding-top: 3%;
+    
 }
 #searcher, .searchButtonSUB {
   height: var(--height);
@@ -154,6 +156,18 @@
 .order-tracking:first-child:before{display: none;}
 .order-tracking.completed:before{background-color: #27aa80;}
 
+@media(max-width:993px){
+ 
+  .searchStuff-gen{
+   
+    padding-top: 7%;
+    
+}
+  
+}
+
+
+
 @media(max-width:700px){
   .searchForm {
     position: relative;
@@ -161,6 +175,14 @@
     background: var(--color-brand);
     border-radius: var(--rad);
   }
+  .searchStuff-gen{
+    display: block;
+    background: var(--color-dark);
+    padding-top: 10%;
+    
+}
+  
+
 }
 
 

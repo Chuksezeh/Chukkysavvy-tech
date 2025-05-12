@@ -19,7 +19,7 @@ const Testmony =(()=>{
           {
             data && data.filter((data)=>(
                data.status !== "suppress"
-            )).map((data)=>(
+            )).slice(0, 5).map((data)=>(
 <figure className="snip1139">
 <blockquote>
   {data.comment}

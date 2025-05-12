@@ -55,7 +55,7 @@ const AdminDashboard = () => {
 
     return (
         <>
-        <Header/>
+        {/* <Header/> */}
             {/* Hamburger icon on mobile */}
             {isMobile && (
                 <div className="hamburger-icon" onClick={toggleSidebar} style={{ padding: "10px", cursor: "pointer", background: "#eee" }}>

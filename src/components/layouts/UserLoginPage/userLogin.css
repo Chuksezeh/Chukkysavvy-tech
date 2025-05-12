@@ -4,7 +4,9 @@
   width: 500px;
    /* padding: 8% 0 0;  */
    margin: 0 auto; 
-   margin-top: 5% !important;
+   /* margin-top: 5% !important; */
+
+   padding-top: 10%;
    
 }
 .form {
@@ -72,7 +74,7 @@
   .login-page-LOGi {
     width: 350px;
      /* padding: 8% 0 0;  */
-     margin:  auto; 
+     padding-top: 10% !important;
      
   }
 }

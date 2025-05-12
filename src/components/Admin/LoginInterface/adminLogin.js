@@ -4,6 +4,7 @@ import "./adminLogin.css";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { chukkytechAxios } from "../../Utility/axios";
+import logo from "../../images/CHUKKY-BRAND-BACKGROUND-removebg-preview.png"
 
 
 const AdminLoginPage  = ()=>{
@@ -63,12 +64,18 @@ const handleSubmitLoginData = async data => {
 
 <Header/>
 
-  <div className="login-page">
-        
-  <div className="form">
-    <p className="titleAdLogin">Admin Login</p>
-    
-    <form className="login-form"  onSubmit={handleSubmit((data, event) => {
+ 
+
+
+
+
+<div className="login-page-LOGi">
+
+        <div className="form">
+             <img className="log-log-inimage" src={logo}/>
+           
+          <p className="titleAdLogin">Admin login</p>
+          <form className="login-form"  onSubmit={handleSubmit((data, event) => {
                           
                           console.log('seedataNow', data);
                           handleSubmitLoginData(data);
@@ -114,8 +121,10 @@ const handleSubmitLoginData = async data => {
 }
 
     </form>
-  </div>
-</div>   
+
+        </div>
+      </div>
+
         
         
         </>

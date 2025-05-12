@@ -24,6 +24,11 @@ const PrivacyPolicy = (() => {
 
             <Header />
 
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+
             <section>
 
                 <article>

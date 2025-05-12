@@ -8,34 +8,7 @@ import Footer from "../Footer";
 
 
 const FindLocation = (()=>{
-    const items = [
-        {
-          title: "Discovery and assessment",
-          content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Adipiscing diam donec adipiscing tristique risus.",
-          phone: "0807876e76766"
-        },
-        {
-          title: "Information gathering and analysis",
-          content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Adipiscing diam donec adipiscing tristique risus."
-        },
-        {
-          title: "Creating your claim",
-          content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Adipiscing diam donec adipiscing tristique risus."
-        },
-        {
-          title: "Approvals and submission",
-          content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Adipiscing diam donec adipiscing tristique risus."
-        },
-        {
-          title: "Receiving your benefit",
-          content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Adipiscing diam donec adipiscing tristique risus."
-        },
-        {
-            title: "Receiving your benefit",
-            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Adipiscing diam donec adipiscing tristique risus."
-          }
-      ];
-
+  
 const {data, isPending, error} = useGetData("location/getAllLocations");
 
 
@@ -49,7 +22,17 @@ console.log("loglocation", data)
 
         <Header/>
         
-        <ol className="styled-list" style={{ '--length': items.length } } role="list">
+        <div className="containLocation">
+            
+            <p className="conLocFirst">Here are our active service centers, in case you'd like to visit us in person.
+            But if you're too busy or can't make it, no worries — we're just one click away!</p>
+
+Book a repair online, and we'll pick up your device, diagnose the issue, fix it promptly, and deliver it back to you — all without you leaving your home or office.
+
+With our tracking system, you can monitor the repair progress every step of the way, right up until we deliver your device.
+
+<p className="conLocLast">Try us today and experience fast, reliable, and convenient repair service! </p>  </div>
+        <ol className="   styled-list" style={{ '--length': data.length } } role="list">
       {data.map((item, index) => (
         <li key={index} style={{ '--i': index + 1 }}>
           <h3>{item.locationName}</h3>

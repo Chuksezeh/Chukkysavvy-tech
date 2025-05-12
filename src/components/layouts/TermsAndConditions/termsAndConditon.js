@@ -26,6 +26,10 @@ const TermsAndConditions = (()=>{
         <>
 
 <Header />
+<br/>
+            <br/>
+            <br/>
+            <br/>
 
 <section>
 

@@ -158,9 +158,7 @@ const LaptopBookDetails = (() => {
 
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
+          
         
         </Modal.Footer>
       </Modal>
@@ -182,9 +180,7 @@ const LaptopBookDetails = (() => {
         <PickupRepairForm/>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClosePickupForm}>
-            Close
-          </Button>
+         
          
         </Modal.Footer>
       </Modal>

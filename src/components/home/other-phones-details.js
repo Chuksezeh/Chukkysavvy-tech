@@ -82,7 +82,7 @@ useEffect(() => {
            
               <div className="text-about-details container">Our trained technicians with years of
                  experience can perform most phone repairs the same day.  We have the tools and the
-                  knowledge to fix Samsung issues such as: cracked or non-working screens, liquid damage,
+                  knowledge to fix any phone issues such as: cracked or non-working screens, liquid damage,
                    intermittent or
                  no charging, mic issues, speaker issues and more! Book your same-day phone repair today!</div>
 
@@ -166,9 +166,7 @@ useEffect(() => {
 
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
+         
          
         </Modal.Footer>
       </Modal>
@@ -190,9 +188,7 @@ useEffect(() => {
         <PickupRepairForm/>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClosePickupForm}>
-            Close
-          </Button>
+        
          
         </Modal.Footer>
       </Modal>

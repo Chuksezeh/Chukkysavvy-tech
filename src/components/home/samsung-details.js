@@ -90,7 +90,7 @@ const handleScrollInstoreForm = (()=>{
                  quickly and professionally repaired at TecFix.</div>
            
               <div className="text-about-details container">Our trained technicians with years of
-                 experience can perform most iPhone repairs the same day.  We have the tools and the
+                 experience can perform most Samsung repairs the same day.  We have the tools and the
                   knowledge to fix Samsung issues such as: cracked or non-working screens, liquid damage,
                    intermittent or
                  no charging, mic issues, speaker issues and more! Book your same-day Samsung repair today!</div>
@@ -99,7 +99,7 @@ const handleScrollInstoreForm = (()=>{
            
               <div className="text-about-details  container">We only use premium quality screens because cheap aftermarket
                  screens have a high chance of showing unattractive white spots or discolouration and may appear
-                  less bright than premium quality screens. For your iPhone repair, we highly recommend not going for
+                  less bright than premium quality screens. For your Samsung repair, we highly recommend not going for
                    the cheapest price in the city for this reason. At Chukkytech, you will be paying for premium quality parts 
                    and at a fair & affordable price.
 

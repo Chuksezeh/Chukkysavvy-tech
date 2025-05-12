@@ -12,6 +12,9 @@
     color: white;
    
 }
+.conTainreGISTER{
+  margin: 0;
+}
 
 .picckBtnDiv:hover{
    
@@ -232,11 +235,7 @@
     }
     
     
-    /**
-     * ----------------------------------------
-     * animation blink-1
-     * ----------------------------------------
-     */
+  
     @-webkit-keyframes blink-1 {
       0%,
       50%,

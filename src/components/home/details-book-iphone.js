@@ -165,10 +165,7 @@ useEffect(() => {
        
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          {/* <Button variant="primary">Continue</Button> */}
+         
         </Modal.Footer>
       </Modal>
 
@@ -197,9 +194,7 @@ useEffect(() => {
        <IphoneInstoreRepair/>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClosePickupForm}>
-            Close
-          </Button>
+        
           {/* <Button variant="primary">Continue</Button> */}
         </Modal.Footer>
       </Modal>

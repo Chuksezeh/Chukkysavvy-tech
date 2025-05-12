@@ -173,12 +173,7 @@ handleSubmitLoginData(data);
 })} />
 <span className="cum-error">{errors.email?.message}</span>
 
-<p >Whatsapp phone number</p>
-<input type="phone" placeholder="Ente your WhatsApp phone number" {...register("phone", {
- required: 'Phone number is required',
- maxLength: {},
-})} />
-<span className="cum-error">{errors.phone?.message}</span>
+
 
 {
 
