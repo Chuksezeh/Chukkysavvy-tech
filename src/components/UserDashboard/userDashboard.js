@@ -29,11 +29,7 @@ const UserDashBoard = () => {
         { name: "Logout", path: "", icon: <IoIosArrowForward /> }
     ];
 
-    useEffect(() => {
-        if (!userData) {
-            navigate("/");
-        }
-    }, [userData]); // React when userData changes
+   
 
     const handleItemClick = (index) => {
         console.log("log", index)

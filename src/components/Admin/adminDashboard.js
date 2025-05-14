@@ -11,6 +11,8 @@ import { IoIosPeople } from "react-icons/io";
 import { IoPersonAddOutline } from "react-icons/io5";
 import { GoListOrdered } from "react-icons/go";
 import { MdOutlineLogout } from "react-icons/md";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 import { FaComment, FaLocationDot, FaMagnifyingGlassLocation } from "react-icons/fa6";
 
 const AdminDashboard = () => {
@@ -18,6 +20,8 @@ const AdminDashboard = () => {
 
     const [isMobile, setIsMobile] = useState(window.innerWidth < 760);
     const [sidebarVisible, setSidebarVisible] = useState(!isMobile);
+
+    const [showLogout, setShowLogout] = useState(false);
 
     const handleResize = () => {
         const isNowMobile = window.innerWidth < 760;
@@ -34,14 +38,14 @@ const AdminDashboard = () => {
     const userInfo = localStorage.getItem("adminsInfo");
     const userData = JSON.parse(userInfo);
 
-    useEffect(() => {
-        if (!userData) {
-            navigate("/");
-        }
-    }, [userData]);
+    // useEffect(() => {
+    //     if (!userData) {
+    //         navigate("/");
+    //     }
+    // }, [userData]);
 
     const handleLogOut = () => {
-        localStorage.removeItem("userInfo");
+        localStorage.removeItem("adminsInfo");
         setTimeout(() => navigate("/admin-login"), 500);
     };
 
@@ -117,14 +121,14 @@ const AdminDashboard = () => {
                                     </li>
                                 </NavText>
                             </NavItem>
-                            <NavItem eventKey="3-2">
+                            {/* <NavItem eventKey="3-2">
                                 <NavText>
                                     <li className="shift-nav" onClick={() => navigate("/product-orders")}>
                                         <IoPersonAddOutline className="inicon" size={16} />
                                         <span className="ml-5">Product Order</span>
                                     </li>
                                 </NavText>
-                            </NavItem>
+                            </NavItem> */}
                         </NavItem>
 
                         <NavItem eventKey="4">
@@ -157,11 +161,29 @@ const AdminDashboard = () => {
 
                         <NavItem eventKey="9">
                         <NavIcon> <MdOutlineLogout className="side-main-icon"/>  </NavIcon>
-                            <NavText onClick={handleLogOut}>Log out</NavText>
+                            <NavText onClick={()=>setShowLogout(true)}>Log out</NavText>
                         </NavItem>
                     </SideNav.Nav>
                 </SideNav>
+
+
             )}
+
+
+<Modal show={showLogout} onHide={()=>setShowLogout(false)} animation={false}   centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Proceed Logout</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to logout? click logout to continue</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={()=>setShowLogout(false)}>
+            Close
+          </Button>
+           <Button variant="" style={{backgroundColor:"red", color:"white"}} onClick={handleLogOut}>
+            Logout
+          </Button>
+        </Modal.Footer>
+      </Modal>
         </>
     );
 };

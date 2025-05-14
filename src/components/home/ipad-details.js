@@ -12,6 +12,7 @@ import InstoreRepairForm from "../layouts/InstoreRepairForm/instoreREpair";
 import PickupRepairForm from "../layouts/PickupRepairForm/pickuprepair";
 import ChatComponent from "../layouts/contactComponent/chatComponent";
 import Goback from "../layouts/goBack";
+import WhatsAppFloat from "../layouts/whatsappFloat/whatsAppFloat";
 
 
 const IpadDetails =(()=>{
@@ -107,7 +108,7 @@ const IpadDetails =(()=>{
     </div>
 
      <h3 className="head-bookRepair">BOOK A REPAIR OR A FREE IN-STORE ASSESSMENT</h3>  
-    <SignUpSignIn/>
+    {/* <SignUpSignIn/> */}
 
 
 <div className="card-hol">
@@ -121,7 +122,7 @@ const IpadDetails =(()=>{
       We offer free pickup city-wide if you are unable to come to our store. If youd like to arrange for your device to be picked up, please choose a time and day youd 
       like for us to call to arrange this and we will give you a call.
       <p className="cl-text">Please chat or call us for detail explanation and the pricing for the fixing service. We are available 24/7    </p>
-      <ChatComponent/>
+      {/* <ChatComponent/> */}
       
       </div>
 
@@ -139,7 +140,7 @@ const IpadDetails =(()=>{
    If youd like to setup an in-store appointment to have your device repaired or assessed, choose this option. 
    This is the quickest way to get a repair done.
    <p className="cl-text">Please chat or call us for detail explanation, reservation and the pricing for the fixing service. We are available 24/7    </p>
-      <ChatComponent/>
+      {/* <ChatComponent/> */}
    
    </div>
    <button className="picckBtn  p-3" onClick={toggleVisibility}> Reserve Now</button>
@@ -205,6 +206,7 @@ const IpadDetails =(()=>{
       </Modal>
 
 
+      <WhatsAppFloat/>
     
 
 <Footer/>

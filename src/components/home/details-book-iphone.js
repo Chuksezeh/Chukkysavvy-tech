@@ -14,6 +14,7 @@ import ChatComponent from "../layouts/contactComponent/chatComponent";
 import IphonePickupREpair from "../layouts/IphonePickupRepairForm/iphonePickupRepair";
 import IphoneInstoreRepair from "../layouts/IphoneInstoreRepairForm/iphoneInstoreRepair";
 import Goback from "../layouts/goBack";
+import WhatsAppFloat from "../layouts/whatsappFloat/whatsAppFloat";
 
 
 
@@ -121,7 +122,7 @@ useEffect(() => {
        your device to be picked up, please choose a time and day you would 
       like us to contact you for Pickup and quick fix
       <p className="cl-text">Please chat or call us for detail explanation and the pricing for the fixing service. We are available 24/7    </p>
-      <ChatComponent/>
+      {/* <ChatComponent/> */}
       
       </div>
 
@@ -139,9 +140,10 @@ useEffect(() => {
    If youd like to setup an in-store appointment to have your device repaired or assessed, choose this option. 
    This is the quickest way to get a repair done.
    <p className="cl-text">Please chat or call us for detail explanation, reservation and the pricing for the fixing service. We are available 24/7    </p>
-      <ChatComponent/>
+      {/* <ChatComponent/> */}
    
    </div>
+ 
    <button className="picckBtn  p-3" onClick={toggleVisibility}> Reserve Now</button>
    
 </div>
@@ -201,7 +203,7 @@ useEffect(() => {
 
 
 
-
+<WhatsAppFloat/>
 
 
      

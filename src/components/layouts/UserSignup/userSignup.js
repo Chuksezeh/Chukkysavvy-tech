@@ -24,9 +24,9 @@ const UserSignUp = (() => {
 	const [terms, setTerms] = useState("");
 	// const [passwordVisible, setPasswordVisible] = useState(false);
 	const [passwordVisible, setPasswordVisible] = useState(false);
-    const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+	const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
-	const [termsAccepted, setTermsAccepted] = useState(false);
+	const [termsAccepted, setTermsAccepted] = useState(true);
 
 	const {
 		register,
@@ -226,170 +226,162 @@ const UserSignUp = (() => {
 					</div>
 					<div className="row clearfix">
 						<div className="">
-						<form onSubmit={handleSubmit((data, event) => {
-  event.target.reset()
-  console.log('seedataNow', data);
-  handleSubmitData(data);
-})}>
-  <div className="row clearfix">
-    <div className="col_half">
-      <label style={{ fontSize: "15px" }}>First name</label>
-      <div className="input_field"> <span><i aria-hidden="true" className="fa fa-user"></i></span>
-        <input type="text" name="name" placeholder="First Name" {...register("firstName", {
-          required: 'First name is required',
-          maxLength: {},
-        })} />
-      </div>
-      <p className="cum-error">{errors.firstName?.message}</p>
-    </div>
-    <div className="col_half">
-      <label style={{ fontSize: "15px" }}>Last name</label>
-      <div className="input_field"> <span><i aria-hidden="true" className="fa fa-user"></i></span>
-        <input type="text" name="name" placeholder="Last Name" {...register("lastName", {
-          required: 'Last name is required',
-          maxLength: {},
-        })} />
-      </div>
-      <p className="cum-error">{errors.lastName?.message}</p>
-    </div>
-  </div>
-  <label style={{ fontSize: "15px" }}>Email</label>
-  <div className="input_field"> <span><i aria-hidden="true" className="fa fa-envelope"></i></span>
-    <input type="email" name="email" placeholder="Email" {...register("email", {
-      required: 'Email address is required',
-      maxLength: {},
-    })} />
-  </div>
-  <p className="cum-error">{errors.email?.message}</p>
+							<form onSubmit={handleSubmit((data, event) => {
+								event.target.reset()
+								console.log('seedataNow', data);
+								handleSubmitData(data);
+							})}>
+								<div className="row clearfix">
+									<div className="col_half">
+										<label style={{ fontSize: "15px" }}>First name</label>
+										<div className="input_field"> <span><i aria-hidden="true" className="fa fa-user"></i></span>
+											<input type="text" name="name" placeholder="First Name" {...register("firstName", {
+												required: 'First name is required',
+												maxLength: {},
+											})} />
+										</div>
+										<p className="cum-error">{errors.firstName?.message}</p>
+									</div>
+									<div className="col_half">
+										<label style={{ fontSize: "15px" }}>Last name</label>
+										<div className="input_field"> <span><i aria-hidden="true" className="fa fa-user"></i></span>
+											<input type="text" name="name" placeholder="Last Name" {...register("lastName", {
+												required: 'Last name is required',
+												maxLength: {},
+											})} />
+										</div>
+										<p className="cum-error">{errors.lastName?.message}</p>
+									</div>
+								</div>
+								<label style={{ fontSize: "15px" }}>Email</label>
+								<div className="input_field"> <span><i aria-hidden="true" className="fa fa-envelope"></i></span>
+									<input type="email" name="email" placeholder="Email" {...register("email", {
+										required: 'Email address is required',
+										validate: (value) => value.includes('@' && '.') || "Email must contain '@' and '.",
+										pattern: {
+											value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+											message: "Invalid email address",
+										},
+									})} />
+								</div>
+								<p className="cum-error">{errors.email?.message}</p>
 
-  <label style={{ fontSize: "15px" }}>Password</label>
-  <div className="input_field" style={{ position: 'relative' }}> 
-    <span><i aria-hidden="true" className="fa fa-lock"></i></span>
-    <input 
-      type={passwordVisible ? "text" : "password"} 
-      name="password" 
-      placeholder="Password"
-      {...register("password", {
-        required: 'Password is required',
-        maxLength: {},
-      })} 
-    />
-    <i
-      style={{
-        position: 'absolute',
-        right: '10px',
-        top: '50%',
-        transform: 'translateY(-50%)',
-        cursor: 'pointer',
-        zIndex: 2
-      }}
-      onClick={() => setPasswordVisible(!passwordVisible)}
-    >
-      {passwordVisible ? '👁️' : '👁️‍🗨️'}
-    </i>
-  </div>
-  <p className="cum-error">{errors.password?.message}</p>
-  
-  <label style={{ fontSize: "15px" }}>Confirm password</label>
-  <div className="input_field" style={{ position: 'relative' }}> 
-    <span><i aria-hidden="true" className="fa fa-lock"></i></span>
-    <input 
-      type={confirmPasswordVisible ? "text" : "password"} 
-      name="password" 
-      placeholder="Re-type Password" 
-      {...register("password_repeat", {
-        required: 'Confirm password',
-        validate: value => value === password.current || "The password does not match"
-      })} 
-    />
-    <i 
-      style={{
-        position: 'absolute',
-        right: '10px',
-        top: '50%',
-        transform: 'translateY(-50%)',
-        cursor: 'pointer',
-        zIndex: 2
-      }}
-      onClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}
-    >
-      {confirmPasswordVisible ? '👁️' : '👁️‍🗨️'}
-    </i>
-  </div>
-  <p className="cum-error">{errors.password_repeat?.message}</p>
+								<label style={{ fontSize: "15px" }}>Password</label>
+								<div className="input_field" style={{ position: 'relative' }}>
+									<span><i aria-hidden="true" className="fa fa-lock"></i></span>
+									<input
+										type={passwordVisible ? "text" : "password"}
+										name="password"
+										placeholder="Password"
+										{...register("password", {
+											required: 'Password is required',
+											minLength: {
+												Value: 6,
+												message: "Password must be six characters and above"
+											},
+										})}
+									/>
+									<i
+										style={{
+											position: 'absolute',
+											right: '10px',
+											top: '50%',
+											transform: 'translateY(-50%)',
+											cursor: 'pointer',
+											zIndex: 2
+										}}
+										onClick={() => setPasswordVisible(!passwordVisible)}
+									>
+										{passwordVisible ? '👁️' : '👁️‍🗨️'}
+									</i>
+								</div>
+								<p className="cum-error">{errors.password?.message}</p>
 
-  <div style={{ fontSize: "20px" }}>Already have an account? <span style={{ color: "blue", cursor: "pointer" }} onClick={navigateLogin}>Login</span> </div>
-  <hr />
+								<label style={{ fontSize: "15px" }}>Confirm password</label>
+								<div className="input_field" style={{ position: 'relative' }}>
+									<span><i aria-hidden="true" className="fa fa-lock"></i></span>
+									<input
+										type={confirmPasswordVisible ? "text" : "password"}
+										name="password"
+										placeholder="Re-type Password"
+										{...register("password_repeat", {
+											required: 'Confirm password',
+											validate: value => value === password.current || "The password does not match"
+										})}
+									/>
+									<i
+										style={{
+											position: 'absolute',
+											right: '10px',
+											top: '50%',
+											transform: 'translateY(-50%)',
+											cursor: 'pointer',
+											zIndex: 2
+										}}
+										onClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}
+									>
+										{confirmPasswordVisible ? '👁️' : '👁️‍🗨️'}
+									</i>
+								</div>
+								<p className="cum-error">{errors.password_repeat?.message}</p>
 
-  {successMessage &&
-    <div className="container mt-2">
-      <div className="row">
-        <div className="col-sm-12">
-          <div className="alert fade alert-success alert-dismissible text-left font__family-montserrat font__size-16 font__weight-light brk-library-rendered rendered show">
-            <i className="start-icon far fa-check-circle faa-tada animated"></i>
-            <strong className="font__weight-semibold" style={{ color: "white" }}>Well done!</strong> Registration successfull. <span style={{ color: "blue", cursor: "pointer" }} onClick={navigateLogin}>Login</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  }
+								<div style={{ fontSize: "20px" }}>Already have an account? <span style={{ color: "blue", cursor: "pointer" }} onClick={navigateLogin}>Login</span> </div>
+								<hr />
 
-  {errorMessage &&
-    <div className="container mt-2">
-      <div className="row">
-        <div class="col-sm-12">
-          <div className="alert alert-danger" role="alert">
-            <span>{errMessage.message}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  }
+								{successMessage &&
+									<div className="container mt-2">
+										<div className="row">
+											<div className="col-sm-12">
+												<div className="alert fade alert-success alert-dismissible text-left font__family-montserrat font__size-16 font__weight-light brk-library-rendered rendered show">
+													<i className="start-icon far fa-check-circle faa-tada animated"></i>
+													<strong className="font__weight-semibold" style={{ color: "white" }}>Well done!</strong> Registration successfull. <span style={{ color: "blue", cursor: "pointer" }} onClick={navigateLogin}>Login</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								}
 
-  <div className="input_field checkbox_option">
-    <input
-      style={{ width: "15px" }}
-      type="checkbox"
-      id="cb1"
-      checked={termsAccepted}
-      onChange={(e) => setTermsAccepted(e.target.checked)}
-    />
-    <label htmlFor="cb1" style={{ fontSize: "15px" }}>
-      I agree with <a href="/terms-conditions">terms and conditions</a>
-    </label>
-  </div>
+								{errorMessage &&
+									<div className="container mt-2">
+										<div className="row">
+											<div class="col-sm-12">
+												<div className="alert alert-danger" role="alert">
+													<span>{errMessage.message}</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								}
 
-  <div className="row">
-    <div className="col-md-4 setbtnDiv">
-      {   loading ? (
-        <button className="picckBtnDiv"><span className="loader"></span> </button>
-      ) : (
-        <button className="picckBtnDiv" type="submit" disabled={!termsAccepted}>
-          Submit
-        </button>
-      )}
-    </div>
-  </div>
-</form>
+								<div className="input_field checkbox_option">
+									<input
+										style={{ width: "15px" }}
+										type="checkbox"
+										id="cb1"
+										checked={termsAccepted}
+										onChange={(e) => setTermsAccepted(e.target.checked)}
+									/>
+									<label htmlFor="cb1" style={{ fontSize: "15px" }}>
+										I agree with <a href="/terms-conditions">terms and conditions</a>
+									</label>
+								</div>
+
+								<div className="row">
+									<div className="col-md-4 setbtnDiv">
+										{loading ? (
+											<button className="picckBtnDiv"><span className="loader"></span> </button>
+										) : (
+											<button className="picckBtnDiv" type="submit" disabled={!termsAccepted}>
+												Submit
+											</button>
+										)}
+									</div>
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>
 			</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 			<br />
 			<br />
 			<br />

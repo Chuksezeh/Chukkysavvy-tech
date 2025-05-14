@@ -26,6 +26,10 @@ const UserDashBoardComponent =  (()=>{
         navigate("/track-repair")
     })
 
+    const handleNavigateAboutUs = (()=>{
+      navigate("/about-us")
+  })
+
 
     
 
@@ -94,7 +98,7 @@ const UserDashBoardComponent =  (()=>{
       
      
       <div className="c-dashboardInfo col-lg-3 col-md-6">
-        <div className="wrap">
+        <div className="wrap" style={{cursor:"pointer"}} onClick={handleNavigateAboutUs}>
           <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">About us<svg
               className="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
               <path fill="none" d="M0 0h24v24H0z"></path>

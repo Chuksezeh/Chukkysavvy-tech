@@ -146,11 +146,11 @@ It ensures that you're always informed about every stage of the repair process â
           <div className="backToHome d-flex">
             <div className="saveIconDiv" onClick={downloadReceipt} style={{ cursor: "pointer" }}>
               <span className="shareIconspan"><GiSaveArrow className="saveIcon" /></span>
-              <span>Download Receipt</span>
+              <span style={{padding:'"10px'}}>Download Receipt</span>
             </div>
             <div className="shareIconDiv saveIconDiv2" onClick={shareReceipt} style={{ cursor: "pointer" }}>
               <span className="shareIconspan"><IoMdShare className="saveIcon" /></span>
-              <span>Share Receipt</span>
+              <span style={{padding:'"10px'}}>Share Receipt</span>
             </div>
           </div>
         </div>

@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../Header";
 import { FcGoogle } from "react-icons/fc";
 import { auth, googleProvider } from "../../Configfile/firebaseConfig";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // import { useUser } from "../../UserDashboard/userConytext";
 import "./userLogin.css";
 import { useForm, SubmitHandler } from "react-hook-form"
@@ -83,7 +83,11 @@ const navigateForgotPassword = (()=>{
         if (res.statusText === "OK") {
           localStorage.setItem('isLoggedIn', 'true');
           localStorage.setItem('userInfo', JSON.stringify(res.data));
-          navigate("/user-profile")
+          window.dispatchEvent(new Event("authChanged"));
+
+          // Then navigate
+          navigate("/user-profile");
+
         }
 
 
@@ -99,7 +103,16 @@ const navigateForgotPassword = (()=>{
 
   // const { data: registerData, isPending: registerDataIsPending, error } = useGetData('/registration');
 
+const scrolltop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
 
+  useEffect(() => {
+    scrolltop();
+  }, []);
 
 
   return (

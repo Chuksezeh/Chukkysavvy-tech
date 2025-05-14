@@ -31,9 +31,9 @@ const CreateUser = (() => {
 
 	const navigate = useNavigate();
 
-	const navigateAdminLogin = (()=>{
+	const navigateAdminLogin = (() => {
 		navigate("/admin-login")
-	  })
+	})
 
 	const scrolltop = () => {
 		window.scrollTo({
@@ -118,7 +118,7 @@ const CreateUser = (() => {
 							<div className="col-md-6">
 								<div className="form-group">
 									<label>First Name</label>
-									<input  id="name" placeholder="Enter first name" className="form-control"
+									<input id="name" placeholder="Enter first name" className="form-control"
 
 										{...register("firstName", {
 											required: 'First name is required',
@@ -131,7 +131,7 @@ const CreateUser = (() => {
 							<div className="col-md-6">
 								<div className="form-group">
 									<label id="name-label" for="name">Last Name</label>
-									<input  id="name" placeholder="Enter last name" className="form-control"
+									<input id="name" placeholder="Enter last name" className="form-control"
 
 										{...register("lastName", {
 											required: 'Last name is required',
@@ -144,7 +144,7 @@ const CreateUser = (() => {
 								<div className="col-md-6">
 									<div className="form-group">
 										<label id="number-label" for="number">Phone Number</label>
-										<input   placeholder="Enter  phone number" className="form-control"
+										<input placeholder="Enter  phone number" className="form-control"
 
 											{...register("phone", {
 												required: 'Phone number is required',
@@ -156,7 +156,7 @@ const CreateUser = (() => {
 								<div className="col-md-6">
 									<div className="form-group">
 										<label id="number-label" for="number">Email</label>
-										<input type="text"  placeholder="Enter email" className="form-control"
+										<input type="text" placeholder="Enter email" className="form-control"
 											{...register("email", {
 												required: 'Email address is required',
 												maxLength: {},
@@ -170,18 +170,21 @@ const CreateUser = (() => {
 								<div className="col-md-6">
 									<div className="form-group">
 										<label id="number-label" for="number">Password</label>
-										<input type="text"  placeholder="Enter password" className="form-control"
+										<input type="text" placeholder="Enter password" className="form-control"
 
 											{...register("password", {
-												required: ' Password is required',
-												maxLength: {},
+												required: 'Password is required',
+												minLength: {
+													Value: 6,
+													message: "Password must be six characters and above"
+												},
 											})} />
 										<span className="cum-error">{errors.password?.message}</span>									</div>
 								</div>
 								<div className="col-md-6">
 									<div className="form-group">
 										<label id="number-label" for="number">Confirm Password</label>
-										<input type="text"  placeholder="Confirm password" className="form-control"
+										<input type="text" placeholder="Confirm password" className="form-control"
 
 											{...register("password_repeat", {
 												required: 'Confirm password',
@@ -265,11 +268,11 @@ const CreateUser = (() => {
 						<div className="row">
 							<div className="col-md-4">
 
-								
-							     {
-									loading ? <button > <span class="loader"></span></button> : 	<button className="picckBtn" type="submit">Submit</button> 
+
+								{
+									loading ? <button > <span class="loader"></span></button> : <button className="picckBtn" type="submit">Submit</button>
 								}
-							
+
 							</div>
 						</div>
 

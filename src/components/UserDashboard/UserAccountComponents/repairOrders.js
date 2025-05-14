@@ -21,6 +21,7 @@ import { FaArrowDownWideShort } from "react-icons/fa6";
 import { chukkytechAxios } from "../../Utility/axios";
 import { IoCheckmarkDoneOutline } from "react-icons/io5";
 import { useForm } from "react-hook-form";
+import { ButtonGroup, DropdownButton,Dropdown} from "react-bootstrap";
 
 
 
@@ -36,6 +37,7 @@ const RepairOrders = (() => {
 const [showHistoryModal, setShowHistoryModal] = useState(false);
 const [loading, setLoading] = useState(false);
 const [errMessage, setErrMessage] = useState("");
+
 
 
 const [showComment, setShowComment] = useState(false);
@@ -68,18 +70,7 @@ const { register, handleSubmit, setValue, reset,
 
   const { data, isPending, error } = useGetData(`repair/getUserRepairOrders/${userData?.userId}`);
   
-  const fetchTrackingDetails = async () => {
-    setRepairOrdersPending(true);
-      try {
-        const response = await chukkytechAxios.get(`repair/getRepairOrderCode/${itemData?.repairOrderCode}`);
-        setRepairOrdersTracking(response.data);
-        setRepairOrdersPending(false);
-      } catch (error) {
-        setRepairOrdersPending(false);
-        console.error('Error fetching tracking:', error);
-      }
-    };
-
+  
 
 
 
@@ -131,11 +122,7 @@ const { register, handleSubmit, setValue, reset,
     };
   });
 
-  const handleShowTrackOrder = ((code) => {
-    setOrderCode(code)
-    setShowTrackOrder(true)
-    fetchTrackingDetails(); 
-  })
+  
 
 
 
@@ -225,9 +212,49 @@ const { register, handleSubmit, setValue, reset,
       setProgressStatus("cancel")
     }
 
-    
-
   })
+
+
+  const fetchTrackingDetails = async (code) => {
+    setRepairOrdersPending(true);
+      try {
+        const response = await chukkytechAxios.get(`repair/getRepairOrderCode/${code}`);
+        setRepairOrdersTracking(response.data);
+        setRepairOrdersPending(false);
+      } catch (error) {
+        setRepairOrdersPending(false);
+        console.error('Error fetching tracking:', error);
+      }
+    };
+
+
+
+  const handleShowDropDownData = ((data)=>{
+    setOrderData(data)
+   
+  })
+
+  const handleShowTrackOrder = ((code) => {
+    console.log("check-oreder-code>>>",code)
+    setOrderCode(code)
+    setShowTrackOrder(true)
+    fetchTrackingDetails(code); 
+  })
+
+  // const handleTrackOrder = (()=>{
+  //   setShowTrackOrder(true)
+  //   handleShowTrackOrder(data?.orderCode);
+
+  // })
+
+
+const handleViewOrder = (()=>{
+  // showDetails()
+  setShowResult(true)
+})
+
+
+
   const handleGetDetails = ((item)=>{
     setItemData(item);
     console.log("mggg>>>>>", itemData)
@@ -370,15 +397,36 @@ const handleSubmitComment = async (data) => {
                           {/* <button class="button-15" role="button" onClick={()=> handleShowTrackOrder(item.repairOrderCode)}>
                              */}
 
-                          <select className="form-control border-secondary" onChange={handleUpdateKeys} onClick={() => handleGetDetails(item)} >
+                          {/* <select className="form-control border-secondary" onChange={handleUpdateKeys} onClick={() => handleGetDetails(item)} >
 
                             <option value="">Action</option>
                             <option value="view">View order </option>
                             <option value="track">Track order</option>
                            
-                            {/* <option value="cancel" style={{ color: "red" }}>Cancel order</option> */}
+                            
 
-                          </select>
+                          </select> */}
+
+                          {[DropdownButton].map((DropdownType, idx) => (
+                                            <DropdownType
+                                                as={ButtonGroup}
+                                                key={idx}
+                                                id={`dropdown-button-drop-${idx}`}
+                                                size="lg"
+                                                title="Action"
+                                                onClick={()=>handleShowDropDownData(item)}
+
+                                            >
+                                                {/* <Dropdown.Item eventKey="1">View user</Dropdown.Item> */}
+
+                                                <Dropdown.Item eventKey="3"  onClick={handleViewOrder}>
+                                                 View order
+
+                                                </Dropdown.Item>
+                                                <Dropdown.Divider />
+                                                <Dropdown.Item eventKey="4" onClick={()=>handleShowTrackOrder(item.repairOrderCode)} >Track order</Dropdown.Item>
+                                            </DropdownType>
+                                        ))}
 
 
 
@@ -605,7 +653,7 @@ handleSubmitComment(data);
     <input 
       type="text"  
       className="form-control"
-      placeholder="Short title..."
+      placeholder="How do you feel?..."
       maxLength={50}  
       {...register("title", {
         required: 'Short title is required',
@@ -681,9 +729,7 @@ handleSubmitComment(data);
         </Modal.Body>
         <Modal.Footer>
        
-          <Button variant="secondary" onClick={()=>setShowComment(false)}>
-            Close
-          </Button>
+        
 
         </Modal.Footer>
       </Modal>

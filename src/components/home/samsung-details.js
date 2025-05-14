@@ -11,6 +11,7 @@ import InstoreRepairForm from "../layouts/InstoreRepairForm/instoreREpair";
 import PickupRepairForm from "../layouts/PickupRepairForm/pickuprepair";
 import ChatComponent from "../layouts/contactComponent/chatComponent";
 import Goback from "../layouts/goBack";
+import WhatsAppFloat from "../layouts/whatsappFloat/whatsAppFloat";
 
 
 const SamsungDetails = (()=>{
@@ -113,7 +114,7 @@ const handleScrollInstoreForm = (()=>{
 
      <h3 className="head-bookRepair">BOOK A REPAIR OR A FREE IN-STORE ASSESSMENT</h3>  
 
-    <SignUpSignIn/>
+    {/* <SignUpSignIn/> */}
 
 
 <div className="card-hol">
@@ -128,7 +129,7 @@ const handleScrollInstoreForm = (()=>{
       like for us to call to arrange this and we will give you a call.
       
       <p className="cl-text">Please chat or call us for detail explanation and the pricing for the fixing service. We are available 24/7    </p>
-      <ChatComponent/>
+      {/* <ChatComponent/> */}
       
       </div>
 
@@ -148,7 +149,7 @@ const handleScrollInstoreForm = (()=>{
    This is the quickest way to get a repair done.
    
    <p className="cl-text">Please chat or call us for detail explanation, reservation and the pricing for the fixing service. We are available 24/7    </p>
-      <ChatComponent/>
+      {/* <ChatComponent/> */}
    
    </div>
    <button className="picckBtn  p-3" onClick={toggleVisibility}> Reserve Now</button>
@@ -226,6 +227,7 @@ const handleScrollInstoreForm = (()=>{
       </Modal>
 
     
+<WhatsAppFloat/>
 
       
       

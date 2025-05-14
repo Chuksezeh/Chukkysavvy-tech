@@ -64,6 +64,11 @@ const Header = ()=>{
 const navigateFindLocation = (()=>{
   navigate("/find-location")
 })
+
+const navigateContactus = (()=>{
+  navigate("/about-us")
+})
+  
   
   const userInfo = localStorage.getItem('userInfo');
   const userData = JSON.parse(userInfo);
@@ -122,6 +127,7 @@ const navigateFindLocation = (()=>{
     }
     
     <a onClick={ navigateAdmin}>Admin</a>
+    <a onClick={navigateContactus}>Contact us</a>
     {/* <span className="badgeMain" onClick={navigateShoppingCart}><span>  <MdOutlineShoppingCart  /></span>  My Cart <span className="badge0">2</span></span> */}
   </div>
  </div>

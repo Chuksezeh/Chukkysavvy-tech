@@ -22,6 +22,11 @@ const handleDetailsIphone = (()=>{
      navigate("/details-book-Iphone")
 })
 
+const handleNavigateISamsung = (()=>{
+  navigate("/samsung-details")
+})
+
+
 const navigateIpad = (()=>{
 
   navigate("/ipad-details")
@@ -61,27 +66,27 @@ const scrolltop = () => {
 <div className='fixlineDiv'>
   <div className='fixLine' ></div>
 </div>
-<div style={{justifyContent:"center", textAlign:"center"}}> <Goback/></div>
+{/* <div style={{justifyContent:"center", textAlign:"center"}}> <Goback/></div> */}
 <div className="wrapper">
  
     
 
    <div className="card" >
-   <NavLink to="/details-book-Iphone">
+   <div onClick={handleDetailsIphone}>
 		<h3 className="card-title" style={{fontWeight: 'bold', width: '250px'}}>Iphone</h3>
 	<img className='card-mg' src={iphoneImage} />
 	{/* <button className="card-btn">SELECT</button> */}
-  </NavLink>
+  </div>
 	</div>
  
  
 	<div className="card">
-  <NavLink to="/samsung-details">
+  <div  onClick={handleNavigateISamsung}>
 		<h3 className="card-title" style={{fontWeight: 'bold'}}>Samsung</h3>
     <img className='card-mg' src={samsung}/>
 		{/* <p className="card-content">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p> */}
 	
-    </NavLink>
+    </div>
 	</div>
   
 	<div className="card" onClick={navigateIpad}>

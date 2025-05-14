@@ -43,6 +43,10 @@ const handleSubmitLoginData = async data => {
       if(res.statusText === "OK"){
         localStorage.setItem('isLoggedIn', 'true');
         localStorage.setItem('adminsInfo', JSON.stringify(res.data));
+
+        window.dispatchEvent(new Event("authChanged"));
+
+       
         navigate("/admin-dashboard-card")
          }
      

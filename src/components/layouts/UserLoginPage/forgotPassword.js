@@ -213,6 +213,7 @@ handleSubmitLoginData(data);
         enterResetCode && 
         <div className="form">
         <img className="log-log-inimage" src={logo}/>
+        <div style={{textAlign:"center"}}> A password reset code has been sent to your email. Please check your inbox or spam folder.</div>
       
      <p className="titleAdLogin">  Enter Reset Code </p>
 
@@ -276,7 +277,11 @@ handleSubmitLoginData(data);
    <p >Enter new password</p>
    <input type="password" placeholder="Enter reset code" {...register("password", {
      required: 'Password is required',
-     maxLength: {},
+     minLength: {
+    value: 6,
+    message: "Must be six characters and above"
+
+     },
    })} />
    <span className="cum-error">{errors.password?.message}</span>
 

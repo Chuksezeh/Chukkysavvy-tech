@@ -1,7 +1,9 @@
 import axios from 'axios';
 
-const baseURLChukkytech = "http://localhost:5001/";
+const baseURLChukkytech = process.env.REACT_APP_BASE_URL;
 
+
+console.log("baseURLChukkytech", baseURLChukkytech)
 
 const chukkytechAxios = axios.create({
   baseURL: baseURLChukkytech
