@@ -126,7 +126,7 @@ const navigateContactus = (()=>{
       userData ? <a  onClick={navigateProfilePage}>My Account</a> : <a  onClick={navigateUserLogin}>Login</a>
     }
     
-    <a onClick={ navigateAdmin}>Admin</a>
+    {/* <a onClick={ navigateAdmin}>Admin</a> */}
     <a onClick={navigateContactus}>Contact us</a>
     {/* <span className="badgeMain" onClick={navigateShoppingCart}><span>  <MdOutlineShoppingCart  /></span>  My Cart <span className="badge0">2</span></span> */}
   </div>

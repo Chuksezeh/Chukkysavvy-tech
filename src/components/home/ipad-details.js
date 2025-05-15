@@ -3,8 +3,8 @@ import Footer from "../layouts/Footer";
 // import samsung from '../images/samsung.png';
 import { Button, Row } from "react-bootstrap";
 import Modal from 'react-bootstrap/Modal';
-import rep1 from '../images/rep1.jpg';
-import rep2 from '../images/tecd.jpeg';
+import rep1 from '../images/Designer.jpeg';
+import rep2 from '../images/black-dispatcher.jpeg';
 import Header from "../layouts/Header";
 import ipadImage from "../images/tab1.jpg"
 import SignUpSignIn from "./singupSignIn/signup-signin";
@@ -118,7 +118,7 @@ const IpadDetails =(()=>{
       <img className="cardimagess" src= {rep2}/>
    </div>
    <div className="cardtext-book p-3">
-      <h4>Free Pickup by Courier </h4> 
+   <h4 className="cl-textHEAd">Order Pickup, Repair and Delivery </h4> 
       We offer free pickup city-wide if you are unable to come to our store. If youd like to arrange for your device to be picked up, please choose a time and day youd 
       like for us to call to arrange this and we will give you a call.
       <p className="cl-text">Please chat or call us for detail explanation and the pricing for the fixing service. We are available 24/7    </p>
@@ -136,7 +136,7 @@ const IpadDetails =(()=>{
       <img className="cardimagess" src= {rep1}/>
    </div>
    <div className="cardtext-book p-3">
-      <h4>In-Store Appointment</h4> 
+   <h4 className="cl-textHEAd">Reserve In-Store Appointment</h4>  
    If youd like to setup an in-store appointment to have your device repaired or assessed, choose this option. 
    This is the quickest way to get a repair done.
    <p className="cl-text">Please chat or call us for detail explanation, reservation and the pricing for the fixing service. We are available 24/7    </p>

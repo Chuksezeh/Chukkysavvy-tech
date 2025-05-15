@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import Footer from "../layouts/Footer";
 import samsung from '../images/samsung.png';
 
-import rep1 from '../images/rep1.jpg';
-import rep2 from '../images/tecd.jpeg';
+import rep1 from '../images/Designer.jpeg';
+import rep2 from '../images/black-dispatcher.jpeg';
 import otherPhones from '../images/laptops1.avif';
 import SignUpSignIn from "./singupSignIn/signup-signin";
 import InstoreRepairForm from "../layouts/InstoreRepairForm/instoreREpair";
@@ -17,10 +17,10 @@ import WhatsAppFloat from "../layouts/whatsappFloat/whatsAppFloat";
 
 const LaptopBookDetails = (() => {
 
- 
+
    const [isVisible, setIsVisible] = useState(false);
    const [isVisiblePickUp, setIsVisiblePickUp] = useState(false);
-   const [showPickUpForm, setShowPickUpForm]= useState(false);
+   const [showPickUpForm, setShowPickUpForm] = useState(false);
    const [show, setShow] = useState(false);
 
    const handleShowPickUpForm = () => setShowPickUpForm(true);
@@ -34,24 +34,24 @@ const LaptopBookDetails = (() => {
       setIsVisible(!isVisible);
       setIsVisiblePickUp(false)
       handleShow()
-    };
-  
-    const toggleVisibilityPickUp = ()=>{
-     setIsVisiblePickUp(!isVisiblePickUp)
-     setIsVisible(false);
-     handleShowPickUpForm()
-  }
+   };
+
+   const toggleVisibilityPickUp = () => {
+      setIsVisiblePickUp(!isVisiblePickUp)
+      setIsVisible(false);
+      handleShowPickUpForm()
+   }
 
 
-  const scrolltop = () => {
-   window.scrollTo({
-     top: 0,
-     behavior: 'smooth',
-   })
- }
- useEffect(() => {
-   scrolltop()
- }, [])
+   const scrolltop = () => {
+      window.scrollTo({
+         top: 0,
+         behavior: 'smooth',
+      })
+   }
+   useEffect(() => {
+      scrolltop()
+   }, [])
 
 
    return (
@@ -59,7 +59,7 @@ const LaptopBookDetails = (() => {
       <>
          <Header />
          <div className="container">
-         <Goback/>
+            <Goback />
 
             <div className='fixlineDiv'>
                <h2 className="iphone-d">Laptops/Desktops</h2>
@@ -94,99 +94,99 @@ const LaptopBookDetails = (() => {
             </div>
 
             <h3 className="head-bookRepair">BOOK A REPAIR OR A FREE IN-STORE ASSESSMENT</h3>
-              {/* <SignUpSignIn/> */}
+            {/* <SignUpSignIn/> */}
 
-           <div className="card-hol">
-               <div className="card-covers">
-                  <div className="cardimage-book p-3">
-                     <img className="cardimagess" src={rep1} />
-                  </div>
-                  <div className="cardtext-book p-3">
-                     <h4>In-Store Appointment</h4>
-                     If youd like to setup an in-store appointment to have your device repaired or assessed, choose this option.
-                     This is the quickest way to get a repair done.
-                     <p className="cl-text">Please chat or call us for detail explanation and the pricing for the fixing service. We are available 24/7    </p>
-                   {/* <ChatComponent/> */}
+            <div className="card-hol">
+
+
+<div className="card-covers">
+   <div className="cardimage-book p-3">
+      <img className="cardimagess" src= {rep2}/>
+   </div>
+   <div className="cardtext-book p-3">
+   <h4 className="cl-textHEAd">Order Pickup, Repair and Delivery </h4> 
+      We offer free pickup city-wide if you are unable to come to our store. If youd like to arrange for your device to be picked up, please choose a time and day youd 
+      like for us to call to arrange this and we will give you a call.
+      <p className="cl-text">Please chat or call us for detail explanation and the pricing for the fixing service. We are available 24/7    </p>
+      {/* <ChatComponent/> */}
       
-                  </div>
+      </div>
 
-                  <button className="picckBtn p-3" onClick={toggleVisibilityPickUp}> Order Now </button>
-               </div>
+      <button className="picckBtn p-3" onClick={toggleVisibilityPickUp}> Order Now </button>
+   
 
-            <div className="card-covers">
-                  <div className="cardimage-book p-3">
-                     <img className="cardimagess" src={rep2} />
-                  </div>
-                  <div className="cardtext-book p-3">
-                     <h4>Free Pickup by Courier </h4>
-                     We offer free pickup city-wide if you are unable to come to our store. If youd like to arrange for your device to be picked up, please choose a time and day youd
-                     like for us to call to arrange this and we will give you a call.
-                     <p className="cl-text">Please chat or call us for detail explanation, reservation and the pricing for the fixing service. We are available 24/7    </p>
+</div>
+
+<div className="card-covers">
+   <div className="cardimage-book p-3">
+      <img className="cardimagess" src= {rep1}/>
+   </div>
+   <div className="cardtext-book p-3">
+   <h4 className="cl-textHEAd">Reserve In-Store Appointment</h4> 
+   If youd like to setup an in-store appointment to have your device repaired or assessed, choose this option. 
+   This is the quickest way to get a repair done.
+   <p className="cl-text">Please chat or call us for detail explanation, reservation and the pricing for the fixing service. We are available 24/7    </p>
       {/* <ChatComponent/> */}
    
    </div>
    <button className="picckBtn  p-3" onClick={toggleVisibility}> Reserve Now</button>
+</div>
 
-
-               </div>
-
-            </div>
-
-           
-            <br/>
-<br/> 
-<br/>
-<br/>   
-<br/>
+</div>
+<br />
+<br />
+<br />
+            <br />
+            <br />
 
          </div>
 
          <Modal
-        show={show}
-        onHide={handleClose}
-        backdrop="static"
-        keyboard={false}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-           
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Order for Instore Repair</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          
-        <InstoreRepairForm/>
+            show={show}
+            onHide={handleClose}
+            backdrop="static"
+            keyboard={false}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
 
-        </Modal.Body>
-        <Modal.Footer>
-          
-        
-        </Modal.Footer>
-      </Modal>
+         >
+            <Modal.Header closeButton>
+               <Modal.Title>Order for Instore Repair</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+
+               <InstoreRepairForm />
+
+            </Modal.Body>
+            <Modal.Footer>
 
 
-      <Modal
-        show={showPickUpForm}
-        onHide={handleClosePickupForm}
-        backdrop="static"
-        keyboard={false}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-           
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Device Repair Pickup Order</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-        <PickupRepairForm/>
-        </Modal.Body>
-        <Modal.Footer>
-         
-         
-        </Modal.Footer>
-      </Modal>
+            </Modal.Footer>
+         </Modal>
 
-      <WhatsAppFloat/>
+
+         <Modal
+            show={showPickUpForm}
+            onHide={handleClosePickupForm}
+            backdrop="static"
+            keyboard={false}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+
+         >
+            <Modal.Header closeButton>
+               <Modal.Title>Device Repair Pickup Order</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+               <PickupRepairForm />
+            </Modal.Body>
+            <Modal.Footer>
+
+
+            </Modal.Footer>
+         </Modal>
+
+         <WhatsAppFloat />
 
 
          <Footer />

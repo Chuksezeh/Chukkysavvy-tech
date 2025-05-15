@@ -30,7 +30,7 @@ body{
     background-color: aliceblue;
   }
   .cl-text{
-    color: rgb(201, 12, 12);
+    color: #1A89B8;
   }
 
 
@@ -418,6 +418,10 @@ form .form-row .textarea{
 }
 .cardimagess{
   width: 200px
+}
+.cardimage-book {
+  justify-content: center;
+  text-align: center;
 }
 /* .cardtext-book{
   width: 30%;
