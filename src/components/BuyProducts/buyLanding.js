@@ -1,11 +1,22 @@
 import "./productBuy.css";
 
 import Header from "../layouts/Header";
+import { useNavigate } from "react-router-dom";
 
 
 
 
 const BuyProducts = (()=>{
+
+  const navigate = useNavigate();
+
+const navigateProductCart = (()=>{
+      navigate("/product-cart")
+})
+
+const navigateProductDetails = (()=>{
+  navigate("/product-details")
+})
 
 
     return(
@@ -16,14 +27,20 @@ const BuyProducts = (()=>{
         <Header/>
 
 
-        <div>
-{/* <h3 className="" style={{textAlign: "center", marginTop:"5%"}}>COMING SOON...</h3> */}
+        <div className="centSoon">
+<h3 className="" style={{textAlign: "center", marginTop:"5%"}}>COMING SOON...</h3>
 
-<div className="container-fluid bg-trasparent my-4 p-3" style={{position:"relative"}}>
+<p  className="centSoon"> While we’re working hard to bring you durable, affordable, and trusted tech products, feel free to take advantage of our <a href="/bookingpage">Book a Repair</a>  service!
+</p>
+<p  className="centSoon">Let us give your device a new lease on life — quick, reliable, and hassle-free.</p>
+
+<p  className="centSoon">Thank you for choosing <span  style={{fontWeight:"bold"}}>CHUKKYTECH</span>  — your trusted tech partner.</p>
+
+{/* <div className="container-fluid bg-trasparent my-4 p-3" style={{position:"relative"}}>
   <div className="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
     <div className="col hp">
       <div className="card  shadow-sm">
-        <a target="_blank" href="https://amzn.to/3qeS1Fe">
+        <a target="_blank" onClick={navigateProductDetails}>
           <img src="https://m.media-amazon.com/images/I/81gK08T6tYL._AC_SL1500_.jpg" className="card-img-top" alt="product.title" />
         </a>
 
@@ -42,7 +59,7 @@ const BuyProducts = (()=>{
 
           <div className="d-grid gap-2 my-4">
 
-            <a href="#" className="btn btn-warning bold-btn" style={{color:"white", fontSize:"15px", padding:"5px"}}>add to cart</a>
+            <a href="#" className="btn btn-warning bold-btn" style={{color:"white", fontSize:"15px", padding:"5px"}} onClick={navigateProductCart}>add to cart</a>
 
           </div>
           <div className="clearfix mb-1">
@@ -168,7 +185,7 @@ const BuyProducts = (()=>{
       </div>
     </div>
   </div>
-</div>
+</div> */}
 
         </div>
         

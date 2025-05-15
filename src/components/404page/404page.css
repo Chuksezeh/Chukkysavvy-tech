@@ -1,0 +1,30 @@
+.content404 {
+    text-align: center;
+    margin: 3rem 0;
+  }
+  
+  .content404 .main-heading {
+    font-size: 2.5rem;
+    font-weight: 700;
+  }
+  .pp-404 {
+    font-size: 1.3rem;
+    padding: 0.7rem 0;
+    text-align: center;
+  }
+  .gif{
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .bTN-404 {
+    padding: 1rem;
+    border-radius: 15px;
+    outline: none;
+    border: none;
+    background: #0046d4;
+    color: #fff;
+    font-size: 1.3rem;
+    cursor: pointer;
+  }
+  

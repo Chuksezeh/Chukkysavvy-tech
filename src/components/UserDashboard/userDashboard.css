@@ -5,10 +5,10 @@
 	padding: 0;
 	box-sizing: border-box;
 } */
-body, html {
+/* body, html {
 	font-family: 'Lato', sans-serif;
 	
-}
+} */
 
 .clearfix:after {
 	content: "";
@@ -65,7 +65,7 @@ body, html {
 	width: 250px;
 	background-color: #F1F1F2;
 	position: fixed;
-	top: 5.5%;
+	top: 6%;
 	left: 0;
 	bottom: 0;
 	/* box-shadow: 1px 0px 10px #777; */
@@ -132,11 +132,12 @@ body, html {
 	width: calc(100% - 250px);
 	height: 100%;
 	margin-left: 250px;
-	padding: 20px 30px;
+	padding: 5% 30px;
+	
 }
 .main-content .panel-wrapper {
 	margin: 20px 0;
-	box-shadow: 0px 1px 1px #777;
+	/* box-shadow: 0px 1px 1px #777; */
 }
 
 .main-content .panel-wrapper .panel-head {
@@ -196,6 +197,35 @@ body, html {
 	box-shadow: rgba(131, 192, 253, 0.5) 0 0 0 3px;
 	outline: none;
   }
+
+
+  .loader-come {
+	width: 50px;
+	aspect-ratio: 1;
+	display: grid;
+	border-radius: 50%;
+	background:
+	  linear-gradient(0deg ,rgb(0 0 0/50%) 30%,#0000 0 70%,rgb(0 0 0/100%) 0) 50%/8% 100%,
+	  linear-gradient(90deg,rgb(0 0 0/25%) 30%,#0000 0 70%,rgb(0 0 0/75% ) 0) 50%/100% 8%;
+	background-repeat: no-repeat;
+	animation: l23 1s infinite steps(12);
+  }
+  .loader-come::before,
+  .loader-come::after {
+	 content: "";
+	 grid-area: 1/1;
+	 border-radius: 50%;
+	 background: inherit;
+	 opacity: 0.915;
+	 transform: rotate(30deg);
+  }
+  .loader-come::after {
+	 opacity: 0.83;
+	 transform: rotate(60deg);
+  }
+  @keyframes l23 {
+	100% {transform: rotate(1turn)}
+  }
 	
 	
 	
@@ -210,9 +240,9 @@ body, html {
 		z-index: 1000 !important; */
 	}
 	.sidebar-User-prof {
-		position: absolute;
+		position: fixed;
 		height: 100vh ;
-		/* padding-top: 20px; */
+		top: 10%;
 		margin-bottom: 40px;
 		z-index: 1000;
 		width: 100%;
@@ -220,6 +250,7 @@ body, html {
 	.main-content {
 		width: 100%;
 		margin-left: 0;
+		padding-top: 20%;
 		/* z-index: -1; */
 		position: relative;
 	}
@@ -243,7 +274,7 @@ body, html {
 	
 }
 
-@media only screen and (max-width: 420px){
+@media only screen and (max-width: 993px){
 	.header-user-prof {
 		display: block;
 	}

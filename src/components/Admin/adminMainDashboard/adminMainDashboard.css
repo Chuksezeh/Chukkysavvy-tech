@@ -51,6 +51,9 @@
   .c-dashboardInfo:nth-child(4) .wrap:after {
     background: linear-gradient(81.67deg, #ff647c 0%, #1f5dc5 100%);
   }
+  .c-dashboardInfo:nth-child(5) .wrap:after {
+    background: linear-gradient(81.67deg, #64ffff 0%, #1f5dc5 100%);
+  }
   .c-dashboardInfo__title svg {
     color: #d7d7d7;
     margin-left: 5px;

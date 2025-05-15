@@ -11,6 +11,7 @@ import otherPhones from '../images/other-phones.jpg';
 import laptop from '../images/laptops1.avif';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import Goback from '../layouts/goBack';
 
 
 
@@ -20,6 +21,11 @@ const navigate = useNavigate()
 const handleDetailsIphone = (()=>{
      navigate("/details-book-Iphone")
 })
+
+const handleNavigateISamsung = (()=>{
+  navigate("/samsung-details")
+})
+
 
 const navigateIpad = (()=>{
 
@@ -55,30 +61,32 @@ const scrolltop = () => {
 
 
      
-<h1 className='respom mt-3'>I want to Fix</h1>
+<h1 className='respom '>I want to Fix</h1>
 <div className='fixText'> To get started on your repair, please select the option that closely matches your device </div>
 <div className='fixlineDiv'>
   <div className='fixLine' ></div>
 </div>
-
+{/* <div style={{justifyContent:"center", textAlign:"center"}}> <Goback/></div> */}
 <div className="wrapper">
+ 
+    
 
    <div className="card" >
-   <NavLink to="/details-book-Iphone">
+   <div onClick={handleDetailsIphone}>
 		<h3 className="card-title" style={{fontWeight: 'bold', width: '250px'}}>Iphone</h3>
 	<img className='card-mg' src={iphoneImage} />
 	{/* <button className="card-btn">SELECT</button> */}
-  </NavLink>
+  </div>
 	</div>
  
  
 	<div className="card">
-  <NavLink to="/samsung-details">
+  <div  onClick={handleNavigateISamsung}>
 		<h3 className="card-title" style={{fontWeight: 'bold'}}>Samsung</h3>
     <img className='card-mg' src={samsung}/>
 		{/* <p className="card-content">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p> */}
 	
-    </NavLink>
+    </div>
 	</div>
   
 	<div className="card" onClick={navigateIpad}>

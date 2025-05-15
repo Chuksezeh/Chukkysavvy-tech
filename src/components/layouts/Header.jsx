@@ -5,6 +5,7 @@ import {PiListPlusThin} from "react-icons/pi";
 import { NavLink, useNavigate } from "react-router-dom";
 import { BsFillPersonFill, BsList, BsPersonCircle } from "react-icons/bs";
 import brandlogo from "../images/CHUKKY-BRAND-BACKGROUND.png";
+import { MdOutlineShoppingCart } from "react-icons/md";
 
 const Header = ()=>{
 
@@ -49,7 +50,29 @@ const Header = ()=>{
 
   const navigateTracking = (()=>{
     navigate("/track-repair")
+  });
+
+  const navigateShoppingCart = (()=>{
+    navigate("/product-cart")
   })
+
+  const navigateProfilePage = (()=>{
+
+    navigate("/user-profile")
+  })
+
+const navigateFindLocation = (()=>{
+  navigate("/find-location")
+})
+
+const navigateContactus = (()=>{
+  navigate("/about-us")
+})
+  
+  
+  const userInfo = localStorage.getItem('userInfo');
+  const userData = JSON.parse(userInfo);
+
 
 
 
@@ -90,7 +113,7 @@ const Header = ()=>{
     </label>
   </div>
   
-  <div className="logoDiv" onClick={navigateHome}>
+  <div className="logoDiv" onClick={navigateHome}>       
     
     <a> <img src={brandlogo} className="logo-SElf"/> Chukkytech</a>
   </div>
@@ -98,8 +121,14 @@ const Header = ()=>{
   <div className="nav-links">
     <a  onClick={navigateHome} >Home</a>
     <a onClick={navigateTracking}>Track  repair</a>
-    <a  onClick={navigateUserLogin}>Login</a>
-    <a onClick={ navigateAdmin}>Admin</a>
+    <a onClick={navigateFindLocation}>Find location</a>
+    {
+      userData ? <a  onClick={navigateProfilePage}>My Account</a> : <a  onClick={navigateUserLogin}>Login</a>
+    }
+    
+    {/* <a onClick={ navigateAdmin}>Admin</a> */}
+    <a onClick={navigateContactus}>Contact us</a>
+    {/* <span className="badgeMain" onClick={navigateShoppingCart}><span>  <MdOutlineShoppingCart  /></span>  My Cart <span className="badge0">2</span></span> */}
   </div>
  </div>
 

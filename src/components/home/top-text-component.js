@@ -6,19 +6,21 @@ const TopTextComponent = ()=>{
         <>
 
             <div className="second">
-                <div className="text-about-sec">
+                {/* <div className="text-about-sec">
                     <h4 className="chukName">Your Solution Hub</h4>
                     <p>We Provide Hardware and Software Solutions to Most of your Gadget Issues</p>
                 </div>
-                <div className="border-line"></div>
+                <div className="border-line"></div> */}
                 <div className="text-about-sec">
 
-                    <div>
+                       <div>
                         <img src={logoImage} className="logo-img-setText"/> 
                         </div>
+                        <div className="p-2">  
                 You don’t have to spend a fortune or be there in person 
                 to restore your device’s original quality. With our 
                 convenient home and office pickup and delivery options, we’ve got you covered!
+                </div>
                 </div>
                
                 {/* <div>

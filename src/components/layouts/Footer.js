@@ -65,9 +65,9 @@ const Footer = () => {
                             <div className="footer-social-icon">
                                 <span>Follow us</span>
                                 <a href="https://www.facebook.com/chukkystarmedia" target="blank"><i className=""><FaFacebookF  size={30}/></i></a>
-                                <a href="#"><i><FaXTwitter size={30} />
+                                <a href="https://x.com/chuksp6"><i><FaXTwitter size={30} />
                                 </i></a>
-                                <a href="#"><i ><FaInstagram  size={30}/>
+                                <a href="https://www.instagram.com/chukky_tech?igsh=ZHIybmhocGZ4c3Jw"><i ><FaInstagram  size={30}/>
                                 </i></a>
                                 <a href="https://www.youtube.com/channel/UCs2Pew4i6lGiVkjTJEZ5o-g"><i ><FaYoutube   size={30}/>
                                 </i></a>
@@ -81,15 +81,15 @@ const Footer = () => {
                                 <h3>Useful Links</h3>
                             </div>
                             <ul>
-                                <li><a href="#">Home</a></li>
+                                <li><a href="/">Home</a></li>
                                
                                 <li> <Link to="/privacy-policy"><a >Privacy policy</a></Link>  </li>
                                
-                                <li><a href="#">About us</a></li>
-                                <li><a href="#">Our Services</a></li>
+                                <li><a href="/find-location">Find locations</a></li>
+                                <li><a href="/">Our Services</a></li>
                                 <li> <Link to="/terms-conditions">  <a >Terms & Condition</a></Link> </li>
-                                <li><a href="#">Contact us</a></li>
-                                <li><a href="#">Latest News</a></li>
+                                <li><a href="/about-us">Contact us</a></li>
+                                {/* <li><a href="#">Latest News</a></li> */}
                             </ul>
                         </div>
                     </div>
@@ -117,8 +117,8 @@ const Footer = () => {
             <div className="container">
                 <div className="row">
                     <div className=" text-center ">
-                        <div className="copyright-text">
-                            <p>Copyright &copy; 2025, All Right Reserved <a >chukkytech</a></p>
+                        <div className="copyright-text" >
+                            <p style={{textAlign:"center", justifyContent:"center"}}>Copyright &copy;{new Date().getFullYear()}, All Right Reserved <a >chukkytech</a></p>
                         </div>
                     </div>
                    

@@ -2,17 +2,19 @@ import Header from "../layouts/Header"
 import iphoneImage from '../images/iphone4.jpg';
 import { Form, useNavigate } from "react-router-dom";
 import { Button, Row } from "react-bootstrap";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Card from 'react-bootstrap/Card';
-import rep1 from '../images/rep1.jpg';
-import rep2 from '../images/tecd.jpeg';
+import rep1 from '../images/Designer.jpeg';
+import rep2 from '../images/black-dispatcher.jpeg';
 import Footer from "../layouts/Footer";
 import SignUpSignIn from "./singupSignIn/signup-signin";
 import { FaWhatsapp } from "react-icons/fa";
 import ChatComponent from "../layouts/contactComponent/chatComponent";
 import IphonePickupREpair from "../layouts/IphonePickupRepairForm/iphonePickupRepair";
 import IphoneInstoreRepair from "../layouts/IphoneInstoreRepairForm/iphoneInstoreRepair";
+import Goback from "../layouts/goBack";
+import WhatsAppFloat from "../layouts/whatsappFloat/whatsAppFloat";
 
 
 
@@ -35,8 +37,6 @@ const DetailsBookIphone = (()=>{
    
 
 
-
-
     const [isVisible, setIsVisible] = useState(false);
     const [isVisiblePickUp, setIsVisiblePickUp] = useState(false);
 
@@ -55,7 +55,15 @@ const DetailsBookIphone = (()=>{
 {/* <Button variant="primary" onClick={handleShow}>
 Launch static backdrop modal
 </Button> */}
-
+const scrolltop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  })
+}
+useEffect(() => {
+  scrolltop()
+}, [])
 
     return(
 
@@ -63,7 +71,8 @@ Launch static backdrop modal
 <Header/>
 
 <div className="container">
-        
+<Goback/>
+
         <div className='fixlineDiv'>
         <h2 className="iphone-d">Iphones</h2>
         <div className='fixLine' ></div>
@@ -108,12 +117,12 @@ Launch static backdrop modal
       <img className="cardimagess" src= {rep2}/>
    </div>
    <div className="cardtext-book p-3">
-      <h4 className="cl-textHEAd">Pickup, Repair and Deliver </h4> 
+      <h4 className="cl-textHEAd">Order Pickup, Repair and Delivery </h4> 
       We offer free pickup city-wide if you are unable to come to our store. If youd like to arrange for
        your device to be picked up, please choose a time and day you would 
       like us to contact you for Pickup and quick fix
       <p className="cl-text">Please chat or call us for detail explanation and the pricing for the fixing service. We are available 24/7    </p>
-      <ChatComponent/>
+      {/* <ChatComponent/> */}
       
       </div>
 
@@ -127,13 +136,14 @@ Launch static backdrop modal
       <img className="cardimagess" src= {rep1}/>
    </div>
    <div className="cardtext-book p-3">
-      <h4 className="cl-textHEAd">In-Store Appointment</h4> 
+      <h4 className="cl-textHEAd">Reserve In-Store Appointment</h4> 
    If youd like to setup an in-store appointment to have your device repaired or assessed, choose this option. 
    This is the quickest way to get a repair done.
    <p className="cl-text">Please chat or call us for detail explanation, reservation and the pricing for the fixing service. We are available 24/7    </p>
-      <ChatComponent/>
+      {/* <ChatComponent/> */}
    
    </div>
+ 
    <button className="picckBtn  p-3" onClick={toggleVisibility}> Reserve Now</button>
    
 </div>
@@ -157,10 +167,7 @@ Launch static backdrop modal
        
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          {/* <Button variant="primary">Continue</Button> */}
+         
         </Modal.Footer>
       </Modal>
 
@@ -183,22 +190,20 @@ Launch static backdrop modal
            
       >
         <Modal.Header closeButton>
-          <Modal.Title>Order For Pickup</Modal.Title>
+          <Modal.Title>Device Repair Pickup Order</Modal.Title>
         </Modal.Header>
         <Modal.Body>
        <IphoneInstoreRepair/>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClosePickupForm}>
-            Close
-          </Button>
+        
           {/* <Button variant="primary">Continue</Button> */}
         </Modal.Footer>
       </Modal>
 
 
 
-
+<WhatsAppFloat/>
 
 
      

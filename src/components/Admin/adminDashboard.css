@@ -4,8 +4,9 @@
   padding: 10px;
 }
 .nowsidecontainer{
-  margin-top: 6%;
+  /* margin-top: 6%; */
   background-color: #041e5c;
+  height: auto !important;
 }
 .shift-nav{
   margin-left: 20px !important;
@@ -14,6 +15,16 @@
 .action-bar{
   list-style-type: none;
   margin-left: 3%;
+}
+.hamburger-icon {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 999;
+  background: white;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 

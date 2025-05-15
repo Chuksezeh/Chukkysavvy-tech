@@ -1,6 +1,6 @@
 section {
-    margin-top: 25px;
-    
+    /* margin-top: 25px; */
+   margin: 0 auto; 
   }
   
   article {
@@ -8,8 +8,9 @@ section {
     border: 1px solid black;
     background-color: #cccccc;
     padding: 15px;
-    margin: 15%;
-    margin-top: 5%;
+    margin: 0 auto; 
+    /* margin: 15%; */
+    /* margin-top: 5%; */
     margin-bottom: 5%;
     font-size: 22px
   }

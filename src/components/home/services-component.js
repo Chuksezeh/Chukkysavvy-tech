@@ -5,6 +5,8 @@ import image3 from "../images/tab1.jpg";
 import image4 from "../images/website.png";
  import image5 from "../images/cartracking.jpg";
 import { NavLink } from "react-router-dom";
+import { LiaHandPointRightSolid } from "react-icons/lia";
+
 
 
 const ServicesComponent = ()=>{
@@ -65,7 +67,7 @@ const ServicesComponent = ()=>{
 
                         <br/><b/> <br/><b/>
                         <div className="jkBTn">
-<NavLink to='/bookingpage' className="navlink-button" > <button className="button-43" role="button">
+                       <NavLink to='/bookingpage' className="navlink-button" > <button className="button-43" role="button">
                                 Book Now
                             </button></NavLink>
                             </div>
@@ -82,7 +84,7 @@ const ServicesComponent = ()=>{
 
             
 
-<div className="body3-container-all">
+           <div className="body3-container-all">
                 <Fade>
                     <div className="body3-main">
                     <div className="body3-image-div">
@@ -110,6 +112,40 @@ const ServicesComponent = ()=>{
              </div>
 
            
+             <div className="body3-container-all">
+                <Fade>
+                    <div className="body3-main">
+                       <div className="body3-image-div centerTextDiVImage showMobSize ">
+                            <h2 className="tittle-text">Tablet Fixes</h2>
+                            <img src={image3} className="body3-img1" />
+                        </div>
+                        <div className="body3-text-div centerTextDiV">
+                        At Chukkytech, we specialize in building smart, efficient, and scalable software solutions tailored to meet
+                         your business or personal needs. Whether you're a startup, 
+                        a growing business, or an individual with a brilliant idea, our team is here to bring your 
+                        vision to life with cutting-edge technology.
+                       
+                        <ul>
+                            <li> <LiaHandPointRightSolid /> Website Design & Development
+                            From sleek, modern landing pages to full-fledged business websites, we craft engaging web experiences that reflect your brand.</li>
+                            <li><LiaHandPointRightSolid />   Mobile App Development
+                            Reach your customers on-the-go with intuitive Android and iOS applications that are fast, responsive, and beautifully designed. </li>
+                        </ul>
+                        
+                        
+
+                        <br/><b/> <br/><b/>
+                      
+                            </div>
+                            <div className="body3-image-div centerTextDiVImage hideMobSize seeAdjustImage">
+                            <h2 className="tittle-text">Software Development </h2>
+                            <img src={image3} className="body3-img1" />
+                        </div>
+
+                    </div>
+                </Fade>
+             </div>
+
 
            
 

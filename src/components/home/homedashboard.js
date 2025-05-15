@@ -36,9 +36,15 @@ const HomeDashBoard = () => {
         
        
           <div>
-            <NavLink to='/bookingpage' className="navlink-button" > <button className="button-50" role="button">
+            <NavLink to='/bookingpage' className="navlink-button" > 
+            <button className="button-50" role="button">
               Repair A Device
-            </button></NavLink>
+            </button>
+            {/* <button class="button-46" role="button">Repair A Device</button> */}
+
+            
+            </NavLink>
+            
             
 
   
@@ -46,9 +52,13 @@ const HomeDashBoard = () => {
           </div>
 
           <div>
-            <NavLink to='/buy-products' className="navlink-button" > <button className="button-50" role="button">
+            <NavLink to='/buy-products' className="navlink-button" >
+             <button className="button-50" role="button">
               Buy A Device
-            </button></NavLink>
+            </button>
+            {/* <button class="button-46" role="button">Buy A Device</button> */}
+ 
+            </NavLink>
 
           </div>
 

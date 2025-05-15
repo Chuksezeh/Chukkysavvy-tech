@@ -33,9 +33,9 @@
   border: 1px solid #ccc;
   border-collapse: collapse;
   margin: 0;
-  padding: 0;
+  padding: 10px;
   width: 100%;
-  table-layout: fixed;
+  
 }
 
 table caption {
@@ -46,7 +46,23 @@ table caption {
 table tr {
   background-color: #f8f8f8;
   border: 1px solid #ddd;
-  padding: .35em;
+ 
+}
+
+/* .text-center {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+
+
+.form-control {
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
 table th,
@@ -59,7 +75,7 @@ table th {
   font-size: .85em;
   letter-spacing: .1em;
   text-transform: uppercase;
-}
+} */
 
 @media screen and (max-width: 600px) {
   table {

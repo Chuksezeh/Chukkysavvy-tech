@@ -26,7 +26,7 @@ const ProductOrderTable = (()=>{
 
         <ul className="action-bar">
 
-          <li>Home / Orders / <span className="addash"> Product Orders </span></li>
+          <li><a href="/"> Home</a> / Orders / <span className="addash"> Product Orders </span></li>
         </ul>
       </div>
 

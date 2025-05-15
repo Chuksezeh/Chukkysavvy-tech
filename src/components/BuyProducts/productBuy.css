@@ -21,6 +21,11 @@
 .badge{
     color: white;
 }
+.centSoon{
+    text-align: center;
+    justify-content: center;
+    padding: 10px;
+}
 
 .container-fluid {
     max-width: 1400px;
