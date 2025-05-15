@@ -824,16 +824,16 @@ margin-top: 40px;
     margin-top: 4%;
     width: 50%;
     padding-right: 10%;
-    font-size: 20px;
+    /* font-size: 20px; */
     /* background-color: #007b5e; */
     /* padding: 30px; */
   }
   .tittle-text{
-    font-family: 'Alfa Slab One', cursive;
+    /* font-family: 'Alfa Slab One', cursive; */
      /* font-family: 'Lobster', cursive;
      font-family: 'Russo One', sans-serif; */
      font-weight: bold;
-     font-size: 40px;
+     /* font-size: 40px; */
   }
   .centerTextDiVImage{
     /* background-color: #17759C; */
