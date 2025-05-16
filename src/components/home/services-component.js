@@ -1,5 +1,5 @@
 import { Fade } from "react-awesome-reveal";
-import image1 from "../images/PHONE.jpg";
+import image1 from "../images/ipHonwithperson.webp";
 import image2 from "../images/laptop.jpeg";
 import image3 from "../images/tab1.jpg";
 import imagedev from "../images/perDeve.jpg";
@@ -117,7 +117,7 @@ const ServicesComponent = ()=>{
                 <Fade>
                     <div className="body3-main">
                        <div className="body3-image-div centerTextDiVImage showMobSize ">
-                            <h2 className="tittle-text">Tablet Fixes</h2>
+                            <h2 className="tittle-text">Software Development</h2>
                             <img src={imagedev} className="body3-img1" />
                         </div>
                         <div className="body3-text-div centerTextDiV">

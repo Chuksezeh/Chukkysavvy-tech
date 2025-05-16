@@ -12,6 +12,7 @@ import PickupRepairForm from "../layouts/PickupRepairForm/pickuprepair";
 import ChatComponent from "../layouts/contactComponent/chatComponent";
 import Goback from "../layouts/goBack";
 import WhatsAppFloat from "../layouts/whatsappFloat/whatsAppFloat";
+import ReadMoreText from "../layouts/readMoreText";
 
 
 const SamsungDetails = (()=>{
@@ -79,7 +80,7 @@ const handleScrollInstoreForm = (()=>{
 <Goback/>
 
         <div className='fixlineDiv'>
-        <h2 className="iphone-d">Samsung</h2>
+        <h1 className="iphone-d">Samsung</h1>
         <div className='fixLine' ></div>
         </div>
          <div className="iphone-detaials-cover container" >
@@ -88,23 +89,26 @@ const handleScrollInstoreForm = (()=>{
         </div>
         <div className="iphone-detaials-cover-text">
                <div className="text-about-details tickHead" style={{fontWeight:"bold"}}>Get your broken Samsung device
-                 quickly and professionally repaired at TecFix.</div>
+                 quickly and professionally repaired at Chukkytech.</div>
            
-              <div className="text-about-details container">Our trained technicians with years of
+<ReadMoreText
+text="Our trained technicians with years of
                  experience can perform most Samsung repairs the same day.  We have the tools and the
                   knowledge to fix Samsung issues such as: cracked or non-working screens, liquid damage,
                    intermittent or
-                 no charging, mic issues, speaker issues and more! Book your same-day Samsung repair today!</div>
+                 no charging, mic issues, speaker issues and more! Book your same-day Samsung repair today!
 
-                 <div className="text-about-details tickHead" style={{fontWeight:"bold"}}>Premium vs cheap aftermarket Samsung screens.</div>
+               Premium vs cheap aftermarket Samsung screens.
            
-              <div className="text-about-details  container">We only use premium quality screens because cheap aftermarket
+             We only use premium quality screens because cheap aftermarket
                  screens have a high chance of showing unattractive white spots or discolouration and may appear
                   less bright than premium quality screens. For your Samsung repair, we highly recommend not going for
                    the cheapest price in the city for this reason. At Chukkytech, you will be paying for premium quality parts 
-                   and at a fair & affordable price.
+                   and at a fair & affordable price."
+/>
+           
+            
 
-</div>
 
 
               </div>

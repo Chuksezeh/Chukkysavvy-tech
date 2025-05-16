@@ -9,10 +9,12 @@ import { IoLogoYoutube } from "react-icons/io5"
 import { BsTwitterX } from "react-icons/bs";
 import imageRepair from "../../images/microscoperepair.jpg"
 import WhatsAppFloat from "../whatsappFloat/whatsAppFloat"
+import { useState } from "react"
+import ReadMoreText from "../readMoreText"
 
 const AboutUs = (()=>{
 
-
+   
 
     return(
 
@@ -32,7 +34,7 @@ const AboutUs = (()=>{
 
           <ul className="contact-ul">
             <li><i className="fa fa-location-dot"> <MdOutlineLocationOn />
-            </i> 91, Ram Nagar, Ram Mandir, Delhi</li>
+            </i>3c Durban Street, Wuse 2, Abuja</li>
 
             <li>
               <i className="fa fa-phone"></i>
@@ -44,7 +46,7 @@ const AboutUs = (()=>{
             <li>
               <i className=" "> <MdAttachEmail size={20}/>
               </i>
-              <a href="mailto:pardeepkumar4bjp@gmail.com"><b> chukkytech001@gmail.com</b></a>
+              <a href="mailto:pardeepkumar4bjp@gmail.com"><b>chukkytech001@gmail.com</b></a>
             </li>
           </ul>
 
@@ -77,12 +79,54 @@ const AboutUs = (()=>{
                 <div className="col-md-3 col-sm-6 col-xs-12">
                     <div className="aboutus">
                         <h2 className="aboutus-title">About Us</h2>
-                        <p className="aboutus-text">At <strong>Chukkytech</strong> , we are committed to delivering top-tier gadget solutions tailored to meet the everyday needs of our customers.  Registered under corporate affairs commission with registration number <strong>7679854 </strong>,  founded and led by Chukwuka Paul Ezeh, a passionate tech enthusiast with years of hands-on experience in the tech and repair industry, Chukkytech has grown to become a trusted name in gadget repair, sales, and support services.</p>
-                        <p className="aboutus-text">We specialize in the <strong> repair and sales of all kinds of gadgets</strong>—including <strong>smartphones, iPads, laptops, tablets, and other smart devices</strong> . Whether it's a cracked screen, a faulty motherboard, or software issues, our certified technicians use modern diagnostic tools 
-                            and original replacement parts to ensure your device gets back to you in optimal condition.</p>
-                        <p className="aboutus-text">To make things even more convenient, we offer <strong>doorstep pickup and delivery services</strong>  for repairs—so you don’t have to step out to fix your device. Just schedule a pickup, and our team will handle the rest, ensuring a smooth, secure, and timely service.
 
-                    At Chukkytech, we don’t just fix gadgets—we provide peace of mind. From fast turnaround times and transparent updates to quality parts and exceptional customer care, we’re here to help you stay connected and productive.</p>
+    
+      
+      {/* <h2>Another Example</h2>
+      <ReadMoreText 
+        text="This is a shorter text that won't need truncation."
+        maxWords={10} 
+      /> */}
+
+             <p className="aboutus-text">
+
+             {/* <h1>Article Preview</h1> */}
+                <ReadMoreText text="At Chukkytech , we are committed to delivering top-tier gadget solutions
+                         tailored to meet the everyday needs of our customers.  Registered under corporate affairs commission with registration
+                          number 7679854 ,  founded and led by Chukwuka Paul Ezeh, a passionate tech enthusiast with years of 
+                          hands-on experience in the tech and repair industry, Chukkytech has grown to become a trusted name in gadget repair,
+                           sales, and support services.
+                           We specialize in the repair and sales of all kinds of gadgets—including 
+                          smartphones, iPads, laptops, tablets, and other smart devices . Whether it's a cracked screen, a faulty
+                          motherboard, or software issues, our certified technicians use modern diagnostic tools 
+                            and original replacement parts to ensure your device gets back to you in optimal condition.
+                          To make things even more convenient, we offer doorstep pickup and delivery services
+                          for repairs—so you don’t have to step out to fix your device. Just schedule a pickup, and our team will handle the rest,
+                           ensuring a smooth, secure, and timely service.
+
+                    At Chukkytech, we don’t just fix gadgets—we provide peace of mind. From fast turnaround times and transparent updates 
+                    to quality parts and exceptional customer care, we’re here to help you stay connected and productive." />
+
+             </p>
+
+
+
+
+                        {/* <p className="aboutus-text">At <strong>Chukkytech</strong> , we are committed to delivering top-tier gadget solutions
+                         tailored to meet the everyday needs of our customers.  Registered under corporate affairs commission with registration
+                          number <strong>7679854 </strong>,  founded and led by Chukwuka Paul Ezeh, a passionate tech enthusiast with years of 
+                          hands-on experience in the tech and repair industry, Chukkytech has grown to become a trusted name in gadget repair,
+                           sales, and support services.</p>
+                        <p className="aboutus-text">We specialize in the <strong> repair and sales of all kinds of gadgets</strong>—including 
+                        <strong>smartphones, iPads, laptops, tablets, and other smart devices</strong> . Whether it's a cracked screen, a faulty
+                         motherboard, or software issues, our certified technicians use modern diagnostic tools 
+                            and original replacement parts to ensure your device gets back to you in optimal condition.</p>
+                        <p className="aboutus-text">To make things even more convenient, we offer <strong>doorstep pickup and delivery services</strong>
+                          for repairs—so you don’t have to step out to fix your device. Just schedule a pickup, and our team will handle the rest,
+                           ensuring a smooth, secure, and timely service.
+
+                    At Chukkytech, we don’t just fix gadgets—we provide peace of mind. From fast turnaround times and transparent updates 
+                    to quality parts and exceptional customer care, we’re here to help you stay connected and productive.</p> */}
                     </div>
                 </div>
                 <div className="col-md-3 col-sm-6 col-xs-12">
