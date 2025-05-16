@@ -1351,7 +1351,7 @@ figure.snip1139 .author h5 span {
   }
   .respom{
     text-align: center;
-    padding-top: 17%;
+    padding-top: 20%;
   }
 
   .navbar-container .hamburger-lines{
@@ -3030,6 +3030,11 @@ padding: 5px;
     margin-top: 5%;
     margin-left: auto;
     padding: 10px;
+  }
+  .fixlineDiv{
+    justify-content: center !important;
+    text-align: center;
+    margin-top: 4%;
   }
   
 }
