@@ -253,6 +253,12 @@
 	  
 	}
 
+	@media(max-width: 640px){
+		.pro-emailSmall{
+			font-size: 12px !important;
+		}
+	}
+
 	
 
   

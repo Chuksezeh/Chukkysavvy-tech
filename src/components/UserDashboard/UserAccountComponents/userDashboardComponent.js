@@ -6,6 +6,7 @@ import logos  from "../../images/CHUKKY-BRAND-BACKGROUND-removebg-preview.png";
 import { useNavigate } from "react-router-dom";
 import { GiAutoRepair, GiProgression } from "react-icons/gi";
 import { BsFillInfoSquareFill } from "react-icons/bs";
+import "./userAccount.css"
 
 const UserDashBoardComponent =  (()=>{
 
@@ -51,7 +52,7 @@ const UserDashBoardComponent =  (()=>{
             </svg></h4><span className="hind-font caption-12 c-dashboardInfo__count"> 
                 
             <p> {userData.firstName} {userData.lastName} </p>
-            <p> {userData.email}  </p> 
+            <p  className="pro-emailSmall"> {userData.email}  </p> 
                 
                 </span>
         </div>

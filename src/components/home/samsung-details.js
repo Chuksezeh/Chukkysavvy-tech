@@ -80,6 +80,7 @@ const handleScrollInstoreForm = (()=>{
 <Goback/>
 
         <div className='fixlineDiv'>
+        <div style={{justifyContent:"start", textAlign:"start"}} className='container'> <Goback/></div>
         <h1 className="iphone-d">Samsung</h1>
         <div className='fixLine' ></div>
         </div>

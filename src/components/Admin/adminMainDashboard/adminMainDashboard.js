@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import Header from "../../layouts/Header"
 import useGetData from "../../Utility/getFunction";
 import AdminDashboard from "../adminDashboard"
@@ -68,7 +69,9 @@ const filterOrderSettled = latestOrders.filter((data)=>(
   data.status == "settled"
 ))
 
-console.log("filterOrderProcessing", filterOrderProcessing?.length)
+// console.log("filterOrderProcessing", filterOrderProcessing?.length)
+
+const navigate = useNavigate();
 
 
 
@@ -94,7 +97,8 @@ console.log("filterOrderProcessing", filterOrderProcessing?.length)
         <div id="root">
   <div className="container pt-5">
     <div className="row align-items-stretch">
-      <div className="c-dashboardInfo col-lg-3 col-md-6">
+      <div className="c-dashboardInfo col-lg-3 col-md-6" onClick={() => navigate("/user-repair-orders")} style={{cursor:"pointer"}}>
+
         <div className="wrap">
           <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Pending Repair Orders<svg
               className="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
@@ -105,7 +109,7 @@ console.log("filterOrderProcessing", filterOrderProcessing?.length)
             </svg></h4><span className="hind-font caption-12 c-dashboardInfo__count">  {filterOrderProcessing?.length} </span>
         </div>
       </div>
-      <div className="c-dashboardInfo col-lg-3 col-md-6">
+      <div className="c-dashboardInfo col-lg-3 col-md-6"  onClick={() => navigate("/user-repair-orders")} style={{cursor:"pointer"}}>
         <div className="wrap">
           <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Repair Order PickedUp<svg
               className="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
@@ -116,7 +120,7 @@ console.log("filterOrderProcessing", filterOrderProcessing?.length)
             </svg></h4><span className="hind-font caption-12 c-dashboardInfo__count">{filterOrderpickedUp?.length}</span>
         </div>
       </div>
-      <div className="c-dashboardInfo col-lg-3 col-md-6">
+      <div className="c-dashboardInfo col-lg-3 col-md-6"  onClick={() => navigate("/user-repair-orders")} style={{cursor:"pointer"}}>
         <div className="wrap">
           <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title"> Fixing Repair Orders <svg
               className="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
@@ -128,7 +132,7 @@ console.log("filterOrderProcessing", filterOrderProcessing?.length)
             className="hind-font caption-12 c-dashboardInfo__subInfo"></span>
         </div>
       </div>
-      <div className="c-dashboardInfo col-lg-3 col-md-6">
+      <div className="c-dashboardInfo col-lg-3 col-md-6"  onClick={() => navigate("/user-repair-orders")} style={{cursor:"pointer"}}>
         <div className="wrap">
           <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Fixed<svg
               className="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
@@ -140,7 +144,7 @@ console.log("filterOrderProcessing", filterOrderProcessing?.length)
         </div>
       </div>
      
-      <div className="c-dashboardInfo col-lg-3 col-md-6">
+      <div className="c-dashboardInfo col-lg-3 col-md-6"  onClick={() => navigate("/user-repair-orders")} style={{cursor:"pointer"}}>
         <div className="wrap">
           <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Repair Order Delivered<svg
               className="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
@@ -151,7 +155,7 @@ console.log("filterOrderProcessing", filterOrderProcessing?.length)
             </svg></h4><span className="hind-font caption-12 c-dashboardInfo__count">{filterOrderDelivered?.length}</span>
         </div>
       </div>
-      <div className="c-dashboardInfo col-lg-3 col-md-6">
+      <div className="c-dashboardInfo col-lg-3 col-md-6"  onClick={() => navigate("/user-repair-orders")} style={{cursor:"pointer"}}>
         <div className="wrap">
           <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Cancel Repair Orders<svg
               className="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
@@ -162,7 +166,7 @@ console.log("filterOrderProcessing", filterOrderProcessing?.length)
             </svg></h4><span className="hind-font caption-12 c-dashboardInfo__count">{filterOrderCancel?.length}</span>
         </div>
       </div>
-      <div className="c-dashboardInfo col-lg-3 col-md-6">
+      <div className="c-dashboardInfo col-lg-3 col-md-6"  onClick={() => navigate("/user-repair-orders")} style={{cursor:"pointer"}}>
         <div className="wrap">
           <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Unable to Repair<svg
               className="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
@@ -174,7 +178,7 @@ console.log("filterOrderProcessing", filterOrderProcessing?.length)
         </div>
       </div>
 
-      <div className="c-dashboardInfo col-lg-3 col-md-6">
+      <div className="c-dashboardInfo col-lg-3 col-md-6"  onClick={() => navigate("/user-repair-orders")} style={{cursor:"pointer"}}>
         <div className="wrap">
           <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title"> Repair Settled<svg
               className="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">

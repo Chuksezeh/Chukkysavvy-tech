@@ -42,7 +42,7 @@
   font-family: var(--font-fam);
   border: 0;
   color: var(--color-dark);
-  font-size: 1.8rem;
+  font-size: 1.4rem;
 }
 #searcher[type="search"] {
   
@@ -181,6 +181,8 @@
     padding-top: 10%;
     
 }
+
+
   
 
 }

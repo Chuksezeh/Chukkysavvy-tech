@@ -75,6 +75,7 @@ Launch static backdrop modal
         <Goback />
 
         <div className='fixlineDiv'>
+          <div style={{justifyContent:"start", textAlign:"start"}} className='container'> <Goback/></div>
           <h1 className="iphone-d">Iphones</h1>
           <div className='fixLine' ></div>
         </div>

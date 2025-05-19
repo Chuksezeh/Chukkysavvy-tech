@@ -60,13 +60,14 @@ const scrolltop = () => {
         <Header/>
 
 
-     
+            
 <h1 className='respom '>I want to Fix</h1>
+{/* <div style={{justifyContent:"start", textAlign:"start"}} className='container'> <Goback/></div> */}
 <div className='fixText'> To get started on your repair, please select the option that closely matches your device </div>
 <div className='fixlineDiv'>
   <div className='fixLine' ></div>
 </div>
-{/* <div style={{justifyContent:"center", textAlign:"center"}}> <Goback/></div> */}
+
 <div className="wrapper">
  
     

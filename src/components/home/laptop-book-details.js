@@ -63,6 +63,7 @@ const LaptopBookDetails = (() => {
             <Goback />
 
             <div className='fixlineDiv'>
+            <div style={{justifyContent:"start", textAlign:"start"}} className='container'> <Goback/></div>
                <h1 className="iphone-d">Laptops/Desktops</h1>
                <div className='fixLine' ></div>
             </div>
