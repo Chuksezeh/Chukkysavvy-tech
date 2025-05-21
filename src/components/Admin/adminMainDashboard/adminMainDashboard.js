@@ -3,6 +3,7 @@ import Header from "../../layouts/Header"
 import useGetData from "../../Utility/getFunction";
 import AdminDashboard from "../adminDashboard"
 import "./adminMainDashboard.css"
+import { useEffect } from "react";
 
 
 const AdminMainDashboard = (()=>{
@@ -71,8 +72,16 @@ const filterOrderSettled = latestOrders.filter((data)=>(
 
 // console.log("filterOrderProcessing", filterOrderProcessing?.length)
 
-const navigate = useNavigate();
+ const navigate = useNavigate();
 
+    useEffect(() => {
+        const adminsInfo = localStorage.getItem('adminsInfo');
+        // console.log('UserInfo:', userInfo);
+      
+        if (!adminsInfo) {
+          navigate('/admin-login');
+        }
+      }, [navigate]);
 
 
 

@@ -4,7 +4,7 @@
   --dur: .3s;
   --color-dark: #2f2f2f42;
   --color-light: #fff;
-  --color-brand: #57bd84;
+  --color-brand: #29A1D4;
   --font-fam: 'Lato', sans-serif;
   --height: 4rem;
   --btn-width: 6rem;
@@ -41,7 +41,7 @@
   height: var(--height);
   font-family: var(--font-fam);
   border: 0;
-  color: var(--color-dark);
+  color: white;
   font-size: 1.4rem;
 }
 #searcher[type="search"] {

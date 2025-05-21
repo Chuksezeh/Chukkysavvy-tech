@@ -47,27 +47,6 @@ const navigateForgotPassword = (()=>{
 
 
 
-  const handleGoogleSignIn = async () => {
-    try {
-      const result = await auth.signInWithRedirect(googleProvider);
-      setUser(result.user);
-      navigateUserProfile()
-      // navigate('/user-profile', { state: { user } });
-      console.log("User signed in with Google:", result.user);
-    } catch (error) {
-      console.error("Error signing in with Google:", error);
-    }
-  };
-
-  const handleSignOut = async () => {
-    try {
-      await auth.signOut();
-      // setUser(null);
-    } catch (error) {
-      console.error("Error signing out:", error);
-    }
-  };
-
 
   const handleSubmitLoginData = async data => {
     setLoading(true);
@@ -80,7 +59,7 @@ const navigateForgotPassword = (()=>{
         console.log('res', res);
         setLoading(false);
         setSuccessMessage(true);
-        if (res.statusText === "OK") {
+        if (res.data.message === "Login successful") {
           localStorage.setItem('isLoggedIn', 'true');
           localStorage.setItem('userInfo', JSON.stringify(res.data));
           window.dispatchEvent(new Event("authChanged"));

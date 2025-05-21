@@ -5,6 +5,7 @@ import { chukkytechAxios } from "../../Utility/axios";
 import moment from "moment";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { useNavigate } from "react-router-dom";
 
 const UserTable = () => {
   const [showDropDown, setShowDropDown] = useState("");
@@ -144,6 +145,19 @@ const UserTable = () => {
   
       });
   };
+
+  const navigate = useNavigate();
+  
+      useEffect(() => {
+          const adminsInfo = localStorage.getItem('adminsInfo');
+          // console.log('UserInfo:', userInfo);
+        
+          if (!adminsInfo) {
+            navigate('/admin-login');
+          }
+        }, [navigate]);
+  
+  
 
 
 

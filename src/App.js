@@ -1,12 +1,10 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Home from '../src/components/Home';
-import {Routes, Route,Switch, BrowserRouter as Router } from 'react-router-dom';
 import SignInPage from './components/home/signinpage';
 import SignUpPage from './components/home/signuppage';
 import ProfilePage from './components/home/profilepage';
 import BookingPage from './components/home/bookingpage';
-import UserMainProfile from './components/home/user-main-profile';
 import DetailsBookIphone from './components/home/details-book-iphone';
 import SamsungDetails from './components/home/samsung-details';
 import IpadDetails from './components/home/ipad-details';
@@ -25,7 +23,6 @@ import RepairOrders from './components/UserDashboard/UserAccountComponents/repai
 import NavtrackRepair from './components/layouts/NavTracking/navTrackRepair';
 import RepairOrderTable from './components/Admin/OrderTable/userRepairOrder';
 import ProductOrderTable from './components/Admin/OrderTable/userProductOrder';
-import { useEffect, useState } from 'react';
 import { UserProvider } from './components/UserDashboard/userConytext';
 import BuyProducts from './components/BuyProducts/buyLanding';
 import AccountOverMobile from './components/UserDashboard/UserAccountComponents/accountOverMobile';
@@ -41,245 +38,93 @@ import ManageComments from './components/Admin/manageComment/commentTable';
 import FindLocation from './components/layouts/location/findLocation';
 import ForgotPassword from './components/layouts/UserLoginPage/forgotPassword';
 import AboutUs from './components/layouts/aboutUs/aboutUs';
-import UserPrivateRoute from './components/UserDashboard/userPrivateRoutes';
-import AdminPrivateRoute from './components/Admin/adminPrivateRoutes';
-// import AdminDashbord from './components/Admin/adminDashbord/adminDash';
-
 
 function App() {
+  const [authState, setAuthState] = useState({
+    user: null,
+    admin: null,
+    loading: true
+  });
 
-  const [user, setUser] = useState(null);
-  const [admin, setAdmin] = useState(null);
-  const [loadingRoute, setLoadingRoute] = useState(true);
+  // useEffect(() => {
+  //   const checkAuth = () => {
+  //     const userInfo = localStorage.getItem('userInfo');
+  //     const adminInfo = localStorage.getItem('adminsInfo');
+      
+  //     setAuthState({
+  //       user: userInfo ? JSON.parse(userInfo) : null,
+  //       admin: adminInfo ? JSON.parse(adminInfo) : null,
+  //       loading: false
+  //     });
+  //   };
 
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [adminAuthenticated, setAdminAuthenticated] = useState(false);
+    
+  //   checkAuth();
 
+    
+  //   window.addEventListener('storage', checkAuth);
+  //   return () => window.removeEventListener('storage', checkAuth);
+  // }, []);
 
-  useEffect(() => {
-    const checkAuth = () => {
-      const userInfo = localStorage.getItem('userInfo');
-      setIsAuthenticated(!!userInfo);
-    };
   
-    window.addEventListener("authChanged", checkAuth);
-    checkAuth(); // run initially
-  
-    return () => window.removeEventListener("authChanged", checkAuth);
-  }, []);
+  // const UserRoute = ({ children }) => {
+  //   if (authState.loading) return <div className="full-page-loader">Loading...</div>;
+  //   return authState.user ? children : <Navigate to="/user-login" replace />;
+  // };
 
+  // const AdminRoute = ({ children }) => {
+  //   if (authState.loading) return <div className="full-page-loader">Loading...</div>;
+  //   return authState.admin ? children : <Navigate to="/admin-login" replace />;
+  // };
 
-  useEffect(() => {
-    const checkAuth = () => {
-      const adminInfo = localStorage.getItem('adminsInfo');
-      setIsAuthenticated(!!adminInfo);
-    };
-  
-    window.addEventListener("authChanged", checkAuth);
-    checkAuth(); // run initially
-  
-    return () => window.removeEventListener("authChanged", checkAuth);
-  }, []);
-
-  useEffect(() => {
-    const userInfo = localStorage.getItem('userInfo');
-    const adminInfo = localStorage.getItem('adminsInfo');
-  
-    if (userInfo) {
-      setUser(JSON.parse(userInfo));
-      setIsAuthenticated(true);
-    }
-  
-    if (adminInfo) {
-      setAdmin(JSON.parse(adminInfo));
-      setAdminAuthenticated(true);
-    }
-  
-    setLoadingRoute(false); // done loading auth states
-  }, []);
-  
   return (
-    <>
+    // <UserProvider value={{ user: authState.user, admin: authState.admin }}>
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/" element={<Home />} />
+        <Route path="/signinpage" element={<SignInPage />} />
+        <Route path="/signuppage" element={<SignUpPage />} />
+        <Route path="/bookingpage" element={<BookingPage />} />
+        <Route path="/details-book-Iphone" element={<DetailsBookIphone />} />
+        <Route path="/samsung-details" element={<SamsungDetails />} />
+        <Route path="/ipad-details" element={<IpadDetails />} />
+        <Route path="/other-phones-details" element={<OtherPhonesDetails />} />
+        <Route path="/laptop-details" element={<LaptopBookDetails />} />
+        <Route path="/admin-login" element={<AdminLoginPage />} />
+        <Route path="/user-login" element={<UserLogin />} />
+        <Route path="/user-signup" element={<UserSignUp />} />
+        <Route path="/buy-products" element={<BuyProducts />} />
+        <Route path="/product-cart" element={<ProductCart />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/product-details" element={<ProductDetailPage />} />
+        <Route path="/terms-conditions" element={<TermsAndConditions />} />
+        <Route path="/find-location" element={<FindLocation />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/track-repair" element={<NavtrackRepair />} />
 
+        {/* User Protected Routes */}
+        <Route path="/profilepage" element={<ProfilePage />} />
+        <Route path="/user-profile" element={<AccountOverView />} />
+        <Route path="/user-dashboard" element={<UserDashBoard />} />
+        <Route path="/user-profile-dashboard" element={<AccountOverMobile />} />
+        <Route path="/repair-orders" element={<RepairOrders />} />
+        <Route path="/user-product-orders" element={<ProductOrders />} />
 
-{loadingRoute ? (
-      <div>Loading...</div>
-    ) : (
-      <Routes basename="/">
-    {/* General routes */}
-      <Route path="/" element={<Home/>}></Route>
-      <Route path="/signinpage" element={<SignInPage/>}></Route>
-      <Route path="/signuppage" element={<SignUpPage/>}></Route>
-      <Route path="/bookingpage" element={<BookingPage/>}></Route>
-      <Route path="/details-book-Iphone" element={<DetailsBookIphone/>}></Route>
-      <Route path="/samsung-details" element={<SamsungDetails/>}></Route>
-      <Route path="/ipad-details" element={<IpadDetails/>}></Route>
-      <Route path="/other-phones-details" element={<OtherPhonesDetails/>}></Route>
-      <Route path="/laptop-details" element={<LaptopBookDetails/>}></Route>
-      <Route path="/create-user" element={<CreateUser/>}></Route>
-      <Route path="/admin-login" element={<AdminLoginPage/>}></Route>
-      <Route path="/user-login" element={<UserLogin />}></Route>
-      <Route path="/user-signup" element={<UserSignUp/>}></Route>
-      <Route path="/buy-products" element={<BuyProducts/>}></Route>
-      <Route path="/product-cart" element={<ProductCart/>}></Route>
-      <Route path="/privacy-policy" element={<PrivacyPolicy/>}></Route>
-      <Route path="*" element={<NoFoundPage/>}></Route>
-      <Route path="/product-details" element={<ProductDetailPage/>}></Route>
-      <Route path="/terms-conditions" element={<TermsAndConditions/>}></Route>
-      <Route path="/find-location" element={<FindLocation/>}></Route>
-      <Route path="/forgot-password" element={<ForgotPassword/>}></Route>
-      <Route path="/about-us" element={<AboutUs/>}></Route>
-      <Route path="/track-repair" element={<NavtrackRepair/>}></Route>
+        {/* Admin Protected Routes */}
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/user-table" element={<UserTable />} />
+        <Route path="/admin-dashboard-card" element={<AdminMainDashboard />} />
+        <Route path="/user-repair-orders" element={<RepairOrderTable />} />
+        <Route path="/product-orders" element={<ProductOrderTable />} />
+        <Route path="/admin-user" element={<AdminUserPage />} />
+        <Route path="/admin-service-locations" element={<AdminLocations />} />
+        <Route path="/manage-comments" element={<ManageComments />} />
 
-   
-
-   {/* All protected routes/////////////////////////////////////////////////////// */}
-      <Route
-    path="/profilepage"
-    element={
-      <UserPrivateRoute isAuthenticated={isAuthenticated} loadingRoute={loadingRoute}>
-        <ProfilePage />
-      </UserPrivateRoute>
-    }
-  />
-
-<Route
-    path="/user-profile"
-    element={
-      <UserPrivateRoute isAuthenticated={isAuthenticated} loadingRoute={loadingRoute}>
-        <AccountOverView />
-      </UserPrivateRoute>
-    }
-  />
-
-{/* <Route path="/user-profile" element={<AccountOverView />}></Route> */}
-
-<Route
-    path="/user-dashboard"
-    element={
-      <UserPrivateRoute isAuthenticated={isAuthenticated} loadingRoute={loadingRoute}>
-        <UserDashBoard  />
-      </UserPrivateRoute>
-    }
-  />
-   <Route
-    path="/user-profile-dashboard"
-    element={
-      <UserPrivateRoute isAuthenticated={isAuthenticated} loadingRoute={loadingRoute}>
-        <AccountOverMobile />
-      </UserPrivateRoute>
-    }
-  />
-  <Route
-    path="/repair-orders"
-    element={
-      <UserPrivateRoute isAuthenticated={isAuthenticated} loadingRoute={loadingRoute}>
-        <RepairOrders />
-      </UserPrivateRoute>
-    }
-  />
-   <Route
-    path="/user-product-orders"
-    element={
-      <UserPrivateRoute isAuthenticated={isAuthenticated} loadingRoute={loadingRoute}>
-        <ProductOrders />
-      </UserPrivateRoute>
-    }
-  />
-
-{/* Admin dashboard routes restricted////////////////////////////////////////*/}
-
-<Route
-    path="/admin-dashboard"
-    element={
-      <AdminPrivateRoute adminAuthenticated={adminAuthenticated}>
-        <AdminDashboard />
-      </AdminPrivateRoute>
-    }
-  />
-  <Route
-    path="/user-table"
-    element={
-      <AdminPrivateRoute adminAuthenticated={adminAuthenticated}>
-        <UserTable  />
-      </AdminPrivateRoute>
-    }
-  />
-   <Route
-    path="/admin-dashboard-card"
-    element={
-      <AdminPrivateRoute adminAuthenticated={adminAuthenticated}>
-        <AdminMainDashboard />
-      </AdminPrivateRoute>
-    }
-  />
-  <Route
-    path="/user-repair-orders"
-    element={
-      <AdminPrivateRoute adminAuthenticated={adminAuthenticated}>
-        <RepairOrderTable />
-      </AdminPrivateRoute>
-    }
-  />
-  <Route
-  path="/product-orders"
-  element={
-    <AdminPrivateRoute adminAuthenticated={adminAuthenticated}>  
-      <ProductOrderTable />
-    </AdminPrivateRoute>
-  }
-/>
-
-
-<Route
-    path="/admin-user"
-    element={
-      <AdminPrivateRoute adminAuthenticated={adminAuthenticated}>
-        <AdminUserPage />
-      </AdminPrivateRoute>
-    }
-  />
-  <Route
-    path="/admin-service-locations"
-    element={
-      <AdminPrivateRoute adminAuthenticated={adminAuthenticated}>
-        <AdminLocations />
-      </AdminPrivateRoute>
-    }
-  />
-   <Route
-    path="/manage-comments"
-    element={
-      <AdminPrivateRoute adminAuthenticated={isAuthenticated}>
-        <ManageComments />
-      </AdminPrivateRoute>
-    }
-  />
-{/* //////////////////////////////////////////////////////////////////////////////////////// */}
-
-
-      {/* <Route path="/admin-dashboard" element={<AdminDashboard/>}></Route>
-
-      <Route path="/user-table" element={<UserTable/>}></Route>
-      <Route path="/admin-dashboard-card" element={<AdminMainDashboard/>}></Route>
-      <Route path="/user-repair-orders" element={<RepairOrderTable/>}></Route>
-      <Route path="/product-orders" element={<ProductOrderTable/>}></Route>
-      <Route path="/admin-user" element={<AdminUserPage/>}></Route>
-      <Route path="/admin-service-locations" element={<AdminLocations/>}></Route>
-      <Route path="/manage-comments" element={<ManageComments/>}></Route> */}
-     
-     
-   </Routes>
-    
-   
-    )}
-  
-
-    
-    
-    
-    
-    </>
+        {/* 404 Page */}
+        <Route path="*" element={<NoFoundPage />} />
+      </Routes>
+    // </UserProvider>
   );
 }
 

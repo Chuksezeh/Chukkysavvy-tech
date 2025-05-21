@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AdminDashboard from "../adminDashboard";
 import "./userRepairOrder.css"
+import { useNavigate } from "react-router-dom";
 
 
 const ProductOrderTable = (()=>{
@@ -14,6 +15,19 @@ const ProductOrderTable = (()=>{
       setShowDropDown(!showDropDown)
     }
   
+
+    const navigate = useNavigate();
+    
+        useEffect(() => {
+            const adminsInfo = localStorage.getItem('adminsInfo');
+            // console.log('UserInfo:', userInfo);
+          
+            if (!adminsInfo) {
+              navigate('/admin-login');
+            }
+          }, [navigate]);
+    
+    
 
 
    return(

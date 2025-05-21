@@ -6,6 +6,7 @@ import AdminDashboard from "../adminDashboard";
 import { chukkytechAxios } from "../../Utility/axios";
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import { ButtonGroup, Dropdown } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 // import AdminDashboard from "../adminDashboard";
 // import "./userRepairOrder.css"
 
@@ -180,6 +181,17 @@ const ManageComments = (() => {
 
 
 
+
+const navigate = useNavigate();
+
+    useEffect(() => {
+        const adminsInfo = localStorage.getItem('adminsInfo');
+        // console.log('UserInfo:', userInfo);
+      
+        if (!adminsInfo) {
+          navigate('/admin-login');
+        }
+      }, [navigate]);
 
 
 

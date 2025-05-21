@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import UserDashBoard from "../userDashboard"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { auth } from "../../Configfile/firebaseConfig";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Header from "../../layouts/Header";
@@ -11,7 +11,7 @@ import UserDashBoardComponent from "./userDashboardComponent";
 
 const AccountOverView = (() => {
 
-	
+	const navigate = useNavigate();
 	const [showMenu, setShowMenu] = useState(false);
 
 	const location = useLocation();
@@ -23,6 +23,17 @@ const AccountOverView = (() => {
 	const handleShowMenu = (() => {
 		setShowMenu(true)
 	})
+
+
+	useEffect(() => {
+		const userInfo = localStorage.getItem('userInfo');
+		console.log('UserInfo:', userInfo);
+	  
+		if (!userInfo) {
+		  navigate('/user-login');
+		}
+	  }, [navigate]);
+	
 
 	return (
 

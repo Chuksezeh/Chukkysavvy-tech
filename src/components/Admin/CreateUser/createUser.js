@@ -79,6 +79,17 @@ const CreateUser = (() => {
 	};
 
 
+	// const navigate = useNavigate();
+
+    useEffect(() => {
+        const adminsInfo = localStorage.getItem('adminsInfo');
+        // console.log('UserInfo:', userInfo);
+      
+        if (!adminsInfo) {
+          navigate('/admin-login');
+        }
+      }, [navigate]);
+
 
 
 

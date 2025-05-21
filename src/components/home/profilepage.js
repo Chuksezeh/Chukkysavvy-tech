@@ -1,32 +1,15 @@
 
+import { useEffect } from "react";
 import Footer from "../layouts/Footer";
 import Header from "../layouts/Header";
+import { useNavigate } from "react-router-dom";
 
 
 const ProfilePage=(()=>{
 
+ 
+
   
-
-  // const scrollRef = useRef(); 
-  // const scrollTesmony = useRef();
-  // const contactScroll = useRef();
-
-  // const scrollBottom = (e) => {
-  //   e.current.scrollIntoView({
-  //     behavior: "smooth"
-  //   });
-  // };
-  // const scrollTes = (e) => {
-  //   e.current.scrollIntoView({
-  //     behavior: "smooth"
-  //   });
-  // };
-  // const scrollContact = (e) => {
-  //   e.current.scrollIntoView({
-  //     behavior: "smooth"
-  //   });
-  // };
-
 
     return(
         <>

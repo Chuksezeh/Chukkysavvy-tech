@@ -1,6 +1,6 @@
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import UserDashBoard from "../userDashboard"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { auth } from "../../Configfile/firebaseConfig";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { MdKeyboardBackspace } from "react-icons/md";
@@ -36,6 +36,21 @@ const AccountOverMobile = (() => {
 
 	const userInfo = localStorage.getItem('userInfo');
 	const userData = JSON.parse(userInfo);
+
+
+	useEffect(() => {
+	  const userInfo = localStorage.getItem('userInfo');
+	  console.log('UserInfo:', userInfo);
+	
+	  if (!userInfo) {
+		navigate('/user-login');
+	  }
+	}, [navigate]);
+  
+
+
+
+
 
 	return (
 

@@ -5,6 +5,7 @@ import { chukkytechAxios } from "../../Utility/axios";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 const RepairOrderTable = () => {
   const [showDropDown, setShowDropDown] = useState(null);
@@ -165,6 +166,17 @@ const RepairOrderTable = () => {
 
 console.log("repairOrderType>>>>", filteredOrders)
 
+
+const navigate = useNavigate();
+
+    useEffect(() => {
+        const adminsInfo = localStorage.getItem('adminsInfo');
+        // console.log('UserInfo:', userInfo);
+      
+        if (!adminsInfo) {
+          navigate('/admin-login');
+        }
+      }, [navigate]);
 
 
 

@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { GiAutoRepair, GiProgression } from "react-icons/gi";
 import { BsFillInfoSquareFill } from "react-icons/bs";
 import "./userAccount.css"
+import { useEffect } from "react";
 
 const UserDashBoardComponent =  (()=>{
 
@@ -32,6 +33,15 @@ const UserDashBoardComponent =  (()=>{
   })
 
 
+useEffect(() => {
+	  const userInfo = localStorage.getItem('userInfo');
+	  console.log('UserInfo:', userInfo);
+	
+	  if (!userInfo) {
+		navigate('/user-login');
+	  }
+	}, [navigate]);
+  
     
 
     return(
@@ -51,8 +61,8 @@ const UserDashBoardComponent =  (()=>{
               </path> */}
             </svg></h4><span className="hind-font caption-12 c-dashboardInfo__count"> 
                 
-            <p> {userData.firstName} {userData.lastName} </p>
-            <p  className="pro-emailSmall"> {userData.email}  </p> 
+            <p> {userData?.firstName} {userData?.lastName} </p>
+            <p  className="pro-emailSmall"> {userData?.email}  </p> 
                 
                 </span>
         </div>

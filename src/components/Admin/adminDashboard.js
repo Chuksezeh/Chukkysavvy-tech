@@ -53,6 +53,19 @@ const AdminDashboard = () => {
         setSidebarVisible(!sidebarVisible);
     };
 
+    
+
+    useEffect(() => {
+        const adminsInfo = localStorage.getItem('adminsInfo');
+        // console.log('UserInfo:', userInfo);
+      
+        if (!adminsInfo) {
+          navigate('/admin-login');
+        }
+      }, [navigate]);
+
+
+
    
 
 

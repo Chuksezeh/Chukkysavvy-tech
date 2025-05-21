@@ -9,12 +9,22 @@ import { IoLogoYoutube } from "react-icons/io5"
 import { BsTwitterX } from "react-icons/bs";
 import imageRepair from "../../images/microscoperepair.jpg"
 import WhatsAppFloat from "../whatsappFloat/whatsAppFloat"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import ReadMoreText from "../readMoreText"
 
 const AboutUs = (()=>{
 
    
+ const scrolltop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
+  useEffect(() => {
+    scrolltop();
+  }, []);
 
     return(
 

@@ -97,6 +97,56 @@ body {
   padding: 5px;
 }
 
+
+.mz1 {
+  border-radius: 5px;
+  width: 100%;
+}
+.mzA {
+  height: 270px;
+}
+.mzB {
+  height: 20px;
+  margin-top: 5px;
+}
+.mzC {
+  height: 25px;
+  margin-top: 7.5px;
+}
+.mzD {
+  height: 15px;
+  margin-top: 10px;
+}
+
+@keyframes fullView {
+  100% {
+    width: 100%;
+  }
+}
+
+
+.mshimmer {
+   animation : shimmer 1s infinite linear;
+   background: linear-gradient(to right, #f0f0f0 5%, #D6D6D6 35%, #f0f0f0 50%);
+    background-size: 1000px 100%;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+
+
+
+
+
+
+
 @media(max-width: 993px){
     .containLocation{
         width: 90%;

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserDashBoard from "../userDashboard"
 import "../userDashboard.css"
 import Button from 'react-bootstrap/Button';
@@ -312,6 +312,17 @@ const handleSubmitComment = async (data) => {
 };
 
 
+useEffect(() => {
+  const userInfo = localStorage.getItem('userInfo');
+  console.log('UserInfo:', userInfo);
+
+  if (!userInfo) {
+  navigate('/user-login');
+  }
+}, [navigate]);
+
+
+
   return (
 
 
@@ -410,10 +421,11 @@ const handleSubmitComment = async (data) => {
                           {[DropdownButton].map((DropdownType, idx) => (
                                             <DropdownType
                                                 as={ButtonGroup}
+                                                className="ttbtN-order"
                                                 key={idx}
                                                 id={`dropdown-button-drop-${idx}`}
                                                 size="lg"
-                                                title="Action"
+                                                title="Manage"
                                                 onClick={()=>handleShowDropDownData(item)}
 
                                             >
@@ -462,7 +474,7 @@ const handleSubmitComment = async (data) => {
 
 
           </Tab>
-          <Tab eventKey="profile" title="Repair Order History">
+          <Tab eventKey="profile" title="Order History">
             <div className="panel-wrapper">
               <h3 className="panel-head">
                 Repair Order History
