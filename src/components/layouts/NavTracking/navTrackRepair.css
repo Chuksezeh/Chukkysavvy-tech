@@ -159,7 +159,7 @@
 @media(max-width:993px){
  
   .searchStuff-gen{
-   
+    
     padding-top: 7%;
     
 }
@@ -180,6 +180,12 @@
     background: var(--color-dark);
     padding-top: 10%;
     
+}
+.searchStuff {
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 3%;
+  text-align: center;
 }
 
 

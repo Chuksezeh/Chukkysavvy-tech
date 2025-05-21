@@ -200,9 +200,9 @@ text="Our trained technicians with years of
 
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          {/* <Button variant="secondary" onClick={handleClose}>
             Close
-          </Button>
+          </Button> */}
           {/* <Button variant="primary">Continue</Button> */}
         </Modal.Footer>
       </Modal>
@@ -224,9 +224,9 @@ text="Our trained technicians with years of
         <PickupRepairForm/>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClosePickupForm}>
+          {/* <Button variant="secondary" onClick={handleClosePickupForm}>
             Close
-          </Button>
+          </Button> */}
           {/* <Button variant="primary">Continue</Button> */}
         </Modal.Footer>
       </Modal>

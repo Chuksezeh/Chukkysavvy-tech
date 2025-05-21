@@ -110,7 +110,7 @@ const scrolltop = () => {
 		
    
 		{/* <p className="card-content">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p> */}
-		<button className="card-btn">SELECT</button>
+		{/* <button className="card-btn">SELECT</button> */}
 	</div>
 	
 </div>

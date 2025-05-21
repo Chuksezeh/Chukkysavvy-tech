@@ -65,7 +65,7 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  background: linear-gradient(to right, var(--c1) var(--stop), var(--c2) var(--stop));
+  background: linear-gradient(to right, #011B58 var(--stop), #2DA4D7 var(--stop));
 }
 
 .styled-list li h3 {

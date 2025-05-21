@@ -41,7 +41,7 @@ const Receipt = ({ orderData, chukkyLogo }) => {
   };
 
   return (
-    <div id="invoice-POS" >
+    <div id="invo" >
       <div id="download-receipt" ref={receiptRef} className="p-3">
         {/* Logo and Header */}
         <div className="loguDiv" style={{ textAlign: "center", margin: "auto" }}>
@@ -135,7 +135,7 @@ const Receipt = ({ orderData, chukkyLogo }) => {
     </tbody>
   </table>
 
- <p> Note: Please keep a copy of your <span style={{fontWeight:"bold"}}> Repair Order Code </span> , as it serves as your tracking number.
+ <p className="push-preceipt" style={{fontSize:"15px", background:""}}> Note: Please keep a copy of your <span style={{fontWeight:"bold"}}> Repair Order Code </span> , as it serves as your tracking number.
 You can use this code at any time to monitor the status and progress of your device repair.
 It ensures that you're always informed about every stage of the repair process — from inspection to completion.</p> 
 </div>

@@ -274,11 +274,11 @@ const UserSignUp = (() => {
 										name="password"
 										placeholder="Password"
 										{...register("password", {
-											required: 'Password is required',
+											required: "Password is required",
 											minLength: {
-												Value: 6,
-												message: "Password must be six characters and above"
-											},
+												value: 6,
+												message: "Password must be at least 6 characters long"
+											}
 										})}
 									/>
 									<i
@@ -291,7 +291,7 @@ const UserSignUp = (() => {
 											zIndex: 2
 										}}
 										onClick={() => setPasswordVisible(!passwordVisible)}
-									>
+									    >
 										{passwordVisible ? '👁️' : '👁️‍🗨️'}
 									</i>
 								</div>
