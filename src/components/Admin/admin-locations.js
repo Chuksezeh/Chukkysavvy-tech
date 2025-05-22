@@ -48,7 +48,7 @@ const AdminLocations = (() => {
         fetchLocation();
     }, []);
 
-    console.log('fetchLocation', allLocations);
+    // console.log('fetchLocation', allLocations);
 
 
     const handleSubmitData = async data => {
@@ -63,7 +63,7 @@ const AdminLocations = (() => {
         await chukkytechAxios
             .post('location/registerLocation', userData)
             .then(res => {
-                console.log('res', res);
+                // console.log('res', res);
                 setLoading(false);
                 setSuccessMessage(true);
                 setSuccessText(res.data.message)
@@ -124,7 +124,7 @@ const handleSubmitEdit = async (data) => {
         if (Object.keys(payload).length > 1) { // More than just the ID
             const response = await chukkytechAxios.put(`location/updateLocation/${locationData.locationId}`, payload);
             
-            console.log('Update successful', response);
+            // console.log('Update successful', response);
             setLoading(false);
             setSuccessMessage(true);
             setSuccessText(response?.data?.message)
@@ -321,6 +321,13 @@ const handleSubmitEdit = async (data) => {
                     </tbody>
                 </table>
 
+                {
+      pendingLocation && <div style={{justifyContent:"center", textAlign:"center", padding:"10px"}}> <span className="loader-circle"></span></div>
+    }
+
+   {
+      allLocations.length === 0  && !pendingLocation  &&  <div style={{justifyContent:"center", textAlign:"center", padding:"10px"}}> <span > No location available  </span></div>
+    }
 
 
             </div>
@@ -333,7 +340,7 @@ const handleSubmitEdit = async (data) => {
 
                     <form id="survey-form" onSubmit={handleSubmit((data, event) => {
                         event.target.reset()
-                        console.log('seedataNow', data);
+                        // console.log('seedataNow', data);
                         handleSubmitData(data);
                     })}>
 

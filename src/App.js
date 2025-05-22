@@ -38,6 +38,7 @@ import ManageComments from './components/Admin/manageComment/commentTable';
 import FindLocation from './components/layouts/location/findLocation';
 import ForgotPassword from './components/layouts/UserLoginPage/forgotPassword';
 import AboutUs from './components/layouts/aboutUs/aboutUs';
+import usePageTracking from './pageTracking';
 
 function App() {
   const [authState, setAuthState] = useState({
@@ -46,40 +47,13 @@ function App() {
     loading: true
   });
 
-  // useEffect(() => {
-  //   const checkAuth = () => {
-  //     const userInfo = localStorage.getItem('userInfo');
-  //     const adminInfo = localStorage.getItem('adminsInfo');
-      
-  //     setAuthState({
-  //       user: userInfo ? JSON.parse(userInfo) : null,
-  //       admin: adminInfo ? JSON.parse(adminInfo) : null,
-  //       loading: false
-  //     });
-  //   };
-
-    
-  //   checkAuth();
-
-    
-  //   window.addEventListener('storage', checkAuth);
-  //   return () => window.removeEventListener('storage', checkAuth);
-  // }, []);
-
+  usePageTracking();
   
-  // const UserRoute = ({ children }) => {
-  //   if (authState.loading) return <div className="full-page-loader">Loading...</div>;
-  //   return authState.user ? children : <Navigate to="/user-login" replace />;
-  // };
-
-  // const AdminRoute = ({ children }) => {
-  //   if (authState.loading) return <div className="full-page-loader">Loading...</div>;
-  //   return authState.admin ? children : <Navigate to="/admin-login" replace />;
-  // };
-
   return (
+       
     // <UserProvider value={{ user: authState.user, admin: authState.admin }}>
       <Routes>
+      
         {/* Public Routes */}
         <Route path="/" element={<Home />} />
         <Route path="/signinpage" element={<SignInPage />} />
@@ -120,6 +94,9 @@ function App() {
         <Route path="/admin-user" element={<AdminUserPage />} />
         <Route path="/admin-service-locations" element={<AdminLocations />} />
         <Route path="/manage-comments" element={<ManageComments />} />
+        <Route path="/create-user" element={<CreateUser />} />
+
+    
 
         {/* 404 Page */}
         <Route path="*" element={<NoFoundPage />} />

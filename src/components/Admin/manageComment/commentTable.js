@@ -43,9 +43,13 @@ const ManageComments = (() => {
             const response = await chukkytechAxios.get("comment/getAllComments");
             setAllComments(response.data);
             setPendingComment(false);
+            
         } catch (error) {
             setPendingComment(false);
             console.error('Error fetching locations:', error);
+        }
+        finally{
+            setPendingComment(false);  
         }
     };
 
@@ -53,7 +57,7 @@ const ManageComments = (() => {
         fetchComments();
     }, []);
 
-    console.log('setPendingComment', allComments);
+    // console.log('setPendingComment', allComments);
 
 
     const handleChangeValue = ((e) => {
@@ -213,11 +217,11 @@ const navigate = useNavigate();
         };
 
         try {
-            console.log("Updating comment with data:", updateData);
+            // console.log("Updating comment with data:", updateData);
 
             const response = await chukkytechAxios.put('comment/updateCommentStatus', updateData);
 
-            console.log('Update successful:', response.data);
+            // console.log('Update successful:', response.data);
 
             setSuccessMessage(true);
             setShowSuppressModal(false);
@@ -327,79 +331,89 @@ const navigate = useNavigate();
 
 
             <div className="controlADMinorder_tb">
-                <table>
-                    <thead>
-                        <tr className="table-headers">
-                            <th>SN</th>
-                            <th>Title</th>
-                            <th>Comment</th>
-                            <th>Created date</th>
-                            <th>status</th>
-                            <th>First name</th>
-                            <th>Last name</th>
-                            <th>Email</th>
-                            {/* <th>Phone</th> */}
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+               
+                  <table>
+                  <thead>
+                      <tr className="table-headers">
+                          <th>SN</th>
+                          <th>Title</th>
+                          <th>Comment</th>
+                          <th>Created date</th>
+                          <th>status</th>
+                          <th>First name</th>
+                          <th>Last name</th>
+                          <th>Email</th>
+                          {/* <th>Phone</th> */}
+                          <th>Action</th>
+                      </tr>
+                  </thead>
+                  <tbody>
 
-                        {
-                            allComments && allComments.map((data, i) => (
+                      {
+                          allComments && allComments.map((data, i) => (
 
-                                <tr key={data.locationId}>
-                                    <td data-label="SN"> {i + 1} </td>
-                                    <td data-label="Title">{data.title} </td>
-                                    <td data-label="Comment"> {data.comment} </td>
-                                    <td data-label="Created date"> {data.createdDateTime} </td>
-                                    <td data-label="status"> {data.status} </td>
-                                    <td data-label="First name">  {data.firstName} </td>
-                                    <td data-label="Last name">{data.lastName} </td>
-                                    <td data-label="Email"> {data.email} </td>
-                                    {/* <td data-label="Phone"> {data.phone} </td> */}
-                                    <td>
-                                        {/* <select className="form-control border-secondary" onChange={(e)=>setLineValue(e.target.value)} onClick={()=>handleCommentAction(data)}>
-                                            <option>Action</option>
+                              <tr key={data.locationId}>
+                                  <td data-label="SN"> {i + 1} </td>
+                                  <td data-label="Title">{data.title} </td>
+                                  <td data-label="Comment"> {data.comment} </td>
+                                  <td data-label="Created date"> {data.createdDateTime} </td>
+                                  <td data-label="status"> {data.status} </td>
+                                  <td data-label="First name">  {data.firstName} </td>
+                                  <td data-label="Last name">{data.lastName} </td>
+                                  <td data-label="Email"> {data.email} </td>
+                                  {/* <td data-label="Phone"> {data.phone} </td> */}
+                                  <td>
+                                      {/* <select className="form-control border-secondary" onChange={(e)=>setLineValue(e.target.value)} onClick={()=>handleCommentAction(data)}>
+                                          <option>Action</option>
 
-                                            <option value="suppress"> Suppress</option>
-                                            <option value="delete">Delete comment</option>
-                                        </select> */}
+                                          <option value="suppress"> Suppress</option>
+                                          <option value="delete">Delete comment</option>
+                                      </select> */}
 
-                                        {[DropdownButton].map((DropdownType, idx) => (
-                                            <DropdownType
-                                                as={ButtonGroup}
-                                                key={idx}
-                                                id={`dropdown-button-drop-${idx}`}
-                                                size="lg"
-                                                title="Action"
+                                      {[DropdownButton].map((DropdownType, idx) => (
+                                          <DropdownType
+                                              as={ButtonGroup}
+                                              key={idx}
+                                              id={`dropdown-button-drop-${idx}`}
+                                              size="lg"
+                                              title="Action"
 
-                                            >
-                                                {/* <Dropdown.Item eventKey="1">View user</Dropdown.Item> */}
+                                          >
+                                              {/* <Dropdown.Item eventKey="1">View user</Dropdown.Item> */}
 
-                                                <Dropdown.Item eventKey="3" onClick={() => handleSuppressModal(data)}>
-                                                    {
-                                                        data.status === "active" ? <span onClick={() => setSupData("suppress")}> Suppress comment</span> : <span onClick={() => setSupData("active")}> Activate comment</span>
-                                                    }
-
-
-                                                </Dropdown.Item>
-                                                <Dropdown.Divider />
-                                                <Dropdown.Item eventKey="4" style={{ color: "red" }} onClick={() => handleShowModal(data)} >Delete comment</Dropdown.Item>
-                                            </DropdownType>
-                                        ))}
+                                              <Dropdown.Item eventKey="3" onClick={() => handleSuppressModal(data)}>
+                                                  {
+                                                      data.status === "active" ? <span onClick={() => setSupData("suppress")}> Suppress comment</span> : <span onClick={() => setSupData("active")}> Activate comment</span>
+                                                  }
 
 
-                                    </td>
-                                </tr>
+                                              </Dropdown.Item>
+                                              <Dropdown.Divider />
+                                              <Dropdown.Item eventKey="4" style={{ color: "red" }} onClick={() => handleShowModal(data)} >Delete comment</Dropdown.Item>
+                                          </DropdownType>
+                                      ))}
 
 
-                            ))
-                        }
+                                  </td>
+                              </tr>
 
 
-                    </tbody>
-                </table>
+                          ))
+                      }
 
+
+                  </tbody>
+              </table>
+
+              {
+      pendingComment && <div style={{justifyContent:"center", textAlign:"center", padding:"10px"}}> <span className="loader-circle"></span></div>
+    }
+
+   {
+      allComments.length === 0  && !pendingComment  &&  <div style={{justifyContent:"center", textAlign:"center", padding:"10px"}}> <span > No comment available  </span></div>
+    }
+             
+               
 
 
             </div>

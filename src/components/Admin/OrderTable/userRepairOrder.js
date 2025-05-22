@@ -34,7 +34,7 @@ const RepairOrderTable = () => {
 
 
   const fetchAdminRepairOrder = async () => {
-    setIsPending(true);
+    // setIsPending(true);
     try {
       const response = await chukkytechAxios.get("adminRepair/getAllRepairOrder");
       setData(response.data);
@@ -75,14 +75,14 @@ const RepairOrderTable = () => {
 
   const getLatestRepairOrders = (orders) => {
     if (!Array.isArray(orders)) {
-      console.error("Expected an array, but got:", orders);
+      // console.error("Expected an array, but got:", orders);
       return [];
     }
 
-    console.log("Processing Orders:", orders);
+    // console.log("Processing Orders:", orders);
 
     const latestOrders = data.reduce((acc, order) => {
-      console.log("Checking Order:", order);
+      // console.log("Checking Order:", order);
 
       if (
         !acc[order.repairOrderCode] ||
@@ -93,7 +93,7 @@ const RepairOrderTable = () => {
       return acc;
     }, {}); // Store latest orders in an object
 
-    console.log("Latest Orders Object:", latestOrders);
+    // console.log("Latest Orders Object:", latestOrders);
 
     return Object.values(latestOrders); // Convert the object to an array
   };
@@ -102,7 +102,7 @@ const RepairOrderTable = () => {
   const ordersArray = Array.isArray(data.repairOrders) ? data.repairOrders : [];
   const latestOrders = getLatestRepairOrders(ordersArray);
 
-  console.log("Latest Orders:", latestOrders);
+  // console.log("Latest Orders:", latestOrders);
 
 
   const handleUpdateKeys = ((e, item) => {
@@ -164,7 +164,7 @@ const RepairOrderTable = () => {
   
 
 
-console.log("repairOrderType>>>>", filteredOrders)
+// console.log("repairOrderType>>>>", filteredOrders)
 
 
 const navigate = useNavigate();
@@ -211,7 +211,7 @@ const navigate = useNavigate();
         repairOrderCode: itemData?.repairOrderCode
       };
 
-      console.log("Sending data:", deviceData);
+      // console.log("Sending data:", deviceData);
 
       const res = await chukkytechAxios.post('repair/repairorder', deviceData);
       const result = res.data;
@@ -331,6 +331,16 @@ const navigate = useNavigate();
           </div>
         </div>
       </div>
+
+      {
+      isPending && <div style={{justifyContent:"center", textAlign:"center", padding:"10px"}}> <span className="loader-circle"></span></div>
+    }
+
+   {
+      data.length === 0  && !isPending  &&  <div style={{justifyContent:"center", textAlign:"center", padding:"10px"}}> <span > No repair order available  </span></div>
+    }
+
+
 
        {
 

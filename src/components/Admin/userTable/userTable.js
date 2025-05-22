@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 const UserTable = () => {
   const [showDropDown, setShowDropDown] = useState("");
-  const [pendingUser, setPendingUser] = useState(false);
+  const [pendingUser, setPendingUser] = useState(true);
   const [allUsers, setAllUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusValue, setStatusValue] = useState("")
@@ -84,7 +84,7 @@ const UserTable = () => {
 
 
   const handleChangeAction = ((e)=>{
-      console.log("target", e.target.value)
+      // console.log("target", e.target.value)
       setStatusValue(e.target.value)
       if(e.target.value === "suspended"){
         setShowModal(true)
@@ -104,12 +104,12 @@ const UserTable = () => {
      const sendData = {
        status: statusValue
      }
-    console.log('data', sendData);
+    // console.log('data', sendData);
   
     await chukkytechAxios
       .put(`auth/updateUserStatus/${userItem.userId}`, sendData)
       .then(res => {
-        console.log('res', res);
+        // console.log('res', res);
         setLoadingStatus(false);
         setSuccessMessage(true);
         fetchUsers()
@@ -280,6 +280,18 @@ errorMessage &&
             )}
           </tbody>
         </table>
+
+
+        {
+        pendingUser && <div style={{justifyContent:"center", textAlign:"center", padding:"10px"}}> <span className="loader-circle"></span></div>
+        }
+
+        {
+         allUsers.length === 0  && !pendingUser  &&  <div style={{justifyContent:"center", textAlign:"center", padding:"10px"}}> <span > No user available  </span></div>
+        }
+
+
+
 
         {/* Pagination controls - only show if there are filtered users */}
         {filteredUsers.length > 0 && (

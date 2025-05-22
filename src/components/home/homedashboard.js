@@ -31,33 +31,45 @@ const HomeDashBoard = () => {
             data recovery needs. Any brand, any problem.</div>
 
         </div>
-        
+
         <div className="btn-begin-container">
-        
-       
+
+
           <div>
-            <NavLink to='/bookingpage' className="navlink-button" > 
-            <button className="button-50" role="button">
-              Repair A Device
-            </button>
-            {/* <button class="button-46" role="button">Repair A Device</button> */}
+            <NavLink to='/bookingpage' className="navlink-button" >
+              <button className="button-50" role="button" onClick={() => {
+                window.gtag('event', 'click', {
+                  event_category: 'Button',
+                  event_label: ' Repair A Device',
+                  value: 1,
+                });
+              }}>
+                Repair A Device
+              </button>
+              {/* <button class="button-46" role="button">Repair A Device</button> */}
 
-            
+
             </NavLink>
-            
-            
 
-  
+
+
+
 
           </div>
 
           <div>
             <NavLink to='/buy-products' className="navlink-button" >
-             <button className="button-50" role="button">
-              Buy A Device
-            </button>
-            {/* <button class="button-46" role="button">Buy A Device</button> */}
- 
+              <button className="button-50" role="button"  onClick={() => {
+                window.gtag('event', 'click', {
+                  event_category: 'Button',
+                  event_label: ' Buy A Device',
+                  value: 1,
+                });
+              }}>
+                Buy A Device
+              </button>
+              {/* <button class="button-46" role="button">Buy A Device</button> */}
+
             </NavLink>
 
           </div>

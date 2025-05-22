@@ -43,7 +43,7 @@ const UserSignUp = (() => {
 
 	const navigate = useNavigate();
 
-	console.log("terms", terms)
+	// console.log("terms", terms)
 
 	const navigateLogin = () => {
 		navigate("/user-login")
@@ -67,12 +67,12 @@ const UserSignUp = (() => {
 			userType: "User",
 			status: "Active"
 		}
-		console.log('data', data);
+		// console.log('data', data);
 
 		await chukkytechAxios
 			.post('/auth/registeration', userData)
 			.then(res => {
-				console.log('res', res);
+				// console.log('res', res);
 				setLoading(false);
 				setSuccessMessage(true);
 				setTimeout(() => {
@@ -80,7 +80,7 @@ const UserSignUp = (() => {
 				}, 4000);
 			})
 			.catch(err => {
-				console.log('err', err);
+				// console.log('err', err);
 				setLoading(false);
 				setErrorMessage(true);
 				setErrMessage(err.response?.data)
@@ -228,7 +228,7 @@ const UserSignUp = (() => {
 						<div className="">
 							<form onSubmit={handleSubmit((data, event) => {
 								event.target.reset()
-								console.log('seedataNow', data);
+								// console.log('seedataNow', data);
 								handleSubmitData(data);
 							})}>
 								<div className="row clearfix">

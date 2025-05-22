@@ -51,9 +51,10 @@
   padding: 0 1.6rem;
   border-radius: var(--rad);
   appearance: none; 
-  transition: all var(--dur) var(--bez);
-  transition-property: width, border-radius;
-  z-index: 1;
+  /* transition: all var(--dur) var(--bez); */
+  color: black;
+  /* transition-property: width, border-radius; */
+  /* z-index: 1; */
   position: relative;
 }
 .searchButtonSUB {
@@ -69,6 +70,7 @@
 #searcher:not(:placeholder-shown) {
   border-radius: var(--rad) 0 0 var(--rad);
   width: calc(100% - var(--btn-width));
+  color: black;
   + button {
     display: block;
   }

@@ -48,12 +48,12 @@ const navigate = useNavigate();
     const handleSubmitLoginData = async data => {
       setLoading(true);
       setShowEnterNewPassword(false);
-      console.log('data', data);
+      // console.log('data', data);
       setGetEmail(data)
       await chukkytechAxios
         .post('password/forgotUserPassword', data)
         .then(res => {
-          console.log('res', res);
+          // console.log('res', res);
           setPasswordData(res.data)
           setLoading(false);
           setSuccessMessage(true);
@@ -64,7 +64,7 @@ const navigate = useNavigate();
   
         })
         .catch(err => {
-          console.log('err', err);
+          // console.log('err', err);
           setLoading(false);
           setErrorMessage(true);
           setErrMessage(err.response?.data?.error)
@@ -74,17 +74,17 @@ const navigate = useNavigate();
 
 
 
-    console.log("getEmail", getEmail)
+    // console.log("getEmail", getEmail)
   
     const handleSubmitResetCode = async data => {
         setLoading(true);
         setShowEnterNewPassword(false)
-        console.log('data', data);
+        // console.log('data', data);
     
         await chukkytechAxios
           .post('password/verifyResetCode', data)
           .then(res => {
-            console.log('res', res);
+            // console.log('res', res);
             
             setLoading(false);
             setSuccessMessage(true);
@@ -114,11 +114,11 @@ const navigate = useNavigate();
              ...getEmail
         }
 
-        console.log('data>>>>>>>', newPasswordData);
+        // console.log('data>>>>>>>', newPasswordData);
         await chukkytechAxios
           .post('password/resetUserPassword', newPasswordData)
           .then(res => {
-            console.log('res', res);
+            // console.log('res', res);
             setLoading(false);
             setSuccessMessage(true);
             setEnterResetCode(false)
@@ -163,7 +163,7 @@ const handleNavigateLogin = (()=>{
 
 <form className="login-form" onSubmit={handleSubmit((data, event) => {
 
-console.log('seedataNow', data);
+// console.log('seedataNow', data);
 handleSubmitLoginData(data);
 })}>
 <p >Email Address</p>
@@ -219,7 +219,7 @@ handleSubmitLoginData(data);
 
      <form className="login-form" onSubmit={handleSubmit((data, event) => {
 
-       console.log('seedataNow', data);
+      //  console.log('seedataNow', data);
        handleSubmitResetCode(data);
      })}>
        <p >Reset Code</p>
@@ -271,7 +271,7 @@ handleSubmitLoginData(data);
 
  <form className="login-form" onSubmit={handleSubmit((data, event) => {
 
-   console.log('seedataNow', data);
+  //  console.log('seedataNow', data);
    handleSubmitNewPassword(data);
  })}>
    <p >Enter new password</p>

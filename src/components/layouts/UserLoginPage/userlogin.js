@@ -40,10 +40,10 @@ const UserLogin = (() => {
   const navigateUserProfile = (() => {
     navigate("/user-profile")
   })
-const navigateForgotPassword = (()=>{
-  navigate("/forgot-password")
+  const navigateForgotPassword = (() => {
+    navigate("/forgot-password")
 
-})
+  })
 
 
 
@@ -51,12 +51,12 @@ const navigateForgotPassword = (()=>{
   const handleSubmitLoginData = async data => {
     setLoading(true);
 
-    console.log('data', data);
+    // console.log('data', data);
 
     await chukkytechAxios
       .post('auth/userLogin', data)
       .then(res => {
-        console.log('res', res);
+        // console.log('res', res);
         setLoading(false);
         setSuccessMessage(true);
         if (res.data.message === "Login successful") {
@@ -72,7 +72,7 @@ const navigateForgotPassword = (()=>{
 
       })
       .catch(err => {
-        console.log('err', err);
+        // console.log('err', err);
         setLoading(false);
         setErrorMessage(true);
         setErrMessage(err.response?.data)
@@ -82,7 +82,7 @@ const navigateForgotPassword = (()=>{
 
   // const { data: registerData, isPending: registerDataIsPending, error } = useGetData('/registration');
 
-const scrolltop = () => {
+  const scrolltop = () => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
@@ -101,71 +101,74 @@ const scrolltop = () => {
 
 
       <div className="login-page-LOGi">
+        <br/>
+        <br/>
+        
 
         <div className="form">
-             <img className="log-log-inimage" src={logo}/>
-           
+          <img className="log-log-inimage" src={logo} />
+
           <p className="titleAdLogin">User login</p>
 
           <form className="login-form" onSubmit={handleSubmit((data, event) => {
-  console.log('seedataNow', data);
-  handleSubmitLoginData(data);
-})}>
-  <p>Email Address</p>
-  <input type="email" placeholder="Enter your email address" {...register("email", {
-    required: 'Email is required',
-    maxLength: {},
-  })} />
-  <span className="cum-error">{errors.email?.message}</span>
-  
-  <p>Password</p>
-  <div style={{ position: 'relative' }}>
-    <input 
-      type={passwordVisible ? "text" : "password"} 
-      placeholder="Enter your password" 
-      {...register("password", {
-        required: 'password is required',
-        maxLength: {},
-      })} 
-    />
-    <span 
-      style={{
-        position: 'absolute',
-        right: '10px',
-        top: '40%',
-        transform: 'translateY(-50%)',
-        cursor: 'pointer'
-      }}
-      onClick={() => setPasswordVisible(!passwordVisible)}
-    >
-      {passwordVisible ? '👁️' : '👁️‍🗨️'}
-    </span>
-  </div>
-  <span className="cum-error">{errors.password?.message}</span>
-  
-  <div style={{ cursor: "pointer" }} onClick={navigateForgotPassword}>Forgot your password?</div>
-  <div className="message" style={{fontSize:"15px"}}>
-    Not registered? <a href="#"><span onClick={navigateSignUp} style={{color:"#011B58", fontWeight:"bold"}}>Create an account</span></a>
-  </div>
-  <br />
+            // console.log('seedataNow', data);
+            handleSubmitLoginData(data);
+          })}>
+            <p>Email Address</p>
+            <input type="email" placeholder="Enter your email address" {...register("email", {
+              required: 'Email is required',
+              maxLength: {},
+            })} />
+            <span className="cum-error">{errors.email?.message}</span>
 
-  {errorMessage &&
-    <div className="container mt-2">
-      <div className="row">
-        <div class="col-sm-12">
-          <div className="alert alert-danger" role="alert">
-            <span>{errMessage?.message || "Something went wrong, Please try again later"}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  }
+            <p>Password</p>
+            <div style={{ position: 'relative' }}>
+              <input
+                type={passwordVisible ? "text" : "password"}
+                placeholder="Enter your password"
+                {...register("password", {
+                  required: 'password is required',
+                  maxLength: {},
+                })}
+              />
+              <span
+                style={{
+                  position: 'absolute',
+                  right: '10px',
+                  top: '40%',
+                  transform: 'translateY(-50%)',
+                  cursor: 'pointer'
+                }}
+                onClick={() => setPasswordVisible(!passwordVisible)}
+              >
+                {passwordVisible ? '👁️' : '👁️‍🗨️'}
+              </span>
+            </div>
+            <span className="cum-error">{errors.password?.message}</span>
 
-  {loading ? 
-    <button><span class="loader"></span></button> : 
-    <button type="submit">Login</button>
-  }
-</form>
+            <div style={{ cursor: "pointer" }} onClick={navigateForgotPassword}>Forgot your password?</div>
+            <div className="message" style={{ fontSize: "15px" }}>
+              Not registered? <a href="#"><span onClick={navigateSignUp} style={{ color: "#011B58", fontWeight: "bold" }}>Create an account</span></a>
+            </div>
+            <br />
+
+            {errorMessage &&
+              <div className="container mt-2">
+                <div className="row">
+                  <div class="col-sm-12">
+                    <div className="alert alert-danger" role="alert">
+                      <span>{errMessage?.message || "Something went wrong, Please try again later"}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+
+            {loading ?
+              <button><span class="loader"></span></button> :
+              <button type="submit">Login</button>
+            }
+          </form>
 
         </div>
       </div>

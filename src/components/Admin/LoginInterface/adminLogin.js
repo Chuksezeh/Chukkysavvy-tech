@@ -4,6 +4,7 @@ import "./adminLogin.css";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { chukkytechAxios } from "../../Utility/axios";
+import { GrUserAdmin } from "react-icons/gr";
 import logo from "../../images/CHUKKY-BRAND-BACKGROUND-removebg-preview.png"
 
 
@@ -27,6 +28,11 @@ const {
 const navigateAdminDashboard = (()=>{
   navigate("/admin-dashboard-card")
 })
+
+const userInfo = localStorage.getItem("adminsInfo");
+const userData = JSON.parse(userInfo);
+
+console.log("checkadmin", userData)
 
 
 const handleSubmitLoginData = async data => {
@@ -63,6 +69,12 @@ const handleSubmitLoginData = async data => {
 
 
 
+const navigateAdmin = (()=>{
+  navigate("/admin-dashboard-card")
+})
+
+
+
  return(
 <>
 
@@ -74,6 +86,14 @@ const handleSubmitLoginData = async data => {
 
 
 <div className="login-page-LOGi">
+<br/>
+<br/>
+{
+  userData && userData && <div> <button className="btn btn-primary" onClick={navigateAdmin}> <GrUserAdmin /> Admin Dashboard </button>  </div>
+
+}
+
+
 
         <div className="form">
              <img className="log-log-inimage" src={logo}/>

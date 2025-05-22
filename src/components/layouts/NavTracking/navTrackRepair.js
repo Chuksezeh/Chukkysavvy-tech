@@ -142,7 +142,7 @@ const NavtrackRepair = () => {
               id="searcher"
               type="search"
               placeholder="Enter Order Number..."
-              autoFocus
+              // autoFocus
               required
               onChange={handleGetCode}
             />
