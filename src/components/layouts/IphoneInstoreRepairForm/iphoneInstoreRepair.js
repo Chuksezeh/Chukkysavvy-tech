@@ -13,6 +13,7 @@ import Receipt from "../Receipt/repairOrderReceipt";
 import { Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import useGetData from "../../Utility/getFunction";
 
 
 
@@ -60,8 +61,10 @@ const IphoneInstoreRepair = (() => {
 
     const navigate = useNavigate(); 
 
-    const userInfo = localStorage.getItem('userInfo');
-    const userData = JSON.parse(userInfo);
+    const userData = JSON.parse(localStorage.getItem('userInfo') || "null");
+   const encodedEmail = encodeURIComponent(userData.email);
+
+   const {data: users, isPending: ispendingUsers, error: errorUsers} = useGetData(`/auth/getUser/${encodedEmail}`)
 
     const handleSubmitDeviceData = async (data) => {
         try {
@@ -69,7 +72,7 @@ const IphoneInstoreRepair = (() => {
             setShowResult(false);
             setShowMainModal(true);
     
-            if (!userData || !userData.userId) {
+            if (!userData || !users.userId) {
                 console.error("No user data found. Redirecting to login.");
                 setShowNoLogin(true);
                 setLoading(false);
@@ -79,7 +82,7 @@ const IphoneInstoreRepair = (() => {
             const deviceData = {
                 ...data,
                 repairOrderType: "Pickup",
-                userId: userData.userId, 
+                userId: users.userId, 
                 status: "Processing"
             };
     

@@ -56,11 +56,10 @@ const IphonePickupREpair = (() => {
     const handleOpen = () => {
         setShow(true);
     }
+   const userData = JSON.parse(localStorage.getItem('userInfo') || "null");
+   const encodedEmail = encodeURIComponent(userData.email);
 
-
-
-    const userInfo = localStorage.getItem('userInfo');
-    const userData = JSON.parse(userInfo);
+   const {data: users, isPending: ispendingUsers, error: errorUsers} = useGetData(`/auth/getUser/${encodedEmail}`)
 
     const handleSubmitDeviceData = async (data) => {
         try {
@@ -68,7 +67,7 @@ const IphonePickupREpair = (() => {
             setShowResult(false);
             setShowMainModal(true);
 
-            if (!userData || !userData.userId) {
+            if (!userData || !users.userId) {
                 console.error("No user data found. Redirecting to login.");
                 setShowNoLogin(true);
                 setLoading(false);
@@ -78,7 +77,7 @@ const IphonePickupREpair = (() => {
             const deviceData = {
                 ...data,
                 repairOrderType: "Instore Appointment",
-                userId: userData?.userId,
+                userId: users?.userId,
                 status: "Processing"
             };
 

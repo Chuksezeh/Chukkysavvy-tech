@@ -764,6 +764,14 @@ color: white;
 .call-icon{
   color: white;
 }
+.btn-log-Sign{
+  background-color: #279FD2;
+  padding: 10px !important;
+  margin-left: 50px !important;
+  border-radius: 5px;
+  cursor: pointer;
+  
+}
 
 
 .loader-circle {

@@ -66,12 +66,17 @@ const { register, handleSubmit, setValue, reset,
   const [successMessage, setSuccessMessage] = useState(false);
     const [errorMessage, setErrorMessage] = useState(false);
 
+const encodedEmail = encodeURIComponent(userData.email);
+const {data: users, isPending: userIsPending, error: userError} = useGetData(`/auth/getUser/${encodedEmail}`)
+
+
+
   // const { data: repairOrdersTracking, isPending: repairOrdersPending, error: repairOrdersError } = useGetData(`repair/getRepairOrderCode/${itemData?.orderCode}`);
 
-  const { data, isPending, error } = useGetData(`repair/getUserRepairOrders/${userData?.userId}`);
+  const { data, isPending, error } = useGetData(`repair/getUserRepairOrders/${users?.userId}`);
   
   
-
+console.log("all", data)
 
 
 

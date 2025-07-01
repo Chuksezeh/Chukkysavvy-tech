@@ -62,8 +62,10 @@ const PickupRepairForm = (() => {
 
     const { data, isPendinge, error } = useGetData('location/getAllLocations')
 
-    const userInfo = localStorage.getItem('userInfo');
-    const userData = JSON.parse(userInfo);
+  const userData = JSON.parse(localStorage.getItem('userInfo') || "null");
+   const encodedEmail = encodeURIComponent(userData.email);
+
+   const {data: users, isPending: ispendingUsers, error: errorUsers} = useGetData(`/auth/getUser/${encodedEmail}`)
 
     const handleSubmitDeviceData = async (data) => {
         try {
@@ -71,7 +73,7 @@ const PickupRepairForm = (() => {
             setShowResult(false);
             setShowMainModal(true);
     
-            if (!userData || !userData.userId) {
+            if (!userData || !users.userId ) {
                 console.error("No user data found. Redirecting to login.");
                 setShowNoLogin(true);
                 setLoading(false);
@@ -81,7 +83,7 @@ const PickupRepairForm = (() => {
             const deviceData = {
                 ...data,
                 repairOrderType: "Pickup",
-                userId: userData?.userId, 
+                userId: users?.userId, 
                 status: "Processing"
             };
     

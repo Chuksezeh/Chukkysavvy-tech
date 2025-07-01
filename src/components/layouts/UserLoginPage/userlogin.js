@@ -10,6 +10,7 @@ import { useForm, SubmitHandler } from "react-hook-form"
 import useGetData from "../../Utility/getFunction";
 import { chukkytechAxios } from "../../Utility/axios";
 import Footer from "../Footer";
+
 import logo from "../../images/CHUKKY-BRAND-BACKGROUND-removebg-preview.png"
 
 
@@ -25,7 +26,11 @@ const UserLogin = (() => {
   const [successMessage, setSuccessMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
   const [errMessage, setErrMessage] = useState("");
+  const [error, setError] = useState(null);
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
   const {
     register,
     handleSubmit,
@@ -47,8 +52,74 @@ const UserLogin = (() => {
 
 
 
+ 
 
-  const handleSubmitLoginData = async data => {
+
+  
+
+   // Navigation handlers
+   const navigateTo = (path) => () => navigate(path);
+
+   const handleGoogleSignIn = async () => {
+     try {
+       const result = await auth.signInWithPopup(googleProvider);
+   
+       const nameResult = result?.additionalUserInfo?.profile
+
+
+
+    const handleCreateUser = async () => {
+    // const formattedPhoneNumber = userMSISDN?.startsWith('0') ? `234${userMSISDN?.slice(1)}` : userMSISDN;
+    try {
+      const userData = { 
+      firstName:  nameResult.given_name,
+      lastName: nameResult.family_name,
+      email: nameResult.email,
+      userType: "User",
+			status: "Active",
+      password: ""
+      
+      };
+ 
+      // Create Wallet
+      const createUserData = await chukkytechAxios.post('/auth/registeration', userData);
+      console.log('createUserData>>>>', createUserData);
+ 
+      } catch (err) {
+      console.error('Error in handleCreate:', err);
+ 
+    }
+  };
+
+  handleCreateUser();
+ 
+   
+       // Store user info and redirect
+       localStorage.setItem('userInfo', JSON.stringify({
+         email: nameResult.email,
+         firstName: nameResult.given_name,
+         lastName: nameResult.family_name,
+         image: nameResult.picture
+       }))
+
+      //  setFirstName(nameResult.given_name);
+      //  setLastName(nameResult.family_name);
+      //  setEmail(nameResult.email);
+      //  handleCreateUser();
+      
+       
+
+       navigateTo("/user-profile")();
+       }catch (error) {
+       setError({
+         message: "Google sign-in failed",
+         details: error.message
+       });
+     }
+   };
+ 
+
+    const handleSubmitLoginData = async data => {
     setLoading(true);
 
     // console.log('data', data);
@@ -66,11 +137,8 @@ const UserLogin = (() => {
 
           // Then navigate
           navigate("/user-profile");
-
         }
-
-
-      })
+         })
       .catch(err => {
         // console.log('err', err);
         setLoading(false);
@@ -165,9 +233,23 @@ const UserLogin = (() => {
             }
 
             {loading ?
-              <button><span class="loader"></span></button> :
+              <button disabled><span class="loader" ></span></button> :
               <button type="submit">Login</button>
             }
+
+                 <div className="social-login">
+              <p className="divider"> <hr/> </p>
+              <button
+                type="button"
+                className="google-button"
+                onClick={handleGoogleSignIn}
+                disabled={loading}
+              >
+                <FcGoogle className="google-icon" size={30} style={{padding:"5px"}} />
+                Sign in with Google
+              </button>
+            </div>
+
           </form>
 
         </div>

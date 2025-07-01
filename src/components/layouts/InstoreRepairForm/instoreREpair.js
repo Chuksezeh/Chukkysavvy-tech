@@ -50,6 +50,8 @@ const InstoreRepairFormForm = (() => {
     const handleShowNoLogin = (()=>setShowNoLogin(true));
     const handleHideNoLogin = (()=>setShowNoLogin(false))
 
+
+
     const navigateLogin = () =>  navigate("/user-login");
 
 
@@ -57,12 +59,16 @@ const InstoreRepairFormForm = (() => {
 
     const handleOpen = () =>{
           setShow(true);
-    }
+
+}
+
+  const userData = JSON.parse(localStorage.getItem('userInfo') || "null");
+   const encodedEmail = encodeURIComponent(userData.email);
+
+   const {data: users, isPending: ispendingUsers, error: errorUsers} = useGetData(`/auth/getUser/${encodedEmail}`)
 
    
-
-    const userInfo = localStorage.getItem('userInfo');
-    const userData = JSON.parse(userInfo);
+ 
 
 
      const handleSubmitDeviceData = async (data) => {
@@ -71,7 +77,7 @@ const InstoreRepairFormForm = (() => {
             setShowResult(false);
             setShowMainModal(true);
     
-            if (!userData || !userData.userId) {
+            if (!userData || !users.userId) {
                 console.error("No user data found. Redirecting to login.");
                 setShowNoLogin(true);
                 setLoading(false);
@@ -81,7 +87,7 @@ const InstoreRepairFormForm = (() => {
             const deviceData = {
                 ...data,
                 repairOrderType: "Instore Apointment",
-                userId: userData?.userId, 
+                userId: users?.userId, 
                 status: "Processing"
             };
     

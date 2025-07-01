@@ -122,12 +122,13 @@ const navigateContactus = (()=>{
     <a  onClick={navigateHome} >Home</a>
     <a onClick={navigateTracking}>Track  repair</a>
     <a onClick={navigateFindLocation}>Find location</a>
+    <a onClick={navigateContactus}>Contact us</a>
     {
-      userData ? <a  onClick={navigateProfilePage}>My Account</a> : <a  onClick={navigateUserLogin}>Login</a>
+      userData ? <span  onClick={navigateProfilePage} className="btn-log-Sign">My Account</span> : <span  onClick={navigateUserLogin}  className="btn-log-Sign">Login</span>
     }
     
     {/* <a onClick={ navigateAdmin}>Admin</a> */}
-    <a onClick={navigateContactus}>Contact us</a>
+   
     {/* <span className="badgeMain" onClick={navigateShoppingCart}><span>  <MdOutlineShoppingCart  /></span>  My Cart <span className="badge0">2</span></span> */}
   </div>
  </div>

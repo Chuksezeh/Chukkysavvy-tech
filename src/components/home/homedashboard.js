@@ -47,9 +47,7 @@ const HomeDashBoard = () => {
                 Repair A Device
               </button>
               {/* <button class="button-46" role="button">Repair A Device</button> */}
-
-
-            </NavLink>
+          </NavLink>
 
 
 

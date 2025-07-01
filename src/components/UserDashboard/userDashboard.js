@@ -5,6 +5,7 @@ import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import "./userDashboard.css";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import useGetData from "../Utility/getFunction";
 
 const UserDashBoard = () => {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -52,7 +53,7 @@ const UserDashBoard = () => {
 
         },[activeIndex])
 
-    console.log("activeindex", activeIndex)
+        console.log("activeindex", activeIndex)
 
          const handleLogOut = ()=>{
          localStorage.removeItem("userInfo");
@@ -68,8 +69,12 @@ const UserDashBoard = () => {
               navigate('/user-login');
             }
           }, [navigate]);
-        
- 
+
+
+const encodedEmail = encodeURIComponent(userData.email);
+const {data, isPending, error} = useGetData(`/auth/getUser/${encodedEmail}`)
+
+
 
     return (
         <>
