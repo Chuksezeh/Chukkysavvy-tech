@@ -14,6 +14,8 @@ import ChatComponent from "../layouts/contactComponent/chatComponent";
 import Goback from "../layouts/goBack";
 import WhatsAppFloat from "../layouts/whatsappFloat/whatsAppFloat";
 import ReadMoreText from "../layouts/readMoreText";
+import { GiCardPickup } from "react-icons/gi";
+import { FaPersonWalkingArrowRight } from "react-icons/fa6";
 
 
 
@@ -79,6 +81,13 @@ useEffect(() => {
            <div className="iphone-detaials-cover-image">
              <img className="iphone-detaials-image" src={otherPhones}/>
         </div>
+             <div className="mobileShow-btn">
+              <br/>
+                    <div > <button className="picckBtn p-3" style={{ width: "100%" }} onClick={toggleVisibilityPickUp}> <span><GiCardPickup size={20} />
+                    </span> Request Pickup Repair </button></div>
+                    <br />
+                    <div> <button className="picckBtn  p-3" onClick={toggleVisibility} style={{ width: "100%" }}> <span><FaPersonWalkingArrowRight size={20} /></span> Reserve Visit Shop</button></div>
+                  </div>
         < div className="iphone-detaials-cover-text">
                <div className="text-about-details tickHead" style={{fontWeight:"bold"}}>Get your broken phone device
                  quickly and professionally repaired at Chukkytech.</div>
@@ -97,25 +106,13 @@ useEffect(() => {
                  screens have a high chance of showing unattractive white spots or discolouration and may appear
                   less bright than premium quality screens. For your iPhone repair, we highly recommend not going for
                    the cheapest price in the city for this reason. At Chukkytech, you will be paying for premium quality parts 
-                   and at a fair & affordable price.  "
-           />
-             
-
-
-
-
-              </div>
-             
-
-    </div>
+                   and at a fair & affordable price.  "/>
+             </div>
+             </div>
 
      <h3 className="head-bookRepair">BOOK A REPAIR OR A FREE IN-STORE ASSESSMENT</h3>  
      {/* <SignUpSignIn/> */}
-
-
 <div className="card-hol">
-
-
 <div className="card-covers">
    <div className="cardimage-book p-3">
       <img className="cardimagess" src= {rep2}/>

@@ -38,6 +38,11 @@
     height: 10px;
     content: "";
   }
+  .centefrotate{
+    justify-content: center !important;
+    text-align: center;
+    margin: 0 auto;
+  }
   
   .c-dashboardInfo:nth-child(1) .wrap:after {
     background: linear-gradient(82.59deg, #00c48c 0%, #00a173 100%);

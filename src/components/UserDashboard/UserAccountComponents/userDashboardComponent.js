@@ -6,6 +6,7 @@ import logos  from "../../images/CHUKKY-BRAND-BACKGROUND-removebg-preview.png";
 import { useNavigate } from "react-router-dom";
 import { GiAutoRepair, GiProgression } from "react-icons/gi";
 import { BsFillInfoSquareFill } from "react-icons/bs";
+import profileImage from "../../images/pace_image.jpeg"
 import "./userAccount.css"
 import { useEffect } from "react";
 
@@ -60,9 +61,18 @@ useEffect(() => {
                 d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
               </path> */}
             </svg></h4><span className="hind-font caption-12 c-dashboardInfo__count"> 
-                
-            <p> {userData?.firstName} {userData?.lastName} </p>
-            <p  className="pro-emailSmall"> {userData?.email}  </p> 
+
+              <div className="toimage_div">
+             <div>
+              <p> {userData?.firstName} {userData?.lastName} </p>
+              <p  className="pro-emailSmall"> {userData?.email}  </p> 
+              </div>  
+              <div> <img className="cImageProf" 
+              // src={profileImage}
+              src={userData.image}
+              /> 
+              </div> 
+            </div>
                 
                 </span>
         </div>

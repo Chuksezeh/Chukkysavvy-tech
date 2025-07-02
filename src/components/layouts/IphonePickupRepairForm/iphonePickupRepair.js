@@ -119,7 +119,7 @@ const IphonePickupREpair = (() => {
 
                     <div className="form-wra">
                         <p id="description" className="text-center">
-                            Please provide required details for pickup/delivery
+                          Reserve a date and visit our service center at your convenience — we’ll be ready to assist you.
 
                         </p>
                         <form id="survey-form" onSubmit={handleSubmit((data, event) => {
@@ -325,7 +325,7 @@ const IphonePickupREpair = (() => {
                             <div className="row">
                                 <div className="col-md-4 setbtnDiv">
                                     {
-                                        loading ? <button className="picckBtnDiv" > <span className="loader"></span></button> : <button className="picckBtnDiv" type="submit">Submit</button>
+                                        loading ? <button className="picckBtnDiv" disabled> <span className="loader"></span></button> : <button className="picckBtnDiv" type="submit">Submit</button>
                                     }
 
                                 </div>

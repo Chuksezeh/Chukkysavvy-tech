@@ -137,9 +137,12 @@ showMainModal &&
 
 <div className="form-wra">
     <p id="description" className="text-center">
-        Please provide required details for pickup/delivery
-
+       
+ Please provide required details of your repair
+  request. Our team will contact you promptly to arrange pickup and begin the repair process.
     </p>
+
+   
     <form id="survey-form" onSubmit={handleSubmit((data, event) => {
 
         console.log('seedataNow', data);
@@ -337,7 +340,7 @@ showMainModal &&
             <div className="col-md-4 setbtnDiv">
                 {
                     loading ? <button  className="picckBtnDiv" 
-                     disabled={showNoLogin}> <span class="loader">
+                     disabled> <span class="loader">
                         </span></button> : <button disabled={showNoLogin}
                         className="picckBtnDiv" type="submit">Submit</button>
                 }

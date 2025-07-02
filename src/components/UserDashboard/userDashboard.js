@@ -23,12 +23,11 @@ const UserDashBoard = () => {
 
     const menuItems = [
         { name: "My Account", path: "/user-profile-dashboard", icon: <IoIosArrowForward />, sideIcon: <FaUser /> },
+          { name: "Book Device Repair", path: "/bookingpage", icon: <IoIosArrowForward /> },
         { name: "Device Repair Orders", path: "/repair-orders", icon: <IoIosArrowForward /> },
         // { name: "Purchase Orders", path: "/user-product-orders", icon: <IoIosArrowForward /> },
-        { name: "Book Device Repair", path: "/bookingpage", icon: <IoIosArrowForward /> },
-        // { name: "Contact", path: "", icon: <IoIosArrowForward /> },
-        { name: "Logout", path: "", icon: <IoIosArrowForward /> }
-    ];
+        { name: "Logout", path: "" }
+      ];
 
    
 
@@ -44,9 +43,7 @@ const UserDashBoard = () => {
          }
          else{
             return
-         }
-
-        };
+         }};
 
         useEffect(()=>{
             handleItemClick();  
@@ -58,23 +55,28 @@ const UserDashBoard = () => {
          const handleLogOut = ()=>{
          localStorage.removeItem("userInfo");
             setTimeout(() => navigate("/"), 500); // Ensure cleanup before navigating
-          
         }
 
-        useEffect(() => {
-            const userInfo = localStorage.getItem('userInfo');
-            console.log('UserInfo:', userInfo);
+    useEffect(() => {
+    const userInfo = localStorage.getItem('userInfo');
+    console.log('UserInfo:', userInfo);
           
-            if (!userInfo) {
-              navigate('/user-login');
-            }
-          }, [navigate]);
+    if (!userInfo) {
+    navigate('/user-login');
+    }
+    }, [navigate]);
 
 
-const encodedEmail = encodeURIComponent(userData.email);
-const {data, isPending, error} = useGetData(`/auth/getUser/${encodedEmail}`)
+  const encodedEmail = encodeURIComponent(userData.email);
+  const {data, isPending, error} = useGetData(`/auth/getUser/${encodedEmail}`)
 
-
+  const checkColor = (item) => {
+      switch (item) {
+        case "Logout":
+        return "red";
+      default:
+      }
+     };
 
     return (
         <>
@@ -90,7 +92,7 @@ const {data, isPending, error} = useGetData(`/auth/getUser/${encodedEmail}`)
                             <Link to={item.path} className="navlink-style" key={index}>
                                 <li onClick={() => handleItemClick(index)} className={activeIndex === index ? "active" : ""}>
                                     <span className="setIconDivSideB">
-                                        <span>{item.name}</span>
+                                        <span  style={{ color: checkColor(item.name) }}>{item.name}</span>
                                         <span>{item.icon}</span>
                                     </span>
                                 </li>

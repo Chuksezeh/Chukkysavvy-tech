@@ -115,7 +115,13 @@ const filterOrderSettled = latestOrders.filter((data)=>(
               <path
                 d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
               </path>
-            </svg></h4><span className="hind-font caption-12 c-dashboardInfo__count">  {filterOrderProcessing?.length} </span>
+            </svg></h4>
+            {
+              isPending ? 
+              <div style={{justifyContent:"center", textAlign:"center"}} className="centefrotate"><a className=" loader-circle"> </a></div>:
+              <span className="hind-font caption-12 c-dashboardInfo__count"> {filterOrderProcessing?.length} </span>
+            }
+            
         </div>
       </div>
       <div className="c-dashboardInfo col-lg-3 col-md-6"  onClick={() => navigate("/user-repair-orders")} style={{cursor:"pointer"}}>
@@ -126,7 +132,13 @@ const filterOrderSettled = latestOrders.filter((data)=>(
               <path
                 d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
               </path>
-            </svg></h4><span className="hind-font caption-12 c-dashboardInfo__count">{filterOrderpickedUp?.length}</span>
+            </svg></h4>
+            {
+              isPending ?
+               <div style={{justifyContent:"center", textAlign:"center"}} className="centefrotate"><a className=" loader-circle"> </a></div>:
+           <span className="hind-font caption-12 c-dashboardInfo__count">{filterOrderpickedUp?.length}</span>
+            }
+           
         </div>
       </div>
       <div className="c-dashboardInfo col-lg-3 col-md-6"  onClick={() => navigate("/user-repair-orders")} style={{cursor:"pointer"}}>
@@ -137,7 +149,13 @@ const filterOrderSettled = latestOrders.filter((data)=>(
               <path
                 d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
               </path>
-            </svg></h4><span className="hind-font caption-12 c-dashboardInfo__count"> {filterOrderFixing?.length} </span><span
+            </svg></h4>
+            {
+              isPending ?
+              <div style={{justifyContent:"center", textAlign:"center"}} className="centefrotate"><a className=" loader-circle"> </a></div>:
+               <span className="hind-font caption-12 c-dashboardInfo__count"> {filterOrderFixing?.length} </span>
+            }
+           <span
             className="hind-font caption-12 c-dashboardInfo__subInfo"></span>
         </div>
       </div>
@@ -149,7 +167,13 @@ const filterOrderSettled = latestOrders.filter((data)=>(
               <path
                 d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
               </path>
-            </svg></h4><span className="hind-font caption-12 c-dashboardInfo__count">{filterOrderFixed?.length}</span>
+            </svg></h4>
+            {
+              isPending ?
+              <div style={{justifyContent:"center", textAlign:"center"}} className="centefrotate"><a className=" loader-circle"> </a></div>:
+             <span className="hind-font caption-12 c-dashboardInfo__count">{filterOrderFixed?.length}</span>
+            }
+           
         </div>
       </div>
      
@@ -161,7 +185,13 @@ const filterOrderSettled = latestOrders.filter((data)=>(
               <path
                 d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
               </path>
-            </svg></h4><span className="hind-font caption-12 c-dashboardInfo__count">{filterOrderDelivered?.length}</span>
+            </svg></h4>
+            {
+              isPending ?
+              <div style={{justifyContent:"center", textAlign:"center"}} className="centefrotate"><a className=" loader-circle"> </a></div>:
+              <span className="hind-font caption-12 c-dashboardInfo__count">{filterOrderDelivered?.length}</span>
+           }
+            
         </div>
       </div>
       <div className="c-dashboardInfo col-lg-3 col-md-6"  onClick={() => navigate("/user-repair-orders")} style={{cursor:"pointer"}}>
@@ -172,7 +202,13 @@ const filterOrderSettled = latestOrders.filter((data)=>(
               <path
                 d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
               </path>
-            </svg></h4><span className="hind-font caption-12 c-dashboardInfo__count">{filterOrderCancel?.length}</span>
+            </svg></h4>
+            {
+              isPending ? 
+              <div style={{justifyContent:"center", textAlign:"center"}} className="centefrotate"><a className=" loader-circle"> </a></div>:
+                       <span className="hind-font caption-12 c-dashboardInfo__count">{filterOrderCancel?.length}</span>
+            }
+
         </div>
       </div>
       <div className="c-dashboardInfo col-lg-3 col-md-6"  onClick={() => navigate("/user-repair-orders")} style={{cursor:"pointer"}}>
@@ -183,7 +219,14 @@ const filterOrderSettled = latestOrders.filter((data)=>(
               <path
                 d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
               </path>
-            </svg></h4><span className="hind-font caption-12 c-dashboardInfo__count"> {filterOrderIrreparable?.length} </span>
+            </svg></h4>
+
+            {
+              isPending ? 
+              <div style={{justifyContent:"center", textAlign:"center"}} className="centefrotate"><a className=" loader-circle"> </a></div>:
+         <span className="hind-font caption-12 c-dashboardInfo__count"> {filterOrderIrreparable?.length} </span>
+            }
+          
         </div>
       </div>
 
@@ -195,7 +238,15 @@ const filterOrderSettled = latestOrders.filter((data)=>(
               <path
                 d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
               </path>
-            </svg></h4><span className="hind-font caption-12 c-dashboardInfo__count">{filterOrderSettled?.length} </span>
+            </svg></h4>
+
+            {
+              isPending ?
+              <div style={{justifyContent:"center", textAlign:"center"}} className="centefrotate"><a className=" loader-circle"> </a></div>:
+            <span className="hind-font caption-12 c-dashboardInfo__count">{filterOrderSettled?.length} </span>
+           }
+            
+           
         </div>
       </div>
     </div>
