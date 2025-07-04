@@ -6,75 +6,35 @@ import HomeDashBoard from "./home/homedashboard";
 import TopTextComponent from "./home/top-text-component";
 import ServicesComponent from "./home/services-component";
 
-
-
 const Home = () => {
-
-  const scrollRef = useRef();
-  const scrollTesmony = useRef();
-  const contactScroll = useRef();
-
-  const scrollBottom = (e) => {
-    e.current.scrollIntoView({
-      behavior: "smooth"
-    });
-  };
-  const scrollTes = (e) => {
-    e.current.scrollIntoView({
-      behavior: "smooth"
-    });
-  };
-  const scrollContact = (e) => {
-    e.current.scrollIntoView({
-      behavior: "smooth"
-    });
-  };
+  const feedbackRef = useRef(null);
 
   const scrolltop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   useEffect(() => {
     scrolltop();
   }, []);
 
-
   return (
     <>
-
-
-      <Header />
+      <Header onFeedbackClick={() => feedbackRef.current?.scrollIntoView({ behavior: 'smooth' })} />
 
       <div className="first-body-corel">
-
         <HomeDashBoard />
-
       </div>
+
       <TopTextComponent />
 
-      <div ref={scrollRef} >
-        <ServicesComponent />
-      </div>
-      <h1 className="testmony-head">Tesmonies</h1>
-      <div className="line-testmony"></div>
-      <div ref={scrollTesmony}>
-        <Testmony />
-      </div>
-      <br/>
-      <br/>
+      <ServicesComponent />
 
-      <div ref={contactScroll}>
-        <Footer />
-      </div>
+     
+      <Testmony ref={feedbackRef} />
 
-
+      <Footer />
     </>
-
-  )
-
+  );
 };
 
 export default Home;

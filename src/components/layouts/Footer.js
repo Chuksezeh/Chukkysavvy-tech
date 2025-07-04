@@ -46,7 +46,7 @@ const Footer = () => {
                                 <h4>Mail us</h4>
                               
 
-                                <span>chukkytech001@gmail.com </span>
+                                <span>support@chukkytech.ng</span>
                             </div>
                         </div>
                     </div>

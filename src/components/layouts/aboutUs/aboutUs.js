@@ -56,7 +56,7 @@ const AboutUs = (()=>{
             <li>
               <i className=" "> <MdAttachEmail size={20}/>
               </i>
-              <a href="mailto:pardeepkumar4bjp@gmail.com"><b>chukkytech001@gmail.com</b></a>
+              <a href="mailto:pardeepkumar4bjp@gmail.com"><b>support@chukkytech.ng</b></a>
             </li>
           </ul>
 

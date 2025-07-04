@@ -22,7 +22,7 @@ const UserDashBoard = () => {
     const handleShow = () => setShow(true);
 
     const menuItems = [
-        { name: "My Account", path: "/user-profile-dashboard", icon: <IoIosArrowForward />, sideIcon: <FaUser /> },
+        { name: "Dashboard", path: "/user-profile-dashboard", icon: <IoIosArrowForward />, sideIcon: <FaUser /> },
           { name: "Book Device Repair", path: "/bookingpage", icon: <IoIosArrowForward /> },
         { name: "Device Repair Orders", path: "/repair-orders", icon: <IoIosArrowForward /> },
         // { name: "Purchase Orders", path: "/user-product-orders", icon: <IoIosArrowForward /> },

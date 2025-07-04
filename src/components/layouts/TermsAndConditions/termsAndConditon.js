@@ -49,7 +49,7 @@ Welcome to Chukkytech! These terms and conditions outline the rules and regulati
 
         <br />
  
-        <h3> 1.Definitions </h3>
+        <strong> 1.Definitions </strong>
 
         <p>
 
@@ -64,12 +64,12 @@ Welcome to Chukkytech! These terms and conditions outline the rules and regulati
 
         <br />
 
-        <h3> 2. Use  of Services
+        <strong> 2. Use  of Services
             
-        </h3>
+        </strong>
 
         <ul>
-        You must be at least 18 years old to use our services.
+        You must be at least 15 years old to use our services.
 
 You agree to provide accurate and complete information when registering or using our services.
 
@@ -80,25 +80,27 @@ Unauthorized use of our website or services, including but not limited to hackin
 
         <br />
 
-        <h3> 3. Repairs and Services
-        </h3>
+        <strong> 3. Repairs and Services
+        </strong>
 
         <p>
 
         Diagnosis and Estimates: All repair work will begin with a diagnosis, and you will be provided with an estimate for approval.
 <br/>
- High-Quality Parts: We use only high-quality parts for repairs unless otherwise suggested by you.
+<strong>High-Quality Parts: </strong>  We use only high-quality parts for repairs unless otherwise suggested by you.
 <br/>
-Real-Time Tracking: Our repair tracking system allows you to monitor the progress of your device repairs in real time.
-
-Service Time: Estimated service times are not guaranteed and may vary based on the complexity of the repair.
+<strong>Real-Time Tracking: </strong>
+ Our repair tracking system allows you to monitor the progress of your device repairs in real time.<br/>
+<strong>Service Time: </strong>
+ Estimated service times are not guaranteed and may vary based on the complexity of the repair.
 <br/>
-Warranty: Repairs are covered under a limited warranty of [specify duration, e.g., 30 days], covering only the parts and services provided.
+<strong>Warranty: </strong> New gadget sales are covered under a limited warranty of the manufacturer or
+ the distributor. Device repairs are not covered under any warranty or guarantee due to the sensitive nature of repair components. Warranty coverage applies only to parts that have not been previously repaired or tested..
         </p>
 
         <br />
 
-        <h3> 4.  Sales Terms </h3>
+        <strong> 4.  Sales Terms </strong>
 
         <p>
 
@@ -110,7 +112,7 @@ Warranties on gadgets sold will be provided as per manufacturer policies.
 
         <br />
 
-        <h3> 5. Payment Terms </h3>
+        <strong> 5. Payment Terms </strong>
 
         <p>
 
@@ -123,7 +125,7 @@ Warranties on gadgets sold will be provided as per manufacturer policies.
 
         <br />
 
-        <h3> 6.Device Pickup and Delivery </h3>
+        <strong> 6.Device Pickup and Delivery </strong>
 
         <p>
 
@@ -138,7 +140,7 @@ Warranties on gadgets sold will be provided as per manufacturer policies.
 
         <br />
 
-        <h3> 7.Limitation of Liability </h3>
+        <strong> 7.Limitation of Liability </strong>
 
         <p>
 
@@ -149,7 +151,7 @@ Warranties on gadgets sold will be provided as per manufacturer policies.
 
         <br />
 
-        <h3> 8.  Intellectual Property. </h3>
+        <strong> 8.  Intellectual Property. </strong>
 
         <p>
 
@@ -161,7 +163,7 @@ Warranties on gadgets sold will be provided as per manufacturer policies.
 
         <br />
 
-        <h3> 9. Privacy Policy </h3>
+        <strong> 9. Privacy Policy </strong>
 
         <p>
 
@@ -170,7 +172,7 @@ Warranties on gadgets sold will be provided as per manufacturer policies.
 
         <br />
 
-        <h3> 10.  Termination </h3>
+        <strong> 10.  Termination </strong>
 
         <p>
 
@@ -180,7 +182,7 @@ Warranties on gadgets sold will be provided as per manufacturer policies.
 
         <br />
 
-        <h3> 11.  Changes to Terms </h3>
+        <strong> 11.  Changes to Terms </strong>
 
         <p>
 
@@ -189,7 +191,7 @@ Warranties on gadgets sold will be provided as per manufacturer policies.
 
         <br />
 
-        <h3> 12. Governing Law</h3>
+        <strong> 12. Governing Law</strong>
 
         <p>
 
@@ -204,7 +206,7 @@ Warranties on gadgets sold will be provided as per manufacturer policies.
 
         
 
-        <h3> 13. Changes. </h3>
+        <strong> 13. Changes. </strong>
 
         <p>
 
@@ -216,8 +218,8 @@ Warranties on gadgets sold will be provided as per manufacturer policies.
 
         </p>
 
-        <h3> 14. Contact Information
-        </h3>
+        <strong> 14. Contact Information
+        </strong>
 
 <p>
 

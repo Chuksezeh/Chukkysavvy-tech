@@ -50,7 +50,7 @@ const Receipt = ({ orderData, chukkyLogo }) => {
         </div>
 
         {/* Booking Confirmation */}
-        <div style={{ textAlign: "center", color: "white", background: "grey", padding: "10px" }}>
+        <div style={{ textAlign: "center", color: "white", background: "#376E37", padding: "10px" }}>
           <IoCheckmarkDoneOutline size={25} /> <span>Successfully booked</span>
         </div>
 

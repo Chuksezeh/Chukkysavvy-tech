@@ -63,7 +63,7 @@ const PickupRepairForm = (() => {
     const { data, isPendinge, error } = useGetData('location/getAllLocations')
 
   const userData = JSON.parse(localStorage.getItem('userInfo') || "null");
-   const encodedEmail = encodeURIComponent(userData.email);
+   const encodedEmail = encodeURIComponent(userData?.email);
 
    const {data: users, isPending: ispendingUsers, error: errorUsers} = useGetData(`/auth/getUser/${encodedEmail}`)
 

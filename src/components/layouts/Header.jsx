@@ -7,7 +7,7 @@ import { BsFillPersonFill, BsList, BsPersonCircle } from "react-icons/bs";
 import brandlogo from "../images/CHUKKY-BRAND-BACKGROUND.png";
 import { MdOutlineShoppingCart } from "react-icons/md";
 
-const Header = ()=>{
+const Header = ({ onFeedbackClick })=>{
 
   const scrollRef = useRef(); 
   const scrollTesmony = useRef();
@@ -68,6 +68,11 @@ const navigateFindLocation = (()=>{
 const navigateContactus = (()=>{
   navigate("/about-us")
 })
+
+const navigateHomeFeedback = (()=>{
+  navigate("/")
+  onFeedbackClick()
+})
   
   
   const userInfo = localStorage.getItem('userInfo');
@@ -75,7 +80,18 @@ const navigateContactus = (()=>{
 
 
 
+  // Close nav dropdown when clicking Feedback
+  const closeNavDropdown = () => {
+    const navCheck = document.getElementById("nav-check");
+    if (navCheck && navCheck.checked) {
+      navCheck.checked = false;
+    }
+  };
 
+  const handleFeedbackClick = () => {
+    closeNavDropdown();
+    navigateHomeFeedback();
+  };
 
 
 
@@ -123,6 +139,8 @@ const navigateContactus = (()=>{
     <a onClick={navigateTracking}>Track  repair</a>
     <a onClick={navigateFindLocation}>Find location</a>
     <a onClick={navigateContactus}>Contact us</a>
+     <a onClick={handleFeedbackClick} style={{ cursor: "pointer" }}>Feedback</a>
+
     {
       userData ? <span  onClick={navigateProfilePage} className="btn-log-Sign">My Account</span> : <span  onClick={navigateUserLogin}  className="btn-log-Sign">Login</span>
     }
