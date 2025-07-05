@@ -20,7 +20,13 @@ const NavtrackRepair = () => {
   const [isPendingTracking, setIsPendingTracking] = useState(false);
   const [data, setData] = useState([]);
 
+ const scrolltop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
+  useEffect(() => {
+    scrolltop();
+  }, []);
   const navigate = useNavigate();
 
   const handleCloseTrackOrder = () => setShowTrackOrder(false);

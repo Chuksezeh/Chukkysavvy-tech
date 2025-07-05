@@ -75,7 +75,7 @@ const UserLogin = (() => {
       firstName:  nameResult.given_name,
       lastName: nameResult.family_name,
       email: nameResult.email,
-      userType: "User",
+      userType: "Google User",
 			status: "Active",
       password: ""
       

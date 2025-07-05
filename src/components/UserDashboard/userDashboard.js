@@ -24,7 +24,7 @@ const UserDashBoard = () => {
     const menuItems = [
         { name: "Dashboard", path: "/user-profile-dashboard", icon: <IoIosArrowForward />, sideIcon: <FaUser /> },
           { name: "Book Device Repair", path: "/bookingpage", icon: <IoIosArrowForward /> },
-        { name: "Device Repair Orders", path: "/repair-orders", icon: <IoIosArrowForward /> },
+        { name: "My Repair Orders", path: "/repair-orders", icon: <IoIosArrowForward /> },
         // { name: "Purchase Orders", path: "/user-product-orders", icon: <IoIosArrowForward /> },
         { name: "Logout", path: "" }
       ];
