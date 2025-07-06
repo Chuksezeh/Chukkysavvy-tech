@@ -104,7 +104,7 @@ const AboutUs = (()=>{
                 <ReadMoreText text="At Chukkytech , we are committed to delivering top-tier gadget solutions
                          tailored to meet the everyday needs of our customers.  Registered under corporate affairs commission with registration
                           number 7679854 ,  founded and led by Chukwuka Paul Ezeh, a passionate tech enthusiast with years of 
-                          hands-on experience in the tech and repair industry, Chukkytech has grown to become a trusted name in gadget repair,
+                          hands-on experience in the tech and repair industry,  Chukkytech has grown to become a trusted name in gadget repair,
                            sales, and support services.
                            We specialize in the repair and sales of all kinds of gadgets—including 
                           smartphones, iPads, laptops, tablets, and other smart devices . Whether it's a cracked screen, a faulty

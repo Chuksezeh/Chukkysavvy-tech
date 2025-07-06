@@ -1,4 +1,6 @@
 import "./productBuy.css";
+import commingImage from "../../components/images/coming-img-removebg-preview.png";
+import { useState } from "react";
 
 import Header from "../layouts/Header";
 import { useNavigate } from "react-router-dom";
@@ -28,7 +30,11 @@ const navigateProductDetails = (()=>{
 
 
         <div className="centSoon">
-<h3 className="" style={{textAlign: "center", marginTop:"5%"}}>COMING SOON...</h3>
+{/* <h3 className="" style={{textAlign: "center", marginTop:"5%"}}>COMING SOON...</h3> */}
+<div className="centSoonImage">    
+
+  <img src={commingImage} className="img-soon"/>
+</div>
 
 <p  className="centSoon"> While we’re working hard to bring you durable, affordable, and trusted tech products, feel free to take advantage of our <a href="/bookingpage">Book a Repair</a>  service!
 </p>

@@ -58,6 +58,8 @@
 	width: 100%;
 	height: 100%;
 	position: relative;
+	/* background-color: aqua !important */
+	;
 	
 }
 
@@ -247,7 +249,7 @@
 	.sidebar-User-prof {
 		position: fixed;
 		height: 100vh ;
-		top: 10%;
+		top: 6%;
 		margin-bottom: 40px;
 		z-index: 1000;
 		width: 100%;
@@ -266,7 +268,7 @@
 	}
 	.sidebar-User-prof nav ul li {
 		padding: auto;	
-		padding-left: auto;
+	padding-left: auto;
 		border-bottom: 0.5px solid #111;
 		color: black !important;
 	}
@@ -306,7 +308,16 @@
 	}
 	
 }
-
+@media(max-width: 640px) {
+	.sidebar-User-prof {
+		position: fixed;
+		height: 100vh ;
+		top: 6%;
+		margin-bottom: 40px;
+		z-index: 1000;
+		width: 100%;
+	}
+}
 
 
 

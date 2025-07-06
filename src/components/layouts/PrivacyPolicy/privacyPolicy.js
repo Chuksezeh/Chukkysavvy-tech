@@ -247,8 +247,8 @@ Business Partners: In cases of mergers, acquisitions, or asset transfers, subjec
 <p>
 
 For questions, concerns, or to exercise your privacy rights, please contact us at:
+<strong> support@chukkytech.ng, 08020653456, Wuse 2, Abuja, Nigeria</strong>
 
-[chukkytech001@gmail.com][08020653456][Physical Address]
 
 By using our website and services, you acknowledge that you have read and understood this Privacy Policy and agree to its terms.
 

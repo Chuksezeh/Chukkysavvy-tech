@@ -31,6 +31,7 @@ const UserLogin = (() => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [loadingGoogle, setLoadingGoogle] = useState(false);
   const {
     register,
     handleSubmit,
@@ -61,6 +62,8 @@ const UserLogin = (() => {
    const navigateTo = (path) => () => navigate(path);
 
    const handleGoogleSignIn = async () => {
+
+    setLoadingGoogle(true);
      try {
        const result = await auth.signInWithPopup(googleProvider);
    
@@ -81,13 +84,14 @@ const UserLogin = (() => {
       
       };
  
-      // Create Wallet
-      const createUserData = await chukkytechAxios.post('/auth/registeration', userData);
+     const createUserData = await chukkytechAxios.post('/auth/registeration', userData);
       console.log('createUserData>>>>', createUserData);
+       setLoadingGoogle(false);
  
       } catch (err) {
       console.error('Error in handleCreate:', err);
- 
+      setLoadingGoogle(false);
+      
     }
   };
 
@@ -102,14 +106,8 @@ const UserLogin = (() => {
          image: nameResult.picture
        }))
 
-      //  setFirstName(nameResult.given_name);
-      //  setLastName(nameResult.family_name);
-      //  setEmail(nameResult.email);
-      //  handleCreateUser();
       
-       
-
-       navigateTo("/user-profile")();
+     navigateTo("/user-profile")();
        }catch (error) {
        setError({
          message: "Google sign-in failed",
@@ -239,7 +237,15 @@ const UserLogin = (() => {
 
                  <div className="social-login">
               <p className="divider"> <hr/> </p>
-              <button
+
+              {
+                loadingGoogle ? <button disabled className="google-button"><span className="loader"></span></button> :
+                  <button type="button" className="google-button" onClick={handleGoogleSignIn} disabled={loadingGoogle}>
+                    <FcGoogle className="google-icon" size={30} style={{ padding: "5px" }} />
+                    Sign in with Google
+                  </button>
+              }
+              {/* <button
                 type="button"
                 className="google-button"
                 onClick={handleGoogleSignIn}
@@ -247,7 +253,7 @@ const UserLogin = (() => {
               >
                 <FcGoogle className="google-icon" size={30} style={{padding:"5px"}} />
                 Sign in with Google
-              </button>
+              </button> */}
             </div>
 
           </form>

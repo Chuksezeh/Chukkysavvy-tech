@@ -225,7 +225,7 @@ Warranties on gadgets sold will be provided as per manufacturer policies.
 
 For questions, concerns, or to exercise your privacy rights, please contact us at:
 
-chukkytech001@gmail.com, 08020653456, Wuse 2 Abuja, Nigeria.
+<strong> support@chukkytech.ng, 08020653456, Wuse 2 Abuja, Nigeria.</strong>
 
 By using our website and services, you acknowledge that you have read and understood this Terms and Conditions and agree to its terms.
 

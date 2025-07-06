@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import moment from "moment";
 import html2canvas from "html2canvas";
 import { IoCheckmarkDoneOutline } from "react-icons/io5";
@@ -39,6 +39,18 @@ const Receipt = ({ orderData, chukkyLogo }) => {
       alert("Sharing not supported on this device");
     }
   };
+
+   const scrolltop = () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    };
+  
+    useEffect(() => {
+      scrolltop();
+    }, []);
+  
 
   return (
     <div id="invo" >

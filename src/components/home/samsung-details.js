@@ -86,7 +86,7 @@ const SamsungDetails = (() => {
           <h1 className="iphone-d">Samsung</h1>
           <div className='fixLine' ></div>
         </div>
-        <div className="iphone-detaials-cover container" >
+        <div className="iphone-detaials-cover " >
           <div className="iphone-detaials-cover-image">
             <img className="iphone-detaials-image" src={samsung} />
           </div>
@@ -95,7 +95,7 @@ const SamsungDetails = (() => {
             <div > <button className="picckBtn p-3" style={{ width: "100%" }} onClick={toggleVisibilityPickUp}> <span><GiCardPickup size={20} />
             </span> Request Pickup Repair </button></div>
             <br />
-            <div> <button className="picckBtn  p-3" onClick={toggleVisibility} style={{ width: "100%" }}> <span><FaPersonWalkingArrowRight size={20} /></span> Reserve Visit Shop</button></div>
+            <div> <button className="picckBtn  p-3" onClick={toggleVisibility} style={{ width: "100%" }}> <span><FaPersonWalkingArrowRight size={20} /></span> Reserve and Visit Shop</button></div>
           </div>
 
           <div className="iphone-detaials-cover-text">

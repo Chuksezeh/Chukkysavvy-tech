@@ -31,6 +31,9 @@
     max-width: 1400px;
 
 }
+.centSoonImage{
+    margin-top: 4%;
+}
 
 .card {
     background: #fff;
@@ -216,4 +219,21 @@
 }
 .fa-chevron-circle-right:before {
     color: darkgray;
+}
+
+@media (max-width: 768px) {
+   .centSoonImage{
+    margin-top: 15%;
+    justify-content: center;
+    text-align: center;
+}
+.img-soon{
+    width: 300px;
+}
+.centSoon{
+    text-align: start;
+    justify-content: start;
+    padding: 10px;
+}
+
 }

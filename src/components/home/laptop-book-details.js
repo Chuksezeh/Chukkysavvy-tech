@@ -69,7 +69,7 @@ const LaptopBookDetails = (() => {
                <h1 className="iphone-d">Laptops/Desktops</h1>
                <div className='fixLine' ></div>
             </div>
-            <div className="iphone-detaials-cover container" >
+            <div className="iphone-detaials-cover " >
                <div className="iphone-detaials-cover-image">
                   <img className="iphone-detaials-image" src={otherPhones} />
                </div>
@@ -77,7 +77,7 @@ const LaptopBookDetails = (() => {
                            <div > <button className="picckBtn p-3" style={{ width: "100%" }} onClick={toggleVisibilityPickUp}> <span><GiCardPickup size={20} />
                            </span> Request Pickup Repair </button></div>
                            <br />
-                           <div> <button className="picckBtn  p-3" onClick={toggleVisibility} style={{ width: "100%" }}> <span><FaPersonWalkingArrowRight size={20} /></span> Reserve Visit Shop</button></div>
+                           <div> <button className="picckBtn  p-3" onClick={toggleVisibility} style={{ width: "100%" }}> <span><FaPersonWalkingArrowRight size={20} /></span> Reserve and Visit Shop</button></div>
                          </div>
                <div className="iphone-detaials-cover-text">
                   <div className="text-about-details tickHead" style={{ fontWeight: "bold" }}>Get your laptop/system
