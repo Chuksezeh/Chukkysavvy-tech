@@ -9,6 +9,7 @@ import { BsFillInfoSquareFill } from "react-icons/bs";
 import profileImage from "../../images/pace_image.jpeg"
 import "./userAccount.css"
 import { useEffect } from "react";
+import Footer from "../../layouts/Footer";
 
 const UserDashBoardComponent =  (()=>{
 
@@ -136,6 +137,7 @@ useEffect(() => {
     </div>
   </div>
 </div> 
+{/* <Footer/> */}
         
         </>
     )

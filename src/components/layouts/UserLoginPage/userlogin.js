@@ -109,9 +109,11 @@ const UserLogin = (() => {
       
      navigateTo("/user-profile")();
        }catch (error) {
+        setLoadingGoogle(false);
        setError({
          message: "Google sign-in failed",
          details: error.message
+          
        });
      }
    };
