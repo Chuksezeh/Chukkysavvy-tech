@@ -15,6 +15,7 @@ import { Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import useGetData from "../../Utility/getFunction";
+import UserLogin from "../UserLoginPage/userlogin";
 
 
 
@@ -127,7 +128,7 @@ showMainModal &&
 
 <div className="form-wra">
     <p id="description" className="text-center">
-        Please provide required details of your repair
+        Please provide required details of your repair   
   request. Our team will contact you promptly to arrange pickup and begin the repair process.
 
     </p>
@@ -331,6 +332,8 @@ showMainModal &&
           Hey, looks like you're not logged in yet! login for a smoother ride, or register to unlock the full experience, let's get you started!
     
           </p>
+
+            {/* <UserLogin  /> */}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleHideNoLogin}>

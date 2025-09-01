@@ -16,6 +16,7 @@ import WhatsAppFloat from "../layouts/whatsappFloat/whatsAppFloat";
 import ReadMoreText from "../layouts/readMoreText";
 import { GiCardPickup } from "react-icons/gi";
 import { FaPersonWalkingArrowRight } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -25,6 +26,9 @@ const OtherPhonesDetails = (()=>{
     const [showSignUp, setSignUp] = useState(false);
     const [showBookForm, setShowBookForm] = useState(false);
     const [showPickUpForm, setShowPickUpForm]= useState(false);
+
+    const userData = JSON.parse(localStorage.getItem('userInfo') || "null");
+      const navigate = useNavigate();
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -40,18 +44,33 @@ const OtherPhonesDetails = (()=>{
     const [isVisible, setIsVisible] = useState(false);
     const [isVisiblePickUp, setIsVisiblePickUp] = useState(false);
 
- const toggleVisibility = () => {
-    setIsVisible(!isVisible);
-    setIsVisiblePickUp(false)
-    handleShow()
+ const [showNoLogin, setShowNoLogin] = useState(false);
+  const handleShowNoLogin = (() => setShowNoLogin(true));
+  const handleHideNoLogin = (() => setShowNoLogin(false))
+
+  const navigateLogin = () => navigate("/user-login");
+
+  const toggleVisibility = () => {
+    if (!userData) {
+      setShowNoLogin(true);
+
+    } else {
+      setIsVisible(!isVisible);
+      setIsVisiblePickUp(false)
+      handleShow()
+    }
   };
 
-  const toggleVisibilityPickUp = ()=>{
-   setIsVisiblePickUp(!isVisiblePickUp)
-   setIsVisible(false);
-   handleShowPickUpForm()
-}
+  const toggleVisibilityPickUp = () => {
+    if (!userData) {
+      setShowNoLogin(true);
+    } else {
+      setIsVisiblePickUp(!isVisiblePickUp)
+      setIsVisible(false);
+      handleShowPickUpForm()
+    }
 
+  }
 
 const scrolltop = () => {
   window.scrollTo({
@@ -117,7 +136,9 @@ useEffect(() => {
    <div className="cardimage-book p-3">
       <img className="cardimagess" src= {rep2}/>
    </div>
-   <div className="cardtext-book p-3">
+
+   <div className="cardtext-book-div">
+   <div className="cardtext-book ">
    <h4 className="cl-textHEAd">Order Pickup, Repair and Delivery </h4> 
       We offer free pickup city-wide if you are unable to come to our store. If youd like to arrange for your device to be picked up, please choose a time and day youd 
       like for us to call to arrange this and we will give you a call.
@@ -125,17 +146,20 @@ useEffect(() => {
       {/* <ChatComponent/> */}
       
       </div>
+<div className="btn-order-div">
+      <button className="picckBtn  btn-order-divbtn" onClick={toggleVisibilityPickUp}> Order Now </button>
+   </div>
 
-      <button className="picckBtn p-3" onClick={toggleVisibilityPickUp}> Order Now </button>
-   
-
+</div>
 </div>
 
 <div className="card-covers">
    <div className="cardimage-book p-3">
       <img className="cardimagess" src= {rep1}/>
    </div>
-   <div className="cardtext-book p-3">
+     <div className="cardtext-book-div">
+
+   <div className="cardtext-book ">
    <h4 className="cl-textHEAd">Reserve In-Store Appointment</h4> 
    If youd like to setup an in-store appointment to have your device repaired or assessed, choose this option. 
    This is the quickest way to get a repair done.
@@ -143,9 +167,11 @@ useEffect(() => {
       {/* <ChatComponent/> */}
    
    </div>
-   <button className="picckBtn  p-3" onClick={toggleVisibility}> Reserve Now</button>
+    <div className="btn-order-div">
+   <button className="picckBtn  btn-order-divbtn" onClick={toggleVisibility}> Reserve Now</button>
 </div>
-
+</div>
+</div>
 
 
 
@@ -196,6 +222,41 @@ useEffect(() => {
          
         </Modal.Footer>
       </Modal>
+
+
+        <Modal
+                show={showNoLogin}
+                onHide={handleHideNoLogin}
+                backdrop="static"
+                keyboard={false}
+                size="md"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title style={{ fontWeight: 'bold' }} className="text-info">
+                    {' '}
+                    LOGIN REQUEST{' '}
+                  </Modal.Title>
+                </Modal.Header>
+      
+                <Modal.Body>
+                  <p>
+                    Hey, looks like you're not logged in yet! login for a smoother ride, or register to unlock the full experience, let's get you started!
+      
+                  </p>
+                </Modal.Body>
+                <Modal.Footer>
+                 
+                  <Button className="WProceedBtn" onClick={navigateLogin}>
+                    Proceed Login
+                  </Button>
+      
+                   <Button variant="secondary" onClick={handleHideNoLogin}>
+                    Cancel
+                  </Button>
+                </Modal.Footer>
+              </Modal>
 
 
       <WhatsAppFloat/>

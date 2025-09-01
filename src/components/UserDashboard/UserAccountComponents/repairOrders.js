@@ -423,7 +423,7 @@ useEffect(() => {
 
                           </select> */}
 
-                          {[DropdownButton].map((DropdownType, idx) => (
+                                    {[DropdownButton].map((DropdownType, idx) => (
                                             <DropdownType
                                                 as={ButtonGroup}
                                                 className="ttbtN-order"
@@ -527,11 +527,8 @@ useEffect(() => {
                     ))}
                 </tbody>
 
-
-
-
               </table>
-              {               isPending && <div className="" style={{ width: "100%", justifyContent: "center", textAlign: "center" }}>
+              { isPending && <div className="" style={{ width: "100%", justifyContent: "center", textAlign: "center" }}>
                   <span style={{ margin: "0 auto" }} className="loader-come"></span>
 
                 </div>}

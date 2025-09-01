@@ -4,11 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { chukkytechAxios } from "../../Utility/axios";
 import Modal from 'react-bootstrap/Modal';
 import chukkyLogo from "../../images/CHUKKY-BRAND-BACKGROUND-removebg-preview.png"
-import moment from "moment/moment";
-import { GiSaveArrow } from "react-icons/gi";
-import { IoMdShare } from "react-icons/io";
-import { html2pdf } from "html2pdf.js";
-import { IoCheckmarkDoneOutline } from "react-icons/io5";
+// import moment from "moment/moment";
+// import { GiSaveArrow } from "react-icons/gi";
+// import { IoMdShare } from "react-icons/io";
+// import { html2pdf } from "html2pdf.js";
+// import { IoCheckmarkDoneOutline } from "react-icons/io5";
 import Receipt from "../Receipt/repairOrderReceipt";
 import { Button } from "react-bootstrap";
 
@@ -369,7 +369,7 @@ const IphonePickupREpair = (() => {
                 <Modal.Body>
                     <p>
                         Hey, looks like you're not logged in yet! login for a smoother ride, or register to unlock the full experience, let's get you started!
-
+                           
                     </p>
                 </Modal.Body>
                 <Modal.Footer>

@@ -21,6 +21,12 @@ body{
   /* padding-left: 20%;
   padding-right: 20%; */
   }
+  .btn-order-div{
+    width: 100%;
+  }
+  .btn-order-divbtn{
+    width: 100% !important;  
+  }
 
   .headSignin{
     display: flex;
@@ -31,6 +37,10 @@ body{
   }
   .cl-text{
     color: #1A89B8;
+  }
+
+  .cardtext-book-div{
+    display: grid;
   }
 
 
@@ -2891,6 +2901,11 @@ padding: 5px;
   margin-top: 3%;
   padding-top: 3%;
 }
+.iphone-detaials-cover-image{
+  justify-content: center;
+  text-align: center;
+}
+
 
 
 

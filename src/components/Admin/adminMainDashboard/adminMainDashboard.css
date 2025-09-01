@@ -44,21 +44,7 @@
     margin: 0 auto;
   }
   
-  .c-dashboardInfo:nth-child(1) .wrap:after {
-    background: linear-gradient(82.59deg, #00c48c 0%, #00a173 100%);
-  }
-  .c-dashboardInfo:nth-child(2) .wrap:after {
-    background: linear-gradient(81.67deg, #0084f4 0%, #1a4da2 100%);
-  }
-  .c-dashboardInfo:nth-child(3) .wrap:after {
-    background: linear-gradient(69.83deg, #0084f4 0%, #00c48c 100%);
-  }
-  .c-dashboardInfo:nth-child(4) .wrap:after {
-    background: linear-gradient(81.67deg, #ff647c 0%, #1f5dc5 100%);
-  }
-  .c-dashboardInfo:nth-child(5) .wrap:after {
-    background: linear-gradient(81.67deg, #64ffff 0%, #1f5dc5 100%);
-  }
+ 
   .c-dashboardInfo__title svg {
     color: #d7d7d7;
     margin-left: 5px;

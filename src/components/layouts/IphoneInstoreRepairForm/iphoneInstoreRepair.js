@@ -14,6 +14,7 @@ import { Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import useGetData from "../../Utility/getFunction";
+import UserLogin from "../UserLoginPage/userlogin";
 
 
 
@@ -66,19 +67,15 @@ const IphoneInstoreRepair = (() => {
 
    const {data: users, isPending: ispendingUsers, error: errorUsers} = useGetData(`/auth/getUser/${encodedEmail}`)
 
-    const handleSubmitDeviceData = async (data) => {
+  
+  
+  
+       const handleSubmitDeviceData = async (data) => {
         try {
             setLoading(true);
             setShowResult(false);
             setShowMainModal(true);
-    
-            if (!userData || !users.userId) {
-                console.error("No user data found. Redirecting to login.");
-                setShowNoLogin(true);
-                setLoading(false);
-                return;
-            }
-    
+
             const deviceData = {
                 ...data,
                 repairOrderType: "Pickup",
@@ -86,6 +83,19 @@ const IphoneInstoreRepair = (() => {
                 status: "Processing"
             };
     
+            if (!userData || !users.userId) {
+                console.error("No user data found. Redirecting to login.");
+                setShowNoLogin(true);
+                localStorage.setItem('initialData', JSON.stringify(deviceData));
+                setLoading(false);
+
+                return;
+            }
+    
+            
+
+          
+                
             console.log("Sending data:", deviceData);
     
             const res = await chukkytechAxios.post('repair/repairorder', deviceData);
@@ -313,14 +323,14 @@ showMainModal &&
 
         }
 
-        {
+           {
 
             errorMessage &&
             <div className="container mt-2">
                 <div className="row">
 
                     <div class="col-sm-12">
-                        <div className="alert   alert-danger  " role="alert" >
+                        <div className="alert  alert-danger  " role="alert" >
 
                             <span> {errMessage}   </span>
 
@@ -331,9 +341,7 @@ showMainModal &&
 
                 </div>
             </div>
-
-
-        }
+              }
 
 
         <div className="row">
@@ -341,42 +349,37 @@ showMainModal &&
                 {
                     loading ? <button  className="picckBtnDiv" 
                      disabled> <span class="loader">
-                        </span></button> : <button disabled={showNoLogin}
-                        className="picckBtnDiv" type="submit">Submit</button>
+                        </span></button> :
+                        <button disabled={showNoLogin}
+                        className="picckBtnDiv" 
+                        type="submit">Submit</button>
                 }
 
             </div>
-        </div>
+          </div>
 
-    </form>
-</div>
-</div>
+        </form>
+      </div>
+    </div>
 
 }
 
 {
-    showResult && 
-
-    
-    <Receipt orderData={orderData} chukkyLogo={chukkyLogo} />
+showResult && 
+<Receipt orderData={orderData} chukkyLogo={chukkyLogo} />
          
-
-
-
-
 }
             
 
 
-<Modal
+    <Modal
         show={showNoLogin}
         onHide={handleHideNoLogin}
         backdrop="static"
         keyboard={false}
         size="md"
         aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
+        centered >
         <Modal.Header closeButton>
           <Modal.Title style={{ fontWeight: 'bold' }} className="text-info">
             {' '}
@@ -386,9 +389,12 @@ showMainModal &&
 
         <Modal.Body>
           <p>
-          Hey, looks like you're not logged in yet! login for a smoother ride, or register to unlock the full experience, let's get you started!
-    
+          Hey, looks like you're not logged in yet! login for a smoother ride,
+          or register to unlock the full experience, let's get you started!
+          
           </p>
+           
+
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleHideNoLogin}>
@@ -400,10 +406,7 @@ showMainModal &&
         </Modal.Footer>
       </Modal>
             
-
-
-
-        </>
+     </>
     )
 })
 export default IphoneInstoreRepair

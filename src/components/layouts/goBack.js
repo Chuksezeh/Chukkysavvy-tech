@@ -12,7 +12,7 @@ const Goback = () => {
     <>
       <div style={{ padding: '10px', cursor: 'pointer' }}>
         <i onClick={handleGoBack}>
-          <FaArrowLeftLong size={35} />
+          <FaArrowLeftLong size={30} />
         </i>
       </div>
     </>
