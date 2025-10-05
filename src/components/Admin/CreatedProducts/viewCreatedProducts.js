@@ -1,16 +1,21 @@
+
+
 import { useEffect, useState } from "react";
-import AdminDashboard from "./adminDashboard";
+// import AdminDashboard from "./adminDashboard";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { chukkytechAxios } from "../Utility/axios";
+// import { chukkytechAxios } from "../Utility/axios";
 import { useForm } from "react-hook-form";
 import { ButtonGroup, DropdownButton,Dropdown} from "react-bootstrap";
 import moment from "moment";
+import AdminDashboard from "../adminDashboard";
+import { chukkytechAxios } from "../../Utility/axios";
+import { Link } from "react-router-dom";
 // import AdminDashboard from "../adminDashboard";
 // import "./userRepairOrder.css"
 
 
-const AdminLocations = (() => {
+const ViewCreatedProducts = (() => {
 
     const {
         register,
@@ -31,11 +36,13 @@ const AdminLocations = (() => {
     const [showEditModal, setShowEditModal] = useState(false)
     const [locationData, setLocationData] = useState({})
     const [showDelete, setShowDelete] = useState(false);
+    const [showDetails, setShowDetails]= useState(false)
 
+    
     const fetchLocation = async () => {
 
         try {
-            const response = await chukkytechAxios.get("location/getAllLocations");
+            const response = await chukkytechAxios.get("/product/getAllProducts");
             setAllLocations(response.data);
             setPendingLocation(false);
         } catch (error) {
@@ -47,6 +54,23 @@ const AdminLocations = (() => {
     useEffect(() => {
         fetchLocation();
     }, []);
+
+
+// useEffect(() => {
+//   const fetchProducts = async () => {
+//     try {
+   
+//       const response = await chukkytechAxios.get("/product/getAllProducts");
+//       console.log("Products:", response.data);
+//     } catch (error) {
+//       console.error("Error fetching products:", error);
+//       console.error("Full error details:", error.response?.data);
+//     }
+//   };
+
+//   fetchProducts();
+// }, []);
+
 
     // console.log('fetchLocation', allLocations);
 
@@ -150,9 +174,9 @@ const handleSubmitEdit = async (data) => {
 
 
     const handleSubmitDelete = async () => {
-        if (!locationData?.locationId) {
+        if (!locationData?.productId) {
             setErrorMessage(true);
-            setErrMessage("No location selected for deletion");
+            setErrMessage("No product selected for deletion");
             return;
         }
     
@@ -162,11 +186,11 @@ const handleSubmitEdit = async (data) => {
     
         try {
             const response = await chukkytechAxios.delete(
-                `location/deleteLocation/${locationData.locationId}`
+                `/product/deleteProduct/${locationData.productId}`
             );
     
             setSuccessMessage(true);
-            setSuccessText(response.data.message || "Location deleted successfully");
+            setSuccessText(response.data.message || "Product deleted successfully");
             setShowDelete(false)
           
             await fetchLocation();
@@ -179,7 +203,7 @@ const handleSubmitEdit = async (data) => {
             
             const errorMsg = err.response?.data?.message || 
                             err.response?.data?.error || 
-                            "Failed to delete location";
+                            "Failed to delete product";
             
             setErrorMessage(true);
             setErrMessage(errorMsg);
@@ -190,7 +214,7 @@ const handleSubmitEdit = async (data) => {
     };
     
    
-
+console.log("viewall products", allLocations)
 
 
 
@@ -204,7 +228,7 @@ const handleSubmitEdit = async (data) => {
 
                 <ul className="action-bar">
 
-                    <li>Home /Locations / <span className="addash"> Admin locations </span></li>
+                    <li>Home /Products / <span className="addash"> View Created Products </span></li>
                 </ul>
             </div>
 
@@ -231,7 +255,7 @@ const handleSubmitEdit = async (data) => {
                         </form>
                     </div>
                 </div>
-                <div className="p-2">   <button className="btn btn-primary p-2" onClick={handleShowModal}>Create location</button> </div>
+                {/* <div className="p-2">   <button className="btn btn-primary p-2" onClick={handleShowModal}>Create location</button> </div> */}
 
             </div>
             {successMessage &&
@@ -252,9 +276,7 @@ const handleSubmitEdit = async (data) => {
 
                     </div>
                 </div>
-
-
-            }
+               }
 
 
 
@@ -263,15 +285,14 @@ const handleSubmitEdit = async (data) => {
             <div className="controlADMinorder_tb">
                 <table>
                     <thead>
-                        <tr className="table-headers">
+                        <tr className="table-headers ">
                             <th>SN</th>
-                            <th>Location name</th>
-                            <th>Location address</th>
-                            <th>Shop name</th>
+                            <th>Product name</th>
+                            <th>Company name</th>
+                            <th>Product price</th>
                             <th>status</th>
                             <th>Created date</th>
-                            <th>Longitude</th>
-                            <th>Latitude</th>
+                           
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -282,34 +303,33 @@ const handleSubmitEdit = async (data) => {
 
                                 <tr key={data.locationId}>
                                     <td data-label="SN"> {i+1} </td>
-                                    <td data-label="Location name">{data.locationName} </td>
-                                    <td data-label="Location address"> {data.locationAddress} </td>
-                                    <td data-label="Shop name"> {data.shopName} </td>
+                                    <td data-label="Product name">{data.productName} </td>
+                                    <td data-label="Company name"> {data.companyName} </td>
+                                    <td data-label="Product price"> {data.productPrice} </td>
                                     <td data-label="status"> {data.status} </td>
                                     <td data-label="Created date">  {moment(data.createdDateTime).format("lll")}  </td>
-                                    <td data-label="Longitude">{data.longitude} </td>
-                                    <td data-label="Latitude"> {data.latitude} </td>
+                                    
                                     <td>
                                     {[DropdownButton].map((DropdownType, idx) => (
-                                            <DropdownType
-                                                as={ButtonGroup}
-                                                key={idx}
-                                                id={`dropdown-button-drop-${idx}`}
-                                                size="lg"
-                                                title="Action"
-                                                onClick={()=>handleShowDropDown(data)}
-
-                                            >
-                                                {/* <Dropdown.Item eventKey="1">View user</Dropdown.Item> */}
-
-                                                <Dropdown.Item eventKey="3" onClick={()=>setShowEditModal(true)}>
-                                                 Edit location
-
-                                                </Dropdown.Item>
-                                                <Dropdown.Divider />
-                                                <Dropdown.Item eventKey="4" style={{ color: "red" }} onClick={()=>setShowDelete(true)}>Delete location</Dropdown.Item>
-                                            </DropdownType>
-                                        ))}
+                                        <DropdownType
+                                            as={ButtonGroup}
+                                            key={idx}
+                                            id={`dropdown-button-drop-${idx}`}
+                                            size="lg"
+                                            title="Action"
+                                            onClick={() => handleShowDropDown(data)}
+                                        >
+                                            <Dropdown.Item eventKey="3" as={Link} to={`/product/${data.productId}`}>
+                                                Product Details
+                                            </Dropdown.Item>
+                                           
+                                         
+                                            <Dropdown.Divider />
+                                            <Dropdown.Item eventKey="4" style={{ color: "red" }} onClick={() => setShowDelete(true)}>
+                                                Delete Product
+                                            </Dropdown.Item>
+                                        </DropdownType>
+                                    ))}
                                     </td>
                                 </tr>
 
@@ -597,7 +617,7 @@ const handleSubmitEdit = async (data) => {
                 <Modal.Body>
 
 
-                    <div>Are you sure you want to delete this location?</div>
+                    <div>Are you sure you want to delete this product?</div>
 
 
                 </Modal.Body>
@@ -617,9 +637,42 @@ const handleSubmitEdit = async (data) => {
                 </Modal.Footer>
             </Modal>
 
+
+
+
+
+               <Modal show={showDetails} onHide={() => setShowDetails(false)} size="xl">
+                <Modal.Header closeButton>
+                    <Modal.Title>Product Detail</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+<div>
+    <div>
+     <div style={{fontWeight: "bold"}}> Product name </div>
+      <div>{locationData.productName} </div>
+
+    </div>
+</div>
+
+                   
+
+
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowDetails(false)}>
+                        Close
+                    </Button>
+
+                   
+
+                </Modal.Footer>
+            </Modal>
+
         </>
 
     )
 })
 
-export default AdminLocations;
+export default ViewCreatedProducts;
+
+

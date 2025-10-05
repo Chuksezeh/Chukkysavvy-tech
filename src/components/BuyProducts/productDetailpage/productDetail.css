@@ -1,64 +1,64 @@
-.contain-fluid{
-    display: flex;
-    
-}
-.pricedetailPageContainer{
-    display: flex;
-    justify-content:space-between ;
-    /* flex-direction: column; */
-}
-.instockTExt{
-    color: green;
-}
-.img-fluidT{
-    width: 500px;
+.product-details {
+  font-family: "Segoe UI", sans-serif;
+ 
+  margin: auto;
+  padding-top: 20px;
 }
 
-.button-Send {
-    background-image: linear-gradient(-180deg, #37AEE2 0%, #1E96C8 100%);
-    border-radius: .5rem;
-    box-sizing: border-box;
-    color: #FFFFFF;
-    display: flex;
-    font-size: 16px;
-    justify-content: center;
-    padding: 1rem 1.75rem;
-    text-decoration: none;
-    width: 100%;
-    border: 0;
-    cursor: pointer;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    max-width: 400px;
-    margin-top: 5px;
-    margin: 0 auto;
-    
-  }
-  .detailTEXtAll{
-    padding: 10px;
-  }
-  
-  .button-Send:hover {
-    background-image: linear-gradient(-180deg, #1D95C9 0%, #17759C 100%);
-  }
-  
-  @media (min-width: 768px) {
-    .button-Send {
-      padding: 1rem 2rem;
-    }
-  }
-   
-  
+.main-image img {
+  border-radius: 12px;
+  max-height: 400px;
+  object-fit: contain;
+  transition: transform 0.3s ease-in-out;
+}
 
-@media (max-width: 993px) {
+.main-image img:hover {
+  transform: scale(1.05);
+}
 
-    .contain-fluid{
-        display: grid;
-        
-        
-    }
-    .img-fluidT{
-        width: 300px;
-    }
+.thumbs {
+  gap: 10px;
+}
+
+.thumb-img {
+  width: 70px;
+  height: 70px;
+  border-radius: 8px;
+  object-fit: contain;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.3s ease-in-out;
+}
+
+.thumb-img:hover {
+  border: 2px solid #007bff;
+}
+
+.thumb-img.active {
+  border: 2px solid #007bff;
+  transform: scale(1.05);
+}
+
+.product-info {
+  padding: 15px;
+}
+
+.product-title {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.product-price {
+  color: #243a6f;
+  font-weight: 700;
+}
+
+.product-desc {
+  margin-top: 10px;
+  line-height: 1.6;
+  color: #555;
+}
+
+.rating {
+  font-size: 1.1rem;
 }

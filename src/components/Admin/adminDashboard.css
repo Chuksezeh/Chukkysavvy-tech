@@ -4,9 +4,30 @@
   padding: 10px;
 }
 .nowsidecontainer{
-  /* margin-top: 6%; */
+ 
   background-color: #041e5c;
   height: auto !important;
+  
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  height: 100vh; 
+  position: fixed;
+  /* left: 0;
+  top: 0; */
+  /* z-index: 10 !important;
+  transition: transform 0.3s ease-in-out;
+   overflow-y: auto;
+  overflow-x: hidden;
+   scroll-behavior: smooth;
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 3px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: #999;
+  } */
 }
 .shift-nav{
   margin-left: 20px !important;

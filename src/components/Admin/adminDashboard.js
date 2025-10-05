@@ -5,15 +5,20 @@ import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import './adminDashboard.css';
 import "./adminDashboard.scss";
 import React, { useEffect, useState } from 'react';
-import { FaHome, FaBars } from "react-icons/fa";
+import { FaHome, FaBars, FaProductHunt } from "react-icons/fa";
 import { SlPeople } from "react-icons/sl";
 import { IoIosPeople } from "react-icons/io";
 import { IoPersonAddOutline } from "react-icons/io5";
 import { GoListOrdered } from "react-icons/go";
-import { MdOutlineLogout } from "react-icons/md";
+import { MdOutlineCreateNewFolder, MdOutlineKeyboardArrowRight, MdOutlineLogout } from "react-icons/md";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FaComment, FaLocationDot, FaMagnifyingGlassLocation } from "react-icons/fa6";
+import { CiCircleList } from "react-icons/ci";
+import { TbCategoryFilled, TbCategoryPlus } from "react-icons/tb";
+import { PiOfficeChairFill } from "react-icons/pi";
+
+
 
 const AdminDashboard = () => {
     const navigate = useNavigate();
@@ -96,28 +101,28 @@ const AdminDashboard = () => {
 
                         <NavItem eventKey="2">
                             <NavIcon><SlPeople className="side-main-icon" /></NavIcon>
-                            <NavText>Users</NavText>
+                            <NavText>Users  <MdOutlineKeyboardArrowRight size={20} />  </NavText>
                             <NavItem eventKey="2-2">
                                 <NavText className="move-side">
-                                    <li className="shift-nav" onClick={() => navigate("/user-table")}>
+                                    <li className="shift-nav p-1" onClick={() => navigate("/user-table")}>
                                         <IoIosPeople className="inicon" size={18} />
-                                        <span className="ml-5">View users</span>
+                                        <span className="p-2" style={{fontSize:"16px"}}>View users</span>
                                     </li>
                                 </NavText>
                             </NavItem>
                             <NavItem eventKey="2-3">
                                 <NavText className="move-side">
-                                    <li className="shift-nav" onClick={() => navigate("/admin-user")}>
+                                    <li className="shift-nav p-1" onClick={() => navigate("/admin-user")}>
                                         <IoIosPeople className="inicon" size={18} />
-                                        <span className="ml-5">View admin users</span>
+                                        <span className="p-2" style={{fontSize:"16px"}}>View admin users</span>
                                     </li>
                                 </NavText>
                             </NavItem>
                             <NavItem eventKey="2-4">
                                 <NavText>
-                                    <li className="shift-nav" onClick={() => navigate("/create-user")}>
+                                    <li className="shift-nav p-1" onClick={() => navigate("/create-user")}>
                                         <IoPersonAddOutline className="inicon" size={16} />
-                                        <span className="ml-5">Create user</span>
+                                        <span className="p-2 " style={{fontSize:"16px"}}>Create user</span>
                                     </li>
                                 </NavText>
                             </NavItem>
@@ -125,12 +130,12 @@ const AdminDashboard = () => {
 
                         <NavItem eventKey="3">
                             <NavIcon><GoListOrdered className="side-main-icon" /></NavIcon>
-                            <NavText>Orders</NavText>
+                            <NavText>Orders <MdOutlineKeyboardArrowRight size={20} /> </NavText>
                             <NavItem eventKey="3-1">
                                 <NavText className="move-side">
                                     <li className="shift-nav" onClick={() => navigate("/user-repair-orders")}>
                                         <IoIosPeople className="inicon" size={18} />
-                                        <span className="ml-5">Repair Order</span>
+                                        <span className="p-2" style={{fontSize:"16px"}} >Repair Order</span>
                                     </li>
                                 </NavText>
                             </NavItem>
@@ -142,21 +147,78 @@ const AdminDashboard = () => {
                                     </li>
                                 </NavText>
                             </NavItem> */}
-                        </NavItem>
+                        </NavItem>   
 
-                        <NavItem eventKey="4">
-                            <NavIcon> <FaLocationDot className="side-main-icon"/>  </NavIcon>
-                            <NavText>Locations</NavText>
-                            <NavItem eventKey="4-1">
+
+                        <NavItem eventKey="6">
+                            <NavIcon> <FaProductHunt className="side-main-icon"/>  </NavIcon>
+                            <NavText>Products   <MdOutlineKeyboardArrowRight size={20} /></NavText>
+                            <NavItem eventKey="6-1">
                                 <NavText className="move-side">
-                                    <li className="shift-nav" onClick={() => navigate("/admin-service-locations")}>
-                                        <FaMagnifyingGlassLocation className="inicon" size={18} />
-                                        <span className="ml-5">Location</span>
+                                    <li className="shift-nav p-1" onClick={() => navigate("/create-products")}>
+                                        <MdOutlineCreateNewFolder className="inicon" size={18} />
+                                        <span className="p-2" style={{fontSize:"16px"}}>Create Product</span>
+                                    </li>
+                                </NavText>
+                            </NavItem>
+                            <NavItem eventKey="6-1">
+                                <NavText className="move-side">
+                                    <li className="shift-nav  p-1" onClick={() => navigate("/view-created-products")}>
+                                        <CiCircleList  className="inicon" size={18} /> 
+                                        <span className="p-2" style={{fontSize:"16px"}}>View Products</span>
                                     </li>
                                 </NavText>
                             </NavItem>
                            
                         </NavItem>
+
+                        <NavItem eventKey="7">
+                            <NavIcon>  <TbCategoryFilled  className="side-main-icon"/> </NavIcon>
+                            <NavText>Categories   <MdOutlineKeyboardArrowRight size={20} /></NavText>
+                            <NavItem eventKey="7-1">
+                                <NavText className="move-side">
+                                    <li className="shift-nav p-1" onClick={() => navigate("/view-categories")}>
+                                         <TbCategoryPlus className="inicon" size={18}/>
+
+                                        <span className="p-2" style={{fontSize:"16px"}}>View Categories</span>
+                                    </li>
+                                </NavText>
+                            </NavItem>
+                           
+                        </NavItem>
+
+
+
+                        <NavItem eventKey="4">
+                            <NavIcon> <FaLocationDot className="side-main-icon"/>  </NavIcon>
+                            <NavText>Locations   <MdOutlineKeyboardArrowRight size={20} /></NavText>
+                            <NavItem eventKey="4-1">
+                                <NavText className="move-side">
+                                    <li className="shift-nav" onClick={() => navigate("/admin-service-locations")}>
+                                        <FaMagnifyingGlassLocation className="inicon" size={18} />
+                                        <span className="p-2" style={{fontSize:"16px"}}>Location</span>
+                                    </li>
+                                </NavText>
+                            </NavItem>
+                           
+                        </NavItem>
+
+                 <NavItem eventKey="8">
+                            <NavIcon> <PiOfficeChairFill className="side-main-icon"/>  </NavIcon>
+                            <NavText>Company   <MdOutlineKeyboardArrowRight size={20} /></NavText>
+                            <NavItem eventKey="8-1">
+                                <NavText className="move-side">
+                                    <li className="shift-nav" onClick={() => navigate("/view-companies")}>
+                                        <CiCircleList className="inicon" size={18} />
+                                        <span className="p-2" style={{fontSize:"16px"}}>List Companies</span>
+                                    </li>
+                                </NavText>
+                            </NavItem>
+                           
+                        </NavItem>
+
+
+
                         <NavItem eventKey="5">
                             <NavIcon> <FaComment className="side-main-icon"/>  </NavIcon>
                             <NavText onClick={() => navigate("/manage-comments")}>Manage comments</NavText>

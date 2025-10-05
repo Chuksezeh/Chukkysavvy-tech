@@ -18,6 +18,13 @@
     --bg-content-color:#243A6F;
 
 }
+/* * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        } */
+
 .badge{
     color: white;
 }
@@ -35,12 +42,13 @@
     margin-top: 4%;
 }
 
-.card {
+.cardo {
     background: #fff;
     box-shadow: 0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
     transition: .3s transform cubic-bezier(.155, 1.105, .295, 1.12), .3s box-shadow, .3s -webkit-transform cubic-bezier(.155, 1.105, .295, 1.12);
     border: 0;
     border-radius: 1rem;
+    margin-top: 5%;
 }
 
 .card-img,
@@ -50,14 +58,14 @@
 }
 
 
-.card h5 {
+.cardo .titleText {
     overflow: hidden;
     height: 55px;
     font-weight: 300;
     font-size: 1rem;
 }
 
-.card h5 a {
+.cardo .titleText a {
   color: black;
   text-decoration: none;
 } 
@@ -73,7 +81,7 @@
     
 }
 
-.card h2 {
+.cardo h2 {
     font-size: 1rem;
 }
 
@@ -220,8 +228,12 @@
 .fa-chevron-circle-right:before {
     color: darkgray;
 }
+.buttonAddCart{
+    /* background-color: var(--danger-index); */
+    width: 100%;
+}
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
    .centSoonImage{
     margin-top: 15%;
     justify-content: center;
@@ -230,10 +242,31 @@
 .img-soon{
     width: 300px;
 }
-.centSoon{
-    text-align: start;
-    justify-content: start;
-    padding: 10px;
-}
 
+.buttonAddCart{
+
+
+} */
+
+@media (max-width: 768px) {
+  .centSoon {
+    text-align: center;
+    justify-content: center;
+    padding: 10px;
+  }
+
+  .cardo {
+    width: 100%;
+    margin: auto;
+     margin-top: 8%;
+    /* background-color: #5bc257; */
+  }
+
+  .card-img-top {
+    min-height: 100px;
+    width: 100%;
+    max-height: 100px;
+    padding: 15px;
+    object-fit: contain;
+  }
 }

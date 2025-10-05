@@ -1,253 +1,36 @@
-.container {
-    max-width: 1300px;
-    margin: auto;
-    padding-left: 25px;
-    padding-right: 25px;
-  }
-  
-  
-  
- .carT-Image{
-    width: 200px !important;
-    border-radius: 20px;
- }
-  
-  .btn:hover {
-    background: #563434;
-  }
-  
-  .header {
-    background: radial-gradient(#fff, #ffd6d6);
-  }
-  
-  .header .row {
-    margin-top: 70px;
-  }
-  
-  .categories {
-    margin: 70px 0;
-  }
-  .cartPP{
-    text-align: center;
-    padding: 5px;
-  }
-  
-  .col-3 {
-    flex-basis: 30%;
-    min-width: 250px;
-    margin-bottom: 30px;
-  }
-  
-  
-  
-  .small-container {
-    max-width: 1080px;
-    margin: auto;
-    padding-left: 25px;
-    padding-right: 25px;
-  }
-  
-  .col-4 {
-    flex-basis: 25%;
-    padding: 10px;
-    min-width: 200px;
-    margin-bottom: 50px;
-    transition: transform 0.5s;
-  }
-  
-  
-  
-  .title {
-    text-align: center;
-    margin: 0 auto 80px;
-    position: relative;
-    line-height: 60px;
-    color: #555;
-  }
-  .title::after {
-    content: "";
-    background: #ff523b;
-    width: 80px;
-    height: 5px;
-    border-radius: 5px;
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translate(-50%);
-  }
-  
-  h4 {
-    color: #555;
-    font-weight: normal;
-  }
-  
-  .col-4 p {
-    font-size: 14px;
-  }
-  
-  .rating .fas {
-    color: #ff523b;
-  }
-  
-  .rating .far {
-    color: #ff523b;
-  }
-  
-  .col-4:hover {
-    transform: translateY(-5px);
-  }
-  
-  /* Offer */
-  
-  .offer {
-    background: radial-gradient(#fff, #ffd6d6);
-    margin-top: 80px;
-    padding: 30px 0;
-  }
-  
-  .col-2 .offer-img {
-    padding: 50px;
-  }
-  
-  small {
-    color: #555;
-  }
-  
-  /* testimonial */
-  
-  .testimonial {
-    padding-top: 100px;
-  }
-  
-  .testimonial .col-3 {
-    text-align: center;
-    padding: 40px 20px;
-    box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: transform 0.5s;
-  }
-  
-  
-  
-  .testimonial .col-3:hover {
-    transform: translateY(-10px);
-  }
-  
-  .fa-quote-left {
-    font-size: 34px;
-    color: #ff523b;
-  }
-  
-  .col-3 p {
-    font-size: 14px;
-    margin: 12px 0;
-    color: #777777;
-  }
-  
-  .testimonial .col-3 h3 {
-    font-weight: 600;
-    color: #555;
-    font-size: 16px;
-  }
-  
-  .brands {
-    margin: 100px auto;
-  }
-  
-  .col-5 {
-    width: 160px;
-  }
-  .controlcounter{
-    display: flex;
-  
-    
-   }
-   .tractminus{
-      background-color: #030334;
-     margin-right: 2%;
-      box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25) ;
-      box-sizing: border-box;
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      border-radius: .25rem;
-      color: white;
-      
-   }
-   .tractminus:hover{
-    background-color: #2BBCF1;
-    z-index: 5;
-   }
-   .incrementnum{
-    font-weight: bold;
-    margin-top: 1%;
-    color: black;
-    }
-   .trackplus {
-    background-color: #030334;
-   margin-left: 2%;
-    box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
-    box-sizing: border-box;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: .25rem;
-    color: white;
-   
-   }
-   .tractminus:hover{
-    background-color: #2BBCF1;
-    z-index: 5;
-   }
-   .trackplus:hover{
-    background-color: #2BBCF1;
-   }
-   .controlcounter{
-   
-    justify-content: center;
-    text-align: center;
-    
-   }
-
-   .cart-info{
-    justify-content: center;
-    text-align: center;
-   }
-  
-   .total-price table {
-    border-top: 3px solid #ff523b;
-    width: 100%;
-    max-width: 400px;
-  
-  }
-  
-
-
-/* CSS */
-.button-43 {
-  background-image: linear-gradient(-180deg, #37AEE2 0%, #1E96C8 100%);
-  border-radius: .5rem;
-  box-sizing: border-box;
-  color: #FFFFFF;
-  display: flex;
-  font-size: 16px;
-  justify-content: center;
-  padding: 1rem 1.75rem;
-  text-decoration: none;
-  width: 100%;
-  border: 0;
-  cursor: pointer;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  max-width: 400px;
-  margin-top: 5px;
+.cart-page {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   
 }
 
-.button-43:hover {
-  background-image: linear-gradient(-180deg, #1D95C9 0%, #17759C 100%);
+.cart-item {
+  background: #fff;
+  transition: 0.3s ease;
+}
+.cart-item:hover {
+  transform: scale(1.02);
 }
 
-@media (min-width: 768px) {
-  .button-43 {
-    padding: 1rem 2rem;
-  }
+.cart-img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 12px;
 }
-  
+
+.quantity-control button {
+  width: 35px;
+  height: 35px;
+}
+
+.cart-summary {
+  background: #f8f9fa;
+  border-radius: 12px;
+}
+
+.empty-cart {
+  font-size: 18px;
+  color: #777;
+  text-align: center;
+  margin-top: 50px;
+}

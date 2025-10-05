@@ -39,6 +39,13 @@ import FindLocation from './components/layouts/location/findLocation';
 import ForgotPassword from './components/layouts/UserLoginPage/forgotPassword';
 import AboutUs from './components/layouts/aboutUs/aboutUs';
 import usePageTracking from './pageTracking';
+import CheckoutPage from './components/BuyProducts/checkoutPage/checkout';
+import CreateProduct from './components/Admin/CreateProducts/createProduct';
+import Categories from './components/Admin/Categories/categories';
+import ViewCreatedProducts from './components/Admin/CreatedProducts/viewCreatedProducts';
+import ViewCompanies from './components/Admin/company/viewCompany';
+import ViewCategories from './components/Admin/Categories/categories';
+import ProductDetail from './components/Admin/CreatedProducts/productDetails';
 
 function App() {
   const [authState, setAuthState] = useState({
@@ -84,6 +91,7 @@ function App() {
         <Route path="/user-profile-dashboard" element={<AccountOverMobile />} />
         <Route path="/repair-orders" element={<RepairOrders />} />
         <Route path="/user-product-orders" element={<ProductOrders />} />
+        <Route path="/checkout-payment" element={<CheckoutPage />} />
 
         {/* Admin Protected Routes */}
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
@@ -95,6 +103,14 @@ function App() {
         <Route path="/admin-service-locations" element={<AdminLocations />} />
         <Route path="/manage-comments" element={<ManageComments />} />
         <Route path="/create-user" element={<CreateUser />} />
+        <Route path="/create-products" element={<CreateProduct />} />
+        {/* <Route path="/view-categories" element={<Categories />} /> */}
+         <Route path="/view-categories" element={<ViewCategories />} />
+         <Route path="/product/:productId" element={<ProductDetail />} />
+        <Route path="/view-companies" element={<ViewCompanies />} />
+
+         <Route path="/view-created-products" element={<ViewCreatedProducts  />} />
+
 
     
 
