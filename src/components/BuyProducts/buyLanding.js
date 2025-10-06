@@ -13,34 +13,71 @@ import { chukkytechAxios } from "../Utility/axios";
 
 const BuyProducts = (()=>{
 
+  const [productData, setProductData] = useState([]);
+const [loading, setLoading] = useState(true);
+
+//  const { data, isPending, error } = useGetData("/product/getAllProducts");
+//  console.log("see products>>", data)
+
   const navigate = useNavigate();
 
 const navigateProductCart = (()=>{
       navigate("/product-cart")
 })
 
-const navigateProductDetails = (()=>{
-  navigate("/product-details")
-})
+// const navigateProductDetails = (()=>{
+//   navigate("/product-details")
+// })
 
 
 useEffect(() => {
   const fetchProducts = async () => {
+    setLoading(true);
     try {
       // ✅ No space at the end
-      const response = await chukkytechAxios.get("/product/getAllProducts");
+      const response = await chukkytechAxios.get("/product/getAllActiveProducts");
+      setProductData(response.data);
       console.log("Products:", response.data);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching products:", error);
       console.error("Full error details:", error.response?.data);
+      setLoading(false);
     }
   };
 
   fetchProducts();
 }, []);
 
-// console.log("see products>>", data)
+// Helper function for status badge classes
+const getStatusBadgeClass = (status) => {
+  switch (status) {
+    case 'active':
+      return 'bg-success';
+    case 'sold':
+      return 'bg-danger';
+    case 'suspended':
+      return 'bg-warning text-dark';
+    case 'inactive':
+      return 'bg-secondary';
+    default:
+      return 'bg-info';
+  }
+};
 
+// Navigation function
+const navigateProductDetails = (productId) => {
+  navigate(`/product/${productId}`);
+};
+
+// Add to cart function
+const addToCart = (product) => {
+  // Your add to cart logic here
+  console.log('Adding to cart:', product);
+  // Example:
+  // dispatch(addToCartAction(product));
+  alert(`${product.productName} added to cart!`);
+};
 
     return(
 
@@ -54,144 +91,116 @@ useEffect(() => {
 
  <div className="container-fluid bg-trasparent my-4 p-3" style={{position:"relative"}}>
   <div className="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
-    <div className="col hp">
-      <div className="cardo  shadow-sm p-2">
-        <a target="_blank" onClick={navigateProductDetails}>
-          <img src="https://m.media-amazon.com/images/I/81gK08T6tYL._AC_SL1500_.jpg" className="card-img-top" alt="product.title" />
-        </a>
 
-        
-        <div className="card-bod">
-          <div className="clearfix mb-3">
-            <span className="float-start badge rounded-pill bg-success">1.245$</span>
+   {
+    productData.length === 0 && !loading &&
 
-            <span className="float-end"><a href="#" className="small text-muted text-uppercase aff-link">reviews</a></span>
-          </div>
-          <div className="titleText">
-            <a target="_blank" href="#">ASUS TUF FX505DT Gaming Laptop- 15.6", 120Hz Full HD, AMD Ryzen 5 R5-3550H Processor, GeForce GTX 1650 Graphics, 8GB DDR4, 256GB PCIe SSD, RGB Keyboard, Windows 10 64-bit - FX505DT-AH51</a>
-          </div>
-
-          
-         
-        </div>
-        <div className="d-grid gap-2 my-6 buttonAddCart">
-
-            <a  className="btn btn-warning bold-btn p-2" style={{color:"white", fontSize:"15px", padding:"5px"}} onClick={navigateProductCart}>add to cart</a>
-
-          </div>
-      </div>
-
+    
+    <div className="comingSoon">
+     
+      <h3 style={{textAlign:"center"}}>Products are coming soon</h3>
     </div>
-    <div className="col hp">
-      <div className="cardo  shadow-sm p-2">
-        <a href="https://amzn.to/42dsdGC" target="_blank">
-          <img src="https://m.media-amazon.com/images/I/71wF7YDIQkL._AC_SL1500_.jpg" className="card-img-top" alt="product.title" />
+
+   }
+
+   {
+  productData && productData.map((product) => (
+    <div className="col hp" key={product.productId}>
+      <div className="cardo shadow-sm p-2">
+        <a onClick={() => navigateProductDetails(product.productId)} style={{ cursor: 'pointer' }}>
+          {product.productImages && product.productImages.length > 0 ? (
+            <img 
+              src={product.productImages[0].imageUrl} 
+              className="card-img-top" 
+              alt={product.productName}
+              onError={(e) => {
+                e.target.src = 'https://via.placeholder.com/300x200?text=No+Image';
+              }}
+            />
+          ) : (
+            <img 
+              src="https://via.placeholder.com/300x200?text=No+Image" 
+              className="card-img-top" 
+              alt="No product image"
+            />
+          )}
         </a>
 
-        
         <div className="card-bod">
           <div className="clearfix mb-3">
-            <span className="float-start badge rounded-pill bg-success">2.345$</span>
-
-            <span className="float-end"><a href="#" className="small text-muted text-uppercase aff-link">reviews</a></span>
-          </div>
-          <div className="titleText">
-            <a target="_blank" href="#">Razer Blade 15 Base Gaming Laptop 2020: Intel Core i7-10750H 6-Core, NVIDIA GeForce GTX 1660 Ti, 15.6" FHD 1080p 120Hz, 16GB RAM, 256GB SSD, CNC Aluminum, Chroma RGB Lighting, Black</a>
-          </div>
-
-          <div className="d-grid gap-2 my-6">
-
-            <a  className="btn btn-warning bold-btn p-2" style={{color:"white", fontSize:"15px", padding:"5px"}}>add to cart</a>
-
-          </div>
-          {/* <div className="clearfix mb-1">
-
-            <span className="float-start"><a href="#"><i className="fas fa-question-circle"></i></a></span>
-
-            <span className="float-end">
-              <i className="far fa-heart" style={{cursor:"pointer"}}></i>
-
-
+            <span className="float-start badge rounded-pill bg-success">
+              N{parseFloat(product.productPrice).toFixed(2)}
             </span>
-          </div> */}
-        </div>
-      </div>
-    </div>
-    <div className="col hp">
-      <div className="cardo  shadow-sm p-2">
-        <a href="https://amzn.to/3os2Nrc" target="_blank">
-          <img src="https://m.media-amazon.com/images/I/81w+3k4U8PL._AC_SL1500_.jpg" className="card-img-top" alt="product.title" />
-        </a>
 
+           
+          </div>
+
+          <div className="titleText">
+            <a onClick={() => navigateProductDetails(product.productId)} style={{ cursor: 'pointer', textDecoration: 'none' }}>
+              {product.productName}
+            </a>
+          </div>
+       <div className="titleText"   dangerouslySetInnerHTML={{ __html: product.shortDiscription }}>
       
-        <div className="card-bod">
-          <div className="clearfix mb-3">
-            <span className="float-start badge rounded-pill bg-success">1.020$</span>
-
-            <span className="float-end"><a href="#" className="small text-muted text-uppercase aff-link">reviews</a></span>
           </div>
-          <div className="titleText">
-            <a target="_blank" href="#">Lenovo Legion 5 Gaming Laptop, 15.6" FHD (1920x1080) IPS Screen, AMD Ryzen 7 4800H Processor, 16GB DDR4, 512GB SSD, NVIDIA GTX 1660Ti, Windows 10, 82B1000AUS, Phantom Black</a>
-          </div>
-
-          <div className="d-grid gap-2 my-6">
-
-               <a href="#" className="btn btn-warning bold-btn p-2" >add to cart</a>
-
+          {/* Product Details */}
+          <div className="product-meta mt-2">
+          
+            {/* Quantity Info */}
+            {product.productQuantity <= 0 && product.status !== 'sold' && (
+              <div className="mt-1">
+                <span className="badge bg-warning text-dark">
+                  Low Stock
+                </span>
               </div>
-          {/* <div className="clearfix mb-1">
+            )}
+          </div>
 
-            <span className="float-start"><a href="#"><i className="fas fa-question-circle"></i></a></span>
-
-            <span className="float-end">
-              <i className="far fa-heart" style={{cursor:"pointer"}}></i>
-
-            </span>
-          </div> */}
-        </div>
-      </div>
-    </div>
-    <div className="col hp">
-      <div className="cardo  shadow-sm p-2">
-        <a href="https://amzn.to/43tMNDW" target="_blank">
-          <img src="https://m.media-amazon.com/images/I/61Ze2wc9nyS._AC_SL1500_.jpg" className="card-img-top" alt="product.title" />
-        </a>
          
-        
-        <div className="card-bod">
-          <div className="clearfix mb-3">
-            <span className="float-start badge rounded-pill bg-success">2.245$</span>
+        </div>
 
-            <span className="float-end"><a  className="small text-muted text-uppercase aff-link">reviews</a></span>
-          </div>
-          <div className="titleText">
-            <a target="_blank" href="#">MSI GL66 Gaming Laptop: 15.6" 144Hz FHD 1080p Display, Intel Core i7-11800H, NVIDIA GeForce RTX 3070, 16GB, 512GB SSD, Win10, Black (11UGK-001)</a>
-          </div>
-
-          <div className="d-grid gap-2 my-6">
-
-            <a className="btn btn-warning bold-btn p-2" style={{color:"white", fontSize:"15px", padding:"5px"}}>add to cart</a>
-
-          </div>
-          {/* <div className="clearfix mb-1">
-
-            <span className="float-start"><a href="#"><i className="fas fa-question-circle"></i></a></span>
-
-            <span className="float-end">
-              
-            <i className="far fa-heart" style={{cursor:"pointer"}}></i>
-
-            </span>
-          </div> */}
+        <div className="d-grid gap-2 my-3 buttonAddCart">
+          {/* Conditional Button Rendering */}
+          {product.status === 'sold' || product.productQuantity <= 0 ? (
+            <button 
+              className="btn btn-secondary bold-btn p-2" 
+              disabled
+              style={{ fontSize: "15px", padding: "5px" }}
+            >
+              Out of Stock
+            </button>
+          ) : product.status === 'suspended' ? (
+            <button 
+              className="btn btn-warning bold-btn p-2" 
+              disabled
+              style={{ fontSize: "15px", padding: "5px" }}
+            >
+              Temporarily Unavailable
+            </button>
+          ) : (
+            <button 
+              className="btn btn-warning bold-btn p-2" 
+              style={{ color: "white", fontSize: "15px", padding: "5px" }} 
+              onClick={() => addToCart(product)}
+            >
+              Add to Cart
+            </button>
+          )}
         </div>
       </div>
     </div>
+  ))
+}
+      
+   
+
   </div>
 </div> 
 
         </div>
         
-        
+      
+ 
         
         </>
     )
