@@ -77,7 +77,7 @@ function App() {
         <Route path="/buy-products" element={<BuyProducts />} />
         <Route path="/product-cart" element={<ProductCart />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/product-details" element={<ProductDetailPage />} />
+        <Route path="/product-details/:productId" element={<ProductDetailPage />} />
         <Route path="/terms-conditions" element={<TermsAndConditions />} />
         <Route path="/find-location" element={<FindLocation />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />

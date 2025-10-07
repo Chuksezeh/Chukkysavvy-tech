@@ -4,10 +4,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // import "./searchfield.css";
 import "./searchField.css";
 import { GiShoppingCart } from "react-icons/gi";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const SearchBar = () =>{
   const [category, setCategory] = useState("All");
   const [search, setSearch] = useState("");
+
+   const navigate = useNavigate();
 
   const categories = ["All", "Electronics", "Fashion", "Books", "Home"];
 
@@ -15,6 +19,19 @@ const SearchBar = () =>{
     e.preventDefault();
     alert(`Searching for "${search}" in "${category}"`);
   };
+
+  const totalCount = useSelector((state) => {
+
+    return state.cartProduct.productItems.length
+
+  })
+
+
+ 
+
+  const handleNavigateProductCart = (()=>{
+      navigate("/product-cart")
+  })
 
   return (
    <>
@@ -43,9 +60,15 @@ const SearchBar = () =>{
        
           />
           <button type="submit" className="search-button" >Search</button>
-          
+          <div className="cart-Mycart-div" onClick={handleNavigateProductCart } style={{cursor:"pointer"}}>
+          <spa className="cart-Mycart-span" >
+
+            <i className="cartIicon" style={{color:"white"}}><GiShoppingCart size={22} />  </i> <span className="cart-Mycart" style={{color:"white"}}> Cart</span>
+            <span className="num-Cart"> {totalCount } </span>
+          </spa>
+        </div>
         </form>
-         
+        
 
         {/* Right - Cart */}
         {/* <div className="navbar-cart">
@@ -53,13 +76,7 @@ const SearchBar = () =>{
         <span className="cart-badge">3</span>
       </div> */}
 
-        <div className="cart-Mycart-div">
-          <spa className="cart-Mycart-span" >
-
-            <i className="cartIicon"><GiShoppingCart size={22} />  </i> <span className="cart-Mycart">My Cart</span>
-            <span className="num-Cart"> 4</span>
-          </spa>
-        </div>
+       
       </nav>
 
    

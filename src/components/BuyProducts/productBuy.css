@@ -233,6 +233,24 @@
     width: 100%;
 }
 
+
+.cart-alert{
+    position: fixed;
+    /* top: 10px; */
+    right: auto;        
+    z-index: 9999;
+    width: 100%;
+    text-align: center;
+    /* padding: 10px 20px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    animation: slideIn 0.5s, fadeOut 0.5s 2.5s; */
+}
+
+
+
 /* @media (max-width: 768px) {
    .centSoonImage{
     margin-top: 15%;

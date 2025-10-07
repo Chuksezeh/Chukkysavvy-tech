@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./productCart.css";
 import Header from "../../layouts/Header";
@@ -6,254 +6,304 @@ import Footer from "../../layouts/Footer";
 import SearchBar from "../../ProductComponents/searchField/searchfield";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { chukkytechAxios } from "../../Utility/axios";
+import { decrease, increase, removeProduct } from "../../redux/productCounter";
 
 const ProductCart = () => {
-
   const navigate = useNavigate();
-  const [cart, setCart] = useState([
-    {
-      id: 1,
-      name: "Wireless Headphones",
-      category: "Electronics",
-      price: 120,
-      quantity: 1,
-      image: "https://m.media-amazon.com/images/I/81gK08T6tYL._AC_SL1500_.jpg",
-    },
-    {
-      id: 2,
-      name: "Classic Sneakers",
-      category: "Fashion",
-      price: 80,
-      quantity: 2,
-      image: "https://m.media-amazon.com/images/I/71wF7YDIQkL._AC_SL1500_.jpg",
-    },
-  ]);
+  const dispatch = useDispatch();
+  
+  // Get cart items from Redux store
+  const { productItems } = useSelector(state => state.cartProduct);
+  const [recentlyViewed, setRecentlyViewed] = useState([]);
 
-  // Handle Increase Quantity
-  const increaseQty = (id) => {
-    setCart(
-      cart.map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-      )
-    );
-  };
-
-  // Handle Decrease Quantity
-  const decreaseQty = (id) => {
-    setCart(
-      cart.map((item) =>
-        item.id === id && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      )
-    );
-  };
-
-  // Remove Item
-  const removeItem = (id) => {
-    setCart(cart.filter((item) => item.id !== id));
-  };
-
-  // Calculate Total
-  const subtotal = cart.reduce(
-    (acc, item) => acc + item.price * item.quantity,
+  // Calculate cart totals
+  const subtotal = productItems?.reduce(
+    (acc, item) => acc + (parseFloat(item.productPrice) * (item.quantity || 1)),
     0
-  );
+  ) || 0;
+  
   const shipping = subtotal > 0 ? 15 : 0;
   const total = subtotal + shipping;
 
-const handleCheckout = () => {
-  navigate("/checkout-payment");
-}
-  
+  useEffect(() => {
+    fetchRecentlyViewed();
+  }, []);
+
+  const fetchRecentlyViewed = async () => {
+    try {
+      const response = await chukkytechAxios.get('/product/getAllProducts');
+      // Get 4 random products for recently viewed
+      const shuffled = response.data.sort(() => 0.5 - Math.random());
+      setRecentlyViewed(shuffled.slice(0, 4));
+    } catch (error) {
+      console.error('Error fetching recently viewed:', error);
+    }
+  };
+
+  // Handle Increase Quantity
+  const increaseQty = (productId) => {
+   dispatch(increase(productId)); 
+    console.log('Increase quantity for:', productId);
+  };
+
+  // Handle Decrease Quantity
+  const decreaseQty = (productId) => {
+    dispatch(decrease(productId));  
+    console.log('Decrease quantity for:', productId);
+  };
+
+  // Remove Item
+  const removeItem = (productId) => {
+  dispatch(removeProduct(productId));
+
+    console.log('Remove item:', productId);
+  };
+
+  const handleCheckout = () => {
+  if (productItems?.length > 0) {
+    navigate("/checkout-payment", { 
+      state: { 
+        cartItems: productItems,
+        subtotal: subtotal,
+        shipping: shipping,
+        total: total
+      } 
+    });
+  }
+};
+
+  const navigateToProduct = (productId) => {
+    navigate(`/product/${productId}`);
+  };
+
+  // Get first image URL from product images array
+  const getProductImage = (product) => {
+    if (product.productImages && product.productImages.length > 0) {
+      return product.productImages[0].imageUrl;
+    }
+    return "https://via.placeholder.com/300x200?text=No+Image";
+  };
+
+
 
   return (
-
     <>
+      <Header />
+      <SearchBar />
+      
+      <div className="container cart-page my-5">
+        <div className="row mt-4">
+          <h2 className="mt-4">Your Shopping Cart</h2>
+          <hr />
+          
+          <div className="col-lg-8">
+            {!productItems || productItems.length === 0 ? (
+              <div className="empty-cart text-center py-5">
+                <div className="empty-cart-icon mb-3">
+                  <i className="fas fa-shopping-cart fa-3x text-muted"></i>
+                </div>
+                <h4 className="text-muted">Your cart is empty</h4>
+                <p className="text-muted mb-4 " style={{ textAlign: "center" }}>Add some products to get started</p>
+                <button 
+                  className="btn btn-warning btn-lg"
+                  onClick={() => navigate('/buy-products')}
+                >
+                  Continue Shopping
+                </button>
+              </div>
+            ) : (
+              productItems.map((item) => (
+                <div 
+                  className="cart-item d-flex align-items-center mb-4 p-3 shadow-sm rounded" 
+                  key={item.productId}
+                >
+                  <img 
+                    src={getProductImage(item)} 
+                    alt={item.productName} 
+                    className="cart-img rounded"
+                    style={{ width: "120px", height: "120px", objectFit: "cover" }}
+                  />
+                  
+                  <div className="cart-details ms-3 flex-grow-1">
+                    <h5 className="mb-2">{item.productName}</h5>
+                    <p className="text-muted mb-1">{item.categoryName}</p>
+                    <p className="fw-bold text-primary mb-2">
+                      N{parseFloat(item.productPrice).toFixed(2)}
+                    </p>
 
-    <Header/>
-    <SearchBar/>
-    <div className="container cart-page my-5">
-     
-      <div className="row mt-4">
-        <h2 className="mt-4">Your Shopping Cart</h2>
-        <hr/>
-        <div className="col-lg-8">
-          {cart.length === 0 ? (
-            <p className="empty-cart">Your cart is empty.</p>
-          ) : (
-            cart.map((item) => (
-              <div className="cart-item d-flex align-items-center mb-4 p-3 shadow-sm rounded" key={item.id}>
-                <img src={item.image} alt={item.name} className="cart-img" />
-                <div className="cart-details ms-3 flex-grow-1">
-                  <h5>{item.name}</h5>
-                  <p className="text-muted">{item.category}</p>
-                  <p className="fw-bold">${item.price}</p>
-
-                  <div className="d-flex align-items-center quantity-control">
+                    <div className="d-flex align-items-center quantity-control">
+                      <button
+                        className="btn btn-outline-secondary btn-sm"
+                        onClick={() => decreaseQty(item.productId)}
+                        disabled={(item.quantity || 1) <= 1}
+                      >
+                        -
+                      </button>
+                      <span className="mx-3 fw-bold">{item.quantity || 1}</span>
+                      <button
+                        className="btn btn-outline-secondary btn-sm"
+                        onClick={() => increaseQty(item.productId)}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <div className="cart-subtotal text-end">
+                    <p className="fw-bold h5 text-primary">
+                      N{((parseFloat(item.productPrice) * (item.quantity || 1))).toFixed(2)}
+                    </p>
                     <button
-                      className="btn btn-outline-secondary"
-                      onClick={() => decreaseQty(item.id)}
+                      className="btn btn-link text-danger p-0"
+                      onClick={() => removeItem(item.productId)}
+                      title="Remove item"
                     >
-                      -
-                    </button>
-                    <span className="mx-2">{item.quantity}</span>
-                    <button
-                      className="btn btn-outline-secondary"
-                      onClick={() => increaseQty(item.id)}
-                    >
-                      +
+                      <FaRegTrashAlt size={20} />
                     </button>
                   </div>
                 </div>
-                <div className="cart-subtotal ">
-                  <p className="fw-bold">${item.price * item.quantity}</p>
-                <i onClick={() => removeItem(item.id)} style={{cursor:"pointer"}} title="Remove item">  <FaRegTrashAlt size={20} color="red"  /></i> 
-                  {/* <button
-                    className="btn btn-sm btn-danger mt-2"
-                    onClick={() => removeItem(item.id)}
-                  >
-                    Remove
-                  </button> */}
-                </div>
+              ))
+            )}
+          </div>
+
+          {/* Order Summary */}
+          <div className="col-lg-4">
+            <div className="cart-summary p-4 shadow-sm rounded sticky-top">
+              <h5 className="mb-3">Order Summary</h5>
+              <hr />
+              <div className="d-flex justify-content-between mb-2">
+                <span>Subtotal ({productItems?.length || 0} items)</span>
+                <span className="fw-bold">N{subtotal.toFixed(2)}</span>
               </div>
-            ))
-          )}
-        </div>
-
-      
-        <div className="col-lg-4">
-          <div className="cart-summary p-4 shadow-sm rounded">
-            <h5>Order Summary</h5>
-            <hr />
-            <p className="d-flex justify-content-between">
-              <span>Subtotal</span> <span>${subtotal}</span>
-            </p>
-            <p className="d-flex justify-content-between">
-              <span>Shipping</span> <span>${shipping}</span>
-            </p>
-            <hr />
-            <p className="d-flex justify-content-between fw-bold">
-              <span>Total</span> <span>${total}</span>
-            </p>
-            <button className="btn btn-warning w-100 mt-3 p-3" onClick={handleCheckout}>
-              Proceed to Checkout
-            </button>
+              <div className="d-flex justify-content-between mb-2">
+                <span>Shipping</span>
+                <span className="fw-bold">N{shipping.toFixed(2)}</span>
+              </div>
+              {subtotal > 0 && (
+                <div className="d-flex justify-content-between mb-2 text-muted small">
+                  <span>Estimated Delivery</span>
+                  <span>2-3 business days</span>
+                </div>
+              )}
+              <hr />
+              <div className="d-flex justify-content-between fw-bold fs-5 mb-4">
+                <span>Total</span>
+                <span className="text-primary">N{total.toFixed(2)}</span>
+              </div>
+              
+              <button 
+                className="btn btn-warning w-100 py-3 fw-bold"
+                onClick={handleCheckout}
+                disabled={!productItems || productItems.length === 0}
+              >
+                {productItems?.length > 0 ? 'Proceed to Checkout' : 'Cart is Empty'}
+              </button>
+              
+              {productItems?.length > 0 && (
+                <button 
+                  className="btn btn-outline-primary w-100 mt-2"
+                  onClick={() => navigate('/buy-products')}
+                >
+                  Continue Shopping
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-  <section> 
+      {/* Recently Viewed Section */}
+      {recentlyViewed.length > 0 && (
+        <section>
+          <div className="centSoon">
+            <div className="container-fluid bg-transparent my-4 p-3">
+              <h2>Recently Viewed</h2>
+              <div className="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
+                {recentlyViewed.map((product) => (
+                  <div className="col hp" key={product.productId}>
+                    <div className="cardo shadow-sm p-2 h-100">
+                      <a 
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => navigateToProduct(product.productId)}
+                      >
+                        <img 
+                          src={getProductImage(product)} 
+                          className="card-img-top" 
+                          alt={product.productName}
+                          style={{ height: "200px", objectFit: "cover" }}
+                        />
+                      </a>
 
-<div className="centSoon">
+                      <div className="card-bod d-flex flex-column">
+                        <div className="clearfix mb-2">
+                          <span className="float-start badge rounded-pill bg-success">
+                            N{parseFloat(product.productPrice).toFixed(2)}
+                          </span>
+                          {product.discount && product.discount > 0 && (
+                            <span className="float-end badge rounded-pill bg-danger">
+                              {product.discount}% OFF
+                            </span>
+                          )}
+                        </div>
+                        
+                        <div className="titleText flex-grow-1">
+                          <a 
+                            style={{ cursor: 'pointer', textDecoration: 'none' }}
+                            onClick={() => navigateToProduct(product.productId)}
+                            className="text-dark"
+                          >
+                            {product.productName.length > 80 
+                              ? `${product.productName.substring(0, 80)}...` 
+                              : product.productName
+                            }
+                          </a>
+                        </div>
 
- <div className="container-fluid bg-trasparent my-4 p-3" style={{position:"relative"}}>
-  <h2>Recently Viewed</h2>
-  <div className="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
-    <div className="col hp">
-      <div className="cardo  shadow-sm p-2">
-        <a target="_blank">
-          <img src="https://m.media-amazon.com/images/I/81gK08T6tYL._AC_SL1500_.jpg" className="card-img-top" alt="product.title" />
-        </a>
-
-        
-        <div className="card-bod">
-          <div className="clearfix mb-3">
-            <span className="float-start badge rounded-pill bg-success">1.245$</span>
-
-            <span className="float-end"><a href="#" className="small text-muted text-uppercase aff-link">reviews</a></span>
+                        <div className="product-meta mt-2">
+                          <small className="text-muted d-block mb-1">
+                            {product.categoryName}
+                          </small>
+                          <span className={`badge ${
+                            product.status === 'active' ? 'bg-success' : 
+                            product.status === 'sold' ? 'bg-danger' : 'bg-warning'
+                          }`}>
+                            {product.status}
+                          </span>
+                        </div>
+                      </div>
+                      
+                      <div className="d-grid gap-2 mt-3">
+                        {(product.status === 'sold' || product.productQuantity <= 0) ? (
+                          <button className="btn btn-secondary btn-sm" disabled>
+                            Out of Stock
+                          </button>
+                        ) : product.status === 'suspended' ? (
+                          <button className="btn btn-warning btn-sm" disabled>
+                            Unavailable
+                          </button>
+                        ) : (
+                          <button 
+                            className="btn btn-warning btn-sm"
+                            onClick={() => navigateToProduct(product.productId)}
+                          >
+                            View Details
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
-          <div className="titleText">
-            <a target="_blank" href="#">ASUS TUF FX505DT Gaming Laptop- 15.6", 120Hz Full HD, AMD Ryzen 5 R5-3550H Processor, GeForce GTX 1650 Graphics, 8GB DDR4, 256GB PCIe SSD, RGB Keyboard, Windows 10 64-bit - FX505DT-AH51</a>
-          </div>
+        </section>
+      )}
 
-          
-         
-        </div>
-        
-      </div>
-
-    </div>
-    <div className="col hp">
-      <div className="cardo  shadow-sm p-2">
-        <a href="https://amzn.to/42dsdGC" target="_blank">
-          <img src="https://m.media-amazon.com/images/I/71wF7YDIQkL._AC_SL1500_.jpg" className="card-img-top" alt="product.title" />
-        </a>
-
-        
-        <div className="card-bod">
-          <div className="clearfix mb-3">
-            <span className="float-start badge rounded-pill bg-success">2.345$</span>
-
-            <span className="float-end"><a href="#" className="small text-muted text-uppercase aff-link">reviews</a></span>
-          </div>
-          <div className="titleText">
-            <a target="_blank" href="#">Razer Blade 15 Base Gaming Laptop 2020: Intel Core i7-10750H 6-Core, NVIDIA GeForce GTX 1660 Ti, 15.6" FHD 1080p 120Hz, 16GB RAM, 256GB SSD, CNC Aluminum, Chroma RGB Lighting, Black</a>
-          </div>
-
-          
-        
-        </div>
-      </div>
-    </div>
-    <div className="col hp">
-      <div className="cardo  shadow-sm p-2">
-        <a href="https://amzn.to/3os2Nrc" target="_blank">
-          <img src="https://m.media-amazon.com/images/I/81w+3k4U8PL._AC_SL1500_.jpg" className="card-img-top" alt="product.title" />
-        </a>
-
-      
-        <div className="card-bod">
-          <div className="clearfix mb-3">
-            <span className="float-start badge rounded-pill bg-success">1.020$</span>
-
-            <span className="float-end"><a href="#" className="small text-muted text-uppercase aff-link">reviews</a></span>
-          </div>
-          <div className="titleText">
-            <a target="_blank" href="#">Lenovo Legion 5 Gaming Laptop, 15.6" FHD (1920x1080) IPS Screen, AMD Ryzen 7 4800H Processor, 16GB DDR4, 512GB SSD, NVIDIA GTX 1660Ti, Windows 10, 82B1000AUS, Phantom Black</a>
-          </div>
-
-         
-         
-        </div>
-      </div>
-    </div>
-    <div className="col hp">
-      <div className="cardo  shadow-sm p-2">
-        <a href="https://amzn.to/43tMNDW" target="_blank">
-          <img src="https://m.media-amazon.com/images/I/61Ze2wc9nyS._AC_SL1500_.jpg" className="card-img-top" alt="product.title" />
-        </a>
-         
-        
-        <div className="card-bod">
-          <div className="clearfix mb-3">
-            <span className="float-start badge rounded-pill bg-success">2.245$</span>
-
-            <span className="float-end"><a  className="small text-muted text-uppercase aff-link">reviews</a></span>
-          </div>
-          <div className="titleText">
-            <a target="_blank" href="#">MSI GL66 Gaming Laptop: 15.6" 144Hz FHD 1080p Display, Intel Core i7-11800H, NVIDIA GeForce RTX 3070, 16GB, 512GB SSD, Win10, Black (11UGK-001)</a>
-          </div>
-
-         
-          
-        </div>
-      </div>
-    </div>
-  </div>
-</div> 
-
-        </div>
-
-
-    </section>
-
-
-
-    <Footer/>
+      <Footer />
     </>
   );
 };
 
-export default  ProductCart;
+export default ProductCart;

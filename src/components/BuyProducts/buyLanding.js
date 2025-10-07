@@ -7,14 +7,20 @@ import { useNavigate } from "react-router-dom";
 import SearchBar from "../ProductComponents/searchField/searchfield";
 import useGetData from "../Utility/getFunction";
 import { chukkytechAxios } from "../Utility/axios";
+import { addToCartProduct } from "../redux/productCounter";
+import { useDispatch } from "react-redux";
 
 
 
 
 const BuyProducts = (()=>{
 
-  const [productData, setProductData] = useState([]);
+const [productData, setProductData] = useState([]);
 const [loading, setLoading] = useState(true);
+const [item, setItem] = useState("");
+const [showAdded, setShowAdded] = useState(false);
+
+
 
 //  const { data, isPending, error } = useGetData("/product/getAllProducts");
 //  console.log("see products>>", data)
@@ -24,6 +30,8 @@ const [loading, setLoading] = useState(true);
 const navigateProductCart = (()=>{
       navigate("/product-cart")
 })
+
+ const dispatch = useDispatch();
 
 // const navigateProductDetails = (()=>{
 //   navigate("/product-details")
@@ -67,17 +75,33 @@ const getStatusBadgeClass = (status) => {
 
 // Navigation function
 const navigateProductDetails = (productId) => {
-  navigate(`/product/${productId}`);
+  navigate(`/product-details/${productId}`);
 };
 
 // Add to cart function
-const addToCart = (product) => {
-  // Your add to cart logic here
-  console.log('Adding to cart:', product);
-  // Example:
-  // dispatch(addToCartAction(product));
-  alert(`${product.productName} added to cart!`);
-};
+// const addToCart = (product) => {
+//   // Your add to cart logic here
+//   console.log('Adding to cart:', product);
+//   // Example:
+//   // dispatch(addToCartAction(product));
+//   alert(`${product.productName} added to cart!`);
+// };
+
+
+ const handleDataProduct = product => {
+setShowAdded(true);
+dispatch(addToCartProduct(product));
+   
+    setItem(product);
+   
+    setTimeout(() => {
+      setShowAdded(false);
+    }, 3000);
+  };
+
+
+
+  console.log("item added", item)
 
     return(
 
@@ -85,11 +109,35 @@ const addToCart = (product) => {
         <>
 
         <Header/>
-<SearchBar/>
+   <SearchBar/>
+
+            {showAdded && 
+            
+                 <div className="container mt-2 cart-alert">
+                    <div className="row">
+
+                        <div className="col-sm-6">
+                            <div className="alert fade  alert-success alert-dismissible text-left font__family-montserrat font__size-16 font__weight-light brk-library-rendered rendered show">
+
+                                <i className="start-icon far fa-check-circle faa-tada animated"></i>
+                                <strong className="font__weight-semibold" style={{ color: "white" }}> Well done! </strong>
+
+                                <span>  <span style={{fontWeight:"bold"}}> {item.productName}  </span>  added to cart </span> <span className="closebtn" onClick={() => setShowAdded(false)} style={{ cursor: "pointer", fontWeight: "bold", color: "red", marginLeft: "30px"}}>    X</span>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+         }
+               
+        
+
+
+
+
 
 <div className="centSoon">
 
- <div className="container-fluid bg-trasparent my-4 p-3" style={{position:"relative"}}>
+<div className="container-fluid bg-trasparent my-4 p-3" style={{position:"relative"}}>
   <div className="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
 
    {
@@ -181,7 +229,7 @@ const addToCart = (product) => {
             <button 
               className="btn btn-warning bold-btn p-2" 
               style={{ color: "white", fontSize: "15px", padding: "5px" }} 
-              onClick={() => addToCart(product)}
+              onClick={() => handleDataProduct(product)}
             >
               Add to Cart
             </button>
