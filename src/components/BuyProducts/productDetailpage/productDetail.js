@@ -9,6 +9,8 @@ import { useEffect, useState } from "react";
 import SearchBar from "../../ProductComponents/searchField/searchfield";
 import { chukkytechAxios } from "../../Utility/axios";
 import { useParams, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToCartProduct } from "../../redux/productCounter";
 
 const ProductDetailPage = () => {
   const { productId } = useParams();
@@ -19,11 +21,15 @@ const ProductDetailPage = () => {
   const [error, setError] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [mainImage, setMainImage] = useState("");
+  const [showAdded, setShowAdded] = useState(false);
+  const [item, setItem] = useState("");
 
   useEffect(() => {
     fetchProductDetail();
     fetchRelatedProducts();
   }, [productId]);
+
+  const dispatch = useDispatch();
 
   const fetchProductDetail = async () => {
     try {
@@ -70,10 +76,36 @@ const ProductDetailPage = () => {
 
   const handleBuyNow = () => {
     if (product) {
-      // Add your buy now logic here
-      console.log('Buy now:', product);
-      alert(`Proceeding to checkout for ${product.productName}`);
+      // Create a single item array for the checkout page
+      const singleItem = {
+        ...product,
+        quantity: 1 // Default quantity for buy now
+      };
+      
+      const subtotal = parseFloat(product.productPrice);
+      const shipping = subtotal > 0 ? 15 : 0;
+      const total = subtotal + shipping;
+      
+      navigate("/checkout-payment", { 
+        state: { 
+          cartItems: [singleItem], // Pass as array for consistency
+          subtotal: subtotal,
+          shipping: shipping,
+          total: total,
+          source: 'buy-now' // Identify this as a buy-now flow
+        } 
+      });
     }
+  };
+
+  const handleDataProduct = product => {
+    setShowAdded(true);
+    dispatch(addToCartProduct(product));
+    setItem(product);
+     
+    setTimeout(() => {
+      setShowAdded(false);
+    }, 3000);
   };
 
   const navigateToProduct = (id) => {
@@ -123,6 +155,21 @@ const ProductDetailPage = () => {
     <>
       <Header />
       <SearchBar />
+
+      {showAdded && 
+        <div className="container mt-2 cart-alert">
+          <div className="row">
+            <div className="col-sm-6">
+              <div className="alert fade alert-success alert-dismissible text-left font__family-montserrat font__size-16 font__weight-light brk-library-rendered rendered show">
+                <i className="start-icon far fa-check-circle faa-tada animated"></i>
+                <strong className="font__weight-semibold" style={{ color: "white" }}> Well done! </strong>
+                <span>  <span style={{fontWeight:"bold"}}> {product.productName}  </span>  added to cart </span> 
+                <span className="closebtn" onClick={() => setShowAdded(false)} style={{ cursor: "pointer", fontWeight: "bold", color: "red", marginLeft: "30px"}}> X</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
 
       <div className="container product-details py-5">
         <div className="row pt-5">
@@ -234,13 +281,13 @@ const ProductDetailPage = () => {
                 <>
                   <button 
                     className="btn btn-warning btn-lg" 
-                    onClick={handleAddToCart}
+                    onClick={() => handleDataProduct(product)}
                   >
                     Add to Cart
                   </button>
                   <button 
                     className="btn btn-primary btn-lg" 
-                    style={{borderRadius:"100px"}}
+                    style={{borderRadius:"10px"}}
                     onClick={handleBuyNow}
                   >
                     Buy Now
@@ -301,19 +348,6 @@ const ProductDetailPage = () => {
                           {relatedProduct.productName}
                         </a>
                       </div>
-
-                      {/* Product Meta */}
-                      {/* <div className="product-meta mt-2">
-                        <small className="text-muted d-block">
-                          {relatedProduct.categoryName}
-                        </small>
-                        <span className={`badge ${
-                          relatedProduct.status === 'active' ? 'bg-success' : 
-                          relatedProduct.status === 'sold' ? 'bg-danger' : 'bg-warning'
-                        }`}>
-                          {relatedProduct.status}
-                        </span>
-                      </div> */}
                     </div>
                     <div className="d-grid gap-2 my-3 buttonAddCart">
                       {(relatedProduct.status === 'sold' || relatedProduct.productQuantity <= 0) ? (

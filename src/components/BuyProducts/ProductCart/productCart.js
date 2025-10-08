@@ -17,6 +17,9 @@ const ProductCart = () => {
   // Get cart items from Redux store
   const { productItems } = useSelector(state => state.cartProduct);
   const [recentlyViewed, setRecentlyViewed] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
+  const [cartAvailability, setCartAvailability] = useState({});
+  const [loading, setLoading] = useState(true);
 
   // Calculate cart totals
   const subtotal = productItems?.reduce(
@@ -28,8 +31,28 @@ const ProductCart = () => {
   const total = subtotal + shipping;
 
   useEffect(() => {
+    fetchAllProducts();
     fetchRecentlyViewed();
   }, []);
+
+  // Update cart availability when products or cart items change
+  useEffect(() => {
+    if (allProducts.length > 0 && productItems) {
+      checkCartAvailability();
+    }
+  }, [allProducts, productItems]);
+
+  const fetchAllProducts = async () => {
+    try {
+      setLoading(true);
+      const response = await chukkytechAxios.get('/product/getAllProducts');
+      setAllProducts(response.data);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const fetchRecentlyViewed = async () => {
     try {
@@ -42,9 +65,51 @@ const ProductCart = () => {
     }
   };
 
-  // Handle Increase Quantity
+  // Check availability of products in cart
+  const checkCartAvailability = () => {
+    const availability = {};
+    
+    productItems?.forEach(item => {
+      const product = allProducts.find(p => p.productId === item.productId);
+      
+      if (product) {
+        availability[item.productId] = {
+          isAvailable: product.status === 'active' && product.productQuantity > 0,
+          maxQuantity: product.productQuantity,
+          status: product.status,
+          currentStock: product.productQuantity
+        };
+      } else {
+        // Product not found in all products (might be deleted)
+        availability[item.productId] = {
+          isAvailable: false,
+          maxQuantity: 0,
+          status: 'not_found',
+          currentStock: 0
+        };
+      }
+    });
+    
+    setCartAvailability(availability);
+  };
+
+  // Handle Increase Quantity with stock check
   const increaseQty = (productId) => {
-   dispatch(increase(productId)); 
+    const availability = cartAvailability[productId];
+    const cartItem = productItems.find(item => item.productId === productId);
+    const currentQuantity = cartItem?.quantity || 1;
+
+    if (!availability?.isAvailable) {
+      alert("This product is currently unavailable");
+      return;
+    }
+
+    if (currentQuantity >= availability.maxQuantity) {
+      alert(`Only ${availability.maxQuantity} items available in stock`);
+      return;
+    }
+
+    dispatch(increase(productId)); 
     console.log('Increase quantity for:', productId);
   };
 
@@ -56,23 +121,33 @@ const ProductCart = () => {
 
   // Remove Item
   const removeItem = (productId) => {
-  dispatch(removeProduct(productId));
-
+    dispatch(removeProduct(productId));
     console.log('Remove item:', productId);
   };
 
   const handleCheckout = () => {
-  if (productItems?.length > 0) {
-    navigate("/checkout-payment", { 
-      state: { 
-        cartItems: productItems,
-        subtotal: subtotal,
-        shipping: shipping,
-        total: total
-      } 
+    // Check if any items are unavailable before proceeding to checkout
+    const unavailableItems = productItems?.filter(item => {
+      const availability = cartAvailability[item.productId];
+      return !availability?.isAvailable;
     });
-  }
-};
+
+    if (unavailableItems && unavailableItems.length > 0) {
+      alert("Some items in your cart are unavailable. Please remove them before proceeding to checkout.");
+      return;
+    }
+
+    if (productItems?.length > 0) {
+      navigate("/checkout-payment", { 
+        state: { 
+          cartItems: productItems,
+          subtotal: subtotal,
+          shipping: shipping,
+          total: total
+        } 
+      });
+    }
+  };
 
   const navigateToProduct = (productId) => {
     navigate(`/product/${productId}`);
@@ -86,7 +161,46 @@ const ProductCart = () => {
     return "https://via.placeholder.com/300x200?text=No+Image";
   };
 
+  // Get availability status for a product
+  const getProductStatus = (productId) => {
+    return cartAvailability[productId] || {
+      isAvailable: false,
+      maxQuantity: 0,
+      status: 'unknown',
+      currentStock: 0
+    };
+  };
 
+  // Render availability badge
+  const renderAvailabilityBadge = (productId) => {
+    const status = getProductStatus(productId);
+    
+    if (!status.isAvailable) {
+      return <span className="badge bg-danger">Out of Stock</span>;
+    }
+    
+    if (status.currentStock <= 5) {
+      return <span className="badge bg-warning">Low Stock ({status.currentStock} left)</span>;
+    }
+    
+    return <span className="badge bg-success">In Stock</span>;
+  };
+
+  if (loading) {
+    return (
+      <>
+        <Header />
+        <SearchBar />
+        <div className="container text-center py-5">
+          <div className="spinner-border text-warning" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+          <p className="mt-3 p-2" style={{textAlign:"center"}}>Checking product availability...</p>
+        </div>
+        <Footer />
+      </>
+    );
+  }
 
   return (
     <>
@@ -114,57 +228,86 @@ const ProductCart = () => {
                 </button>
               </div>
             ) : (
-              productItems.map((item) => (
-                <div 
-                  className="cart-item d-flex align-items-center mb-4 p-3 shadow-sm rounded" 
-                  key={item.productId}
-                >
-                  <img 
-                    src={getProductImage(item)} 
-                    alt={item.productName} 
-                    className="cart-img rounded"
-                    style={{ width: "120px", height: "120px", objectFit: "cover" }}
-                  />
-                  
-                  <div className="cart-details ms-3 flex-grow-1">
-                    <h5 className="mb-2">{item.productName}</h5>
-                    <p className="text-muted mb-1">{item.categoryName}</p>
-                    <p className="fw-bold text-primary mb-2">
-                      N{parseFloat(item.productPrice).toFixed(2)}
-                    </p>
+              productItems.map((item) => {
+                const availability = getProductStatus(item.productId);
+                const isAvailable = availability.isAvailable;
+                const currentQuantity = item.quantity || 1;
+                const canIncrease = currentQuantity < availability.maxQuantity;
 
-                    <div className="d-flex align-items-center quantity-control">
+                return (
+                  <div 
+                    className={`cart-item d-flex align-items-center mb-4 p-3 shadow-sm rounded ${!isAvailable ? 'unavailable-item' : ''}`} 
+                    key={item.productId}
+                  >
+                    <img 
+                      src={getProductImage(item)} 
+                      alt={item.productName} 
+                      className="cart-img rounded"
+                      style={{ 
+                        width: "120px", 
+                        height: "120px", 
+                        objectFit: "cover",
+                        opacity: !isAvailable ? 0.5 : 1 
+                      }}
+                    />
+                    
+                    <div className="cart-details ms-3 flex-grow-1">
+                      <div className="d-flex justify-content-between align-items-start">
+                        <h5 className="mb-2">{item.productName}</h5>
+                        {renderAvailabilityBadge(item.productId)}
+                      </div>
+                      <p className="text-muted mb-1">{item.categoryName}</p>
+                      <p className="fw-bold text-primary mb-2">
+                        N{parseFloat(item.productPrice).toFixed(2)}
+                      </p>
+
+                      {!isAvailable ? (
+                        <div className="alert alert-warning py-2 mb-2">
+                          <small>This product is no longer available</small>
+                        </div>
+                      ) : (
+                        <div className="d-flex align-items-center quantity-control">
+                          <button
+                            className="btn btn-outline-secondary btn-sm"
+                            onClick={() => decreaseQty(item.productId)}
+                            disabled={currentQuantity <= 1}
+                          >
+                            -
+                          </button>
+                          <span className="mx-3 fw-bold">{currentQuantity}</span>
+                          <button
+                            className="btn btn-outline-secondary btn-sm"
+                            onClick={() => increaseQty(item.productId)}
+                            disabled={!canIncrease}
+                            title={!canIncrease ? `Only ${availability.maxQuantity} available` : 'Increase quantity'}
+                          >
+                            +
+                          </button>
+                          {availability.maxQuantity > 0 && (
+                            <small className="text-muted ms-3">
+                              Max: {availability.maxQuantity}
+                            </small>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                    
+                    <div className="cart-subtotal text-end">
+                      <p className={`fw-bold h5 ${!isAvailable ? 'text-muted' : 'text-primary'}`}>
+                        N{((parseFloat(item.productPrice) * currentQuantity)).toFixed(2)}
+                        {!isAvailable && <small className="d-block text-danger">Unavailable</small>}
+                      </p>
                       <button
-                        className="btn btn-outline-secondary btn-sm"
-                        onClick={() => decreaseQty(item.productId)}
-                        disabled={(item.quantity || 1) <= 1}
+                        className="btn btn-link text-danger p-0"
+                        onClick={() => removeItem(item.productId)}
+                        title="Remove item"
                       >
-                        -
-                      </button>
-                      <span className="mx-3 fw-bold">{item.quantity || 1}</span>
-                      <button
-                        className="btn btn-outline-secondary btn-sm"
-                        onClick={() => increaseQty(item.productId)}
-                      >
-                        +
+                        <FaRegTrashAlt size={20} />
                       </button>
                     </div>
                   </div>
-                  
-                  <div className="cart-subtotal text-end">
-                    <p className="fw-bold h5 text-primary">
-                      N{((parseFloat(item.productPrice) * (item.quantity || 1))).toFixed(2)}
-                    </p>
-                    <button
-                      className="btn btn-link text-danger p-0"
-                      onClick={() => removeItem(item.productId)}
-                      title="Remove item"
-                    >
-                      <FaRegTrashAlt size={20} />
-                    </button>
-                  </div>
-                </div>
-              ))
+                );
+              })
             )}
           </div>
 
@@ -173,6 +316,17 @@ const ProductCart = () => {
             <div className="cart-summary p-4 shadow-sm rounded sticky-top">
               <h5 className="mb-3">Order Summary</h5>
               <hr />
+              
+              {/* Show warning if any items are unavailable */}
+              {productItems?.some(item => !getProductStatus(item.productId).isAvailable) && (
+                <div className="alert alert-warning mb-3">
+                  <small>
+                    <i className="fas fa-exclamation-triangle me-2"></i>
+                    Some items in your cart are unavailable
+                  </small>
+                </div>
+              )}
+              
               <div className="d-flex justify-content-between mb-2">
                 <span>Subtotal ({productItems?.length || 0} items)</span>
                 <span className="fw-bold">N{subtotal.toFixed(2)}</span>
@@ -196,9 +350,18 @@ const ProductCart = () => {
               <button 
                 className="btn btn-warning w-100 py-3 fw-bold"
                 onClick={handleCheckout}
-                disabled={!productItems || productItems.length === 0}
+                disabled={!productItems || productItems.length === 0 || 
+                  productItems.some(item => !getProductStatus(item.productId).isAvailable)}
+                title={
+                  productItems?.some(item => !getProductStatus(item.productId).isAvailable) 
+                    ? "Remove unavailable items to checkout" 
+                    : ""
+                }
               >
-                {productItems?.length > 0 ? 'Proceed to Checkout' : 'Cart is Empty'}
+                {productItems?.some(item => !getProductStatus(item.productId).isAvailable) 
+                  ? 'Remove Unavailable Items' 
+                  : productItems?.length > 0 ? 'Proceed to Checkout' : 'Cart is Empty'
+                }
               </button>
               
               {productItems?.length > 0 && (
@@ -266,10 +429,11 @@ const ProductCart = () => {
                             {product.categoryName}
                           </small>
                           <span className={`badge ${
-                            product.status === 'active' ? 'bg-success' : 
-                            product.status === 'sold' ? 'bg-danger' : 'bg-warning'
+                            product.status === 'active' && product.productQuantity > 0 ? 'bg-success' : 
+                            product.status === 'sold' || product.productQuantity === 0 ? 'bg-danger' : 'bg-warning'
                           }`}>
-                            {product.status}
+                            {product.status === 'active' && product.productQuantity > 0 ? 'In Stock' : 
+                             product.productQuantity === 0 ? 'Out of Stock' : product.status}
                           </span>
                         </div>
                       </div>

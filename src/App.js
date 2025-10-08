@@ -46,6 +46,7 @@ import ViewCreatedProducts from './components/Admin/CreatedProducts/viewCreatedP
 import ViewCompanies from './components/Admin/company/viewCompany';
 import ViewCategories from './components/Admin/Categories/categories';
 import ProductDetail from './components/Admin/CreatedProducts/productDetails';
+import Header from './components/layouts/Header';
 
 function App() {
   const [authState, setAuthState] = useState({
@@ -57,8 +58,9 @@ function App() {
   usePageTracking();
   
   return (
-       
-    // <UserProvider value={{ user: authState.user, admin: authState.admin }}>
+       <>
+     <UserProvider value={{ user: authState.user, admin: authState.admin }}>
+      {/* <Header /> */}
       <Routes>
       
         {/* Public Routes */}
@@ -117,7 +119,8 @@ function App() {
         {/* 404 Page */}
         <Route path="*" element={<NoFoundPage />} />
       </Routes>
-    // </UserProvider>
+    </UserProvider>
+    </>
   );
 }
 
