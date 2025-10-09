@@ -466,6 +466,8 @@ const CheckoutPage = () => {
                 </div>
             )}
 
+          
+
             {errorMessage && (
                 <div className="container mt-3">
                     <div className="alert alert-danger alert-dismissible fade show" role="alert">
@@ -1000,6 +1002,8 @@ const CheckoutPage = () => {
                 </div>
             )}
 
+  
+         {/* <PurchaseReceipt/> */}
 
              <Modal show={showWarningModal} onHide={() => setShowWarningModal(false)} centered>
                     <Modal.Header closeButton>

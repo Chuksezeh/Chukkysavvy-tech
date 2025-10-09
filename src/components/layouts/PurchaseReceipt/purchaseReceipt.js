@@ -9,24 +9,14 @@ const PurchaseReceipt = () => {
           <div className="col-12 col-lg-9 col-xl-8 col-xxl-7">
             <div className="row gy-3 mb-3">
               <div className="col-6">
-                <h2 className="text-uppercase text-endx m-0">Invoice</h2>
+                <h2 className="text-uppercase text-endx m-0">Purchace Receipt</h2>
               </div>
               <div className="col-6">
                 <a className="d-block text-end" href="#!">
                   <img src="https://finance.naweriindustries.com/assets/images/logo%20-%20naweriindustries.jpeg" className="img-fluid" alt="BootstrapBrain Logo" width="135" height="44" />
                 </a>
               </div>
-              <div className="col-12">
-                <h4>From</h4>
-                <address>
-                  <strong>BootstrapBrain</strong><br />
-                  875 N Coast Hwybr<br />
-                  Laguna Beach, California, 92651<br />
-                  United States<br />
-                  Phone: (949) 494-7695<br />
-                  Email: email@domain.com
-                </address>
-              </div>
+              
             </div>
             <div className="row mb-3">
               <div className="col-12 col-sm-6 col-md-8">

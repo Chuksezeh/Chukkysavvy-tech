@@ -290,6 +290,7 @@ console.log("viewall products", allLocations)
                             <th>Product name</th>
                             <th>Company name</th>
                             <th>Product price</th>
+                            <th>Product Quantity</th>
                             <th>status</th>
                             <th>Created date</th>
                            
@@ -306,6 +307,7 @@ console.log("viewall products", allLocations)
                                     <td data-label="Product name">{data.productName} </td>
                                     <td data-label="Company name"> {data.companyName} </td>
                                     <td data-label="Product price"> {data.productPrice} </td>
+                                      <td data-label="Product quantity"> {data.productQuantity} </td>
                                     <td data-label="status"> {data.status} </td>
                                     <td data-label="Created date">  {moment(data.createdDateTime).format("lll")}  </td>
                                     

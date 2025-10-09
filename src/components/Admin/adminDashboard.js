@@ -10,7 +10,7 @@ import { SlPeople } from "react-icons/sl";
 import { IoIosPeople } from "react-icons/io";
 import { IoPersonAddOutline } from "react-icons/io5";
 import { GoListOrdered } from "react-icons/go";
-import { MdOutlineCreateNewFolder, MdOutlineKeyboardArrowRight, MdOutlineLogout } from "react-icons/md";
+import { MdOutlineCreateNewFolder, MdOutlineKeyboardArrowRight, MdOutlineLogout, MdProductionQuantityLimits } from "react-icons/md";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FaComment, FaLocationDot, FaMagnifyingGlassLocation } from "react-icons/fa6";
@@ -139,14 +139,14 @@ const AdminDashboard = () => {
                                     </li>
                                 </NavText>
                             </NavItem>
-                            {/* <NavItem eventKey="3-2">
-                                <NavText>
+                            <NavItem eventKey="3-2">
+                                <NavText className="move-side">
                                     <li className="shift-nav" onClick={() => navigate("/product-orders")}>
-                                        <IoPersonAddOutline className="inicon" size={16} />
-                                        <span className="ml-5">Product Order</span>
+                                        <MdProductionQuantityLimits className="inicon" size={16} />
+                                        <span className="p-2" style={{fontSize:"16px"}} >Product Order</span>
                                     </li>
                                 </NavText>
-                            </NavItem> */}
+                            </NavItem>
                         </NavItem>   
 
 
