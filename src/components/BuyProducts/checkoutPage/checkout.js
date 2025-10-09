@@ -343,6 +343,11 @@ const CheckoutPage = () => {
 
  console.log("Processing check:", paymentData);
         try {
+
+   const response =   await chukkytechAxios.post("/order/orders/create", paymentData);
+
+    console.log("Checkout response:", response.data);
+      
             // Here you would typically process the payment and create the order
             console.log("Processing checkout with address:", selectedAddress);
             console.log("Payment method:", payment);
@@ -358,6 +363,7 @@ const CheckoutPage = () => {
 
         } catch (error) {
             setLoading(false);
+            console.log("error", error)
             setErrorMessage("Failed to process order. Please try again.");
         }
     };
