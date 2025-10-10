@@ -4,87 +4,20 @@ import "./userRepairOrder.css"
 import { useNavigate } from "react-router-dom";
 import { chukkytechAxios } from "../../Utility/axios";
 import moment from "moment";
+import ProductManagementPage from "../adminproductOrderManagement/productMangementPage";
 
-
-const ProductOrderTable = (()=>{
-
-
-    const [showDropDown, setShowDropDown] = useState("");
-    const [isPending, setIsPending] = useState(true);
-
-const [errMessage, setErrMessage] = useState("");
+const ProductOrderTable = () => {
+  const [showDropDown, setShowDropDown] = useState("");
+  const [isPending, setIsPending] = useState(true);
+  const [errMessage, setErrMessage] = useState("");
   const [itemData, setItemData] = useState({});
   const [data, setData] = useState([]);
-
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedStatus, setSelectedStatus] = useState("");
-  const [selectedOrderType, setSelectedOrderType] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState("all");
+  const [selectedOrderType, setSelectedOrderType] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
 
-
-
-    const handleShowDropDown = () => {
-  
-      setShowDropDown(!showDropDown)
-    }
-  
-
-    const navigate = useNavigate();
-    
-        useEffect(() => {
-            const adminsInfo = localStorage.getItem('adminsInfo');
-            // console.log('UserInfo:', userInfo);
-          
-            if (!adminsInfo) {
-              navigate('/admin-login');
-            }
-          }, [navigate]);
-    
-    const fetchAllProductOrders = async () => {
-    // setIsPending(true);
-    try {
-
-
-      const response = await chukkytechAxios.get('/order/all-orders');
-      // const response = await chukkytechAxios.get("/order/orders/getAllProductOrders ");
-      setData(response.data);
-
-      console.log("All product orders:", response.data);
-      setFilteredOrders(response?.data?.data);
-      setIsPending(false);
-    } catch (error) {
-      setIsPending(false);
-      console.error('Error fetching tracking:', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchAllProductOrders()
-  }, []);
-
-
-const checkColor = (item) => {
-    switch (item) {
-      case "Processing":
-        return "green";
-      case "pickedUp":
-        return "blue";
-      case "fixing":
-        return "purple";
-      case "fixed":
-        return "brown";
-      case "delivered":
-        return "darkgreen";
-      case "cancel":
-        return "red";
-      default:
-    }
-  };
-
-
-  console.log("Data:", data);
-
-const [currentPage, setCurrentPage] = useState(1);
   const ordersPerPage = 10;
   const totalPages = Math.ceil(filteredOrders?.length / ordersPerPage);
   const paginatedOrders = filteredOrders?.slice(
@@ -92,131 +25,385 @@ const [currentPage, setCurrentPage] = useState(1);
     currentPage * ordersPerPage
   );
 
-   return(
+  const navigate = useNavigate();
 
-<>
+  useEffect(() => {
+    const adminsInfo = localStorage.getItem('adminsInfo');
+    if (!adminsInfo) {
+      navigate('/admin-login');
+    }
+  }, [navigate]);
 
+  const fetchAllProductOrders = async () => {
+    setIsPending(true);
+    try {
+      const response = await chukkytechAxios.get('/order/all-orders');
+      setData(response.data);
+      setFilteredOrders(response?.data?.data || []);
+      setIsPending(false);
+    } catch (error) {
+      setIsPending(false);
+      console.error('Error fetching orders:', error);
+      setErrMessage("Failed to load orders");
+    }
+  };
 
-<AdminDashboard />
-      <div className="header-bar">
+  useEffect(() => {
+    fetchAllProductOrders();
+  }, []);
 
-        <ul className="action-bar">
+  // Filter orders based on search and filters
+  useEffect(() => {
+    let filtered = data?.data || [];
+    
+    if (searchTerm) {
+      filtered = filtered.filter(order => 
+        order.repairOrderCode?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        order.customerName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        order.customerEmail?.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+    
+    if (selectedStatus !== "all") {
+      filtered = filtered.filter(order => order.orderStatus === selectedStatus);
+    }
+    
+    if (selectedOrderType !== "all") {
+      filtered = filtered.filter(order => order.repairOrderType === selectedOrderType);
+    }
 
-          <li><a href="/"> Home</a> / Orders / <span className="addash"> Product Orders </span></li>
-        </ul>
-      </div>
+    setFilteredOrders(filtered);
+    setCurrentPage(1);
+  }, [searchTerm, selectedStatus, selectedOrderType, data]);
 
+  const getStatusBadge = (status) => {
+    const statusConfig = {
+      pending: { class: "bg-warning text-dark", label: "Pending" },
+      confirmed: { class: "bg-info text-white", label: "Confirmed" },
+      processing: { class: "bg-primary text-white", label: "Processing" },
+      shipped: { class: "bg-success text-white", label: "Shipped" },
+      delivered: { class: "bg-success text-white", label: "Delivered" },
+      cancelled: { class: "bg-danger text-white", label: "Cancelled" }
+    };
 
-     <div className="container">
-        <h4 style={{ textAlign: "center" }}>Search order</h4>
-        <span>Search by orderCode</span>
-        <div className="row">
+    const config = statusConfig[status?.toLowerCase()] || { class: "bg-secondary text-white", label: status };
+    
+    return (
+      <span className={`badge ${config.class} px-3 py-2`} style={{ fontSize: '0.75rem' }}>
+        {config.label}
+      </span>
+    );
+  };
 
-          <div className="col-6">
+  const handleRefresh = () => {
+    fetchAllProductOrders();
+  };
 
-            <div className="input-group">
-              <input
-                className="form-control border-secondary py-2"
-                type="search"
-                placeholder="Search by order number, device name"
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-
+  return (
+    <>
+      <AdminDashboard />
+      
+      {/* Header Section */}
+      <div className="container-fluid py-4" style={{ backgroundColor: '#f8f9fa', marginTop: '-20px' }}>
+        <div className="row align-items-center">
+          <div className="col">
+            <nav aria-label="breadcrumb">
+              <ol className="breadcrumb mb-0">
+                <li className="breadcrumb-item"><a href="/" className="text-decoration-none">Home</a></li>
+                <li className="breadcrumb-item"><a href="/admin" className="text-decoration-none">Admin</a></li>
+                <li className="breadcrumb-item active text-dark">Product Orders</li>
+              </ol>
+            </nav>
+            <h1 className="h3 mb-0 mt-2 text-dark">Product Orders Management</h1>
+            <p className="text-muted mb-0">Manage and track all product orders</p>
+          </div>
+          <div className="col-auto">
+            <div className="d-flex gap-2">
+              <button 
+                className="btn btn-outline-primary d-flex align-items-center"
+                onClick={handleRefresh}
+                disabled={isPending}
+              >
+                <span className={`spinner-border spinner-border-sm me-2 ${isPending ? '' : 'd-none'}`}></span>
+                Refresh
+              </button>
+              <button className="btn btn-primary d-flex align-items-center">
+                Export
+              </button>
             </div>
           </div>
-          <div className="col-6">
-            <div className="input-group">
-              {/* <span>Search by status</span> */}
-              <select className="form-control border-secondary py-2" value={selectedStatus}
-                onChange={(e) => setSelectedStatus(e.target.value)}>
-                <option value="all">Select status</option>
-                <option value="pickedUp">Picked up</option>
-                <option value="fixing">Fixing</option>
-                <option value="fixed">Fixed</option>
-                <option value="delivered"> Delivered</option>
-                <option value="irreparable"> Cannot fix</option>
-                <option value="cancel"> Cancelled</option>
-                <option value="settled">Settled</option>
-              </select>
+        </div>
+      </div>
+
+      {/* Stats Cards */}
+      <div className="container-fluid mt-4">
+        <div className="row g-3 mb-4">
+          <div className="col-xl-3 col-md-6">
+            <div className="card border-0 shadow-sm h-100">
+              <div className="card-body">
+                <div className="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 className="card-title text-muted mb-2">Total Orders</h6>
+                    <h3 className="mb-0">{data?.data?.length || 0}</h3>
+                  </div>
+                  <div className="bg-primary bg-opacity-10 p-3 rounded">
+                    <i className="fas fa-shopping-cart text-primary"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col-xl-3 col-md-6">
+            <div className="card border-0 shadow-sm h-100">
+              <div className="card-body">
+                <div className="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 className="card-title text-muted mb-2">Pending</h6>
+                    <h3 className="mb-0">
+                      {data?.data?.filter(order => order.orderStatus === 'pending').length || 0}
+                    </h3>
+                  </div>
+                  <div className="bg-warning bg-opacity-10 p-3 rounded">
+                    <i className="fas fa-clock text-warning"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col-xl-3 col-md-6">
+            <div className="card border-0 shadow-sm h-100">
+              <div className="card-body">
+                <div className="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 className="card-title text-muted mb-2">Processing</h6>
+                    <h3 className="mb-0">
+                      {data?.data?.filter(order => order.orderStatus === 'processing').length || 0}
+                    </h3>
+                  </div>
+                  <div className="bg-info bg-opacity-10 p-3 rounded">
+                    <i className="fas fa-cog text-info"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col-xl-3 col-md-6">
+            <div className="card border-0 shadow-sm h-100">
+              <div className="card-body">
+                <div className="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 className="card-title text-muted mb-2">Completed</h6>
+                    <h3 className="mb-0">
+                      {data?.data?.filter(order => order.orderStatus === 'delivered').length || 0}
+                    </h3>
+                  </div>
+                  <div className="bg-success bg-opacity-10 p-3 rounded">
+                    <i className="fas fa-check-circle text-success"></i>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <p></p>
-        <span>Select order type</span>
-        <div className="col-12">
-          <div className="input-group">
-            <select className="form-control border-secondary py-2" value={selectedOrderType}
-              onChange={(e) => setSelectedOrderType(e.target.value)}>
-              <option value="all">Select order type</option>
-              <option value="Pickup"> Pickup</option>
-              <option value="Instore Appointment">Instore Apointment</option>
 
-            </select>
+        {/* Filters Section */}
+        <div className=" border-0 shadow-sm">
+          <div className="card-header bg-white py-3">
+            <h5 className="card-title mb-0">Filters & Search</h5>
+          </div>
+          <div className="card-body">
+            <div className="row g-3">
+              <div className="col-lg-4">
+                <label className="form-label fw-semibold">Search Orders</label>
+                <div className="input-group">
+                  <span className="input-group-text bg-light border-end-0">
+                    <i className="fas fa-search text-muted"></i>
+                  </span>
+                  <input
+                    type="text"
+                    className="form-control border-start-0"
+                    placeholder="Search by order code, customer name or email..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="col-lg-4">
+                <label className="form-label fw-semibold">Order Status</label>
+                <select 
+                  className="form-select"
+                  value={selectedStatus}
+                  onChange={(e) => setSelectedStatus(e.target.value)}
+                >
+                  <option value="all">All Statuses</option>
+                  <option value="pending">Pending</option>
+                  <option value="confirmed">Confirmed</option>
+                  <option value="processing">Processing</option>
+                  <option value="shipped">Shipped</option>
+                  <option value="delivered">Delivered</option>
+                  <option value="cancelled">Cancelled</option>
+                </select>
+              </div>
+              <div className="col-lg-4">
+                <label className="form-label fw-semibold">Order Type</label>
+                <select 
+                  className="form-select"
+                  value={selectedOrderType}
+                  onChange={(e) => setSelectedOrderType(e.target.value)}
+                >
+                  <option value="all">All Types</option>
+                  <option value="Pickup">Pickup</option>
+                  <option value="Instore Appointment">Instore Appointment</option>
+                </select>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
- <div className="controlADMinorder_tb">
-        <table>
-          <thead>
-            <tr className="table-headers">
-              <th>SN</th>
-              <th> Order Code</th>
-              <th>Customer name</th>
-              <th>Customer email</th>
-              <th>Order status</th>
-              {/* <th>Order type</th> */}
-              <th>Created date</th>
-             
-            </tr>
-          </thead>
-          <tbody>
-            {paginatedOrders.map((item, i) => (
-              <tr key={item.repairOrderCode}>
-                <td data-label=""> {i + 1} </td>
-                <td data-label="Order Code"> {item.repairOrderCode} </td>
-                <td data-label="Customer name">{item.customerName} </td>
-                <td data-label="Customer email"> {item.customerEmail} </td>
-               
 
-                <td data-label="Order status" style={{ color: checkColor(item.status),
-                   fontWeight: "bold", textTransform: "capitalize" }} className="tansDroP"> {item?.orderStatus} </td>
-                {/* <td data-label="Order type"> {item.repairOrderType} </td> */}
-                <td data-label="Order due date"> {moment(item.createdDate).format("lll")}</td>
-                
-                
-                <td>
-                  <button className="btn btn-primary" onClick={() => navigate(`/single-product-order/${item.orderId}`)}>View/manage</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-
-        {/* Loader for pending state */}
-        {isPending && (
-          <div style={{ width: "100%", justifyContent: "center", textAlign: "center" }}>
-            <span style={{ margin: "0 auto" }} className="loader-come"></span>
+        {/* Orders Table */}
+        <div className="car border-0 shadow-sm mt-4">
+          <div className="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+            <h5 className="card-title mb-0">Product Orders</h5>
+            <div className="text-muted small">
+              Showing {paginatedOrders.length} of {filteredOrders.length} orders
+            </div>
           </div>
-        )}
+          <div className="card-body p-0">
+            <div className="table-responsive">
+              <table className="table table-hover mb-0">
+                <thead className="bg-light">
+                  <tr>
+                    <th className="ps-4 py-3 fw-semibold">#</th>
+                    <th className="py-3 fw-semibold">Order Code</th>
+                    <th className="py-3 fw-semibold">Customer</th>
+                    <th className="py-3 fw-semibold">Email</th>
+                    <th className="py-3 fw-semibold">Status</th>
+                    <th className="py-3 fw-semibold">Created Date</th>
+                    <th className="pe-4 py-3 fw-semibold text-center">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {isPending ? (
+                    <tr>
+                      <td colSpan="7" className="text-center py-5">
+                        <div className="spinner-border text-primary" role="status">
+                          <span className="visually-hidden">Loading...</span>
+                        </div>
+                        <p className="mt-2 text-muted">Loading orders...</p>
+                      </td>
+                    </tr>
+                  ) : paginatedOrders.length === 0 ? (
+                    <tr>
+                      <td colSpan="7" className="text-center py-5">
+                        <div className="text-muted">
+                          <i className="fas fa-inbox fa-3x mb-3"></i>
+                          <p>No orders found</p>
+                          {searchTerm || selectedStatus !== "all" || selectedOrderType !== "all" ? (
+                            <button 
+                              className="btn btn-outline-primary"
+                              onClick={() => {
+                                setSearchTerm("");
+                                setSelectedStatus("all");
+                                setSelectedOrderType("all");
+                              }}
+                            >
+                              Clear Filters
+                            </button>
+                          ) : null}
+                        </div>
+                      </td>
+                    </tr>
+                  ) : (
+                    paginatedOrders.map((item, i) => (
+                      <tr key={item.orderId} className="align-middle">
+                        <td className="ps-4">{(currentPage - 1) * ordersPerPage + i + 1}</td>
+                        <td>
+                          <span className="fw-semibold text-primary">{item.repairOrderCode}</span>
+                        </td>
+                        <td>
+                          <div>
+                            <div className="fw-semibold">{item.customerName}</div>
+                          </div>
+                        </td>
+                        <td>
+                          <span className="text-muted">{item.customerEmail}</span>
+                        </td>
+                        <td>
+                          {getStatusBadge(item.orderStatus)}
+                        </td>
+                        <td>
+                          <span className="text-muted">
+                            {moment(item.createdDate).format("MMM DD, YYYY")}
+                          </span>
+                          <br />
+                          <small className="text-muted">
+                            {moment(item.createdDate).format("h:mm A")}
+                          </small>
+                        </td>
+                        <td className="pe-4 text-center">
+                          <button 
+                            className="btn btn-outline-primary btn-sm"
+                            onClick={() => navigate(`/admin-product-order-management/${item.orderId}`)}
+                            title="View and manage order"
+                          >
+                            <i className="fas fa-eye me-1"></i>
+                            Manage
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
 
-        {/* Pagination Controls */}
-        <div className="pagination">
-          <button disabled={currentPage === 1} className="btn btn-primary" onClick={() => setCurrentPage(currentPage - 1)}>
-            Previous
-          </button>
-          <span> Page {currentPage} of {totalPages} </span>
-          <button disabled={currentPage === totalPages} className="btn btn-primary" onClick={() => setCurrentPage(currentPage + 1)}>
-            Next
-          </button>
+          {/* Pagination */}
+          {!isPending && paginatedOrders.length > 0 && (
+            <div className="card-footer bg-white py-3">
+              <div className="d-flex justify-content-between align-items-center">
+                <div className="text-muted">
+                  Showing {((currentPage - 1) * ordersPerPage) + 1} to {Math.min(currentPage * ordersPerPage, filteredOrders.length)} of {filteredOrders.length} entries
+                </div>
+                <nav>
+                  <ul className="pagination mb-0">
+                    <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                      <button 
+                        className="page-link"
+                        onClick={() => setCurrentPage(currentPage - 1)}
+                        disabled={currentPage === 1}
+                      >
+                        Previous
+                      </button>
+                    </li>
+                    {[...Array(totalPages)].map((_, index) => (
+                      <li key={index} className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}>
+                        <button 
+                          className="page-link"
+                          onClick={() => setCurrentPage(index + 1)}
+                        >
+                          {index + 1}
+                        </button>
+                      </li>
+                    ))}
+                    <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                      <button 
+                        className="page-link"
+                        onClick={() => setCurrentPage(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                      >
+                        Next
+                      </button>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          )}
         </div>
       </div>
-      <br />
-
-
-
-</>
-
-   )
-})
+    </>
+  );
+};
 
 export default ProductOrderTable;

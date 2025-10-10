@@ -295,7 +295,7 @@ const ProductCart = () => {
                     <div className="cart-subtotal text-end">
                       <p className={`fw-bold h5 ${!isAvailable ? 'text-muted' : 'text-primary'}`}>
                         N{((parseFloat(item.productPrice) * currentQuantity)).toFixed(2)}
-                        {!isAvailable && <small className="d-block text-danger">Unavailable</small>}
+                        {!isAvailable && <small className="d-block text-danger" style={{fontSize:"10px"}}>Unavailable</small>}
                       </p>
                       <button
                         className="btn btn-link text-danger p-0"

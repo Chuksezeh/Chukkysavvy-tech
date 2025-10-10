@@ -122,68 +122,7 @@ const ManageComments = (() => {
 
 
 
-    // const handleSubmitDelete = async data => {
-    //     setLoading(true);
-    //     console.log('setPendingppppp', holdCommentData);
-    //     await chukkytechAxios
-    //         .delete(`comment/deleteComment/${holdCommentData?.commentId}`)
-    //         .then(res => {
-    //             console.log('res', res);
-    //             setLoading(false);
-    //             setSuccessMessage(true);
-    //             setSuccessText(res.data.message)
-    //             fetchComments()
-
-    //            })
-    //         .catch(err => {
-    //             console.log('err', err);
-    //             setLoading(false);
-    //             setErrorMessage(true);
-    //             setErrMessage(err.response?.data)
-    //       });
-    // };
-
    
-
-    // const handleSuppressModal = ((data) => {
-    //     setShowSuppressModal(true)
-    //     setHoldCommentData(data)
-    // })
-
-
-
-    // const handleSubmitUpdateComment = async data => {
-    //     setLoading(true);
-
-    //     const upDateData = {
-    //         status: supData,
-    //          commentId: holdCommentData?.commentId
-    //     }
-
-    //     console.log("comment>>>>>", upDateData)
-
-    //       await chukkytechAxios
-    //         .post('comment/updateCommentStatus', upDateData)
-    //         .then(res => {
-    //             console.log('res', res);
-    //             setLoading(false);
-    //             setSuccessMessage(true);
-    //             setShowSuppressModal(false)
-    //             fetchComments()
-
-
-    //         })
-    //         .catch(err => {
-    //             console.log('err', err);
-    //             setLoading(false);
-    //             setErrorMessage(true);
-    //             setErrMessage(err.response?.data)
-
-
-    //         });
-    // };
-
-
 
 
 const navigate = useNavigate();

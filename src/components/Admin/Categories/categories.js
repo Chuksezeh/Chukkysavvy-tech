@@ -1,408 +1,555 @@
 import { useEffect, useState } from "react";
-// import AdminDashboard from "./adminDashboard";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-// import { chukkytechAxios } from "../Utility/axios";
 import { useForm } from "react-hook-form";
-import { ButtonGroup, DropdownButton,Dropdown} from "react-bootstrap";
+import { ButtonGroup, DropdownButton, Dropdown } from "react-bootstrap";
 import moment from "moment";
 import AdminDashboard from "../adminDashboard";
 import { chukkytechAxios } from "../../Utility/axios";
-// import AdminDashboard from "../adminDashboard";
-// import "./userRepairOrder.css"
 
-
-const ViewCategories = (() => {
-
+const ViewCategories = () => {
     const {
         register,
         handleSubmit,
         reset,
-        watch,
-        formState: { errors, isDirty, isValid },
+        formState: { errors },
     } = useForm();
-    const [showDropDown, setShowDropDown] = useState("");
-    const [showModal, setShowModal] = useState(false)
+    
+    const [showModal, setShowModal] = useState(false);
     const [loading, setLoading] = useState(false);
     const [successMessage, setSuccessMessage] = useState(false);
     const [successText, setSuccessText] = useState("");
     const [errorMessage, setErrorMessage] = useState(false);
     const [errMessage, setErrMessage] = useState("");
     const [pendingLocation, setPendingLocation] = useState(true);
-    const [allLocations, setAllLocations] = useState([]);
-    const [showEditModal, setShowEditModal] = useState(false)
-    const [locationData, setLocationData] = useState({})
+    const [allCategories, setAllCategories] = useState([]);
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [categoryData, setCategoryData] = useState({});
     const [showDelete, setShowDelete] = useState(false);
-
+    const [searchTerm, setSearchTerm] = useState("");
+    const [selectedStatus, setSelectedStatus] = useState("all");
+    const [currentPage, setCurrentPage] = useState(1);
+    const categoriesPerPage = 10;
 
     const userInfo = localStorage.getItem("adminsInfo");
-      const user = JSON.parse(userInfo);
+    const user = JSON.parse(userInfo);
 
-    const fetchLocation = async () => {
-
+    const fetchCategories = async () => {
+        setPendingLocation(true);
         try {
             const response = await chukkytechAxios.get("category/getAllCategories");
-            setAllLocations(response.data);
+            setAllCategories(response.data);
             setPendingLocation(false);
         } catch (error) {
             setPendingLocation(false);
-            console.error('Error fetching locations:', error);
+            console.error('Error fetching categories:', error);
         }
     };
 
     useEffect(() => {
-        fetchLocation();
+        fetchCategories();
     }, []);
 
-    // console.log('fetchLocation', allLocations);
+    // Filter categories based on search term and status
+    const filteredCategories = allCategories.filter(category => {
+        const searchLower = searchTerm.toLowerCase();
+        const matchesSearch = category.categoryName?.toLowerCase().includes(searchLower);
 
+        const matchesStatus = selectedStatus === "all" ? true : category.status === selectedStatus;
 
-    const handleSubmitData = async data => {
+        return matchesSearch && matchesStatus;
+    });
+
+    // Pagination
+    const totalPages = Math.ceil(filteredCategories.length / categoriesPerPage);
+    const currentCategories = filteredCategories.slice(
+        (currentPage - 1) * categoriesPerPage,
+        currentPage * categoriesPerPage
+    );
+
+    const handleSubmitData = async (data) => {
         setLoading(true);
+        setErrorMessage(false);
 
         const userData = {
             ...data,
             createdBy: user?.userId
+        };
+
+        try {
+            const response = await chukkytechAxios.post('category/createCategories', userData);
+            setLoading(false);
+            setSuccessMessage(true);
+            setSuccessText(response.data.message);
+            setShowModal(false);
+            reset();
+            fetchCategories();
+        } catch (err) {
+            setLoading(false);
+            setErrorMessage(true);
+            setErrMessage(err.response?.data || "Failed to create category");
         }
-
-
-        await chukkytechAxios
-            .post('category/createCategories', userData)
-            .then(res => {
-                // console.log('res', res);
-                setLoading(false);
-                setSuccessMessage(true);
-                setSuccessText(res.data.message)
-                setShowModal(false)
-                fetchLocation();
-
-            })
-            .catch(err => {
-                console.log('err', err);
-                setLoading(false);
-                setErrorMessage(true);
-                setErrMessage(err.response?.data)
-
-
-            });
     };
 
-
-    const handleShowModal = (() => {
-        setShowModal(true)
-    })
-
-const handleShowDropDown = ((data)=>{
-    setLocationData(data)
-
-})
-
-
-
-    const handleShowModalEdit = (() => {
-        showEditModal(true)
-    })
-
-
-
     const handleSubmitDelete = async () => {
-        if (!locationData?.categoryId) {
+        if (!categoryData?.categoryId) {
             setErrorMessage(true);
             setErrMessage("No category selected for deletion");
             return;
         }
-    
+
         setLoading(true);
         setErrorMessage(false);
         setSuccessMessage(false);
-    
+
         try {
             const response = await chukkytechAxios.delete(
-                `category/deleteCategories/${locationData.categoryId}`
+                `category/deleteCategories/${categoryData.categoryId}`
             );
-    
             setSuccessMessage(true);
             setSuccessText(response.data.message || "Category deleted successfully");
-            setShowDelete(false)
-          
-            await fetchLocation();
-         
             setShowDelete(false);
-            
-            
+            await fetchCategories();
         } catch (err) {
             console.error('Deletion failed:', err);
-            
             const errorMsg = err.response?.data?.message || 
                             err.response?.data?.error || 
                             "Failed to delete category";
-            
             setErrorMessage(true);
             setErrMessage(errorMsg);
-            
         } finally {
             setLoading(false);
         }
     };
-    
-   
 
+    const getStatusBadge = (status) => {
+        const statusConfig = {
+            active: { class: "badge bg-success", label: "Active" },
+            inactive: { class: "badge bg-secondary", label: "Inactive" },
+            disable: { class: "badge bg-danger", label: "Disabled" },
+            pending: { class: "badge bg-warning text-dark", label: "Pending" }
+        };
 
+        const config = statusConfig[status?.toLowerCase()] || { class: "badge bg-secondary", label: status };
+        return <span className={config.class}>{config.label}</span>;
+    };
 
+    const handleRefresh = () => {
+        fetchCategories();
+    };
+
+    const handleShowDropDown = (data) => {
+        setCategoryData(data);
+    };
 
     return (
-
         <>
-
-
             <AdminDashboard />
-            <div className="header-bar">
-
-                <ul className="action-bar">
-
-                    <li>Home /Category / <span className="addash"> View Categories </span></li>
-                </ul>
-            </div>
-
-
-            <div className="container">
- 
-
-                <h5>Search Category</h5>
-                <div className="row">
-                    <div className="col-12">
-                        <form className="input-group">
-                            <input
-                                className="form-control border-secondary py-2"
-                                type="search"
-                                placeholder="Search by name or email"
-
-
-                            />
-                            <div className="input-group-append">
-                                <button className="btn btn-outline-secondary h-100 w-100" type="submit">
-                                    <i className="fa fa-search"></i>
-                                </button>
-                            </div>
-                        </form>
+            
+            {/* Header Section */}
+            <div className="container-fluid py-4" style={{ backgroundColor: '#f8f9fa', marginTop: '-20px' }}>
+                <div className="row align-items-center">
+                    <div className="col">
+                        <nav aria-label="breadcrumb">
+                            <ol className="breadcrumb mb-0">
+                                <li className="breadcrumb-item"><a href="/" className="text-decoration-none">Home</a></li>
+                                <li className="breadcrumb-item"><a href="/admin" className="text-decoration-none">Admin</a></li>
+                                <li className="breadcrumb-item active text-dark">Category Management</li>
+                            </ol>
+                        </nav>
+                        <h1 className="h3 mb-0 mt-2 text-dark">Category Management</h1>
+                        <p className="text-muted mb-0">Organize and manage product categories</p>
+                    </div>
+                    <div className="col-auto">
+                        <div className="d-flex gap-2">
+                            <button 
+                                className="btn btn-outline-primary d-flex align-items-center"
+                                onClick={handleRefresh}
+                                disabled={pendingLocation}
+                            >
+                                <span className={`spinner-border spinner-border-sm me-2 ${pendingLocation ? '' : 'd-none'}`}></span>
+                                Refresh
+                            </button>
+                            <button className="btn btn-primary d-flex align-items-center" onClick={() => setShowModal(true)}>
+                                <i className="fas fa-plus me-2"></i>
+                                Create Category
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <div className="p-2">   <button className="btn btn-primary p-2" onClick={handleShowModal}>Create Category</button> </div>
-
-            </div>
-            {successMessage &&
-                <div className="container mt-2">
-                    <div className="row">
-
-                        <div className="col-sm-12">
-                            <div className="alert fade  alert-success alert-dismissible text-left font__family-montserrat font__size-16 font__weight-light brk-library-rendered rendered show">
-
-                                <i className="start-icon far fa-check-circle faa-tada animated"></i>
-                                <strong className="font__weight-semibold" style={{ color: "white" }}>Well done!</strong>
-
-                                <span>  {successText}  </span>
-                            </div>
-                        </div>
-
-
-
-                    </div>
-                </div>
-
-
-            }
-
-
-
-
-
-            <div className="controlADMinorder_tb">
-                <table>
-                    <thead>
-                        <tr className="table-headers">
-                            <th>SN</th>
-                            <th>Category name</th>
-                            
-                            <th>status</th>
-                            <th>Created date</th>
-                           
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        {
-                            allLocations && allLocations.map((data, i) => (
-
-                                <tr key={data.locationId}>
-                                    <td data-label="SN"> {i+1} </td>
-                                    <td data-label="Category name">{data.categoryName} </td>
-                                    
-                                    <td data-label="status"> {data.status} </td>
-                                    <td data-label="Created date">  {moment(data.createdDateTime).format("lll")}  </td>
-                                    
-                                    <td>
-                                    {[DropdownButton].map((DropdownType, idx) => (
-                                            <DropdownType
-                                                as={ButtonGroup}
-                                                key={idx}
-                                                id={`dropdown-button-drop-${idx}`}
-                                                size="lg"
-                                                title="Action"
-                                                onClick={()=>handleShowDropDown(data)}
-
-                                            >
-                                                {/* <Dropdown.Item eventKey="1">View user</Dropdown.Item> */}
-
-                                               
-                                                <Dropdown.Divider />
-                                                <Dropdown.Item eventKey="4" style={{ color: "red" }} onClick={()=>setShowDelete(true)}>Delete location</Dropdown.Item>
-                                            </DropdownType>
-                                        ))}
-                                    </td>
-                                </tr>
-
-
-                            ))
-                        }
-
-
-                    </tbody>
-                </table>
-
-                {
-      pendingLocation && <div style={{justifyContent:"center", textAlign:"center", padding:"10px"}}> <span className="loader-circle"></span></div>
-    }
-
-   {
-      allLocations.length === 0  && !pendingLocation  &&  <div style={{justifyContent:"center", textAlign:"center", padding:"10px"}}> <span > No location available  </span></div>
-    }
-
-
             </div>
 
-            <Modal show={showModal} onHide={() => setShowModal(false)} size="lg">
-                <Modal.Header closeButton>
-                    <Modal.Title>Create Category</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-
-                    <form id="survey-form" onSubmit={handleSubmit((data, event) => {
-                        event.target.reset()
-                        // console.log('seedataNow', data);
-                        handleSubmitData(data);
-                    })}>
-
-                        <div className="row">
-
-                            <div className="col-md-12">
-                                <div className="form-group">
-                                    <label>Category Name</label>
-                                    <input id="name" placeholder="Enter category name" className="form-control"
-
-                                        {...register("categoryName", {
-                                            required: 'category name is required',
-                                            maxLength: {},
-                                        })} />
-                                    <span className="cum-error">{errors.categoryName?.message}</span>
-                                </div>
-                            </div>
-
-                            <div className="col-md-12">
-                                <div className="form-group">
-                                    <label id="name-label" for="name">Status</label>
-
-                                    <select className="form-control" {...register("status")}>
-                                        <option value="active"> Active  </option>
-                                        <option value="inActive"> Inactive  </option>
-                                        <option value="disable"> Disable  </option>
-                                    </select>
-                                    
-                                </div>
-                            </div>
-                           
-
-                          
-                        </div>
-
-
-                        <div className="row">
-                            <div className="col-md-12">
-
-
-                                {
-                                    loading ? <button className="btn btn-primary p-2 submitbtn-Control"> <span class="loader"></span></button> : <button className="btn btn-primary p-2 submitbtn-Control" type="submit" >Create Category</button>
-                                }
-
-                            </div>
-                        </div>
-
-                        {
-
-                            errorMessage &&
-                            <div className="container mt-2">
-                                <div className="row">
-
-                                    <div class="col-sm-12">
-                                        <div className="alert   alert-danger  " role="alert" >
-
-                                            <span> {errMessage.message || "Something went wrong, please try again"}   </span>
-
-                                        </div>
+            {/* Stats Cards */}
+            <div className="container-fluid mt-4">
+                <div className="row g-3 mb-4">
+                    <div className="col-xl-3 col-md-6">
+                        <div className="card border-0 shadow-sm h-100">
+                            <div className="card-body">
+                                <div className="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 className="card-title text-muted mb-2">Total Categories</h6>
+                                        <h3 className="mb-0">{allCategories.length}</h3>
                                     </div>
-
-
-
+                                    <div className="bg-primary bg-opacity-10 p-3 rounded">
+                                        <i className="fas fa-tags text-primary"></i>
+                                    </div>
                                 </div>
                             </div>
-                        }
+                        </div>
+                    </div>
+                    <div className="col-xl-3 col-md-6">
+                        <div className="card border-0 shadow-sm h-100">
+                            <div className="card-body">
+                                <div className="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 className="card-title text-muted mb-2">Active Categories</h6>
+                                        <h3 className="mb-0">
+                                            {allCategories.filter(category => category.status === 'active').length}
+                                        </h3>
+                                    </div>
+                                    <div className="bg-success bg-opacity-10 p-3 rounded">
+                                        <i className="fas fa-check-circle text-success"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-xl-3 col-md-6">
+                        <div className="card border-0 shadow-sm h-100">
+                            <div className="card-body">
+                                <div className="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 className="card-title text-muted mb-2">Inactive</h6>
+                                        <h3 className="mb-0">
+                                            {allCategories.filter(category => category.status === 'inactive').length}
+                                        </h3>
+                                    </div>
+                                    <div className="bg-secondary bg-opacity-10 p-3 rounded">
+                                        <i className="fas fa-pause-circle text-secondary"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-xl-3 col-md-6">
+                        <div className="card border-0 shadow-sm h-100">
+                            <div className="card-body">
+                                <div className="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 className="card-title text-muted mb-2">Disabled</h6>
+                                        <h3 className="mb-0">
+                                            {allCategories.filter(category => category.status === 'disable').length}
+                                        </h3>
+                                    </div>
+                                    <div className="bg-danger bg-opacity-10 p-3 rounded">
+                                        <i className="fas fa-times-circle text-danger"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                    </form>
+                {/* Search and Filters Section */}
+                <div className=" border-0 shadow-sm">
+                    <div className="card-header bg-white py-3">
+                        <h5 className="card-title mb-0">Search & Filters</h5>
+                    </div>
+                    <div className="card-body">
+                        <div className="row g-3">
+                            <div className="col-lg-6">
+                                <label className="form-label fw-semibold">Search Categories</label>
+                                <div className="input-group">
+                                    <span className="input-group-text bg-light border-end-0">
+                                        <i className="fas fa-search text-muted"></i>
+                                    </span>
+                                    <input
+                                        type="text"
+                                        className="form-control border-start-0"
+                                        placeholder="Search by category name..."
+                                        value={searchTerm}
+                                        onChange={(e) => {
+                                            setSearchTerm(e.target.value);
+                                            setCurrentPage(1);
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                            <div className="col-lg-6">
+                                <label className="form-label fw-semibold">Category Status</label>
+                                <select 
+                                    className="form-select"
+                                    value={selectedStatus}
+                                    onChange={(e) => {
+                                        setSelectedStatus(e.target.value);
+                                        setCurrentPage(1);
+                                    }}
+                                >
+                                    <option value="all">All Statuses</option>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                    <option value="disable">Disabled</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+                {/* Categories Table */}
+                <div className=" border-0 shadow-sm mt-4">
+                    <div className="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                        <h5 className="card-title mb-0">All Categories</h5>
+                        <div className="text-muted small">
+                            Showing {currentCategories.length} of {filteredCategories.length} categories
+                        </div>
+                    </div>
+                    <div className="card-body p-0">
+                        <div className="table-responsive">
+                            <table className="table table-hover mb-0">
+                                <thead className="bg-light">
+                                    <tr>
+                                        <th className="ps-4 py-3 fw-semibold">#</th>
+                                        <th className="py-3 fw-semibold">Category Name</th>
+                                        <th className="py-3 fw-semibold">Status</th>
+                                        <th className="py-3 fw-semibold">Created Date</th>
+                                        <th className="pe-4 py-3 fw-semibold text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {pendingLocation ? (
+                                        <tr>
+                                            <td colSpan="5" className="text-center py-5">
+                                                <div className="spinner-border text-primary" role="status">
+                                                    <span className="visually-hidden">Loading...</span>
+                                                </div>
+                                                <p className="mt-2 text-muted">Loading categories...</p>
+                                            </td>
+                                        </tr>
+                                    ) : currentCategories.length === 0 ? (
+                                        <tr>
+                                            <td colSpan="5" className="text-center py-5">
+                                                <div className="text-muted">
+                                                    <i className="fas fa-tags fa-3x mb-3"></i>
+                                                    <p>{searchTerm || selectedStatus !== "all" ? "No categories match your filters" : "No categories found"}</p>
+                                                    {(searchTerm || selectedStatus !== "all") && (
+                                                        <button 
+                                                            className="btn btn-outline-primary mt-2"
+                                                            onClick={() => {
+                                                                setSearchTerm("");
+                                                                setSelectedStatus("all");
+                                                            }}
+                                                        >
+                                                            Clear Filters
+                                                        </button>
+                                                    )}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ) : (
+                                        currentCategories.map((category, index) => (
+                                            <tr key={category.categoryId} className="align-middle">
+                                                <td className="ps-4">{(currentPage - 1) * categoriesPerPage + index + 1}</td>
+                                                <td>
+                                                    <div className="fw-semibold">{category.categoryName}</div>
+                                                    <small className="text-muted">ID: {category.categoryId}</small>
+                                                </td>
+                                                <td>
+                                                    {getStatusBadge(category.status)}
+                                                </td>
+                                                <td>
+                                                    <span className="text-muted">
+                                                        {moment(category.createdDateTime).format("MMM DD, YYYY")}
+                                                    </span>
+                                                    <br />
+                                                    <small className="text-muted">
+                                                        {moment(category.createdDateTime).format("h:mm A")}
+                                                    </small>
+                                                </td>
+                                                <td className="pe-4 text-center">
+                                                    <DropdownButton
+                                                        as={ButtonGroup}
+                                                        size="sm"
+                                                        title="Actions"
+                                                        variant="outline-primary"
+                                                        onClick={() => handleShowDropDown(category)}
+                                                    >
+                                                        <Dropdown.Divider />
+                                                        <Dropdown.Item 
+                                                            style={{ color: "red" }} 
+                                                            onClick={() => setShowDelete(true)}
+                                                            className="d-flex align-items-center"
+                                                        >
+                                                            <i className="fas fa-trash me-2"></i>
+                                                            Delete Category
+                                                        </Dropdown.Item>
+                                                    </DropdownButton>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 
+                    {/* Pagination */}
+                    {!pendingLocation && currentCategories.length > 0 && (
+                        <div className="card-footer bg-white py-3">
+                            <div className="d-flex justify-content-between align-items-center">
+                                <div className="text-muted">
+                                    Showing {((currentPage - 1) * categoriesPerPage) + 1} to {Math.min(currentPage * categoriesPerPage, filteredCategories.length)} of {filteredCategories.length} entries
+                                </div>
+                                <nav>
+                                    <ul className="pagination mb-0">
+                                        <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                                            <button 
+                                                className="page-link"
+                                                onClick={() => setCurrentPage(currentPage - 1)}
+                                                disabled={currentPage === 1}
+                                            >
+                                                Previous
+                                            </button>
+                                        </li>
+                                        {[...Array(totalPages)].map((_, index) => (
+                                            <li key={index} className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}>
+                                                <button 
+                                                    className="page-link"
+                                                    onClick={() => setCurrentPage(index + 1)}
+                                                >
+                                                    {index + 1}
+                                                </button>
+                                            </li>
+                                        ))}
+                                        <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                                            <button 
+                                                className="page-link"
+                                                onClick={() => setCurrentPage(currentPage + 1)}
+                                                disabled={currentPage === totalPages}
+                                            >
+                                                Next
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </div>
 
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowModal(false)}>
-                        Close
-                    </Button>
+            {/* Success Message */}
+            {successMessage && (
+                <div className="position-fixed top-0 end-0 p-3" style={{ zIndex: 1050 }}>
+                    <div className="alert alert-success alert-dismissible fade show" role="alert">
+                        <i className="fas fa-check-circle me-2"></i>
+                        <strong>Success!</strong> {successText}
+                        <button type="button" className="btn-close" onClick={() => setSuccessMessage(false)}></button>
+                    </div>
+                </div>
+            )}
 
+            {/* Error Message */}
+            {errorMessage && (
+                <div className="position-fixed top-0 end-0 p-3" style={{ zIndex: 1050 }}>
+                    <div className="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i className="fas fa-exclamation-circle me-2"></i>
+                        <strong>Error!</strong> {errMessage}
+                        <button type="button" className="btn-close" onClick={() => setErrorMessage(false)}></button>
+                    </div>
+                </div>
+            )}
 
-                </Modal.Footer>
-            </Modal>
-
-
-
-           <Modal show={showDelete} onHide={() => setShowDelete(false)} size="">
+            {/* Create Category Modal */}
+            <Modal show={showModal} onHide={() => setShowModal(false)} size="lg" centered>
                 <Modal.Header closeButton>
-                    <Modal.Title>Delete location</Modal.Title>
+                    <Modal.Title>Create New Category</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                    <form onSubmit={handleSubmit(handleSubmitData)}>
+                        <div className="row g-3">
+                            <div className="col-md-12">
+                                <label className="form-label fw-semibold">Category Name <span className="text-danger">*</span></label>
+                                <input 
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Enter category name"
+                                    {...register("categoryName", { required: 'Category name is required' })}
+                                />
+                                {errors.categoryName && <div className="text-danger small mt-1">{errors.categoryName.message}</div>}
+                            </div>
 
+                            <div className="col-md-12">
+                                <label className="form-label fw-semibold">Status <span className="text-danger">*</span></label>
+                                <select 
+                                    className="form-select"
+                                    {...register("status", { required: 'Status is required' })}
+                                >
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                    <option value="disable">Disabled</option>
+                                </select>
+                                {errors.status && <div className="text-danger small mt-1">{errors.status.message}</div>}
+                            </div>
+                        </div>
 
-                    <div>Are you sure you want to delete this location?</div>
-
-
+                        <div className="row mt-4">
+                            <div className="col-12">
+                                {loading ? (
+                                    <button className="btn btn-primary w-100" disabled>
+                                        <span className="spinner-border spinner-border-sm me-2"></span>
+                                        Creating Category...
+                                    </button>
+                                ) : (
+                                    <button className="btn btn-primary w-100" type="submit">
+                                        Create Category
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+                    </form>
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowDelete(false)}>
-                        Close
-                    </Button>
-
-                    {
-                        loading ? <Button className="btn btn-primary" variant="primary" >
-                            <span className="loader"></span>
-                        </Button> : <Button style={{ background: "red" }}  onClick={handleSubmitDelete}>
-                        Delete
-                        </Button>
-                    }
-
-                </Modal.Footer>
             </Modal>
 
+            {/* Delete Confirmation Modal */}
+            <Modal show={showDelete} onHide={() => setShowDelete(false)} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title className="text-danger">Delete Category</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div className="text-center">
+                        <div className="bg-danger bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" 
+                             style={{ width: '60px', height: '60px' }}>
+                            <i className="fas fa-trash text-danger fa-lg"></i>
+                        </div>
+                        <h5>Delete Category</h5>
+                        <p className="text-muted">
+                            Are you sure you want to delete <strong>{categoryData.categoryName}</strong>?
+                            This action cannot be undone and all category data will be permanently removed.
+                        </p>
+                    </div>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="outline-secondary" onClick={() => setShowDelete(false)}>
+                        Cancel
+                    </Button>
+                    <Button 
+                        variant="danger" 
+                        onClick={handleSubmitDelete}
+                        disabled={loading}
+                    >
+                        {loading ? (
+                            <>
+                                <span className="spinner-border spinner-border-sm me-2"></span>
+                                Deleting...
+                            </>
+                        ) : (
+                            "Yes, Delete Category"
+                        )}
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </>
-
-    )
-})
+    );
+};
 
 export default ViewCategories;

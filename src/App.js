@@ -47,6 +47,7 @@ import ViewCompanies from './components/Admin/company/viewCompany';
 import ViewCategories from './components/Admin/Categories/categories';
 import ProductDetail from './components/Admin/CreatedProducts/productDetails';
 import Header from './components/layouts/Header';
+import ProductManagementPage from './components/Admin/adminproductOrderManagement/productMangementPage';
 
 function App() {
   const [authState, setAuthState] = useState({
@@ -110,6 +111,7 @@ function App() {
          <Route path="/view-categories" element={<ViewCategories />} />
          <Route path="/product/:productId" element={<ProductDetail />} />
         <Route path="/view-companies" element={<ViewCompanies />} />
+        <Route path="/admin-product-order-management/:orderId" element={<ProductManagementPage  />} />
 
          <Route path="/view-created-products" element={<ViewCreatedProducts  />} />
 

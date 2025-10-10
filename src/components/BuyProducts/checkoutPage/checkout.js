@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./checkout.css";
@@ -13,6 +13,9 @@ import { ButtonGroup, DropdownButton, Dropdown, Modal, Button } from "react-boot
 import { MdDelete, MdOutlineMoreVert } from "react-icons/md";
 import { IoIosMore } from "react-icons/io";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import html2canvas from "html2canvas";
+import { useDispatch } from "react-redux";
+import { clearCartProduct } from "../../redux/productCounter";
 
 const CheckoutPage = () => {
     const location = useLocation();
@@ -28,7 +31,7 @@ const CheckoutPage = () => {
     const [addressForm, setAddressForm] = useState({
         setAsDefault: false
     });
-     const [modalMessage, setModalMessage] = useState('');
+    const [modalMessage, setModalMessage] = useState('');
     const [mainDefaultAddress, setMainDefaultAddress] = useState(null);
     const [allAddress, setAllAddress] = useState([]);
     const [filterLGA, setFilterLGA] = useState("");
@@ -38,14 +41,15 @@ const CheckoutPage = () => {
     const [selectedAddress, setSelectedAddress] = useState(null);
     const [pendingDeleteAddress, setPendingDeleteAddress] = useState(false);
     const [addressId, setAddressId] = useState(null);
-     const [showWarningModal, setShowWarningModal] = useState(false);
-    // New states for edit modal
+    const [showWarningModal, setShowWarningModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [editingAddress, setEditingAddress] = useState(null);
     const [editLoading, setEditLoading] = useState(false);
     const [deliverAddress, setDeliverAddress] = useState(null);
-    // const [addressId, setAddressId] = useState(null);
-
+    const [showReceipt, setShowReceipt] = useState(false);
+    const [checkingStock, setCheckingStock] = useState(false);
+    const [productStock, setProductStock] = useState({});
+    const receiptRef = useRef(null);
     const {
         register,
         handleSubmit,
@@ -57,11 +61,9 @@ const CheckoutPage = () => {
     const userInfo = localStorage.getItem("userInfo");
     const user = JSON.parse(userInfo);
     const encodedEmail = encodeURIComponent(user.email);
+    const dispatch = useDispatch();
 
-    
-
-
-      // Get cart items from navigation state - handle both cart and buy-now flows
+    // Get cart items from navigation state - handle both cart and buy-now flows
     const { 
         cartItems = [],
         subtotal: passedSubtotal = 0,
@@ -78,23 +80,81 @@ const CheckoutPage = () => {
     const shipping = passedShipping || (subtotal > 0 ? 15 : 0);
     const total = passedTotal || (subtotal + shipping);
 
-    // ... rest of your existing code ...
+    // Function to check product stock availability
+    const checkProductStock = async () => {
+        setCheckingStock(true);
+        try {
+            const stockChecks = cartItems.map(async (item) => {
+                try {
+                    // Fetch current product details to get the latest quantity
+                    const response = await chukkytechAxios.get(`/product/getProductById/${item.productId}`);
+                    const currentProduct = response.data;
+                    
+                    const availableQuantity = currentProduct.productQuantity || 0;
+                    const requestedQuantity = item.quantity || 1;
+                    
+                    console.log(`Product ${item.productName}: Available=${availableQuantity}, Requested=${requestedQuantity}`);
+                    
+                    return {
+                        productId: item.productId,
+                        productName: item.productName,
+                        availableQuantity,
+                        requestedQuantity,
+                        isAvailable: availableQuantity >= requestedQuantity,
+                        currentProductData: currentProduct
+                    };
+                } catch (error) {
+                    console.error(`Error checking stock for product ${item.productId}:`, error);
+                    return {
+                        productId: item.productId,
+                        productName: item.productName,
+                        availableQuantity: 0,
+                        requestedQuantity: item.quantity || 1,
+                        isAvailable: false,
+                        error: true
+                    };
+                }
+            });
 
-    // You can use the 'source' variable to show different messaging if needed
-    useEffect(() => {
-        if (source === 'buy-now') {
-            console.log('Buy Now flow - single product checkout');
-        } else {
-            console.log('Cart flow - multiple products checkout');
+            const stockResults = await Promise.all(stockChecks);
+            const unavailableProducts = stockResults.filter(result => !result.isAvailable);
+            
+            // Update product stock state for UI display
+            const stockMap = {};
+            stockResults.forEach(result => {
+                stockMap[result.productId] = {
+                    available: result.availableQuantity,
+                    requested: result.requestedQuantity,
+                    isSufficient: result.isAvailable
+                };
+            });
+            setProductStock(stockMap);
+            
+            return {
+                allAvailable: unavailableProducts.length === 0,
+                unavailableProducts,
+                stockResults
+            };
+            
+        } catch (error) {
+            console.error('Error checking product stock:', error);
+            return {
+                allAvailable: false,
+                unavailableProducts: [],
+                stockResults: [],
+                error: true
+            };
+        } finally {
+            setCheckingStock(false);
         }
-    }, [source]);
+    };
 
-
-   console.log('Cart Items> check paying data>>:', source, cartItems, subtotal, shipping, total); 
-
-
-    // Get cart items from navigation state
-    
+    // Check stock on component mount and when cart items change
+    useEffect(() => {
+        if (cartItems && cartItems.length > 0) {
+            checkProductStock();
+        }
+    }, [cartItems]);
 
     // Handle checkbox change
     const handleCheckboxChange = (e) => {
@@ -217,10 +277,6 @@ const CheckoutPage = () => {
 
     // Handle delete address
     const handleDeleteAddress = async (addressId) => {
-        // if (!window.confirm("Are you sure you want to delete this address?")) {
-        //     return;
-        // }
-
         setPendingDeleteAddress(true);
         try {
             await chukkytechAxios.delete(`/general/deleteAddress/${addressId}/${userDetails.userId}`);
@@ -229,7 +285,7 @@ const CheckoutPage = () => {
             
             // Refresh addresses
             await fetchUserData();
-             setShowWarningModal(false);
+            setShowWarningModal(false);
         } catch (err) {
             console.log('Error deleting address:', err);
             setShowWarningModal(false);
@@ -268,13 +324,21 @@ const CheckoutPage = () => {
         setAddressForm({ setAsDefault: address.defaultAddress || false });
     };
 
-    const handleShowWarningModal = (id) =>{
-    setAddressId(id);
-
-    setModalMessage('Are you sure you want to delete this address?');
-    setShowWarningModal(true);
+    const handleShowWarningModal = (id) => {
+        setAddressId(id);
+        setModalMessage('Are you sure you want to delete this address?');
+        setShowWarningModal(true);
     }  
 
+    const handleClearCart = () => {
+        try {
+            // Clear Redux store
+            dispatch(clearCartProduct());
+            console.log('Cart cleared from Redux');
+        } catch (error) {
+            console.error('Error clearing cart from Redux:', error);
+        }
+    };
 
     // Handle update address
     const handleUpdateAddress = async (data) => {
@@ -301,7 +365,7 @@ const CheckoutPage = () => {
             setEditLoading(false);
             setSuccessMessage("Address updated successfully!");
 
-              console.log("Response from update:", response.data);
+            console.log("Response from update:", response.data);
             // Refresh addresses
             await fetchUserData();
 
@@ -327,44 +391,81 @@ const CheckoutPage = () => {
         }
 
         setLoading(true);
+        setErrorMessage("");
 
-         const paymentData = {
+        // First check product stock availability
+        const stockCheck = await checkProductStock();
+
+        console.log("Stock check result:>>>>>", stockCheck);
+
+
+        
+        if (!stockCheck.allAvailable) {
+            setLoading(false);
+            
+            if (stockCheck.unavailableProducts.length > 0) {
+                const productNames = stockCheck.unavailableProducts.map(p => 
+                    `${p.productName} (Available: ${p.availableQuantity}, Requested: ${p.requestedQuantity})`
+                ).join(', ');
+                
+                setErrorMessage(`Insufficient stock for: ${productNames}. Please adjust your quantities and try again.`);
+            } else {
+                setErrorMessage("Unable to verify product availability. Please try again.");
+            }
+            return;
+        }
+
+        // if (stockCheck.allAvailable === false){
+        //        return
+        // }
+
+    
+        const paymentData = {
             paymentMethod: payment,
             totalAmount: total,
             customerEmail: userDetails?.email,
             customerName: `${userDetails?.firstName} ${userDetails?.lastName}`,
             selectedProduct: cartItems,
-            deliveryAddress: mainDefaultAddress || deliverAddress ,
+            deliveryAddress: mainDefaultAddress || deliverAddress,
             userId: userDetails?.userId, 
             subtotal: subtotal,
             deliveryFee: shipping,
+        };
 
-     }
-
- console.log("Processing check:", paymentData);
+        console.log("Processing checkout:", paymentData);
+        
         try {
+            const response = await chukkytechAxios.post("/order/orders/create", paymentData);
 
-   const response =   await chukkytechAxios.post("/order/orders/create", paymentData);
+            console.log("Checkout response:", response);
 
-    console.log("Checkout response:", response.data);
-      
-            // Here you would typically process the payment and create the order
-            console.log("Processing checkout with address:", selectedAddress);
-            console.log("Payment method:", payment);
-            console.log("Cart items:", cartItems);
-
-            // Simulate API call
-            setTimeout(() => {
-                setLoading(false);
-                alert("Order placed successfully!");
-                // Navigate to order confirmation page
-                // navigate("/order-confirmation", { state: { orderDetails: ... } });
-            }, 2000);
+            if (response.data && response.data.success) {
+                // Order created successfully
+                setShowReceipt(true);
+                
+                // Clear cart data comprehensively
+                await handleClearCart();
+                
+                // Clear all localStorage cart data
+                localStorage.removeItem('cartItems');
+                localStorage.removeItem('cartTotal');
+                localStorage.removeItem('cartSubtotal');
+                localStorage.removeItem('cartCount');
+                
+                // Force refresh of cart-related components
+                setTimeout(() => {
+                    window.dispatchEvent(new Event('cartUpdated'));
+                }, 100);
+                
+            } else {
+                throw new Error(response.data?.message || "Order creation failed");
+            }
 
         } catch (error) {
+            console.log("Checkout error:", error);
+            setErrorMessage(error.response?.data?.message || "Failed to process order. Please try again.");
+        } finally {
             setLoading(false);
-            console.log("error", error)
-            setErrorMessage("Failed to process order. Please try again.");
         }
     };
 
@@ -418,6 +519,26 @@ const CheckoutPage = () => {
         return "https://via.placeholder.com/300x200?text=No+Image";
     };
 
+    // Get stock status for a product
+    const getStockStatus = (item) => {
+        const stockInfo = productStock[item.productId];
+        if (!stockInfo) return null;
+
+        const isSufficient = stockInfo.available >= (item.quantity || 1);
+        
+        return (
+            <small 
+                className={`d-block ${isSufficient ? 'text-success' : 'text-danger fw-bold'}`}
+            >
+                <i className={`fas ${isSufficient ? 'fa-check-circle' : 'fa-exclamation-triangle'} me-1`}></i>
+                Stock: {stockInfo.available} units
+                {!isSufficient && (
+                    <span className="ms-1">- Insufficient</span>
+                )}
+            </small>
+        );
+    };
+
     // If no cart items, show empty state
     if (!cartItems || cartItems.length === 0) {
         return (
@@ -446,16 +567,42 @@ const CheckoutPage = () => {
         );
     }
 
+    const downloadReceipt = async () => {
+        if (receiptRef.current) {
+            const canvas = await html2canvas(receiptRef.current);
+            const imgData = canvas.toDataURL("image/png");
+            const link = document.createElement("a");
+            link.href = imgData;
+            link.download = "receipt.png";
+            link.click();
+        }
+    };
 
-
-
+    const shareReceipt = async () => {
+        if (navigator.share) {
+            try {
+                const canvas = await html2canvas(receiptRef.current);
+                canvas.toBlob(blob => {
+                    const file = new File([blob], "receipt.png", { type: "image/png" });
+                    navigator.share({
+                        files: [file],
+                        title: "Receipt",
+                        text: "Here is your repair receipt",
+                    });
+                }, "image/png");
+            } catch (error) {
+                console.error("Error sharing receipt:", error);
+            }
+        } else {
+            alert("Sharing not supported on this device");
+        }
+    };
 
     return (
         <>
-           <Header />
+            <Header />
             <SearchBar />
            
-
             {/* Success/Error Messages */}
             {successMessage && (
                 <div className="container mt-3">
@@ -465,8 +612,6 @@ const CheckoutPage = () => {
                     </div>
                 </div>
             )}
-
-          
 
             {errorMessage && (
                 <div className="container mt-3">
@@ -520,7 +665,6 @@ const CheckoutPage = () => {
                                                     className="btn btn-light btn-sm me-2"
                                                     type="button" 
                                                     onClick={(e) => {
-                                                        // e.stopPropagation();
                                                         handleEditAddress(mainDefaultAddress);
                                                     }}
                                                 >
@@ -531,8 +675,7 @@ const CheckoutPage = () => {
                                                     type="button" 
                                                     onClick={(e) => {
                                                         e.stopPropagation();
-                                                    handleShowWarningModal(mainDefaultAddress.deliveryAddressId);
-                                                        // handleDeleteAddress(mainDefaultAddress.deliveryAddressId);
+                                                        handleShowWarningModal(mainDefaultAddress.deliveryAddressId);
                                                     }}
                                                     disabled={pendingDeleteAddress}
                                                 >
@@ -763,9 +906,13 @@ const CheckoutPage = () => {
                                 type="button"
                                 className="btn btn-warning w-100 mt-4 p-3 fw-bold"
                                 onClick={handleCheckout}
-                                disabled={loading || !selectedAddress}
+                                disabled={loading || !selectedAddress || checkingStock}
                             >
-                                {loading ? (
+                                {checkingStock ? (
+                                    <>
+                                        <span className="btn-loader"></span> Checking Stock Availability...
+                                    </>
+                                ) : loading ? (
                                     <>
                                         <span className="btn-loader"></span> Processing Order...
                                     </>
@@ -800,6 +947,8 @@ const CheckoutPage = () => {
                                         <small className="text-muted">
                                             {item.categoryName}
                                         </small>
+                                        {/* Stock Status */}
+                                        {getStockStatus(item)}
                                     </div>
                                     <p className="fw-bold mb-0 text-primary">
                                         N{((parseFloat(item.productPrice) * (item.quantity || 1))).toFixed(2)}
@@ -831,6 +980,14 @@ const CheckoutPage = () => {
                                     <span className="text-primary">N{total.toFixed(2)}</span>
                                 </div>
                             </div>
+
+                            {/* Stock Check Notice */}
+                            {checkingStock && (
+                                <div className="alert alert-info mt-3 p-2 small">
+                                    <i className="fas fa-sync-alt fa-spin me-2"></i>
+                                    Verifying product availability...
+                                </div>
+                            )}
 
                             {/* Order Security Badge */}
                             <div className="security-badge mt-3 p-2 text-center bg-light rounded">
@@ -1002,42 +1159,204 @@ const CheckoutPage = () => {
                 </div>
             )}
 
-  
-         {/* <PurchaseReceipt/> */}
-
-             <Modal show={showWarningModal} onHide={() => setShowWarningModal(false)} centered>
-                    <Modal.Header closeButton>
-                      <Modal.Title>Confirm Action</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <p>{modalMessage}</p>
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <Button variant="secondary" onClick={() => setShowWarningModal(false)}>
+            {/* Delete Confirmation Modal */}
+            <Modal show={showWarningModal} onHide={() => setShowWarningModal(false)} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Confirm Action</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <p>{modalMessage}</p>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowWarningModal(false)}>
                         Cancel
-                      </Button>
+                    </Button>
+                    {pendingDeleteAddress ? (
+                        <Button variant="primary" disabled={pendingDeleteAddress}>
+                            <span className="btn-loader"></span> Deleting...
+                        </Button>
+                    ) : (
+                        <Button variant="primary" onClick={() => handleDeleteAddress(addressId)}>
+                            Confirm
+                        </Button>
+                    )}
+                </Modal.Footer>
+            </Modal>
 
- 
-                                                
-                        {
-                        pendingDeleteAddress ? <Button 
-                        variant="primary" 
-                       disabled={pendingDeleteAddress}
-                       
-                      >
-                        <span className="btn-loader"></span> Deleting...
-                      </Button>:  <Button 
-                        variant="primary" 
-                        onClick={ ()=>  handleDeleteAddress(addressId)}
-                        
-                      >
-                        Confirm
-                      </Button>
-                        }                           
+            {/* Receipt Modal */}
+            <Modal show={showReceipt} onHide={() => setShowReceipt(false)} size="lg" centered>
+                <Modal.Header closeButton className="border-0 bg-light">
+                    <Modal.Title className="w-100 text-center">
+                        <div className="d-flex align-items-center justify-content-center">
+                            <i className="fas fa-receipt text-primary me-2 fs-4"></i>
+                            <h4 className="m-0 text-dark">Order Confirmation</h4>
+                        </div>
+                        <small className="text-muted fw-normal">Thank you for your purchase!</small>
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body className="p-4" id="download-receipt" ref={receiptRef}> 
+                    {/* Header Section */}
+                    <div className="row align-items-center mb-4">
+                        <div className="col-6">
+                            <div className="d-flex align-items-center">
+                                <div className="bg-primary rounded-circle d-flex align-items-center justify-content-center me-3" 
+                                    style={{width: '50px', height: '50px'}}>
+                                    <i className="fas fa-shopping-bag text-white fs-5"></i>
+                                </div>
+                                <div>
+                                    <h5 className="mb-0 fw-bold">ChukkyTech</h5>
+                                    <small className="text-muted">Premium Tech Solutions</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-6 text-end">
+                            <div className="badge bg-success fs-6 p-2">
+                                <i className="fas fa-check-circle me-1"></i>
+                                Payment Successful
+                            </div>
+                            <p className="text-muted small mb-0 mt-1">Order Date: {new Date().toLocaleDateString()}</p>
+                        </div>
+                    </div>
 
-                     
-                    </Modal.Footer>
-                  </Modal>
+                    {/* Order Items */}
+                    <div className="border-0 shadow-sm mb-4">
+                        <div className="card-header bg-white border-0">
+                            <h6 className="mb-0 fw-bold">
+                                <i className="fas fa-boxes me-2 text-primary"></i>
+                                Order Items ({cartItems.length})
+                            </h6>
+                        </div>
+                        <div className="card-body p-0">
+                            <div className="table-responsive">
+                                <table className="table table-hover align-middle mb-0">
+                                    <thead className="table-light">
+                                        <tr>
+                                            <th className="ps-4">Product</th>
+                                            <th className="text-center">Qty</th>
+                                            <th className="text-end pe-4">Price</th>
+                                            <th className="text-end pe-4">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {cartItems.map((item, index) => (
+                                            <tr key={item.productId}>
+                                                <td className="ps-4">
+                                                    <div className="d-flex align-items-center">
+                                                        <img 
+                                                            src={getProductImage(item)} 
+                                                            alt={item.productName}
+                                                            className="rounded me-3"
+                                                            style={{width: '40px', height: '40px', objectFit: 'cover'}}
+                                                        />
+                                                        <div>
+                                                            <div className="fw-semibold">{item.productName}</div>
+                                                            <small className="text-muted">{item.categoryName}</small>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td className="text-center">
+                                                    <span className="badge bg-secondary">{item.quantity || 1}</span>
+                                                </td>
+                                                <td className="text-end">
+                                                    N{parseFloat(item.productPrice).toFixed(2)}
+                                                </td>
+                                                <td className="text-end pe-4 fw-semibold">
+                                                    N{((parseFloat(item.productPrice) * (item.quantity || 1))).toFixed(2)}
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Order Summary */}
+                    <div className="row justify-content-end">
+                        <div className="col-md-6">
+                            <div className="border-0 bg-light">
+                                <div className="card-body">
+                                    <h6 className="card-title fw-bold mb-3">Order Summary</h6>
+                                    <div className="d-flex justify-content-between mb-2">
+                                        <span className="text-muted">Subtotal:</span>
+                                        <span className="fw-semibold">N{subtotal.toFixed(2)}</span>
+                                    </div>
+                                    <div className="d-flex justify-content-between mb-2">
+                                        <span className="text-muted">Shipping Fee:</span>
+                                        <span className="fw-semibold">N{shipping.toFixed(2)}</span>
+                                    </div>
+                                    {payment === 'credit' && (
+                                        <div className="d-flex justify-content-between mb-2">
+                                            <span className="text-muted">Payment Method:</span>
+                                            <span className="badge bg-info">
+                                                <i className="fas fa-credit-card me-1"></i>
+                                                Credit Card
+                                            </span>
+                                        </div>
+                                    )}
+                                    <hr />
+                                    <div className="d-flex justify-content-between mb-3">
+                                        <span className="fw-bold fs-5">Total Amount:</span>
+                                        <span className="fw-bold fs-5 text-primary">N{total.toFixed(2)}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Support Information */}
+                    <div className="row mt-4">
+                        <div className="col-12">
+                            <div className="text-center p-3 bg-light rounded">
+                                <div className="row align-items-center">
+                                    <div className="col-md-4 text-md-start">
+                                        <div className="d-flex align-items-center justify-content-center justify-content-md-start">
+                                            <i className="fas fa-headset text-primary me-2 fs-5"></i>
+                                            <div>
+                                                <small className="fw-bold d-block">Need Help?</small>
+                                                <small className="text-muted">Contact Support</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-4 my-2 my-md-0">
+                                        <small className="text-muted">
+                                            <i className="fas fa-envelope me-1"></i>
+                                            support@chukkytech.com
+                                        </small>
+                                    </div>
+                                    <div className="col-md-4 text-md-end">
+                                        <small className="text-muted">
+                                            <i className="fas fa-phone me-1"></i>
+                                            +234-XXX-XXXX-XXX
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Modal.Body>
+                <Modal.Footer className="border-0 bg-light">
+                    <div className="d-flex justify-content-between w-100">
+                        <button 
+                            className="btn btn-outline-secondary"
+                            onClick={() => setShowReceipt(false)}
+                        >
+                            <i className="fas fa-times me-2"></i>
+                            Close
+                        </button>
+                        <div>
+                            <button className="btn btn-outline-primary me-2" onClick={shareReceipt}>
+                                <i className="fas fa-print me-2"></i>
+                                Share Receipt
+                            </button>
+                            <button className="btn btn-primary" onClick={downloadReceipt}>
+                                <i className="fas fa-download me-2"></i>
+                                Download PDF
+                            </button>
+                        </div>
+                    </div>
+                </Modal.Footer>
+            </Modal>
 
             <Footer />
         </>
