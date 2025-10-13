@@ -390,6 +390,9 @@ font-weight: 800;
 .nav-main-NAv {
   /* height: 60px; */
   width: 100%;
+  top: 0 !important;
+  margin: 0;
+  padding: 0;
   background-color: #011B58;
   position: fixed;
   height: 60px;

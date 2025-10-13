@@ -12,6 +12,7 @@ import laptop from '../images/laptops1.avif';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import Goback from '../layouts/goBack';
+import ServicesComponent from './services-component';
 
 
 
@@ -114,6 +115,9 @@ const scrolltop = () => {
 	</div>
 	
 </div>
+
+
+<ServicesComponent/>
 
 <Footer/>
 

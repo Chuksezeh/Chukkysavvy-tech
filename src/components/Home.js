@@ -25,7 +25,7 @@ const Home = () => {
         <HomeDashBoard />
       </div>
 
-      <TopTextComponent />
+      {/* <TopTextComponent /> */}
 
       <ServicesComponent />
 

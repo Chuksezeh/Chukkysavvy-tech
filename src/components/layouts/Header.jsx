@@ -139,7 +139,7 @@ const navigateHomeFeedback = (()=>{
     <a onClick={navigateTracking}>Track  repair</a>
     <a onClick={navigateFindLocation}>Find location</a>
     <a onClick={navigateContactus}>Contact us</a>
-     <a onClick={handleFeedbackClick} style={{ cursor: "pointer" }}>Feedback</a>
+     {/* <a onClick={handleFeedbackClick} style={{ cursor: "pointer" }}>Feedback</a> */}
 
     {
       userData ? <span  onClick={navigateProfilePage} className="btn-log-Sign">My Account</span> : <span  onClick={navigateUserLogin}  className="btn-log-Sign">Login</span>

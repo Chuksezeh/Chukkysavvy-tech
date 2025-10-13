@@ -256,7 +256,10 @@ const ProductManagementPage = () => {
                                 Order Management
                             </Typography>
                             <Typography variant="h6" color="textSecondary">
-                                Order # {orderId}
+                                Order ID: <span style={{color:"#1976D2"}}>{orderId}</span> 
+                            </Typography>
+                             <Typography variant="h6" color="textSecondary">
+                                Payment Reference: <span style={{color:"#1976D2"}}>{orderData.paymentReference}</span> 
                             </Typography>
                         </Grid>
                         <Grid item xs={12} md={6} sx={{ textAlign: { md: 'right' } }}>
@@ -270,7 +273,7 @@ const ProductManagementPage = () => {
                                 Created: {moment(createdDate).format('lll')}
                             </Typography> */}
                             <Typography variant="body2" color="textSecondary" sx={{ mt: 1 }}>
-                                Last  updated: {moment(updatedDate).format('lll')}
+                                Last  updated:  <span style={{fontWeight:"bold"}}>{moment(updatedDate).format('lll')}</span>  
                             </Typography>
                         </Grid>
                     </Grid>

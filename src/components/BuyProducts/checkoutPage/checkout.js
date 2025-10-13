@@ -16,11 +16,13 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import html2canvas from "html2canvas";
 import { useDispatch } from "react-redux";
 import { clearCartProduct } from "../../redux/productCounter";
+import Goback from "../../layouts/goBack";
+import myLogo from "../../images/CHUKKY-BRAND-BACKGROUND-removebg-preview.png"
 
 const CheckoutPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const [payment, setPayment] = useState("credit");
+    const [payment, setPayment] = useState("credit-paid");
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
@@ -49,6 +51,7 @@ const CheckoutPage = () => {
     const [showReceipt, setShowReceipt] = useState(false);
     const [checkingStock, setCheckingStock] = useState(false);
     const [productStock, setProductStock] = useState({});
+    const [showLogin, setShowLogin] = useState(false);
     const receiptRef = useRef(null);
     const {
         register,
@@ -58,13 +61,18 @@ const CheckoutPage = () => {
         formState: { errors },
     } = useForm();
 
-    const userInfo = localStorage.getItem("userInfo");
+    const userInfo = localStorage.getItem("userInfo" || null);
     const user = JSON.parse(userInfo);
-    const encodedEmail = encodeURIComponent(user.email);
+    const encodedEmail = encodeURIComponent(user?.email);
     const dispatch = useDispatch();
+    const [showNoLogin, setShowNoLogin] = useState(false);
+    const handleShowNoLogin = (() => setShowNoLogin(true));
+    const handleHideNoLogin = (() => setShowNoLogin(false))
 
+
+    const navigateLogin = () => navigate("/user-login");
     // Get cart items from navigation state - handle both cart and buy-now flows
-    const { 
+    const {
         cartItems = [],
         subtotal: passedSubtotal = 0,
         shipping: passedShipping = 0,
@@ -89,12 +97,12 @@ const CheckoutPage = () => {
                     // Fetch current product details to get the latest quantity
                     const response = await chukkytechAxios.get(`/product/getProductById/${item.productId}`);
                     const currentProduct = response.data;
-                    
+
                     const availableQuantity = currentProduct.productQuantity || 0;
                     const requestedQuantity = item.quantity || 1;
-                    
+
                     console.log(`Product ${item.productName}: Available=${availableQuantity}, Requested=${requestedQuantity}`);
-                    
+
                     return {
                         productId: item.productId,
                         productName: item.productName,
@@ -118,7 +126,7 @@ const CheckoutPage = () => {
 
             const stockResults = await Promise.all(stockChecks);
             const unavailableProducts = stockResults.filter(result => !result.isAvailable);
-            
+
             // Update product stock state for UI display
             const stockMap = {};
             stockResults.forEach(result => {
@@ -129,13 +137,13 @@ const CheckoutPage = () => {
                 };
             });
             setProductStock(stockMap);
-            
+
             return {
                 allAvailable: unavailableProducts.length === 0,
                 unavailableProducts,
                 stockResults
             };
-            
+
         } catch (error) {
             console.error('Error checking product stock:', error);
             return {
@@ -186,9 +194,11 @@ const CheckoutPage = () => {
                     fetchAllAddress(userData.userId)
                 ]);
             }
+            setShowLogin(false);
         } catch (error) {
             console.error('Error fetching user data:', error);
-            setErrorMessage("Failed to load user data");
+            setShowLogin(true);
+            setErrorMessage("Failed to load user data /  please login or register to continue");
         }
     };
 
@@ -280,9 +290,9 @@ const CheckoutPage = () => {
         setPendingDeleteAddress(true);
         try {
             await chukkytechAxios.delete(`/general/deleteAddress/${addressId}/${userDetails.userId}`);
-            
+
             setSuccessMessage("Address deleted successfully!");
-            
+
             // Refresh addresses
             await fetchUserData();
             setShowWarningModal(false);
@@ -299,7 +309,7 @@ const CheckoutPage = () => {
     const handleEditAddress = (address) => {
         setEditingAddress(address);
         setShowEditModal(true);
-        
+
         // Pre-fill form with address data
         setValue("firstName", address.firstName);
         setValue("lastName", address.lastName);
@@ -307,7 +317,7 @@ const CheckoutPage = () => {
         setValue("phoneNumber", address.phoneNumber);
         setValue("deliveryAddress", address.deliveryAddress);
         setValue("additionalInfo", address.additionalInfo || "");
-        
+
         // Set state and LGA
         setFilterState(address.stateId);
         setAddressId(address.deliveryAddressId);
@@ -315,12 +325,12 @@ const CheckoutPage = () => {
         if (allStateLocalGov?.allLocalGovt) {
             const stateLocalGovt = allStateLocalGov.allLocalGovt.filter(LGA => LGA.stateId === address.stateId);
             setSelectedStateLGA(stateLocalGovt);
-            
+
             // Find and set the LGA
             const selectedLga = stateLocalGovt.find(lga => lga.lgaId === address.lgaId);
             setFilterLGA(selectedLga);
         }
-        
+
         setAddressForm({ setAsDefault: address.defaultAddress || false });
     };
 
@@ -328,7 +338,7 @@ const CheckoutPage = () => {
         setAddressId(id);
         setModalMessage('Are you sure you want to delete this address?');
         setShowWarningModal(true);
-    }  
+    }
 
     const handleClearCart = () => {
         try {
@@ -382,8 +392,10 @@ const CheckoutPage = () => {
     };
 
     // Handle checkout submission
-    const handleCheckout = async (e) => {
-        e.preventDefault();
+    const handleCheckout = async (reference) => {
+
+
+        // e.preventDefault();
 
         if (!selectedAddress) {
             setErrorMessage("Please select a delivery address");
@@ -399,15 +411,14 @@ const CheckoutPage = () => {
         console.log("Stock check result:>>>>>", stockCheck);
 
 
-        
         if (!stockCheck.allAvailable) {
             setLoading(false);
-            
+
             if (stockCheck.unavailableProducts.length > 0) {
-                const productNames = stockCheck.unavailableProducts.map(p => 
+                const productNames = stockCheck.unavailableProducts.map(p =>
                     `${p.productName} (Available: ${p.availableQuantity}, Requested: ${p.requestedQuantity})`
                 ).join(', ');
-                
+
                 setErrorMessage(`Insufficient stock for: ${productNames}. Please adjust your quantities and try again.`);
             } else {
                 setErrorMessage("Unable to verify product availability. Please try again.");
@@ -418,22 +429,28 @@ const CheckoutPage = () => {
         // if (stockCheck.allAvailable === false){
         //        return
         // }
+        let selectedPaymentReference
+        if (payment === "credit-paid") {
+            selectedPaymentReference = reference
+        } else {
+            selectedPaymentReference = "POD"
+        }
 
-    
         const paymentData = {
-            paymentMethod: payment,
+            paymentMethod: payment || "credit-paid",
             totalAmount: total,
             customerEmail: userDetails?.email,
             customerName: `${userDetails?.firstName} ${userDetails?.lastName}`,
             selectedProduct: cartItems,
             deliveryAddress: mainDefaultAddress || deliverAddress,
-            userId: userDetails?.userId, 
+            userId: userDetails?.userId,
             subtotal: subtotal,
             deliveryFee: shipping,
+            paymentReference: selectedPaymentReference
         };
 
-        console.log("Processing checkout:", paymentData);
-        
+        // console.log("Processing checkout:", paymentData);
+
         try {
             const response = await chukkytechAxios.post("/order/orders/create", paymentData);
 
@@ -442,21 +459,21 @@ const CheckoutPage = () => {
             if (response.data && response.data.success) {
                 // Order created successfully
                 setShowReceipt(true);
-                
+
                 // Clear cart data comprehensively
                 await handleClearCart();
-                
+
                 // Clear all localStorage cart data
                 localStorage.removeItem('cartItems');
                 localStorage.removeItem('cartTotal');
                 localStorage.removeItem('cartSubtotal');
                 localStorage.removeItem('cartCount');
-                
+
                 // Force refresh of cart-related components
                 setTimeout(() => {
                     window.dispatchEvent(new Event('cartUpdated'));
                 }, 100);
-                
+
             } else {
                 throw new Error(response.data?.message || "Order creation failed");
             }
@@ -525,9 +542,9 @@ const CheckoutPage = () => {
         if (!stockInfo) return null;
 
         const isSufficient = stockInfo.available >= (item.quantity || 1);
-        
+
         return (
-            <small 
+            <small
                 className={`d-block ${isSufficient ? 'text-success' : 'text-danger fw-bold'}`}
             >
                 <i className={`fas ${isSufficient ? 'fa-check-circle' : 'fa-exclamation-triangle'} me-1`}></i>
@@ -545,6 +562,7 @@ const CheckoutPage = () => {
             <>
                 <Header />
                 <SearchBar />
+                <Goback />
                 <div className="container checkout-page my-5">
                     <div className="row pt-4">
                         <div className="col-12 text-center py-5">
@@ -598,11 +616,75 @@ const CheckoutPage = () => {
         }
     };
 
+
+
+    const handleAddAddress = (() => {
+        if (!user) {
+            setShowAddressForm(false)
+
+        } else {
+            setShowAddressForm(!showAddressForm)
+        }
+
+    })
+
+    const handleNavigateLogin = (() => {
+        navigate("/user-login")
+    })
+
+
+    //   const handlePayNow = async () => {
+    //     try {
+    //       setLoading(true);
+
+    //       const response = await chukkytechAxios.post("payments/initialize", {
+    //         email: userDetails?.email,
+    //         amount: total, // in Naira
+    //         userId: userDetails?.userId
+
+    //       });
+
+    //       if (response.data.success) {
+
+    //         window.location.href = response.data.authorization_url;
+    //       }
+    //     } catch (error) {
+    //       console.error("Payment initialization failed:", error);
+    //       alert("Something went wrong while initializing payment.");
+    //     } finally {
+    //       setLoading(false);
+    //     }
+    //   };
+
+
+    const payWithPaystack = () => {
+        setLoading(true);
+
+        const handler = window.PaystackPop.setup({
+            key: process.env.REACT_APP_PAYSTACK_KEY,
+            email: userDetails?.email,
+            amount: total,
+            userId: userDetails?.userId,
+            currency: 'NGN',
+            callback: function (response) {
+                console.log("paystack", response)
+                handleCheckout(response.reference);
+            },
+            onClose: function () {
+                setErrorMessage("Payment window closed");
+                setLoading(false);
+            },
+        });
+        handler.openIframe();
+    };
+
     return (
         <>
             <Header />
-            <SearchBar />
-           
+            {/* <SearchBar /> */}
+
+            <Goback />
+
             {/* Success/Error Messages */}
             {successMessage && (
                 <div className="container mt-3">
@@ -617,6 +699,8 @@ const CheckoutPage = () => {
                 <div className="container mt-3">
                     <div className="alert alert-danger alert-dismissible fade show" role="alert">
                         {errorMessage}
+                        {showLogin && <button className="loginSetStle btn btn-primary" onClick={handleNavigateLogin}>login</button>}
+
                         <button type="button" className="btn-close" onClick={() => setErrorMessage("")}></button>
                     </div>
                 </div>
@@ -661,25 +745,25 @@ const CheckoutPage = () => {
 
                                         <div style={{ top: "10px", right: "10px" }} className="positionAddressDropDiv">
                                             <div>
-                                                <button 
+                                                <button
                                                     className="btn btn-light btn-sm me-2"
-                                                    type="button" 
+                                                    type="button"
                                                     onClick={(e) => {
                                                         handleEditAddress(mainDefaultAddress);
                                                     }}
                                                 >
                                                     Edit
                                                 </button>
-                                                <span 
+                                                <span
                                                     className="btn btn-light btn-sm"
-                                                    type="button" 
+                                                    type="button"
                                                     onClick={(e) => {
                                                         e.stopPropagation();
                                                         handleShowWarningModal(mainDefaultAddress.deliveryAddressId);
                                                     }}
                                                     disabled={pendingDeleteAddress}
                                                 >
-                                                    {pendingDeleteAddress ? "Deleting..." : <MdDelete color="red"/>}
+                                                    {pendingDeleteAddress ? "Deleting..." : <MdDelete color="red" />}
                                                 </span>
                                             </div>
                                         </div>
@@ -716,8 +800,8 @@ const CheckoutPage = () => {
                                             </div>
 
                                             <div style={{ top: "10px", right: "10px" }} className="positionAddressDropDiv">
-                                                <button 
-                                                    className="btn btn-light btn-sm me-2" 
+                                                <button
+                                                    className="btn btn-light btn-sm me-2"
                                                     type="button"
                                                     onClick={(e) => {
                                                         e.stopPropagation();
@@ -726,8 +810,8 @@ const CheckoutPage = () => {
                                                 >
                                                     Edit
                                                 </button>
-                                                <span 
-                                                    className="btn btn-light btn-sm" 
+                                                <span
+                                                    className="btn btn-light btn-sm"
                                                     type="button"
                                                     onClick={(e) => {
                                                         e.stopPropagation();
@@ -735,7 +819,7 @@ const CheckoutPage = () => {
                                                     }}
                                                     disabled={pendingDeleteAddress}
                                                 >
-                                                    {pendingDeleteAddress ? "Deleting..." : <MdDelete color="red"/>}
+                                                    {pendingDeleteAddress ? "Deleting..." : <MdDelete color="red" />}
                                                 </span>
                                             </div>
 
@@ -752,13 +836,13 @@ const CheckoutPage = () => {
                             {/* Add New Address Toggle */}
                             <div
                                 style={{ cursor: "pointer" }}
-                                onClick={() => setShowAddressForm(!showAddressForm)}
+                                onClick={() => handleAddAddress()}
                                 className="d-flex align-items-center text-primary mb-3"
                             >
                                 <FaPlus />
-                                <span style={{ fontSize: "16px", marginLeft: "8px" }}>
+                                <s style={{ fontSize: "16px", marginLeft: "8px", textDecoration: "none" }} >
                                     {showAddressForm ? "Cancel Adding Address" : "Add New Address"}
-                                </span>
+                                </s>
                             </div>
 
                             {/* New Address Form */}
@@ -893,33 +977,69 @@ const CheckoutPage = () => {
                                     <input
                                         className="form-check-input"
                                         type="radio"
-                                        value="credit"
-                                        checked={payment === "credit"}
+                                        value="credit-paid"
+                                        checked={payment === "credit-paid"}
                                         onChange={(e) => setPayment(e.target.value)}
                                     />
                                     <label className="form-check-label">Credit / Debit Card</label>
                                 </div>
+
+                                <div className="form-check mb-2">
+                                    <input
+                                        className="form-check-input"
+                                        type="radio"
+                                        value="pay-on-delivery"
+                                        checked={payment === "pay-on-delivery"}
+                                        onChange={(e) => setPayment(e.target.value)}
+                                    />
+                                    <label className="form-check-label">Pay on Delivery</label>
+                                </div>
                             </div>
 
                             {/* Place Order Button */}
-                            <button
-                                type="button"
-                                className="btn btn-warning w-100 mt-4 p-3 fw-bold"
-                                onClick={handleCheckout}
-                                disabled={loading || !selectedAddress || checkingStock}
-                            >
-                                {checkingStock ? (
-                                    <>
-                                        <span className="btn-loader"></span> Checking Stock Availability...
-                                    </>
-                                ) : loading ? (
-                                    <>
-                                        <span className="btn-loader"></span> Processing Order...
-                                    </>
-                                ) : (
-                                    `Place Order - N${total.toFixed(2)}`
-                                )}
-                            </button>
+
+                            {
+                                payment === "credit-paid" ? <button
+                                    type="button"
+                                    className="btn btn-warning w-100 mt-4 p-3 fw-bold"
+                                    // onClick={handleCheckout}
+                                    onClick={payWithPaystack}
+
+                                    disabled={loading || !selectedAddress || checkingStock}
+                                >
+                                    {checkingStock ? (
+                                        <>
+                                            <span className="btn-loader"></span> Checking Stock Availability...
+                                        </>
+                                    ) : loading ? (
+                                        <>
+                                            <span className="btn-loader"></span> Processing Order...
+                                        </>
+                                    ) : (
+                                        `Pay Now - N${total.toFixed(2)}`
+                                    )}
+                                </button> : <button
+                                    type="button"
+                                    className="btn btn-warning w-100 mt-4 p-3 fw-bold"
+                                    onClick={handleCheckout}
+
+
+                                    disabled={loading || !selectedAddress || checkingStock}
+                                >
+                                    {checkingStock ? (
+                                        <>
+                                            <span className="btn-loader"></span> Checking Stock Availability...
+                                        </>
+                                    ) : loading ? (
+                                        <>
+                                            <span className="btn-loader"></span> Processing Order...
+                                        </>
+                                    ) : (
+                                        `Place Order - N${total.toFixed(2)}`
+                                    )}
+                                </button>
+                            }
+
                         </form>
                     </div>
 
@@ -965,7 +1085,7 @@ const CheckoutPage = () => {
                                     <span>N{subtotal.toFixed(2)}</span>
                                 </div>
                                 <div className="d-flex justify-content-between mb-2">
-                                    <span>Shipping</span>
+                                    <span>Delivery</span>
                                     <span>N{shipping.toFixed(2)}</span>
                                 </div>
                                 {subtotal > 0 && (
@@ -1008,9 +1128,9 @@ const CheckoutPage = () => {
                         <div className="modal-content">
                             <div className="modal-header">
                                 <h5 className="modal-title">Edit Address</h5>
-                                <button 
-                                    type="button" 
-                                    className="btn-close" 
+                                <button
+                                    type="button"
+                                    className="btn-close"
                                     onClick={() => {
                                         setShowEditModal(false);
                                         setEditingAddress(null);
@@ -1129,9 +1249,9 @@ const CheckoutPage = () => {
                                 </form>
                             </div>
                             <div className="modal-footer">
-                                <button 
-                                    type="button" 
-                                    className="btn btn-secondary" 
+                                <button
+                                    type="button"
+                                    className="btn btn-secondary"
                                     onClick={() => {
                                         setShowEditModal(false);
                                         setEditingAddress(null);
@@ -1145,9 +1265,9 @@ const CheckoutPage = () => {
                                         <span className="btn-loader"></span> Updating Address...
                                     </button>
                                 ) : (
-                                    <button 
-                                        type="button" 
-                                        className="btn btn-primary" 
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary"
                                         onClick={handleSubmit(handleUpdateAddress)}
                                     >
                                         Update Address
@@ -1194,15 +1314,14 @@ const CheckoutPage = () => {
                         <small className="text-muted fw-normal">Thank you for your purchase!</small>
                     </Modal.Title>
                 </Modal.Header>
-                <Modal.Body className="p-4" id="download-receipt" ref={receiptRef}> 
+                <Modal.Body className="p-4" id="download-receipt" ref={receiptRef}>
                     {/* Header Section */}
                     <div className="row align-items-center mb-4">
                         <div className="col-6">
                             <div className="d-flex align-items-center">
-                                <div className="bg-primary rounded-circle d-flex align-items-center justify-content-center me-3" 
-                                    style={{width: '50px', height: '50px'}}>
-                                    <i className="fas fa-shopping-bag text-white fs-5"></i>
-                                </div>
+
+                                <i className="">    <img src={myLogo} style={{ width: "80px" }} /> </i>
+
                                 <div>
                                     <h5 className="mb-0 fw-bold">ChukkyTech</h5>
                                     <small className="text-muted">Premium Tech Solutions</small>
@@ -1210,10 +1329,16 @@ const CheckoutPage = () => {
                             </div>
                         </div>
                         <div className="col-6 text-end">
-                            <div className="badge bg-success fs-6 p-2">
-                                <i className="fas fa-check-circle me-1"></i>
-                                Payment Successful
-                            </div>
+                            {
+                                payment === "credit-paid" ? <div className="badge bg-success fs-6 p-2">
+                                    <i className="fas fa-check-circle me-1"></i>
+                                    Payment Successful
+                                </div> : <div className="badge bg-success fs-6 p-2">
+                                    <i className="fas fa-check-circle me-1"></i>
+                                    Order Booked Successfully
+                                </div>
+                            }
+
                             <p className="text-muted small mb-0 mt-1">Order Date: {new Date().toLocaleDateString()}</p>
                         </div>
                     </div>
@@ -1242,11 +1367,11 @@ const CheckoutPage = () => {
                                             <tr key={item.productId}>
                                                 <td className="ps-4">
                                                     <div className="d-flex align-items-center">
-                                                        <img 
-                                                            src={getProductImage(item)} 
+                                                        <img
+                                                            src={getProductImage(item)}
                                                             alt={item.productName}
                                                             className="rounded me-3"
-                                                            style={{width: '40px', height: '40px', objectFit: 'cover'}}
+                                                            style={{ width: '40px', height: '40px', objectFit: 'cover' }}
                                                         />
                                                         <div>
                                                             <div className="fw-semibold">{item.productName}</div>
@@ -1282,23 +1407,46 @@ const CheckoutPage = () => {
                                         <span className="fw-semibold">N{subtotal.toFixed(2)}</span>
                                     </div>
                                     <div className="d-flex justify-content-between mb-2">
-                                        <span className="text-muted">Shipping Fee:</span>
+                                        <span className="text-muted">Delivery Fee:</span>
                                         <span className="fw-semibold">N{shipping.toFixed(2)}</span>
                                     </div>
-                                    {payment === 'credit' && (
+                                    {payment === 'credit-paid' ? (
                                         <div className="d-flex justify-content-between mb-2">
                                             <span className="text-muted">Payment Method:</span>
                                             <span className="badge bg-info">
                                                 <i className="fas fa-credit-card me-1"></i>
-                                                Credit Card
+                                                Online/Paid
                                             </span>
                                         </div>
-                                    )}
-                                    <hr />
-                                    <div className="d-flex justify-content-between mb-3">
-                                        <span className="fw-bold fs-5">Total Amount:</span>
-                                        <span className="fw-bold fs-5 text-primary">N{total.toFixed(2)}</span>
+                                    ) : (
+                                        <div className="d-flex justify-content-between mb-2">
+                                            <span className="text-muted">Payment Method:</span>
+                                            <span className="badge bg-info">
+                                                <i className=""></i>
+                                                Pay on Delivery
+                                                /
+                                                Not Paid
+                                            </span>
+                                        </div>
+                                    )
+
+                                    }
+
+                                    <div className="d-flex justify-content-between mb-2">
+                                        <span className="text-muted">Payment Reference:</span>
+                                        <span className="fw-semibold">  {""} </span>
                                     </div>
+                                    <hr />
+                                    {
+                                        payment === "credit-paid" ? <div className="d-flex justify-content-between mb-3">
+                                            <span className="fw-bold fs-5">Total Amount Paid:</span>
+                                            <span className="fw-bold fs-5 text-primary">N{total.toFixed(2)}</span>
+                                        </div> : <div className="d-flex justify-content-between mb-3">
+                                            <span className="fw-bold fs-5">Total Amount to be Paid on Delivery:</span>
+                                            <span className="fw-bold fs-5 text-primary">N{total.toFixed(2)}</span>
+                                        </div>
+                                    }
+
                                 </div>
                             </div>
                         </div>
@@ -1327,7 +1475,7 @@ const CheckoutPage = () => {
                                     <div className="col-md-4 text-md-end">
                                         <small className="text-muted">
                                             <i className="fas fa-phone me-1"></i>
-                                            +234-XXX-XXXX-XXX
+                                            08020653456
                                         </small>
                                     </div>
                                 </div>
@@ -1337,7 +1485,7 @@ const CheckoutPage = () => {
                 </Modal.Body>
                 <Modal.Footer className="border-0 bg-light">
                     <div className="d-flex justify-content-between w-100">
-                        <button 
+                        <button
                             className="btn btn-outline-secondary"
                             onClick={() => setShowReceipt(false)}
                         >
@@ -1355,6 +1503,40 @@ const CheckoutPage = () => {
                             </button>
                         </div>
                     </div>
+                </Modal.Footer>
+            </Modal>
+
+            <Modal
+                show={showNoLogin}
+                onHide={handleHideNoLogin}
+                backdrop="static"
+                keyboard={false}
+                size="md"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title style={{ fontWeight: 'bold' }} className="text-info">
+                        {' '}
+                        LOGIN REQUEST{' '}
+                    </Modal.Title>
+                </Modal.Header>
+
+                <Modal.Body>
+                    <p>
+                        Hey, looks like you're not logged in yet! login for a smoother ride, or register to unlock the full experience, let's get you started!
+
+                    </p>
+                </Modal.Body>
+                <Modal.Footer>
+
+                    <Button className="WProceedBtn" onClick={navigateLogin}>
+                        Proceed Login
+                    </Button>
+
+                    <Button variant="secondary" onClick={handleHideNoLogin}>
+                        Cancel
+                    </Button>
                 </Modal.Footer>
             </Modal>
 

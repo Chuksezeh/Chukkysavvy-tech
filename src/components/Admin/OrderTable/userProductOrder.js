@@ -252,8 +252,8 @@ const ProductOrderTable = () => {
                   onChange={(e) => setSelectedOrderType(e.target.value)}
                 >
                   <option value="all">All Types</option>
-                  <option value="Pickup">Pickup</option>
-                  <option value="Instore Appointment">Instore Appointment</option>
+                  {/* <option value="Pickup">Pickup</option>
+                  <option value="Instore Appointment">Instore Appointment</option> */}
                 </select>
               </div>
             </div>
@@ -274,7 +274,7 @@ const ProductOrderTable = () => {
                 <thead className="bg-light">
                   <tr>
                     <th className="ps-4 py-3 fw-semibold">#</th>
-                    <th className="py-3 fw-semibold">Order Code</th>
+                    <th className="py-3 fw-semibold">Payment Method</th>
                     <th className="py-3 fw-semibold">Customer</th>
                     <th className="py-3 fw-semibold">Email</th>
                     <th className="py-3 fw-semibold">Status</th>
@@ -318,7 +318,7 @@ const ProductOrderTable = () => {
                       <tr key={item.orderId} className="align-middle">
                         <td className="ps-4">{(currentPage - 1) * ordersPerPage + i + 1}</td>
                         <td>
-                          <span className="fw-semibold text-primary">{item.repairOrderCode}</span>
+                          <span className="fw-semibold text-primary">{item.paymentMethod}</span>
                         </td>
                         <td>
                           <div>

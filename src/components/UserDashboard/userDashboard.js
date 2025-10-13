@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { FaUser } from "react-icons/fa6";
+import { FaCartShopping, FaUser } from "react-icons/fa6";
 import { IoIosArrowForward } from "react-icons/io";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import "./userDashboard.css";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import useGetData from "../Utility/getFunction";
+import { GiAutoRepair } from "react-icons/gi";
+import { BsTools } from "react-icons/bs";
 
 const UserDashBoard = () => {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -23,9 +25,10 @@ const UserDashBoard = () => {
 
     const menuItems = [
         { name: "Dashboard", path: "/user-profile-dashboard", icon: <IoIosArrowForward />, sideIcon: <FaUser /> },
-          { name: "Book Device Repair", path: "/bookingpage", icon: <IoIosArrowForward /> },
-        { name: "My Repair Orders", path: "/repair-orders", icon: <IoIosArrowForward /> },
-        // { name: "Purchase Orders", path: "/user-product-orders", icon: <IoIosArrowForward /> },
+       { name: "My Repair Orders", path: "/repair-orders", icon: <IoIosArrowForward />, sideIcon: <BsTools /> },
+       { name: "Purchased Orders", path: "/user-product-orders", icon: <IoIosArrowForward />, sideIcon: <FaCartShopping /> },
+        { name: "Book Device Repair", path: "/bookingpage", icon: <IoIosArrowForward />, sideIcon: <GiAutoRepair /> },
+        
         { name: "Logout", path: "" }
       ];
 
@@ -92,7 +95,8 @@ const UserDashBoard = () => {
                             <Link to={item.path} className="navlink-style" key={index}>
                                 <li onClick={() => handleItemClick(index)} className={activeIndex === index ? "active" : ""}>
                                     <span className="setIconDivSideB">
-                                        <span  style={{ color: checkColor(item.name) }}>{item.name}</span>
+                                      
+                                        <span  style={{ color: checkColor(item.name) }}> <span>{item.sideIcon}</span>  <span  style={{marginLeft:"5px"}}>{item.name}</span>  </span>
                                         <span>{item.icon}</span>
                                     </span>
                                 </li>

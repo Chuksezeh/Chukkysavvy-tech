@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { chukkytechAxios } from "../../Utility/axios";
 import { decrease, increase, removeProduct } from "../../redux/productCounter";
+import Goback from "../../layouts/goBack";
 
 const ProductCart = () => {
   const navigate = useNavigate();
@@ -206,6 +207,7 @@ const ProductCart = () => {
     <>
       <Header />
       <SearchBar />
+        {/* <Goback/> */}
       
       <div className="container cart-page my-5">
         <div className="row mt-4">

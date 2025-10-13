@@ -1,332 +1,231 @@
 import { useEffect, useState } from "react";
-import UserDashBoard from "../userDashboard"
-import "../userDashboard.css"
+import UserDashBoard from "../userDashboard";
+import "../userDashboard.css";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import TrackProgress from "../TrackProgress/trrackProgress";
-import TrackBtn from "../TrackProgress/trackerButton";
 import { PiPhoneIncomingDuotone } from "react-icons/pi";
-import { MdKeyboardBackspace } from "react-icons/md";
+import { MdKeyboardBackspace, MdOutlineHistory, MdOutlineShoppingBag } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import Header from "../../layouts/Header";
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import useGetData from "../../Utility/getFunction";
 import moment from "moment/moment";
-import { FaClipboardList, FaTruckPickup, FaTools, FaTruckMoving, FaCheckCircle, FaRegCommentDots } from 'react-icons/fa';
+import { 
+  FaClipboardList, 
+  FaTruckPickup, 
+  FaTools, 
+  FaTruckMoving, 
+  FaCheckCircle, 
+  FaRegCommentDots,
+  FaSearch,
+  FaFilter
+} from 'react-icons/fa';
 import Receipt from "../../layouts/Receipt/repairOrderReceipt";
-import chukkyLogo from "../../images/CHUKKY-BRAND-BACKGROUND-removebg-preview.png"
+import chukkyLogo from "../../images/CHUKKY-BRAND-BACKGROUND-removebg-preview.png";
 import Footer from "../../layouts/Footer";
-import { FaArrowDownWideShort } from "react-icons/fa6";
 import { chukkytechAxios } from "../../Utility/axios";
 import { IoCheckmarkDoneOutline } from "react-icons/io5";
 import { useForm } from "react-hook-form";
-import { ButtonGroup, DropdownButton,Dropdown} from "react-bootstrap";
+import { ButtonGroup, DropdownButton, Dropdown, Badge, Card, Row, Col } from "react-bootstrap";
+import "./RepairOrders.css";
 
 
 
 
 
 const RepairOrders = (() => {
-  const [showDropDown, setShowDropDown] = useState("");
+
+ const [showDropDown, setShowDropDown] = useState("");
   const [commentPhone, setCommentPhone] = useState("");
-  const [noOrderHistory, setNoOrderHistory] = useState(false)
+  const [noOrderHistory, setNoOrderHistory] = useState(false);
   const [itemData, setItemData] = useState({});
   const [progressStatus, setProgressStatus] = useState(false);
   const [historyData, setHistoryData] = useState({});
-const [showHistoryModal, setShowHistoryModal] = useState(false);
-const [loading, setLoading] = useState(false);
-const [errMessage, setErrMessage] = useState("");
-
-
-
-const [showComment, setShowComment] = useState(false);
-
-const { register, handleSubmit, setValue, reset,
-        watch, formState: { errors, isDirty, isValid  } } = useForm({
-       
-      });
-
+  const [showHistoryModal, setShowHistoryModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errMessage, setErrMessage] = useState("");
+  const [showComment, setShowComment] = useState(false);
   const [orderData, setOrderData] = useState("");
   const [showResult, setShowResult] = useState(false);
   const navigate = useNavigate();
-
   const [showTrackOrder, setShowTrackOrder] = useState("");
-
   const [orderCode, setOrderCode] = useState("");
   const [successTex, setSuccessText] = useState("");
   const [commentOrderCode, setCommentOrderCode] = useState("");
-
   const [repairOrdersPending, setRepairOrdersPending] = useState(false);
   const [repairOrdersTracking, setRepairOrdersTracking] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [successMessage, setSuccessMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(false);
+
 
   const userInfo = localStorage.getItem('userInfo');
   const userData = JSON.parse(userInfo);
 
-  const [successMessage, setSuccessMessage] = useState(false);
-    const [errorMessage, setErrorMessage] = useState(false);
-
-const encodedEmail = encodeURIComponent(userData.email);
-const {data: users, isPending: userIsPending, error: userError} = useGetData(`/auth/getUser/${encodedEmail}`)
-
-
-
-  // const { data: repairOrdersTracking, isPending: repairOrdersPending, error: repairOrdersError } = useGetData(`repair/getRepairOrderCode/${itemData?.orderCode}`);
-
+  const { register, handleSubmit, setValue, reset, watch, formState: { errors, isDirty, isValid } } = useForm({});
+  
+  const encodedEmail = encodeURIComponent(userData.email);
+  const { data: users, isPending: userIsPending, error: userError } = useGetData(`/auth/getUser/${encodedEmail}`);
   const { data, isPending, error } = useGetData(`repair/getUserRepairOrders/${users?.userId}`);
-  
-  
-console.log("all", data)
 
+  // Status color mapping
+  // const getStatusColor = (status) => {
+  //   const statusColors = {
+  //     Processing: "var(--primary)",
+  //     pickedUp: "var(--warning)",
+  //     fixing: "var(--info)",
+  //     fixed: "var(--success)",
+  //     delivered: "var(--success)",
+  //     settled: "var(--dark)",
+  //     cancel: "var(--danger)",
+  //     irreparable: "var(--danger)"
+  //   };
+  //   return statusColors[status] || "var(--secondary)";
+  // };
 
-
-  const handleShowDropDown = () => {
-
-    setShowDropDown(!showDropDown)
-  }
-
-  const handleNavigateDashboard = (() => {
-    navigate("-1")
-  })
-
-
-  const repairOrders = repairOrdersTracking?.repairOrders || []; // Ensure it's always an array
-
-  const handleCloseTrackOrder = () => setShowTrackOrder(false);
-
-
-  const getRepairData = repairOrders[0]
-
-  console.log("data>>>>>jjfj", orderCode)
-
-
-  // Sort repairOrders by createdDateTime to get the latest status
-  const sortedOrders = [...repairOrders].sort((a, b) => new Date(a.createdDateTime) - new Date(b.createdDateTime));
-
-  // Get the latest status update
-  const latestOrder = sortedOrders[sortedOrders.length - 1];
-
-  // Define the stages and their corresponding statuses
-  const stages = [
-       { name: "Ordered", status: "Processing", icon: <FaClipboardList />, date: null },
-       { name: "Picked", status: "pickedUp", icon: <FaTruckPickup />, date: null },
-       { name: "Fixing", status: "fixing", icon: <FaTools />, date: null },
-       { name: "Fixed", status: "fixed", icon: <FaTruckMoving />, date: null },
-       { name: "Delivered", status: "delivered", icon: <FaCheckCircle />, date: null },
-       { name: "Settled", status: "settled", icon: <IoCheckmarkDoneOutline />, date: null },
-   ];
- 
-
-  // Map status updates to the stages
-  const updatedStages = stages.map((stage) => {
-    const matchingOrder = sortedOrders.find((order) => order.status === stage.status);
-    return {
-      ...stage,
-      date: matchingOrder ? matchingOrder.createdDateTime : null,
-      isActive: latestOrder?.status === stage.status, // Highlight latest status
+  const getStatusVariant = (status) => {
+    const variants = {
+      Processing: "primary",
+      pickedUp: "warning",
+      fixing: "info",
+      fixed: "success",
+      delivered: "success",
+      settled: "dark",
+      cancel: "danger",
+      irreparable: "danger"
     };
-  });
-
-  
-
-
-
-
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-
-
+    return variants[status] || "secondary";
+  };
 
   const getLatestRepairOrders = (orders) => {
-    if (!Array.isArray(orders)) {
-      console.error("Expected an array, but got:", orders);
-      return [];
-    }
-
-    console.log("Processing Orders:", orders);
-
+    if (!Array.isArray(orders)) return [];
+    
     const latestOrders = orders.reduce((acc, order) => {
-      console.log("Checking Order:", order);
-
       if (!acc[order.repairOrderCode] || new Date(order.createdDateTime) > new Date(acc[order.repairOrderCode].createdDateTime)) {
         acc[order.repairOrderCode] = order;
       }
       return acc;
     }, {});
 
-    console.log("Latest Orders Object:", latestOrders);
-
     return Object.values(latestOrders);
   };
 
-  const ordersArray = Array.isArray(data.repairOrders) ? data.repairOrders : [];
+  const ordersArray = Array.isArray(data?.repairOrders) ? data.repairOrders : [];
   const latestOrders = getLatestRepairOrders(ordersArray);
 
   const filterActiveOrders = latestOrders && latestOrders.filter((order) =>
     order.status !== "delivered" && order.status !== "cancel" &&
-    order.status !== "irreparable" &&   order.status !== "settled"  
-    );
-
+    order.status !== "irreparable" && order.status !== "settled"  
+  );
 
   const filterOrderHistory = latestOrders && latestOrders.filter((order) =>
-     order.status === "delivered" || order.status === "cancel" ||
-    order.status === "irreparable" ||   order.status === "settled"  
-);
+    order.status === "delivered" || order.status === "cancel" ||
+    order.status === "irreparable" || order.status === "settled"  
+  );
 
+  // Filter orders based on search and status
+  const filteredActiveOrders = filterActiveOrders?.filter(order => 
+    order.repairOrderCode.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    order.deviceType.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    order.deviceModel.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
+  const filteredHistoryOrders = filterOrderHistory?.filter(order => 
+    order.repairOrderCode.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    order.deviceType.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    order.deviceModel.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-  const showDetails = (item) => {
-     setOrderData(itemData)
-     setShowResult(true)
-     
-    
-  }
-
-  const handleShowDetails = ((item)=>{
-     setHistoryData(item)
-       setShowHistoryModal(true)
-  })
-
-  const handleCloseResult = () => setShowResult(false)
-
- 
-
-
-  const handleUpdateKeys = ((e, item) => {
-    console.log("Latest>>>>>>>>>mm:",  e.target.value);
-    if(e.target.value === "view"){
-        showDetails()
-        setShowHistoryModal(false)
-      }else if(e.target.value === "track"){
-        setShowTrackOrder(true)
-        
-        handleShowTrackOrder(itemData?.orderCode);
-      }else{
-        setShowHistoryModal(true)
-      }
-    if (e.target.value === "pickedUp") {
-      setProgressStatus("pickedUp")
-    } else if (e.target.value === "fixing") {
-      setProgressStatus("fixing")
-    } else if (e.target.value === "fixed") {
-      setProgressStatus("fixed")
-    } else if (e.target.value === "delivered") {
-      setProgressStatus("delivered")
-    } else if (e.target.value === "cancel") {
-      setProgressStatus("cancel")
-    }
-
-  })
-
+  const handleShowTrackOrder = (code) => {
+    setOrderCode(code);
+    setShowTrackOrder(true);
+    fetchTrackingDetails(code); 
+  };
 
   const fetchTrackingDetails = async (code) => {
     setRepairOrdersPending(true);
-      try {
-        const response = await chukkytechAxios.get(`repair/getRepairOrderCode/${code}`);
-        setRepairOrdersTracking(response.data);
-        setRepairOrdersPending(false);
-      } catch (error) {
-        setRepairOrdersPending(false);
-        console.error('Error fetching tracking:', error);
-      }
+    try {
+      const response = await chukkytechAxios.get(`repair/getRepairOrderCode/${code}`);
+      setRepairOrdersTracking(response.data);
+      setRepairOrdersPending(false);
+    } catch (error) {
+      setRepairOrdersPending(false);
+      console.error('Error fetching tracking:', error);
+    }
+  };
+
+  const repairOrders = repairOrdersTracking?.repairOrders || [];
+  const getRepairData = repairOrders[0];
+  const sortedOrders = [...repairOrders].sort((a, b) => new Date(a.createdDateTime) - new Date(b.createdDateTime));
+  const latestOrder = sortedOrders[sortedOrders.length - 1];
+
+  const stages = [
+    { name: "Ordered", status: "Processing", icon: <FaClipboardList />, date: null },
+    { name: "Picked", status: "pickedUp", icon: <FaTruckPickup />, date: null },
+    { name: "Fixing", status: "fixing", icon: <FaTools />, date: null },
+    { name: "Fixed", status: "fixed", icon: <FaTruckMoving />, date: null },
+    { name: "Delivered", status: "delivered", icon: <FaCheckCircle />, date: null },
+    { name: "Settled", status: "settled", icon: <IoCheckmarkDoneOutline />, date: null },
+  ];
+
+  const updatedStages = stages.map((stage) => {
+    const matchingOrder = sortedOrders.find((order) => order.status === stage.status);
+    return {
+      ...stage,
+      date: matchingOrder ? matchingOrder.createdDateTime : null,
+      isActive: latestOrder?.status === stage.status,
+      isCompleted: matchingOrder ? true : false,
     };
+  });
 
+  const truncateText = (text, maxWords) => {
+    if (!text) return "";
+    const words = text.split(' ');
+    return words.length > maxWords ? `${words.slice(0, maxWords).join(' ')}...` : text;
+  };
 
+  const handleShowComment = (item) => {
+    setCommentOrderCode(item?.repairOrderCode);
+    setCommentPhone(item.phone);
+    setShowComment(true);
+  };
 
-  const handleShowDropDownData = ((data)=>{
-    setOrderData(data)
-   
-  })
-
-  const handleShowTrackOrder = ((code) => {
-    console.log("check-oreder-code>>>",code)
-    setOrderCode(code)
-    setShowTrackOrder(true)
-    fetchTrackingDetails(code); 
-  })
-
-  // const handleTrackOrder = (()=>{
-  //   setShowTrackOrder(true)
-  //   handleShowTrackOrder(data?.orderCode);
-
-  // })
-
-
-const handleViewOrder = (()=>{
-  // showDetails()
-  setShowResult(true)
-})
-
-
-
-  const handleGetDetails = ((item)=>{
-    setItemData(item);
-    console.log("mggg>>>>>", itemData)
-})
-
-const truncateText = (text, maxWords) => {
-  const words = text?.split(' ');
-  return words?.length > maxWords 
-    ? `${words?.slice(0, maxWords).join(' ')}...` 
-    : text;
-};
-
-
-
-const handleShowComment = ((item)=>{
-  setCommentOrderCode(item?.repairOrderCode);
-  setCommentPhone(item.phone);
-  setShowComment(true);
-})
-
-
-const handleSubmitComment = async (data) => {
-  try {
+  const handleSubmitComment = async (data) => {
+    try {
       setLoading(true);
-     
-  const commentData = {
-          ...data,
-          phone: commentPhone,
-          repairOrderCode: commentOrderCode,
-          email: userData?.email,
-          firstName: userData?.firstName,
-          lastName: userData?.lastName,
-          userId: userData?.userId,
-          status: "active"
-
+      const commentData = {
+        ...data,
+        phone: commentPhone,
+        repairOrderCode: commentOrderCode,
+        email: userData?.email,
+        firstName: userData?.firstName,
+        lastName: userData?.lastName,
+        userId: users?.userId,
+        status: "active"
       };
 
-      console.log("Sending data:", commentData);
-
       const res = await chukkytechAxios.post('comment/createUserComment', commentData);
-      const result = res.data;
-
-      console.log("API response:", result);
-     setSuccessText(res.data.message)
+      setSuccessText(res.data.message);
       setLoading(false);
       setSuccessMessage(true);
       setShowComment(false);
-      
-  } catch (err) {
+      reset();
+    } catch (err) {
       console.error("API error:", err);
       setLoading(false);
       setErrorMessage(true);
       setErrMessage(err.response?.data || "An error occurred");
-  }
-};
+    }
+  };
 
-
-useEffect(() => {
-  const userInfo = localStorage.getItem('userInfo');
-  console.log('UserInfo:', userInfo);
-
-  if (!userInfo) {
-  navigate('/user-login');
-  }
-}, [navigate]);
-
-
+  useEffect(() => {
+    const userInfo = localStorage.getItem('userInfo');
+    if (!userInfo) {
+      navigate('/user-login');
+    }
+  }, [navigate]);
 
   return (
 
@@ -340,8 +239,29 @@ useEffect(() => {
       </div>
 
       <div className="main-content">
-        <div onClick={() => navigate(-1)}> <MdKeyboardBackspace size={35} /> </div>
-        {/* <h4>Orders</h4> */}
+        {/* <div onClick={() => navigate(-1)}> <MdKeyboardBackspace size={35} /> </div> */}
+        <div className="orders-header">
+                 <div className="back-nav" onClick={() => navigate(-1)}>
+                   <MdKeyboardBackspace size={24} />
+                   <span>Back to Dashboard</span>
+                 </div>
+                 <div className="header-content">
+                   <div className="header-main">
+                     <MdOutlineShoppingBag size={32} className="header-icon" />
+                     <div>
+                       <div>Repair Orders</div>
+                       <p style={{fontSize:"12px"}}>Manage and track your repair orders</p>
+                     </div>
+                   </div>
+                   <div className="order-stats">
+                     <div className="stat-card">
+                       <span className="stat-number">{""}</span>
+                       <span className="stat-label">Total Orders</span>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+       
         {
     successMessage &&
     <div className="container mt-2">
@@ -363,390 +283,344 @@ useEffect(() => {
 
 }
 
-        <Tabs
-          defaultActiveKey="home"
-          id="fill-tab-example"
-          className="mb-3"
-          fill
-        >
-          <Tab eventKey="home" title="Repair Order">
-            <div className="panel-wrapper">
-              <h3 className="panel-head">
-                Repair Order
-              </h3>
+       <div className="orders-content">
+          <Tabs defaultActiveKey="active" className="custom-tabs" fill>
+            {/* Active Orders Tab */}
+            <Tab eventKey="active" title={
+              <div className="tab-title">
+                <FaClipboardList />
+                <span>Active Repair Orders</span>
+                {filteredActiveOrders?.length > 0 && (
+                  <Badge bg="primary" className="tab-badge">{filteredActiveOrders.length}</Badge>
+                )}
+              </div>
+            }>
+              <div className="tab-panel">
+                {/* Search and Filter Bar */}
+                <div className="search-filter-bar">
+                  <div className="search-box">
+                    <FaSearch className="search-icon" />
+                    <input
+                      type="text"
+                      placeholder="Search by order code, device name or model..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="search-input"
+                    />
+                  </div>
+                </div>
 
-
-              <table >
-                <thead>
-                  <tr className="table-headers" >
-                    <th>Repair Order Code</th>
-                    <th>Device name</th>
-                    <th>Device model</th>
-                    <th>Device fault</th>
-                    <th>Order type</th>
-                    <th>Order due date</th>
-                    <th>Created date</th>
-                    {/* <th>Phone number</th> */}
-                    {/* <th>Address pickup/center</th> */}
-                    <th>Action</th>
-                    {/* <th>Action</th> */}
-                  </tr>
-                </thead>
-                <tbody>
-                  {filterActiveOrders &&
-                    filterActiveOrders.map((item) => (
-                      <tr key={item.repairOrderCode}>
-                        <td data-label="Repair Order Code" style={{fontWeight:"bold"}}> {item.repairOrderCode} </td>
-                        <td data-label="Device name">{item.deviceType} </td>
-                        <td data-label="Device model"> {item.deviceModel} </td>
-                        
-                        <td data-label=" Device fault">{truncateText(item.details, 8)}</td>
-                        <td data-label="Order type"> {item.repairOrderType} </td>
-                        <td data-label="Order due date">  {moment(item.reserveDate).format("lll")}</td>
-                        <td data-label="Created date"> {moment(item.createdDateTime).format("lll")}</td>
-                        {/* <td data-label="Phone number"> {item.phone} </td> */}
-                        {/* <td data-label="Address pickup/center"> {item.pickUpAddress} </td> */}
-                        {/* <td data-label="Status" style={{ color: `${checkColor(item.status)}`, fontWeight:"bold", textTransform:"capitalize" }} className="tansDroP"> {item.status} </td> */}
-                        <td>
-
-
-                          {/* <button class="button-15" role="button" onClick={()=> handleShowTrackOrder(item.repairOrderCode)}>
-                             */}
-
-                          {/* <select className="form-control border-secondary" onChange={handleUpdateKeys} onClick={() => handleGetDetails(item)} >
-
-                            <option value="">Action</option>
-                            <option value="view">View order </option>
-                            <option value="track">Track order</option>
-                           
+                {/* Orders Grid */}
+                {isPending ? (
+                  <div className="loading-state">
+                    <div className="spinner"></div>
+                    <p>Loading your orders...</p>
+                  </div>
+                ) : filteredActiveOrders?.length > 0 ? (
+                  <div className="orders-grid">
+                    {filteredActiveOrders.map((item) => (
+                      <div key={item.repairOrderCode} className="order-card">
+                        <Card.Body>
+                          <div className="order-header">
+                            <div className="order-code">
+                              <strong>#{item.repairOrderCode}</strong>
+                            </div>
+                            <Badge bg={getStatusVariant(item.status)} className="status-badge">
+                              {item.status}
+                            </Badge>
+                          </div>
+                          
+                          <div className="order-details">
+                            <div className="device-info">
+                              <h6>{item.deviceType} {item.deviceModel}</h6>
+                              <p className="fault-text">{truncateText(item.details, 12)}</p>
+                            </div>
                             
+                            <div className="order-meta">
+                              <div className="meta-item">
+                                <span className="meta-label">Order Type</span>
+                                <span className="meta-value">{item.repairOrderType}</span>
+                              </div>
+                              <div className="meta-item">
+                                <span className="meta-label">Due Date</span>
+                                <span className="meta-value">{moment(item.reserveDate).format("MMM D, YYYY")}</span>
+                              </div>
+                              <div className="meta-item">
+                                <span className="meta-label">Created</span>
+                                <span className="meta-value">{moment(item.createdDateTime).format("MMM D, YYYY")}</span>
+                              </div>
+                            </div>
+                          </div>
 
-                          </select> */}
-
-                                    {[DropdownButton].map((DropdownType, idx) => (
-                                            <DropdownType
-                                                as={ButtonGroup}
-                                                className="ttbtN-order"
-                                                key={idx}
-                                                id={`dropdown-button-drop-${idx}`}
-                                                size="lg"
-                                                title="Manage"
-                                                onClick={()=>handleShowDropDownData(item)}
-
-                                            >
-                                                {/* <Dropdown.Item eventKey="1">View user</Dropdown.Item> */}
-
-                                                <Dropdown.Item eventKey="3"  onClick={handleViewOrder}>
-                                                 View order
-
-                                                </Dropdown.Item>
-                                                <Dropdown.Divider />
-                                                <Dropdown.Item eventKey="4" onClick={()=>handleShowTrackOrder(item.repairOrderCode)} >Track order</Dropdown.Item>
-                                            </DropdownType>
-                                        ))}
-
-
-
-                          {/* </button> */}
-
-                        </td>
-                      </tr>
+                          <div className="order-actions">
+                            <Button 
+                              variant="outline-primary" 
+                              size="sm"
+                              onClick={() => {
+                                setOrderData(item);
+                                setShowResult(true);
+                              }}
+                            >
+                              View Details
+                            </Button>
+                            <Button 
+                              variant="primary" 
+                              size="sm"
+                              onClick={() => handleShowTrackOrder(item.repairOrderCode)}
+                            >
+                              Track Order
+                            </Button>
+                          </div>
+                        </Card.Body>
+                      </div>
                     ))}
-                </tbody>
+                  </div>
+                ) : (
+                  <div className="empty-state">
+                    <FaClipboardList size={48} className="empty-icon" />
+                    <h4>No Active Orders</h4>
+                    <p>You don't have any active repair orders at the moment.</p>
+                  </div>
+                )}
+              </div>
+            </Tab>
 
+            {/* Order History Tab */}
+            <Tab eventKey="history" title={
+              <div className="tab-title">
+                <MdOutlineHistory />
+                <span> Repair Order History</span>
+                {filteredHistoryOrders?.length > 0 && (
+                  <Badge bg="secondary" className="tab-badge">{filteredHistoryOrders.length}</Badge>
+                )}
+              </div>
+            }>
+              <div className="tab-panel">
+                {/* Search Bar */}
+                <div className="search-filter-bar">
+                  <div className="search-box">
+                    <FaSearch className="search-icon" />
+                    <input
+                      type="text"
+                      placeholder="Search order history..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="search-input"
+                    />
+                  </div>
+                </div>
 
+                {isPending ? (
+                  <div className="loading-state">
+                    <div className="spinner"></div>
+                    <p>Loading order history...</p>
+                  </div>
+                ) : filteredHistoryOrders?.length > 0 ? (
+                  <div className="orders-table-container">
+                    <div className="table-responsive">
+                      <table className="orders-table">
+                        <thead>
+                          <tr>
+                            <th>Order Code</th>
+                            <th>Device</th>
+                            <th>Fault</th>
+                            <th>Type</th>
+                            <th> Pickup/Due Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {filteredHistoryOrders.map((item) => (
+                            <tr key={item.repairOrderCode}>
+                              <td  className="order-code-cell" data-label="Order Code">
+                                <strong>#{item.repairOrderCode}</strong>
+                              </td>
+                              <td className="device-cell" data-label="Device">
+                                <div className="device-cell">
+                                  <div className="device-name">{item.deviceType}</div>
+                                  <div className="device-model">{item.deviceModel}</div>
+                                </div>
+                              </td>
+                              <td className="fault-cell" data-label="Fault">
+                                {truncateText(item.details, 8)}
+                              </td>
+                              <td data-label="Type">{item.repairOrderType}</td>
+                              <td data-label="Pickup/Due">{moment(item.reserveDate).format("MMM D, YYYY")}</td>
+                              <td data-label="Status">
+                                <Badge bg={getStatusVariant(item.status)}>
+                                  {item.status}
+                                </Badge>
+                              </td>
+                              
+                                <div className="action-buttons">
+                                  <Button
+                                    variant="outline-primary"
+                                    size="sm"
+                                    onClick={() => {
+                                      setHistoryData(item);
+                                      setShowHistoryModal(true);
+                                    }}
+                                  >
+                                    View
+                                  </Button>
+                                  <Button
+                                    variant="outline-secondary"
+                                    size="sm"
+                                    onClick={() => handleShowComment(item)}
+                                    className="comment-btn"
+                                  >
+                                    <FaRegCommentDots /> <span className="ms-1">Leave comment</span>
+                                  </Button>
+                                </div>
+                              
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="empty-state">
+                    <MdOutlineHistory size={48} className="empty-icon" />
+                    <h4>No Order History</h4>
+                    <p>Your completed repair orders will appear here.</p>
+                  </div>
+                )}
+              </div>
+            </Tab>
+          </Tabs>
+        </div>
 
-
-              </table>
-              {
-                isPending && <div className="" style={{ width: "100%", justifyContent: "center", textAlign: "center" }}>
-                  <span style={{ margin: "0 auto" }} className="loader-come"></span>
-
-                </div>}
-
-            
-
-              {
-                filterActiveOrders.length === 0 && !isPending && <h2 className="" style={{ textAlign: "center", padding: "10px" }}  >No Recent Order Placed</h2>
-              }
-
-
-
-            </div>
-
-
-
-
-
-          </Tab>
-          <Tab eventKey="profile" title="Order History">
-            <div className="panel-wrapper">
-              <h3 className="panel-head">
-                Repair Order History
-              </h3>
-
-
-              <table>
-                <thead>
-                  <tr className="table-headers">
-                    <th>Repair Order Code</th>
-                    <th>Device name</th>
-                    <th>Device model</th>
-                    <th>Device fault</th>
-                    <th>Order type</th>
-                    <th>Order due date</th>
-                    <th>Created date</th>
-                    {/* <th>Phone number</th> */}
-                    {/* <th>Address pickup/center</th> */}
-                    <th>Status</th>
-                    {/* <th>Action</th> */}
-                  </tr>
-                </thead>
-                <tbody>
-                  {filterOrderHistory &&
-                    filterOrderHistory.map((item) => (
-                      <tr key={item.repairOrderCode}>
-                        <td data-label="Repair Order Code"  style={{fontWeight:"bold"}}> {item.repairOrderCode} </td>
-                        <td data-label="Device name">{item.deviceType} </td>
-                        <td data-label="Device model"> {item.deviceModel} </td>
-                        <td data-label=" Device fault">{truncateText(orderData.details, 8)}</td>
-                        <td data-label="Order type"> {item.repairOrderType} </td>
-                        <td data-label="Order due date">  {moment(item.reserveDate).format("lll")}</td>
-                        <td data-label="Created date"> {moment(item.createdDateTime).format("lll")}</td>
-                        {/* <td data-label="Phone number"> {item.phone} </td> */}
-                        {/* <td data-label="Address pickup/center"> {item.pickUpAddress} </td> */}
-                        {/* <td data-label="Status" style={{ color: `${checkColor(item.status)}`, fontWeight:"bold", textTransform:"capitalize" }} className="tansDroP"> {item.status} </td> */}
-                        <td style={{display:"flex", gap:"20px", padding:"5px"}}>
-
-                   
-                          <button class="button-15" role="button" onClick={() =>handleShowDetails(item)} >View Details</button>
-                          <i onClick={()=> handleShowComment(item)}><FaRegCommentDots size={30} style={{cursor:"pointer"}}/></i>
-
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-
-              </table>
-              { isPending && <div className="" style={{ width: "100%", justifyContent: "center", textAlign: "center" }}>
-                  <span style={{ margin: "0 auto" }} className="loader-come"></span>
-
-                </div>}
-
-
-
-              {
-                filterOrderHistory.length === 0 && !isPending && <h2 className="" style={{ textAlign: "center", padding: "10px" }}  >No Order History Yet</h2>
-              }
-
-
-
-            </div>
-
-          </Tab>
-
-        </Tabs>
 
       </div>
 
 
-
-
-
-
-      <Modal show={showResult} onHide={handleCloseResult} size="lg">
+ {/* Modals */}
+      {/* Order Details Modal */}
+      <Modal show={showResult} onHide={() => setShowResult(false)} size="lg" centered>
         <Modal.Header closeButton>
-          <Modal.Title>Device Repair Details</Modal.Title>
+          <Modal.Title>Repair Order Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-
-
-          <Receipt orderData={orderData } chukkyLogo={chukkyLogo} />
-
-
+          <Receipt orderData={orderData} chukkyLogo={chukkyLogo} />
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseResult}>
-            Close
-          </Button>
-
-        </Modal.Footer>
       </Modal>
 
-      <Modal show={showHistoryModal} onHide={()=>setShowHistoryModal(false)} size="lg">
+      {/* History Details Modal */}
+      <Modal show={showHistoryModal} onHide={() => setShowHistoryModal(false)} size="lg" centered>
         <Modal.Header closeButton>
-          <Modal.Title>Device History Repair Details</Modal.Title>
+          <Modal.Title>Order History Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-
-
-          <Receipt orderData={historyData } chukkyLogo={chukkyLogo} />
-
-
+          <Receipt orderData={historyData} chukkyLogo={chukkyLogo} />
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={()=>setShowHistoryModal(false)}>
-            Close
-          </Button>
-
-        </Modal.Footer>
       </Modal>
 
-
-
-      <Modal show={showTrackOrder} onHide={handleCloseTrackOrder} size="lg">
+      {/* Tracking Modal */}
+      <Modal show={showTrackOrder} onHide={() => setShowTrackOrder(false)} size="lg" centered>
         <Modal.Header closeButton>
-          <Modal.Title>Device Repair Tracking Progress</Modal.Title>
+          <Modal.Title>Track Repair Progress</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-
-          {
-            repairOrdersPending && <div className="" style={{ width: "100%", justifyContent: "center", textAlign: "center" }}>
-              <span style={{ margin: "0 auto" }} className="loader-come"></span>
-
-            </div>}
-
-          {
-
-            repairOrders?.length === 0 ?
-              <div>  No repair Order associated with this code, please enter the correct code and try again </div> :
-
-              <div>
-                <h3> Tracking for {getRepairData?.deviceType} {getRepairData?.deviceModel} repair</h3>
-                <p>Repair Order Code: {getRepairData?.repairOrderCode}</p>
-                <div>
-
-                  <div style={{ gap: "20px" }}>
-                    {updatedStages.map((stage, index) => (
-                      <div key={index} style={{ color: stage.isActive ? "green" : "gray", fontWeight: stage.isActive ? "bold" : "revert" }}>
-                        <span className="icon-container">{stage.icon}</span>
-                        <p>{stage.name}</p>
-                        <p>{stage.date ? moment(stage.date).format("lll") : "Pending..."}</p>
-                        <hr />
-                      </div>
-                    ))}
-
-                  </div>
-                </div>
-
+          {repairOrdersPending ? (
+            <div className="loading-state">
+              <div className="spinner"></div>
+              <p>Loading tracking information...</p>
+            </div>
+          ) : repairOrders?.length === 0 ? (
+            <div className="empty-state">
+              <p>No tracking information available for this order.</p>
+            </div>
+          ) : (
+            <div className="tracking-container">
+              <div className="tracking-header">
+                <h5>{getRepairData?.deviceType} {getRepairData?.deviceModel}</h5>
+                <p className="text-muted">Order: #{getRepairData?.repairOrderCode}</p>
               </div>
-          }
-
-
-
-
+              
+              <div className="tracking-timeline">
+                {updatedStages.map((stage, index) => (
+                  <div key={index} className={`timeline-item ${stage.isCompleted ? 'completed' : ''} ${stage.isActive ? 'active' : ''}`}>
+                    <div className="timeline-marker-repair">
+                      <div className="marker-icon">
+                        {stage.isCompleted ? <IoCheckmarkDoneOutline /> : stage.icon}
+                      </div>
+                    </div>
+                    <div className="timeline-content-repair">
+                      <h6 className="stage-name">{stage.name}</h6>
+                      <p className="stage-date">
+                        {stage.date ? moment(stage.date).format("MMM D, YYYY h:mm A") : "Pending"}
+                      </p>
+                    </div>
+                    {index < updatedStages.length - 1 && <div className="timeline-connector"></div>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseTrackOrder}>
-            Close
-          </Button>
-
-        </Modal.Footer>
       </Modal>
 
-
-
-      <Modal show={showComment} onHide={()=>setShowComment(false)} size="lg">
+      {/* Comment Modal */}
+      <Modal show={showComment} onHide={() => setShowComment(false)} size="md" centered>
         <Modal.Header closeButton>
-          <Modal.Title>Device Repair Feedback</Modal.Title>
+          <Modal.Title>Provide Feedback</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div style={{textAlign:"center"}}> Thank you for choosing <span style={{fontWeight:"bold"}}>CHUKKYTECH</span> . We value your feedback and recommendations to help us improve our services. Your input is greatly appreciated.</div>
-
-<form id="survey-form" onSubmit={handleSubmit((data, event) => {
-
-console.log('seedataNow', data);
-handleSubmitComment(data);
-})}>
-
-<div className="row">
-
-<div className="col-md-12">
-  <div className="form-group">
-    <label id="number-label" htmlFor="number">Title</label>
-    <input 
-      type="text"  
-      className="form-control"
-      placeholder="How do you feel?..."
-      maxLength={50}  
-      {...register("title", {
-        required: 'Short title is required',
-        maxLength: {
-          value: 50,
-          message: 'Title cannot exceed 50 characters'
-        }
-      })}
-    />
-    <span className="cum-error">
-      {errors.title?.message}
-    </span>
-  </div>
-</div>
-
-  </div>
-<div className="row">
-    <div className="col-md-12">
-        <div className="form-group">
-            <label>Comment</label>
-            <textarea id="comments" className="form-control" name="comment" placeholder="Please provide your feedback..."
+          <div className="feedback-intro">
+            <p>Thank you for choosing <strong>CHUKKYTECH</strong>. We value your feedback to help us improve our services.</p>
+          </div>
+          
+          <form onSubmit={handleSubmit(handleSubmitComment)}>
+            <div className="mb-3">
+              <label className="form-label">Title</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Brief summary of your feedback..."
+                {...register("title", {
+                  required: 'Title is required',
+                  maxLength: {
+                    value: 50,
+                    message: 'Title cannot exceed 50 characters'
+                  }
+                })}
+              />
+              {errors.title && <div className="text-danger small">{errors.title.message}</div>}
+            </div>
+            
+            <div className="mb-4">
+              <label className="form-label">Comment</label>
+              <textarea
+                className="form-control"
+                rows="4"
+                placeholder="Please share your experience and suggestions..."
                 {...register("comment", {
-                    required: 'Comment is required',
-                    maxLength: {},
-                })}  >
-
-            </textarea>
-            <span className="cum-error">{errors.comment?.message}</span>
-        </div>
-    </div>
-</div>
-
-
-
-
-
-{
-
-    errorMessage &&
-    <div className="container mt-2">
-        <div className="row">
-
-            <div class="col-sm-12">
-                <div className="alert   alert-danger  " role="alert" >
-
-                    <span> {errMessage}   </span>
-
-                </div>
+                  required: 'Comment is required'
+                })}
+              />
+              {errors.comment && <div className="text-danger small">{errors.comment.message}</div>}
             </div>
 
+            {/* {errorMessage && (
+              <div className="alert alert-danger" role="alert">
+                {errMessage}
+              </div>
+            )} */}
 
-
-        </div>
-    </div>
-
-
-} 
-
-
-<div className="row">
-    <div className="col-md-4 setbtnDiv">
-        {
-            loading ? <button className="picckBtnDiv" > <span className="loader"></span></button> : <button className="picckBtnDiv" type="submit">Submit</button>
-        }
-
-    </div>
-</div>
-
-</form>
-         
-
-
+            <div className="d-flex gap-2 justify-content-end">
+              <Button variant="outline-secondary" onClick={() => setShowComment(false)}>
+                Cancel
+              </Button>
+              <Button variant="primary" type="submit" disabled={loading}>
+                {loading ? 'Submitting...' : 'Submit Feedback'}
+              </Button>
+            </div>
+          </form>
         </Modal.Body>
-        <Modal.Footer>
-       
-        
-
-        </Modal.Footer>
       </Modal>
+
 
 
 

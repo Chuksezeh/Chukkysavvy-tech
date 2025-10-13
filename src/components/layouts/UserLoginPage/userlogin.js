@@ -107,7 +107,7 @@ const UserLogin = (() => {
        }))
 
       
-     navigateTo("/user-profile")();
+     navigateTo(-1)();
        }catch (error) {
         setLoadingGoogle(false);
        setError({
@@ -136,7 +136,7 @@ const UserLogin = (() => {
           window.dispatchEvent(new Event("authChanged"));
 
           // Then navigate
-          navigate("/user-profile");
+          navigate(-1);
         }
          })
       .catch(err => {

@@ -59,6 +59,10 @@ button.btn-primary {
     padding: 10px;
 }
 
+.loginSetStle{
+    margin-left: 20px;
+}
+
 .btn-loader {
       width: 35px;
       height: 35px;

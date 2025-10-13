@@ -18,7 +18,8 @@
 
 .aControlUser {
 	color: #011B58;
-	text-decoration: none; 
+	text-decoration: none;
+	font-size: 18px !important; 
 }
 
 .nav-btn-control {
