@@ -21,11 +21,22 @@ body{
   /* padding-left: 20%;
   padding-right: 20%; */
   }
+  .firsttext-contain h3{
+    font-size: 40px !important;
+    font-weight: 800;
+    color: black;
+  }
+  .homeWE{
+    color: #279FD2;
+  }
   .btn-order-div{
     width: 100%;
   }
   .btn-order-divbtn{
     width: 100% !important;  
+  }
+  .home-fic-heades{
+    color: #011B58;
   }
 
   .headSignin{
@@ -677,13 +688,7 @@ margin-top: 40px;
     margin-top: 3%;
     padding-top: 3%;
 }
-.firsttext-contain h3{
-    
-    font-family: 'Russo One', sans-serif;
-    font-weight: bold;
-    font-size: 30px;
-    
-}
+
 .firsttext-contain h2{
   font-size: 60px;
   font-weight: 800;
@@ -2893,17 +2898,30 @@ padding: 5px;
   width: 80% !important;
 }
 .body-one-textcontiner{
-  padding: 5px;
+  /* padding: 5px; */
 }
 .firsttext-contain{
   color: white;
-  margin-left: 5%;
-  margin-top: 3%;
-  padding-top: 3%;
+
+  /* margin-left: 5%; */
+  /* margin-top: 3%; */
+  /* padding-top: 3%; */
 }
 .iphone-detaials-cover-image{
   justify-content: center;
   text-align: center;
+}
+ .firsttext-contain h3{
+    font-size: 30px !important;
+    justify-content: center;
+    text-align: center;
+    font-weight: 800;
+    color: black;
+  }
+  .firsttext-contain h2{
+  font-size: 30px;
+   text-align: center;
+  font-weight: 800;
 }
 
 
@@ -3174,11 +3192,12 @@ padding: 5px;
      
     }
     .firsttext-contain h3{
-    
-      font-family: 'Russo One', sans-serif;
-      font-weight: bold;
-      font-size: 25px;
-      
+    font-size: 16px !important;
+    justify-content: center;
+    padding: 5px;
+    text-align: center;
+    font-weight: 800;
+    color: black;
   }
   .firsttext-contain h2{
     font-size: 30px;

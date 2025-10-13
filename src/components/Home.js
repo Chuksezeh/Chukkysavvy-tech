@@ -21,9 +21,9 @@ const Home = () => {
     <>
       <Header onFeedbackClick={() => feedbackRef.current?.scrollIntoView({ behavior: 'smooth' })} />
 
-      <div className="first-body-corel">
+      {/* <div className="first-body-corel"> */}
         <HomeDashBoard />
-      </div>
+      {/* </div> */}
 
       {/* <TopTextComponent /> */}
 
