@@ -40,9 +40,10 @@
 }
 
 .hero-description {
-  font-size: 2rem;
+  font-size: 1.4rem;
   line-height: 1.5;
   margin-bottom: 4.8rem;
+  margin-left: 5% !important;
 }
 
 .hero-img-box {
@@ -521,6 +522,7 @@
     margin-bottom: 3.2rem;
     padding-left: 10%;
     padding-right: 10%;
+    margin-left: -5% !important;
   }
 
   .delivered-meals {

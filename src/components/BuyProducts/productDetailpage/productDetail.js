@@ -12,6 +12,98 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCartProduct } from "../../redux/productCounter";
 
+// Skeleton Loader Components
+const ProductDetailSkeleton = () => {
+  return (
+    <>
+      <Header />
+      <SearchBar />
+      
+      <div className="container product-details py-5">
+        <div className="row pt-5">
+          {/* Image Gallery Skeleton */}
+          <div className="col-md-6 text-center">
+            <div className="main-image-skeleton skeleton">
+              <div className="skeleton-image"></div>
+            </div>
+            <div className="thumbs-skeleton d-flex justify-content-center mt-3 flex-wrap">
+              {[1, 2, 3, 4].map((item) => (
+                <div key={item} className="thumb-skeleton skeleton"></div>
+              ))}
+            </div>
+          </div>
+
+          {/* Product Info Skeleton */}
+          <div className="col-md-6 product-info-skeleton">
+            <div className="skeleton-title skeleton"></div>
+            <div className="skeleton-text skeleton"></div>
+            <div className="skeleton-text skeleton"></div>
+            
+            <div className="skeleton-badge skeleton"></div>
+            
+            <div className="skeleton-rating skeleton"></div>
+            
+            <div className="skeleton-price skeleton"></div>
+            
+            <div className="skeleton-quantity skeleton"></div>
+            <div className="skeleton-type skeleton"></div>
+            
+            <div className="skeleton-desc">
+              <div className="skeleton-line skeleton"></div>
+              <div className="skeleton-line skeleton"></div>
+              <div className="skeleton-line skeleton"></div>
+              <div className="skeleton-line skeleton short"></div>
+            </div>
+            
+            <div className="skeleton-buttons d-flex gap-3 mt-4 flex-wrap">
+              <div className="skeleton-button skeleton"></div>
+              <div className="skeleton-button skeleton"></div>
+            </div>
+            
+            <div className="skeleton-full-desc mt-4">
+              <div className="skeleton-heading skeleton"></div>
+              <div className="skeleton-line skeleton"></div>
+              <div className="skeleton-line skeleton"></div>
+              <div className="skeleton-line skeleton"></div>
+              <div className="skeleton-line skeleton short"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Related Products Skeleton */}
+      <section>
+        <div className="centSoon">
+          <div className="container-fluid bg-transparent my-4 p-3" style={{position:"relative"}}>
+            <div className="skeleton-section-title skeleton"></div>
+            <div className="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
+              {[1, 2, 3, 4].map((item) => (
+                <div className="col hp" key={item}>
+                  <div className="cardo-skeleton shadow-sm p-2">
+                    <div className="skeleton-card-image skeleton"></div>
+                    <div className="card-bod-skeleton">
+                      <div className="clearfix mb-3">
+                        <div className="skeleton-price-badge skeleton"></div>
+                        <div className="skeleton-discount-badge skeleton"></div>
+                      </div>
+                      <div className="skeleton-product-title skeleton"></div>
+                    </div>
+                    <div className="d-grid gap-2 my-3">
+                      <div className="skeleton-card-button skeleton"></div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </>
+  );
+};
+
 const ProductDetailPage = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
@@ -28,6 +120,11 @@ const ProductDetailPage = () => {
     fetchProductDetail();
     fetchRelatedProducts();
   }, [productId]);
+
+
+  useEffect(()=>{
+     window.scrollTo(0, 0);
+    },[])
 
   const dispatch = useDispatch();
 
@@ -113,20 +210,14 @@ const ProductDetailPage = () => {
     window.scrollTo(0, 0);
   };
 
+  const handleChangeImage = (image) => {
+    setMainImage(image);
+    window.scrollTo(0, 0);
+  };
+
+  // Show skeleton loader while loading
   if (loading) {
-    return (
-      <>
-        <Header />
-        <SearchBar />
-        <div className="container py-5 text-center">
-          <div className="spinner-border text-primary" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
-          <p className="mt-3">Loading product details...</p>
-        </div>
-        <Footer />
-      </>
-    );
+    return <ProductDetailSkeleton />;
   }
 
   if (error || !product) {
@@ -190,7 +281,7 @@ const ProductDetailPage = () => {
                   src={img.imageUrl}
                   alt={`${product.productName} - view ${i + 1}`}
                   className={`thumb-img ${mainImage === img.imageUrl ? "active" : ""}`}
-                  onClick={() => setMainImage(img.imageUrl)}
+                  onClick={() => handleChangeImage(img.imageUrl)}
                   style={{
                     width: "80px",
                     height: "80px",
@@ -337,11 +428,11 @@ const ProductDetailPage = () => {
                         <span className="float-start badge rounded-pill bg-success">
                           N{parseFloat(relatedProduct.productPrice).toFixed(2)}
                         </span>
-                        {relatedProduct.discount && relatedProduct.discount > 0 && (
+                        {/* {relatedProduct.discount && relatedProduct.discount > 0 && (
                           <span className="float-end badge rounded-pill bg-danger">
                             {relatedProduct.discount}% OFF
                           </span>
-                        )}
+                        )} */}
                       </div>
                       <div className="titleText">
                         <a onClick={() => navigateToProduct(relatedProduct.productId)} style={{cursor: 'pointer', textDecoration: 'none'}}>

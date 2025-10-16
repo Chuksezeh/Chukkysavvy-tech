@@ -465,6 +465,9 @@
   .action-buttons {
     flex-direction: column;
   }
+  .order-stats{
+    display: none !important;
+  }
 }
 
 /* Dark mode support */
@@ -496,4 +499,294 @@
   .search-input::placeholder {
     color: #a0aec0;
   }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Order Tracking Modal Styles */
+.order-tracking-modal .modal-header {
+  background: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.order-tracking-modal .modal-title h4 {
+  color: #2c3e50;
+  margin: 0;
+}
+
+/* Order Tracking Timeline */
+.order-tracking-timeline {
+  position: relative;
+  /* padding-left: 30px; */
+}
+
+.tracking-step {
+  display: flex;
+  margin-bottom: 25px;
+  position: relative;
+}
+
+.tracking-step:last-child {
+  margin-bottom: 0;
+}
+
+.step-indicator {
+  position: relative;
+  margin-right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.step-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+.default-icon {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #e9ecef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6c757d;
+  font-size: 1.2rem;
+}
+
+.step-icon.completed .default-icon {
+  background: #28a745;
+  color: white;
+}
+
+.step-icon.active .default-icon {
+  background: #007bff;
+  color: white;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+}
+
+.completed-icon {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #28a745;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.2rem;
+}
+
+.step-connector {
+  width: 2px;
+  background: #e9ecef;
+  flex: 1;
+  margin-top: 5px;
+  min-height: 30px;
+}
+
+.step-connector.completed {
+  background: #28a745;
+}
+
+.step-content {
+  flex: 1;
+  padding-bottom: 10px;
+}
+
+.step-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.step-description {
+  color: #6c757d;
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+}
+
+.step-time {
+  font-size: 0.8rem;
+  color: #28a745;
+  font-weight: 500;
+}
+
+.step-badge {
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.completed-badge {
+  background: #d4edda;
+  color: #155724;
+}
+
+.active-badge {
+  background: #cce7ff;
+  color: #004085;
+}
+
+.cancelled-badge {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.step-info {
+  margin-top: 5px;
+}
+
+/* Current Status Summary */
+.current-status-summary {
+  border-left: 4px solid #007bff;
+}
+
+.estimated-delivery {
+  padding: 10px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+}
+
+/* Section Titles */
+.section-title {
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+}
+
+/* Info Grid */
+.info-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #f8f9fa;
+}
+
+.info-item.total {
+  border-top: 2px solid #007bff;
+  border-bottom: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #007bff;
+  margin-top: 5px;
+  padding-top: 12px;
+}
+
+/* Delivery Address */
+.delivery-address {
+  line-height: 1.6;
+}
+
+/* Order Items Table */
+.order-items-table {
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #dee2e6;
+}
+
+.order-items-table thead th {
+  background: #f8f9fa;
+  border-bottom: 2px solid #dee2e6;
+  font-weight: 600;
+  padding: 12px 15px;
+}
+
+.order-items-table tbody td {
+  padding: 15px;
+  vertical-align: middle;
+}
+
+.product-info small {
+  font-size: 0.8rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .order-tracking-timeline {
+    padding-left: 20px;
+  }
+  
+  .step-indicator {
+    margin-right: 15px;
+  }
+  
+  .step-icon {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .step-title {
+    font-size: 1rem;
+  }
+  
+  .current-status-summary .row > div {
+    margin-bottom: 15px;
+  }
+  
+  .estimated-delivery {
+    text-align: left !important;
+  }
+}
+
+/* Animation for active steps */
+.tracking-step.active .step-icon {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(0, 123, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+  }
+}
+
+/* Cancelled order styling */
+.tracking-step.cancelled .default-icon {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.tracking-step.cancelled .step-connector {
+  background: #f8d7da;
 }

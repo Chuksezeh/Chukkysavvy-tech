@@ -69,7 +69,9 @@ const CheckoutPage = () => {
     const handleShowNoLogin = (() => setShowNoLogin(true));
     const handleHideNoLogin = (() => setShowNoLogin(false))
 
-
+ useEffect(()=>{
+   window.scrollTo(0, 0);
+  },[])
     const navigateLogin = () => navigate("/user-login");
     // Get cart items from navigation state - handle both cart and buy-now flows
     const {
@@ -633,29 +635,8 @@ const CheckoutPage = () => {
     })
 
 
-    //   const handlePayNow = async () => {
-    //     try {
-    //       setLoading(true);
-
-    //       const response = await chukkytechAxios.post("payments/initialize", {
-    //         email: userDetails?.email,
-    //         amount: total, // in Naira
-    //         userId: userDetails?.userId
-
-    //       });
-
-    //       if (response.data.success) {
-
-    //         window.location.href = response.data.authorization_url;
-    //       }
-    //     } catch (error) {
-    //       console.error("Payment initialization failed:", error);
-    //       alert("Something went wrong while initializing payment.");
-    //     } finally {
-    //       setLoading(false);
-    //     }
-    //   };
-
+    
+ 
 
     const payWithPaystack = () => {
         setLoading(true);
@@ -677,6 +658,9 @@ const CheckoutPage = () => {
         });
         handler.openIframe();
     };
+
+
+   
 
     return (
         <>

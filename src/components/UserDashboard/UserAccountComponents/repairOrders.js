@@ -255,7 +255,7 @@ const RepairOrders = (() => {
                    </div>
                    <div className="order-stats">
                      <div className="stat-card">
-                       <span className="stat-number">{""}</span>
+                       <span className="stat-number">{latestOrders?.length}</span>
                        <span className="stat-label">Total Orders</span>
                      </div>
                    </div>

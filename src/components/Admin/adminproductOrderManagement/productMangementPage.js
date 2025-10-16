@@ -221,9 +221,9 @@ const ProductManagementPage = () => {
         setSelectedItem(item);
     };
 
-    const handleAction = (action) => {
+     const handleAction = (action) => {
         setActionDialog({ open: true, action });
-};
+     };
 
     const handleCloseDialog = () => {
         setActionDialog({ open: false, action: '' });

@@ -7,9 +7,11 @@
 
 .main-image img {
   border-radius: 12px;
-  max-height: 400px;
-  object-fit: contain;
-  transition: transform 0.3s ease-in-out;
+  width: 800px !important;
+  height: 8000px;
+  /* background-color: aqua; */
+  /* object-fit: contain; */
+  /* transition: transform 0.3s ease-in-out; */
 }
 
 .main-image img:hover {
@@ -59,6 +61,227 @@
   color: #555;
 }
 
-.rating {
+.rating { 
   font-size: 1.1rem;
+}
+
+@media(max-width: 664px){
+  .main-image img {
+  border-radius: 12px;
+  width: 400px !important;
+  height: 4000px;
+  /* background-color: aqua; */
+  /* object-fit: contain; */
+  /* transition: transform 0.3s ease-in-out; */
+}
+
+}
+
+
+/* Skeleton Loader Styles */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 4px;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Main Image Skeleton */
+.main-image-skeleton {
+  height: 400px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.skeleton-image {
+  width: 100%;
+  height: 100%;
+  background: #f0f0f0;
+}
+
+/* Thumbnail Skeletons */
+.thumbs-skeleton {
+  gap: 10px;
+}
+
+.thumb-skeleton {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+}
+
+/* Product Info Skeletons */
+.product-info-skeleton {
+  padding-left: 2rem;
+}
+
+.skeleton-title {
+  height: 32px;
+  width: 80%;
+  margin-bottom: 1rem;
+}
+
+.skeleton-text {
+  height: 16px;
+  width: 60%;
+  margin-bottom: 0.5rem;
+}
+
+.skeleton-badge {
+  height: 24px;
+  width: 100px;
+  margin-bottom: 1rem;
+  border-radius: 20px;
+}
+
+.skeleton-rating {
+  height: 20px;
+  width: 150px;
+  margin-bottom: 1rem;
+}
+
+.skeleton-price {
+  height: 36px;
+  width: 120px;
+  margin-bottom: 1rem;
+}
+
+.skeleton-quantity,
+.skeleton-type {
+  height: 20px;
+  width: 200px;
+  margin-bottom: 0.75rem;
+}
+
+/* Description Skeletons */
+.skeleton-desc {
+  margin-bottom: 2rem;
+}
+
+.skeleton-line {
+  height: 14px;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.skeleton-line.short {
+  width: 70%;
+}
+
+.skeleton-heading {
+  height: 20px;
+  width: 150px;
+  margin-bottom: 1rem;
+}
+
+/* Button Skeletons */
+.skeleton-buttons {
+  gap: 1rem;
+}
+
+.skeleton-button {
+  height: 48px;
+  width: 140px;
+  border-radius: 8px;
+}
+
+/* Related Products Skeletons */
+.skeleton-section-title {
+  height: 32px;
+  width: 200px;
+  margin-bottom: 1.5rem;
+}
+
+.cardo-skeleton {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.skeleton-card-image {
+  height: 200px;
+  width: 100%;
+  border-radius: 8px 8px 0 0;
+}
+
+.card-bod-skeleton {
+  padding: 1rem;
+}
+
+.skeleton-price-badge {
+  height: 24px;
+  width: 80px;
+  border-radius: 20px;
+  float: left;
+}
+
+.skeleton-discount-badge {
+  height: 24px;
+  width: 60px;
+  border-radius: 20px;
+  float: right;
+}
+
+.skeleton-product-title {
+  height: 20px;
+  width: 90%;
+  margin-top: 0.5rem;
+  clear: both;
+}
+
+.skeleton-card-button {
+  height: 40px;
+  width: 100%;
+  border-radius: 6px;
+}
+
+/* Full Description Skeleton */
+.skeleton-full-desc {
+  margin-top: 2rem;
+}
+
+/* Responsive Design for Skeletons */
+@media (max-width: 768px) {
+  .product-info-skeleton {
+    padding-left: 0;
+    margin-top: 2rem;
+  }
+  
+  .main-image-skeleton {
+    height: 300px;
+  }
+  
+  .skeleton-button {
+    width: 100%;
+    max-width: 200px;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+    background: #f0f0f0;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .skeleton {
+    background: linear-gradient(90deg, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%);
+    background-size: 200% 100%;
+  }
+  
+  .skeleton-image {
+    background: #2a2a2a;
+  }
 }

@@ -4,7 +4,6 @@ import "./userRepairOrder.css"
 import { useNavigate } from "react-router-dom";
 import { chukkytechAxios } from "../../Utility/axios";
 import moment from "moment";
-import ProductManagementPage from "../adminproductOrderManagement/productMangementPage";
 
 const ProductOrderTable = () => {
   const [showDropDown, setShowDropDown] = useState("");
@@ -17,14 +16,10 @@ const ProductOrderTable = () => {
   const [selectedStatus, setSelectedStatus] = useState("all");
   const [selectedOrderType, setSelectedOrderType] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalOrders, setTotalOrders] = useState(0);
 
   const ordersPerPage = 10;
-  const totalPages = Math.ceil(filteredOrders?.length / ordersPerPage);
-  const paginatedOrders = filteredOrders?.slice(
-    (currentPage - 1) * ordersPerPage,
-    currentPage * ordersPerPage
-  );
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,12 +29,26 @@ const ProductOrderTable = () => {
     }
   }, [navigate]);
 
-  const fetchAllProductOrders = async () => {
+  const fetchAllProductOrders = async (page = 1, status = "all", search = "") => {
     setIsPending(true);
     try {
-      const response = await chukkytechAxios.get('/order/all-orders');
+      const params = {
+        page: page,
+        limit: ordersPerPage,
+        ...(status !== "all" && { status }),
+        ...(search && { search })
+      };
+
+      console.log("Fetching orders with params:", params);
+
+      const response = await chukkytechAxios.get('/order/all-orders', { params });
+      console.log("API Response:", response.data);
+      
       setData(response.data);
-      setFilteredOrders(response?.data?.data || []);
+      setFilteredOrders(response.data?.data || []);
+      setTotalPages(response.data?.pagination?.totalPages || 1);
+      setTotalOrders(response.data?.pagination?.total || 0);
+      setCurrentPage(page);
       setIsPending(false);
     } catch (error) {
       setIsPending(false);
@@ -49,32 +58,33 @@ const ProductOrderTable = () => {
   };
 
   useEffect(() => {
-    fetchAllProductOrders();
+    fetchAllProductOrders(1, selectedStatus, searchTerm);
   }, []);
 
-  // Filter orders based on search and filters
+  // Handle filter changes - reset to page 1
   useEffect(() => {
-    let filtered = data?.data || [];
-    
-    if (searchTerm) {
-      filtered = filtered.filter(order => 
-        order.repairOrderCode?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        order.customerName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        order.customerEmail?.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-    
-    if (selectedStatus !== "all") {
-      filtered = filtered.filter(order => order.orderStatus === selectedStatus);
-    }
-    
-    if (selectedOrderType !== "all") {
-      filtered = filtered.filter(order => order.repairOrderType === selectedOrderType);
-    }
-
-    setFilteredOrders(filtered);
     setCurrentPage(1);
-  }, [searchTerm, selectedStatus, selectedOrderType, data]);
+    fetchAllProductOrders(1, selectedStatus, searchTerm);
+  }, [searchTerm, selectedStatus, selectedOrderType]);
+
+  // Handle pagination
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      const nextPage = currentPage + 1;
+      fetchAllProductOrders(nextPage, selectedStatus, searchTerm);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      const prevPage = currentPage - 1;
+      fetchAllProductOrders(prevPage, selectedStatus, searchTerm);
+    }
+  };
+
+  const handlePageClick = (pageNumber) => {
+    fetchAllProductOrders(pageNumber, selectedStatus, searchTerm);
+  };
 
   const getStatusBadge = (status) => {
     const statusConfig = {
@@ -96,7 +106,35 @@ const ProductOrderTable = () => {
   };
 
   const handleRefresh = () => {
-    fetchAllProductOrders();
+    fetchAllProductOrders(currentPage, selectedStatus, searchTerm);
+  };
+
+  const handleClearFilters = () => {
+    setSearchTerm("");
+    setSelectedStatus("all");
+    setSelectedOrderType("all");
+    setCurrentPage(1);
+    fetchAllProductOrders(1, "all", "");
+  };
+
+  // Generate page numbers for pagination
+  const getPageNumbers = () => {
+    const pages = [];
+    const maxVisiblePages = 5;
+    
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+    
+    // Adjust start page if we're near the end
+    if (endPage - startPage + 1 < maxVisiblePages) {
+      startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+    
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(i);
+    }
+    
+    return pages;
   };
 
   return (
@@ -144,7 +182,7 @@ const ProductOrderTable = () => {
                 <div className="d-flex justify-content-between align-items-center">
                   <div>
                     <h6 className="card-title text-muted mb-2">Total Orders</h6>
-                    <h3 className="mb-0">{data?.data?.length || 0}</h3>
+                    <h3 className="mb-0">{totalOrders}</h3>
                   </div>
                   <div className="bg-primary bg-opacity-10 p-3 rounded">
                     <i className="fas fa-shopping-cart text-primary"></i>
@@ -252,11 +290,20 @@ const ProductOrderTable = () => {
                   onChange={(e) => setSelectedOrderType(e.target.value)}
                 >
                   <option value="all">All Types</option>
-                  {/* <option value="Pickup">Pickup</option>
-                  <option value="Instore Appointment">Instore Appointment</option> */}
                 </select>
               </div>
             </div>
+            {(searchTerm || selectedStatus !== "all") && (
+              <div className="mt-3">
+                <button 
+                  className="btn btn-outline-secondary btn-sm"
+                  onClick={handleClearFilters}
+                >
+                  <i className="fas fa-times me-1"></i>
+                  Clear Filters
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
@@ -265,7 +312,8 @@ const ProductOrderTable = () => {
           <div className="card-header bg-white py-3 d-flex justify-content-between align-items-center">
             <h5 className="card-title mb-0">Product Orders</h5>
             <div className="text-muted small">
-              Showing {paginatedOrders.length} of {filteredOrders.length} orders
+              Showing {filteredOrders.length} of {totalOrders} orders
+              {searchTerm || selectedStatus !== "all" ? " (filtered)" : ""}
             </div>
           </div>
           <div className="card-body p-0">
@@ -274,6 +322,7 @@ const ProductOrderTable = () => {
                 <thead className="bg-light">
                   <tr>
                     <th className="ps-4 py-3 fw-semibold">#</th>
+                    <th className="py-3 fw-semibold">Order ID</th>
                     <th className="py-3 fw-semibold">Payment Method</th>
                     <th className="py-3 fw-semibold">Customer</th>
                     <th className="py-3 fw-semibold">Email</th>
@@ -285,40 +334,41 @@ const ProductOrderTable = () => {
                 <tbody>
                   {isPending ? (
                     <tr>
-                      <td colSpan="7" className="text-center py-5">
+                      <td colSpan="8" className="text-center py-5">
                         <div className="spinner-border text-primary" role="status">
                           <span className="visually-hidden">Loading...</span>
                         </div>
                         <p className="mt-2 text-muted">Loading orders...</p>
                       </td>
                     </tr>
-                  ) : paginatedOrders.length === 0 ? (
+                  ) : filteredOrders.length === 0 ? (
                     <tr>
-                      <td colSpan="7" className="text-center py-5">
+                      <td colSpan="8" className="text-center py-5">
                         <div className="text-muted">
                           <i className="fas fa-inbox fa-3x mb-3"></i>
                           <p>No orders found</p>
-                          {searchTerm || selectedStatus !== "all" || selectedOrderType !== "all" ? (
+                          {(searchTerm || selectedStatus !== "all") && (
                             <button 
-                              className="btn btn-outline-primary"
-                              onClick={() => {
-                                setSearchTerm("");
-                                setSelectedStatus("all");
-                                setSelectedOrderType("all");
-                              }}
+                              className="btn btn-outline-primary mt-2"
+                              onClick={handleClearFilters}
                             >
                               Clear Filters
                             </button>
-                          ) : null}
+                          )}
                         </div>
                       </td>
                     </tr>
                   ) : (
-                    paginatedOrders.map((item, i) => (
+                    filteredOrders.map((item, i) => (
                       <tr key={item.orderId} className="align-middle">
                         <td className="ps-4">{(currentPage - 1) * ordersPerPage + i + 1}</td>
                         <td>
-                          <span className="fw-semibold text-primary">{item.paymentMethod}</span>
+                          <code className="text-primary">{item.orderId}</code>
+                        </td>
+                        <td>
+                          <span className="fw-semibold text-primary" style={{textTransform:"capitalize"}}>
+                            {item.paymentMethod}
+                          </span>
                         </td>
                         <td>
                           <div>
@@ -359,40 +409,48 @@ const ProductOrderTable = () => {
           </div>
 
           {/* Pagination */}
-          {!isPending && paginatedOrders.length > 0 && (
+          {!isPending && filteredOrders.length > 0 && totalPages > 1 && (
             <div className="card-footer bg-white py-3">
               <div className="d-flex justify-content-between align-items-center">
                 <div className="text-muted">
-                  Showing {((currentPage - 1) * ordersPerPage) + 1} to {Math.min(currentPage * ordersPerPage, filteredOrders.length)} of {filteredOrders.length} entries
+                  Showing {((currentPage - 1) * ordersPerPage) + 1} to {Math.min(currentPage * ordersPerPage, totalOrders)} of {totalOrders} entries
+                  {searchTerm || selectedStatus !== "all" ? " (filtered)" : ""}
                 </div>
                 <nav>
                   <ul className="pagination mb-0">
+                    {/* Previous Button */}
                     <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
                       <button 
                         className="page-link"
-                        onClick={() => setCurrentPage(currentPage - 1)}
+                        onClick={handlePrevPage}
                         disabled={currentPage === 1}
                       >
+                        <i className="fas fa-chevron-left me-1"></i>
                         Previous
                       </button>
                     </li>
-                    {[...Array(totalPages)].map((_, index) => (
-                      <li key={index} className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}>
+
+                    {/* Page Numbers */}
+                    {getPageNumbers().map(pageNumber => (
+                      <li key={pageNumber} className={`page-item ${currentPage === pageNumber ? 'active' : ''}`}>
                         <button 
                           className="page-link"
-                          onClick={() => setCurrentPage(index + 1)}
+                          onClick={() => handlePageClick(pageNumber)}
                         >
-                          {index + 1}
+                          {pageNumber}
                         </button>
                       </li>
                     ))}
+
+                    {/* Next Button */}
                     <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
                       <button 
                         className="page-link"
-                        onClick={() => setCurrentPage(currentPage + 1)}
+                        onClick={handleNextPage}
                         disabled={currentPage === totalPages}
                       >
                         Next
+                        <i className="fas fa-chevron-right ms-1"></i>
                       </button>
                     </li>
                   </ul>

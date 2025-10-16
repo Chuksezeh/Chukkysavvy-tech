@@ -11,6 +11,117 @@ import { chukkytechAxios } from "../../Utility/axios";
 import { decrease, increase, removeProduct } from "../../redux/productCounter";
 import Goback from "../../layouts/goBack";
 
+// Skeleton Loader Components
+const CartSkeletonLoader = () => {
+  return (
+    <>
+      <Header />
+      <SearchBar />
+      
+      <div className="container cart-page my-5">
+        <div className="row mt-4">
+          <div className="skeleton-page-title skeleton"></div>
+          <div className="skeleton-divider skeleton"></div>
+          
+          <div className="col-lg-8">
+            {/* Cart Items Skeleton */}
+            {[1, 2, 3].map((item) => (
+              <div className="cart-item-skeleton d-flex align-items-center mb-4 p-3 shadow-sm rounded" key={item}>
+                <div className="skeleton-cart-image skeleton"></div>
+                
+                <div className="cart-details-skeleton ms-3 flex-grow-1">
+                  <div className="d-flex justify-content-between align-items-start mb-2">
+                    <div className="skeleton-product-title skeleton"></div>
+                    <div className="skeleton-badge skeleton"></div>
+                  </div>
+                  <div className="skeleton-category skeleton"></div>
+                  <div className="skeleton-price skeleton"></div>
+                  <div className="skeleton-quantity-controls d-flex align-items-center">
+                    <div className="skeleton-quantity-btn skeleton"></div>
+                    <div className="skeleton-quantity-value skeleton"></div>
+                    <div className="skeleton-quantity-btn skeleton"></div>
+                    <div className="skeleton-stock-info skeleton"></div>
+                  </div>
+                </div>
+                
+                <div className="cart-subtotal-skeleton text-end">
+                  <div className="skeleton-subtotal skeleton"></div>
+                  <div className="skeleton-remove-btn skeleton"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Order Summary Skeleton */}
+          <div className="col-lg-4">
+            <div className="cart-summary-skeleton p-4 shadow-sm rounded">
+              <div className="skeleton-summary-title skeleton"></div>
+              <div className="skeleton-divider-small skeleton"></div>
+              
+              <div className="skeleton-summary-item d-flex justify-content-between mb-2">
+                <div className="skeleton-summary-label skeleton"></div>
+                <div className="skeleton-summary-value skeleton"></div>
+              </div>
+              <div className="skeleton-summary-item d-flex justify-content-between mb-2">
+                <div className="skeleton-summary-label skeleton"></div>
+                <div className="skeleton-summary-value skeleton"></div>
+              </div>
+              <div className="skeleton-summary-item d-flex justify-content-between mb-2">
+                <div className="skeleton-summary-label skeleton"></div>
+                <div className="skeleton-summary-value skeleton"></div>
+              </div>
+              
+              <div className="skeleton-divider-small skeleton"></div>
+              
+              <div className="skeleton-total d-flex justify-content-between mb-4">
+                <div className="skeleton-total-label skeleton"></div>
+                <div className="skeleton-total-value skeleton"></div>
+              </div>
+              
+              <div className="skeleton-checkout-btn skeleton"></div>
+              <div className="skeleton-continue-btn skeleton mt-2"></div>
+            </div>
+          </div>
+        </div>
+
+        {/* Recently Viewed Skeleton */}
+        <section>
+          <div className="centSoon">
+            <div className="container-fluid bg-transparent my-4 p-3">
+              <div className="skeleton-section-title skeleton"></div>
+              <div className="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
+                {[1, 2, 3, 4].map((item) => (
+                  <div className="col hp" key={item}>
+                    <div className="cardo-skeleton shadow-sm p-2 h-100">
+                      <div className="skeleton-card-image skeleton"></div>
+                      <div className="card-bod-skeleton d-flex flex-column">
+                        <div className="clearfix mb-2">
+                          <div className="skeleton-price-badge skeleton"></div>
+                          <div className="skeleton-discount-badge skeleton"></div>
+                        </div>
+                        <div className="skeleton-product-card-title skeleton"></div>
+                        <div className="skeleton-product-meta mt-2">
+                          <div className="skeleton-category-small skeleton"></div>
+                          <div className="skeleton-stock-badge skeleton"></div>
+                        </div>
+                      </div>
+                      <div className="d-grid gap-2 mt-3">
+                        <div className="skeleton-card-button skeleton"></div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      
+      <Footer />
+    </>
+  );
+};
+
 const ProductCart = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -27,6 +138,12 @@ const ProductCart = () => {
     (acc, item) => acc + (parseFloat(item.productPrice) * (item.quantity || 1)),
     0
   ) || 0;
+
+
+
+  useEffect(()=>{
+   window.scrollTo(0, 0);
+  },[])
   
   const shipping = subtotal > 0 ? 15 : 0;
   const total = subtotal + shipping;
@@ -151,7 +268,7 @@ const ProductCart = () => {
   };
 
   const navigateToProduct = (productId) => {
-    navigate(`/product/${productId}`);
+    navigate(`/product-details/${productId}`);
   };
 
   // Get first image URL from product images array
@@ -187,20 +304,9 @@ const ProductCart = () => {
     return <span className="badge bg-success">In Stock</span>;
   };
 
+  // Show skeleton loader while loading
   if (loading) {
-    return (
-      <>
-        <Header />
-        <SearchBar />
-        <div className="container text-center py-5">
-          <div className="spinner-border text-warning" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
-          <p className="mt-3 p-2" style={{textAlign:"center"}}>Checking product availability...</p>
-        </div>
-        <Footer />
-      </>
-    );
+    return <CartSkeletonLoader />;
   }
 
   return (
@@ -256,7 +362,7 @@ const ProductCart = () => {
                     <div className="cart-details ms-3 flex-grow-1">
                       <div className="d-flex justify-content-between align-items-start">
                         <h5 className="mb-2">{item.productName}</h5>
-                        {renderAvailabilityBadge(item.productId)}
+                       <span style={{marginLeft:"10px"}}> {renderAvailabilityBadge(item.productId)}  </span> 
                       </div>
                       <p className="text-muted mb-1">{item.categoryName}</p>
                       <p className="fw-bold text-primary mb-2">
@@ -406,14 +512,14 @@ const ProductCart = () => {
                           <span className="float-start badge rounded-pill bg-success">
                             N{parseFloat(product.productPrice).toFixed(2)}
                           </span>
-                          {product.discount && product.discount > 0 && (
+                          {/* {product.discount && product.discount > 0 && (
                             <span className="float-end badge rounded-pill bg-danger">
                               {product.discount}% OFF
                             </span>
-                          )}
+                          )} */}
                         </div>
                         
-                        <div className="titleText flex-grow-1">
+                        {/* <div className="titleText flex-grow-1">
                           <a 
                             style={{ cursor: 'pointer', textDecoration: 'none' }}
                             onClick={() => navigateToProduct(product.productId)}
@@ -424,19 +530,19 @@ const ProductCart = () => {
                               : product.productName
                             }
                           </a>
-                        </div>
+                        </div> */}
 
                         <div className="product-meta mt-2">
                           <small className="text-muted d-block mb-1">
                             {product.categoryName}
                           </small>
-                          <span className={`badge ${
+                          {/* <span className={`badge ${
                             product.status === 'active' && product.productQuantity > 0 ? 'bg-success' : 
                             product.status === 'sold' || product.productQuantity === 0 ? 'bg-danger' : 'bg-warning'
                           }`}>
                             {product.status === 'active' && product.productQuantity > 0 ? 'In Stock' : 
                              product.productQuantity === 0 ? 'Out of Stock' : product.status}
-                          </span>
+                          </span> */}
                         </div>
                       </div>
                       

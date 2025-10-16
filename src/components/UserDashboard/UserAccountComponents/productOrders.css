@@ -81,16 +81,16 @@
 .stat-card {
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   color: white;
-  padding: 1rem 1.5rem;
+  padding: 0rem 1rem;
   border-radius: var(--radius);
   text-align: center;
-  min-width: 50px;
+  min-width: 20px;
 }
 
 .stat-number {
   display: block;
-  font-size: 1rem;
-  font-weight: 700;
+  font-size: 0.5rem;
+  font-weight: 400;
   line-height: 1;
 }
 
