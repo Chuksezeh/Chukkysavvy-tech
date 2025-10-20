@@ -666,10 +666,14 @@ console.log("InsufficientButton", checkingStock)
     const payWithPaystack = async () => {
         setLoading(true);
 
+        console.log("all====chechAmount", total)
+                
+        
         const handler = window.PaystackPop.setup({
             key: process.env.REACT_APP_PAYSTACK_KEY,
             email: userDetails?.email,
-            amount: total,
+            amount: total * 100,
+            fullName: userDetails?.firstName +" "+ userDetails?.firstName,
             userId: userDetails?.userId,
             currency: 'NGN',
             callback: function (response) {

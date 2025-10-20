@@ -50,6 +50,8 @@ import Header from './components/layouts/Header';
 import ProductManagementPage from './components/Admin/adminproductOrderManagement/productMangementPage';
 import GeneralSettings from './components/Admin/generalSettings/generalSettings';
 
+import SearchResults from './components/BuyProducts/SearchResults/SearchResults';
+
 function App() {
   const [authState, setAuthState] = useState({
     user: null,
@@ -116,6 +118,8 @@ function App() {
 
          <Route path="/view-created-products" element={<ViewCreatedProducts  />} />
           <Route path="/admin-general-update" element={<GeneralSettings  />} />
+
+          <Route path="/search-results" element={<SearchResults />} />
 
 
     

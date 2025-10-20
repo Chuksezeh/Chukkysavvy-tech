@@ -8,7 +8,7 @@ const useGetData = (url) => {
     const [isPending, setIsPending] = useState(true);
     const [error, setError] = useState(null);
 
-    console.log("data>>>>>>>>>chukkytechAxios",chukkytechAxios)
+    // console.log("data>>>>>>>>>chukkytechAxios",chukkytechAxios)
   
   useEffect(() => {
       setIsPending(true)
