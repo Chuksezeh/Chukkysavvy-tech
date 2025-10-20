@@ -180,7 +180,7 @@ const ProductDetailPage = () => {
       };
       
       const subtotal = parseFloat(product.productPrice);
-      const shipping = subtotal > 0 ? 15 : 0;
+      const shipping = subtotal > 0 ? 0 : 0;
       const total = subtotal + shipping;
       
       navigate("/checkout-payment", { 
@@ -322,7 +322,7 @@ const ProductDetailPage = () => {
             {/* Price */}
             <div className="price-section mb-3">
               <h3 className="product-price text-primary">
-                N{parseFloat(product.productPrice).toFixed(2)}
+                ₦{parseFloat(product.productPrice).toFixed(2)}
               </h3>
               {product.discount && product.discount > 0 && (
                 <div className="discount-info">
@@ -426,7 +426,7 @@ const ProductDetailPage = () => {
                     <div className="card-bod">
                       <div className="clearfix mb-3">
                         <span className="float-start badge rounded-pill bg-success">
-                          N{parseFloat(relatedProduct.productPrice).toFixed(2)}
+                          ₦{parseFloat(relatedProduct.productPrice).toFixed(2)}
                         </span>
                         {/* {relatedProduct.discount && relatedProduct.discount > 0 && (
                           <span className="float-end badge rounded-pill bg-danger">

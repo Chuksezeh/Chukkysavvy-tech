@@ -4,24 +4,27 @@ import Modal from 'react-bootstrap/Modal';
 import { useForm } from "react-hook-form";
 import AdminDashboard from "../adminDashboard";
 import { chukkytechAxios } from "../../Utility/axios";
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import { ButtonGroup, Dropdown } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-// import AdminDashboard from "../adminDashboard";
-// import "./userRepairOrder.css"
+import "./manageComments.css";
+import { 
+  FaComments, 
+  FaSearch, 
+  FaUser, 
+  FaCalendarAlt,
+  FaToggleOn,
+  FaToggleOff,
+  FaTrash,
+  FaExclamationTriangle,
+  FaCheckCircle
+} from "react-icons/fa";
 
-
-const ManageComments = (() => {
-
+const ManageComments = () => {
     const {
         register,
         handleSubmit,
-        reset,
-        watch,
-        formState: { errors, isDirty, isValid },
+        formState: { errors },
     } = useForm();
-    const [showDropDown, setShowDropDown] = useState("");
-    const [showModal, setShowModal] = useState(false)
+    
     const [loading, setLoading] = useState(false);
     const [successMessage, setSuccessMessage] = useState(false);
     const [errorMessage, setErrorMessage] = useState(false);
@@ -29,27 +32,19 @@ const ManageComments = (() => {
     const [pendingComment, setPendingComment] = useState(true);
     const [allComments, setAllComments] = useState([]);
     const [successText, setSuccessText] = useState("");
-    const [showCommentDeletModal, setShowCommentDeletModal] = useState(false);
+    const [showCommentDeleteModal, setShowCommentDeleteModal] = useState(false);
     const [showSuppressModal, setShowSuppressModal] = useState(false);
-    const [commentId, setCommentId] = useState('');
-    const [supData, setSupData] = useState("");
-    const [holdCommentData, setHoldCommentData] = useState({});
-
-    const [lineValue, setLineValue] = useState("");
+    const [holdCommentData, setHoldCommentData] = useState(null);
+    const [searchTerm, setSearchTerm] = useState("");
 
     const fetchComments = async () => {
-
         try {
             const response = await chukkytechAxios.get("comment/getAllComments");
             setAllComments(response.data);
-            setPendingComment(false);
-            
         } catch (error) {
+            console.error('Error fetching comments:', error);
+        } finally {
             setPendingComment(false);
-            console.error('Error fetching locations:', error);
-        }
-        finally{
-            setPendingComment(false);  
         }
     };
 
@@ -57,374 +52,360 @@ const ManageComments = (() => {
         fetchComments();
     }, []);
 
-    // console.log('setPendingComment', allComments);
+    const handleShowDeleteModal = (comment) => {
+        setShowCommentDeleteModal(true);
+        setHoldCommentData(comment);
+    };
 
-
-    const handleChangeValue = ((e) => {
-
-    })
-
-    const handleShowModal = ((data) => {
-        setShowCommentDeletModal(true)
-        setHoldCommentData(data)
-    })
-
-    const handleSuppressModal = (data) => {
+    const handleShowSuppressModal = (comment) => {
         setShowSuppressModal(true);
-        setHoldCommentData(data);
+        setHoldCommentData(comment);
         setErrorMessage(false);
         setSuccessMessage(false);
     };
 
-
-    const handleSubmitDelete = async () => {
+    const handleDeleteComment = async () => {
         if (!holdCommentData?.commentId) {
             setErrorMessage(true);
             setErrMessage("No comment selected for deletion");
             return;
         }
-    
+
         setLoading(true);
         setErrorMessage(false);
         setSuccessMessage(false);
-    
+
         try {
             const response = await chukkytechAxios.delete(
                 `comment/deleteComment/${holdCommentData.commentId}`
             );
-    
+
             setSuccessMessage(true);
             setSuccessText(response.data.message || "Comment deleted successfully");
-            setShowCommentDeletModal(false)
-          
+            setShowCommentDeleteModal(false);
             await fetchComments();
-         
-            setShowSuppressModal(false);
-            
-            
         } catch (err) {
             console.error('Deletion failed:', err);
-            
             const errorMsg = err.response?.data?.message || 
                             err.response?.data?.error || 
                             "Failed to delete comment";
-            
             setErrorMessage(true);
             setErrMessage(errorMsg);
-            
         } finally {
             setLoading(false);
         }
     };
-    
-   
 
-
-
-
-   
-
-
-const navigate = useNavigate();
-
-    useEffect(() => {
-        const adminsInfo = localStorage.getItem('adminsInfo');
-        // console.log('UserInfo:', userInfo);
-      
-        if (!adminsInfo) {
-          navigate('/admin-login');
-        }
-      }, [navigate]);
-
-
-
-
-
-
-
-
-
-    
-    const handleSubmitUpdateComment = async (data) => {
+    const handleUpdateCommentStatus = async () => {
         setLoading(true);
         setErrorMessage(false);
         setSuccessMessage(false);
 
+        const newStatus = holdCommentData?.status === "active" ? "suppress" : "active";
         const updateData = {
-            status: supData,
+            status: newStatus,
             commentId: holdCommentData?.commentId
         };
 
         try {
-            // console.log("Updating comment with data:", updateData);
-
             const response = await chukkytechAxios.put('comment/updateCommentStatus', updateData);
-
-            // console.log('Update successful:', response.data);
-
             setSuccessMessage(true);
             setShowSuppressModal(false);
-            setSuccessText(response.data.message)
-
+            setSuccessText(response.data.message);
             await fetchComments();
-
-
-
         } catch (err) {
             console.error('Update failed:', err);
-
             const errorMsg = err.response?.data?.error ||
                 err.response?.data?.message ||
                 'Failed to update comment status';
-
             setErrorMessage(true);
             setErrMessage(errorMsg);
-
         } finally {
             setLoading(false);
         }
     };
 
+    const navigate = useNavigate();
 
-    
+    useEffect(() => {
+        const adminsInfo = localStorage.getItem('adminsInfo');
+        if (!adminsInfo) {
+            navigate('/admin-login');
+        }
+    }, [navigate]);
 
-    // const handleCommentAction = ((data)=>{
-    //     setCommentId(data.commentId)
-    //     if(lineValue === "delete"){
-    //         handleShowModal(); 
-    //     }else if(lineValue === "suppress"){
-    //         handleSuppressModal();
-    //     }else{
+    const getInitials = (firstName, lastName) => {
+        return `${firstName?.charAt(0) || ''}${lastName?.charAt(0) || ''}`.toUpperCase();
+    };
 
-    //     }
+    const formatDate = (dateString) => {
+        return new Date(dateString).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    };
 
+    const getStatusBadgeClass = (status) => {
+        switch (status) {
+            case 'active':
+                return 'status-active';
+            case 'suppress':
+                return 'status-suppressed';
+            default:
+                return 'status-inactive';
+        }
+    };
 
-    // })
-
-
+    const filteredComments = allComments.filter(comment => 
+        comment.firstName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        comment.lastName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        comment.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        comment.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        comment.comment?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     return (
-
         <>
-
-
             <AdminDashboard />
-            <div className="header-bar">
-
-                <ul className="action-bar">
-
-                    <li>Home /Locations / <span className="addash"> Manage comments </span></li>
-                </ul>
-            </div>
-
-
-            <div className="container">
-
-
-                <h5>Search Comments</h5>
-                <div className="row">
-                    <div className="col-12">
-                        <form className="input-group">
-                            <input
-                                className="form-control border-secondary py-2"
-                                type="search"
-                                placeholder="Search by name or email"
-
-
-                            />
-                            <div className="input-group-append">
-                                <button className="btn btn-outline-secondary h-100 w-100" type="submit">
-                                    <i className="fa fa-search"></i>
-                                </button>
-                            </div>
-                        </form>
+            
+            <div className="comments-management-container">
+                {/* Header */}
+                <div className="comments-header">
+                    <div className="header-content">
+                        <h1>
+                            <FaComments className="me-2" />
+                            Comments Management
+                        </h1>
+                        <p>Manage and moderate user comments across the platform</p>
                     </div>
                 </div>
 
+                {/* Success/Error Messages */}
+                {successMessage && (
+                    <div className="alert alert-success alert-improved">
+                        <FaCheckCircle className="me-2" />
+                        <strong>Success!</strong> {successText}
+                    </div>
+                )}
 
-            </div>
-            {successMessage &&
-                <div className="container mt-2">
-                    <div className="row">
+                {errorMessage && (
+                    <div className="alert alert-error alert-improved">
+                        <FaExclamationTriangle className="me-2" />
+                        <strong>Error!</strong> {errMessage}
+                    </div>
+                )}
 
-                        <div className="col-sm-12">
-                            <div className="alert fade  alert-success alert-dismissible text-left font__family-montserrat font__size-16 font__weight-light brk-library-rendered rendered show">
+                {/* Search Bar */}
+                <div className="search-container">
+                    <h5>Search Comments</h5>
+                    <div className="search-form">
+                        <input
+                            type="text"
+                            className="search-input"
+                            placeholder="Search by name, email, title, or comment content..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                        <button className="search-btn">
+                            <FaSearch className="me-2" />
+                            Search
+                        </button>
+                    </div>
+                </div>
 
-                                <i className="start-icon far fa-check-circle faa-tada animated"></i>
-                                <strong className="font__weight-semibold" style={{ color: "white" }}>Well done!</strong>
-
-                                <span> {successText}  </span>
-                            </div>
+                {/* Comments Grid */}
+                <div className="comments-grid">
+                    {pendingComment ? (
+                        <div className="loading-state">
+                            <div className="loader-circle"></div>
                         </div>
+                    ) : filteredComments.length === 0 ? (
+                        <div className="empty-state">
+                            <FaComments className="empty-icon" />
+                            <h3>No Comments Found</h3>
+                            <p>
+                                {searchTerm ? 
+                                    "No comments match your search criteria" : 
+                                    "There are no comments to display at the moment"
+                                }
+                            </p>
+                        </div>
+                    ) : (
+                        filteredComments.map((comment, index) => (
+                            <div key={comment.commentId} className="comment-card">
+                                <div className="comment-header">
+                                    <div className="comment-user">
+                                        <div className="user-avatar">
+                                            {getInitials(comment.firstName, comment.lastName)}
+                                        </div>
+                                        <div className="user-info">
+                                            <h4>
+                                                {comment.firstName} {comment.lastName}
+                                            </h4>
+                                            <p>{comment.email}</p>
+                                        </div>
+                                    </div>
+                                    <div className="comment-meta">
+                                        <div className="comment-date">
+                                            <FaCalendarAlt className="me-1" />
+                                            {formatDate(comment.createdDateTime)}
+                                        </div>
+                                        <span className={`status-badge ${getStatusBadgeClass(comment.status)}`}>
+                                            {comment.status}
+                                        </span>
+                                    </div>
+                                </div>
 
+                                <div className="comment-content">
+                                    <h5 className="comment-title">{comment.title}</h5>
+                                    <p className="comment-text">{comment.comment}</p>
+                                </div>
 
-
-                    </div>
+                                <div className="comment-actions">
+                                    {comment.status === "active" ? (
+                                        <button 
+                                            className="action-btn btn-suppress"
+                                            onClick={() => handleShowSuppressModal(comment)}
+                                        >
+                                            <FaToggleOff className="me-1" />
+                                            Suppress
+                                        </button>
+                                    ) : (
+                                        <button 
+                                            className="action-btn btn-activate"
+                                            onClick={() => handleShowSuppressModal(comment)}
+                                        >
+                                            <FaToggleOn className="me-1" />
+                                            Activate
+                                        </button>
+                                    )}
+                                    <button 
+                                        className="action-btn btn-delete"
+                                        onClick={() => handleShowDeleteModal(comment)}
+                                    >
+                                        <FaTrash className="me-1" />
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        ))
+                    )}
                 </div>
 
-
-            }
-
-
-
-
-
-            <div className="controlADMinorder_tb">
-               
-                  <table>
-                  <thead>
-                      <tr className="table-headers">
-                          <th>SN</th>
-                          <th>Title</th>
-                          <th>Comment</th>
-                          <th>Created date</th>
-                          <th>status</th>
-                          <th>First name</th>
-                          <th>Last name</th>
-                          <th>Email</th>
-                          {/* <th>Phone</th> */}
-                          <th>Action</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-
-                      {
-                          allComments && allComments.map((data, i) => (
-
-                              <tr key={data.locationId}>
-                                  <td data-label="SN"> {i + 1} </td>
-                                  <td data-label="Title">{data.title} </td>
-                                  <td data-label="Comment"> {data.comment} </td>
-                                  <td data-label="Created date"> {data.createdDateTime} </td>
-                                  <td data-label="status"> {data.status} </td>
-                                  <td data-label="First name">  {data.firstName} </td>
-                                  <td data-label="Last name">{data.lastName} </td>
-                                  <td data-label="Email"> {data.email} </td>
-                                  {/* <td data-label="Phone"> {data.phone} </td> */}
-                                  <td>
-                                      {/* <select className="form-control border-secondary" onChange={(e)=>setLineValue(e.target.value)} onClick={()=>handleCommentAction(data)}>
-                                          <option>Action</option>
-
-                                          <option value="suppress"> Suppress</option>
-                                          <option value="delete">Delete comment</option>
-                                      </select> */}
-
-                                      {[DropdownButton].map((DropdownType, idx) => (
-                                          <DropdownType
-                                              as={ButtonGroup}
-                                              key={idx}
-                                              id={`dropdown-button-drop-${idx}`}
-                                              size="lg"
-                                              title="Action"
-
-                                          >
-                                              {/* <Dropdown.Item eventKey="1">View user</Dropdown.Item> */}
-
-                                              <Dropdown.Item eventKey="3" onClick={() => handleSuppressModal(data)}>
-                                                  {
-                                                      data.status === "active" ? <span onClick={() => setSupData("suppress")}> Suppress comment</span> : <span onClick={() => setSupData("active")}> Activate comment</span>
-                                                  }
-
-
-                                              </Dropdown.Item>
-                                              <Dropdown.Divider />
-                                              <Dropdown.Item eventKey="4" style={{ color: "red" }} onClick={() => handleShowModal(data)} >Delete comment</Dropdown.Item>
-                                          </DropdownType>
-                                      ))}
-
-
-                                  </td>
-                              </tr>
-
-
-                          ))
-                      }
-
-
-                  </tbody>
-              </table>
-
-              {
-      pendingComment && <div style={{justifyContent:"center", textAlign:"center", padding:"10px"}}> <span className="loader-circle"></span></div>
-    }
-
-   {
-      allComments.length === 0  && !pendingComment  &&  <div style={{justifyContent:"center", textAlign:"center", padding:"10px"}}> <span > No comment available  </span></div>
-    }
-             
-               
-
-
+                {/* Stats Summary */}
+                {!pendingComment && filteredComments.length > 0 && (
+                    <div className="text-center text-muted">
+                        <small>
+                            Showing {filteredComments.length} of {allComments.length} comments
+                        </small>
+                    </div>
+                )}
             </div>
 
-
-            <Modal show={showCommentDeletModal} onHide={() => setShowCommentDeletModal(false)} size="">
+            {/* Delete Confirmation Modal */}
+            <Modal 
+                show={showCommentDeleteModal} 
+                onHide={() => setShowCommentDeleteModal(false)} 
+                className="modal-improved"
+                centered
+            >
                 <Modal.Header closeButton>
-                    <Modal.Title>Delete comment</Modal.Title>
+                    <Modal.Title>Delete Comment</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-
-
-                    <div>Are you sure you want to delete this comment?</div>
-
-
+                    <FaExclamationTriangle size={32} className="text-warning mb-3" />
+                    <p>Are you sure you want to delete this comment?</p>
+                    <p className="text-muted">
+                        This action cannot be undone and the comment will be permanently removed.
+                    </p>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowCommentDeletModal(false)}>
-                        Close
+                    <Button 
+                        variant="secondary" 
+                        className="btn-modal-cancel"
+                        onClick={() => setShowCommentDeleteModal(false)}
+                        disabled={loading}
+                    >
+                        Cancel
                     </Button>
-
-
-                    {
-                        loading ? <Button className="btn btn-primary" variant="primary" >
-                            <span className="loader"></span>
-                        </Button> : <Button style={{ background: "red" }}  onClick={handleSubmitDelete}>
-                        Delete
-                        </Button>
-                    }
-
-                    
-
+                    <Button 
+                        className="btn-modal-delete"
+                        onClick={handleDeleteComment}
+                        disabled={loading}
+                    >
+                        {loading ? (
+                            <>
+                                <span className="spinner-border spinner-border-sm me-2"></span>
+                                Deleting...
+                            </>
+                        ) : (
+                            "Delete Comment"
+                        )}
+                    </Button>
                 </Modal.Footer>
             </Modal>
 
-
-            <Modal show={showSuppressModal} onHide={() => setShowSuppressModal(false)} size="">
+            {/* Suppress/Activate Confirmation Modal */}
+            <Modal 
+                show={showSuppressModal} 
+                onHide={() => setShowSuppressModal(false)} 
+                className="modal-improved"
+                centered
+            >
                 <Modal.Header closeButton>
-                    <Modal.Title>Delete comment</Modal.Title>
+                    <Modal.Title>
+                        {holdCommentData?.status === "active" ? "Suppress Comment" : "Activate Comment"}
+                    </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-
-                    {
-                        holdCommentData.status === "active" ? <div>Are you sure you want to <span style={{ fontWeight: "bold" }}>suppress </span> this comment?</div> :
-                            <div>Are you sure you want to <span style={{ fontWeight: "bold" }}>activate </span> this comment?</div>
-                    }
-
-
-
+                    {holdCommentData?.status === "active" ? (
+                        <>
+                            <FaToggleOff size={32} className="text-warning mb-3" />
+                            <p>Are you sure you want to <strong>suppress</strong> this comment?</p>
+                            <p className="text-muted">
+                                The comment will be hidden from public view but can be activated later.
+                            </p>
+                        </>
+                    ) : (
+                        <>
+                            <FaToggleOn size={32} className="text-success mb-3" />
+                            <p>Are you sure you want to <strong>activate</strong> this comment?</p>
+                            <p className="text-muted">
+                                The comment will be visible to the public.
+                            </p>
+                        </>
+                    )}
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowSuppressModal(false)}>
-                        Close
+                    <Button 
+                        variant="secondary" 
+                        className="btn-modal-cancel"
+                        onClick={() => setShowSuppressModal(false)}
+                        disabled={loading}
+                    >
+                        Cancel
                     </Button>
-                    {
-                        loading ? <Button className="btn btn-primary" variant="primary" >
-                            <span className="loader"></span>
-                        </Button> : <Button className="btn btn-primary" variant="primary" onClick={handleSubmitUpdateComment}>
-                            Update
-                        </Button>
-                    }
-
-
+                    <Button 
+                        className="btn-modal-confirm"
+                        onClick={handleUpdateCommentStatus}
+                        disabled={loading}
+                    >
+                        {loading ? (
+                            <>
+                                <span className="spinner-border spinner-border-sm me-2"></span>
+                                Updating...
+                            </>
+                        ) : (
+                            holdCommentData?.status === "active" ? "Suppress Comment" : "Activate Comment"
+                        )}
+                    </Button>
                 </Modal.Footer>
             </Modal>
-
-
-
-
         </>
-
-    )
-})
+    );
+};
 
 export default ManageComments;

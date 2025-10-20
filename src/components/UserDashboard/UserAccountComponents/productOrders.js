@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Header from "../../layouts/Header";
 import UserDashBoard from "../userDashboard";
 import { useNavigate } from "react-router-dom";
+import html2canvas from "html2canvas";
+import brandLogo from "../../images/CHUKKY-BRAND-BACKGROUND-removebg-preview.png"
 import { 
   MdKeyboardBackspace, 
   MdOutlineShoppingBag,
@@ -41,7 +43,7 @@ const ProductOrders = (() => {
   const [statusFilter, setStatusFilter] = useState("all");
    const [actionDialog, setActionDialog] = useState(false);
    const [statusPending, setStatusPending] = useState(false);
-
+    const receiptRef = useRef(null);
 
   useEffect(() => {
     const userInfo = localStorage.getItem('userInfo');
@@ -295,7 +297,7 @@ const ProductOrders = (() => {
             .then(res => {
                 console.log('res', res);
                   setStatusPending(false);
-                  // fetchUserProductOrders();
+                   fetchUserData();
                   handleCloseDialog();
                   setShowOrderModal(false);
               })
@@ -307,7 +309,16 @@ const ProductOrders = (() => {
 
 
 
-
+const downloadReceipt = async () => {
+    if (receiptRef.current) {
+      const canvas = await html2canvas(receiptRef.current);
+      const imgData = canvas.toDataURL("image/png");
+      const link = document.createElement("a");
+      link.href = imgData;
+      link.download = "receipt.png";
+      link.click();
+    }
+  };
 
 
 
@@ -429,7 +440,7 @@ const ProductOrders = (() => {
                               <span className="summary-label">Items</span>
                               <span className="summary-value">
                                 {order.items_count || 'N/A'}
-                              </span>
+                               </span>
                             </div>
                           </Col> */}
                           <Col xs={12}>
@@ -489,6 +500,7 @@ const ProductOrders = (() => {
           size="lg"
           centered
           className="order-tracking-modal"
+         
         >
           <Modal.Header closeButton className="border-bottom-0 bg-light">
             <Modal.Title className="w-100">
@@ -499,6 +511,9 @@ const ProductOrders = (() => {
                     Placed on {selectedOrder && formatDate(selectedOrder.created_date)}
                   </small>
                 </div>
+               
+              </div>
+               <div>
                 {selectedOrder && (
                   <Badge 
                     bg={getStatusVariant(selectedOrder.order_status)} 
@@ -508,12 +523,13 @@ const ProductOrders = (() => {
                     <span className="ms-2 text-capitalize">{selectedOrder.order_status}</span>
                   </Badge>
                 )}
-              </div>
+                </div>
             </Modal.Title>
           </Modal.Header>
           <Modal.Body className="pt-0">
             {selectedOrder && (
-              <div className="order-details-modal">
+              <div className="order-details-modal"  id="download-receipt" ref={receiptRef} >
+            <div style={{justifyContent:"center", textAlign:"center", padding:"5px"}}>    <img src={brandLogo} className="loGO-ReceIpt"/> <span className="nameBrand-Receipt"> Chukkytech</span></div>
                 {/* Order Tracking Timeline */}
                 <div className="border-0 shadow-sm mb-4">
                   <Card.Body className="p-4">
@@ -718,8 +734,7 @@ const ProductOrders = (() => {
               </Button>
             )}
             {(selectedOrder?.order_status === 'delivered' || selectedOrder?.order_status === 'completed') && (
-              <Button variant="primary"  
-  >
+              <Button variant="primary" onClick={downloadReceipt }>
                 Download Invoice
               </Button>
             )}

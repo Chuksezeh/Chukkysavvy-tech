@@ -18,6 +18,8 @@ import { useDispatch } from "react-redux";
 import { clearCartProduct } from "../../redux/productCounter";
 import Goback from "../../layouts/goBack";
 import myLogo from "../../images/CHUKKY-BRAND-BACKGROUND-removebg-preview.png"
+import moment from "moment/moment";
+import useGetData from "../../Utility/getFunction";
 
 const CheckoutPage = () => {
     const location = useLocation();
@@ -52,6 +54,8 @@ const CheckoutPage = () => {
     const [checkingStock, setCheckingStock] = useState(false);
     const [productStock, setProductStock] = useState({});
     const [showLogin, setShowLogin] = useState(false);
+    const [showPaymentReference, setShowPaymentReference] = useState("");
+    const [insuficientButton, setInsufficientButton]= useState(false);
     const receiptRef = useRef(null);
     const {
         register,
@@ -82,13 +86,23 @@ const CheckoutPage = () => {
         source = 'cart' // 'cart' or 'buy-now'
     } = location.state || {};
 
+
+
+    const {data, isPending, error} = useGetData("general/getGeneralSettings");
+    const generalData = data?.data;
+    
+
     // Calculate totals - handle both single item and multiple items
     const subtotal = passedSubtotal || cartItems.reduce(
         (acc, item) => acc + (parseFloat(item.productPrice) * (item.quantity || 1)),
         0
     );
-    const shipping = passedShipping || (subtotal > 0 ? 15 : 0);
-    const total = passedTotal || (subtotal + shipping);
+    const shipping =  parseInt(generalData?.productDeliveryFeeAbuja)   || (subtotal > 0 ? parseInt(generalData?.productDeliveryFeeAbuja) : 0);
+
+    console.log("looooooog", shipping)
+
+
+    const total = passedTotal + shipping || (subtotal + shipping);
 
     // Function to check product stock availability
     const checkProductStock = async () => {
@@ -266,10 +280,11 @@ const CheckoutPage = () => {
 
             setLoading(false);
             setSuccessMessage("Address saved successfully!");
-
+             
             // Refresh addresses
             if (userDetails?.userId) {
                 await fetchUserData();
+                window.scrollTo(0, 0);
             }
 
             // Reset form
@@ -285,7 +300,7 @@ const CheckoutPage = () => {
             setLoading(false);
             setErrorMessage(err.response?.data?.error || "Failed to save address. Please try again.");
         }
-    };
+     };
 
     // Handle delete address
     const handleDeleteAddress = async (addressId) => {
@@ -410,7 +425,7 @@ const CheckoutPage = () => {
         // First check product stock availability
         const stockCheck = await checkProductStock();
 
-        console.log("Stock check result:>>>>>", stockCheck);
+        console.log("Stock referencet:>>>>>", reference);
 
 
         if (!stockCheck.allAvailable) {
@@ -448,16 +463,16 @@ const CheckoutPage = () => {
             userId: userDetails?.userId,
             subtotal: subtotal,
             deliveryFee: shipping,
-            paymentReference: selectedPaymentReference
+            paymentReference: selectedPaymentReference || reference
         };
-
+      
         // console.log("Processing checkout:", paymentData);
 
         try {
             const response = await chukkytechAxios.post("/order/orders/create", paymentData);
 
             console.log("Checkout response:", response);
-
+             setShowPaymentReference(response.data.paymentReference)
             if (response.data && response.data.success) {
                 // Order created successfully
                 setShowReceipt(true);
@@ -487,6 +502,10 @@ const CheckoutPage = () => {
             setLoading(false);
         }
     };
+
+
+console.log("InsufficientButton", checkingStock)
+
 
     // State and LGA handlers
     const handleStateChange = (event) => {
@@ -544,6 +563,12 @@ const CheckoutPage = () => {
         if (!stockInfo) return null;
 
         const isSufficient = stockInfo.available >= (item.quantity || 1);
+
+        console.log(".../",isSufficient)
+        //  if (isSufficient === false){
+            
+        //  }
+        // setInsufficientButton(true);
 
         return (
             <small
@@ -638,7 +663,7 @@ const CheckoutPage = () => {
     
  
 
-    const payWithPaystack = () => {
+    const payWithPaystack = async () => {
         setLoading(true);
 
         const handler = window.PaystackPop.setup({
@@ -1000,7 +1025,7 @@ const CheckoutPage = () => {
                                             <span className="btn-loader"></span> Processing Order...
                                         </>
                                     ) : (
-                                        `Pay Now - N${total.toFixed(2)}`
+                                        `Pay Now - N${total?.toFixed(2)}`
                                     )}
                                 </button> : <button
                                     type="button"
@@ -1008,7 +1033,7 @@ const CheckoutPage = () => {
                                     onClick={handleCheckout}
 
 
-                                    disabled={loading || !selectedAddress || checkingStock}
+                                    disabled={ checkingStock  ||  loading || !selectedAddress }
                                 >
                                     {checkingStock ? (
                                         <>
@@ -1019,7 +1044,7 @@ const CheckoutPage = () => {
                                             <span className="btn-loader"></span> Processing Order...
                                         </>
                                     ) : (
-                                        `Place Order - N${total.toFixed(2)}`
+                                        `Place Order - ₦${total?.toFixed(2)}`
                                     )}
                                 </button>
                             }
@@ -1045,7 +1070,7 @@ const CheckoutPage = () => {
                                     <div className="flex-grow-1">
                                         <p className="mb-1 fw-semibold">{item.productName}</p>
                                         <small className="text-muted">
-                                            {item.quantity || 1} × N{parseFloat(item.productPrice).toFixed(2)}
+                                            {item.quantity || 1} × ₦{parseFloat(item.productPrice).toFixed(2)}
                                         </small>
                                         <br />
                                         <small className="text-muted">
@@ -1055,7 +1080,7 @@ const CheckoutPage = () => {
                                         {getStockStatus(item)}
                                     </div>
                                     <p className="fw-bold mb-0 text-primary">
-                                        N{((parseFloat(item.productPrice) * (item.quantity || 1))).toFixed(2)}
+                                        ₦{((parseFloat(item.productPrice) * (item.quantity || 1))).toFixed(2)}
                                     </p>
                                 </div>
                             ))}
@@ -1066,11 +1091,11 @@ const CheckoutPage = () => {
                             <div className="order-totals">
                                 <div className="d-flex justify-content-between mb-2">
                                     <span>Subtotal</span>
-                                    <span>N{subtotal.toFixed(2)}</span>
+                                    <span>₦{subtotal.toFixed(2)}</span>
                                 </div>
                                 <div className="d-flex justify-content-between mb-2">
                                     <span>Delivery</span>
-                                    <span>N{shipping.toFixed(2)}</span>
+                                    <span>₦{shipping.toFixed(2)}</span>
                                 </div>
                                 {subtotal > 0 && (
                                     <div className="d-flex justify-content-between mb-2 text-muted small">
@@ -1081,7 +1106,7 @@ const CheckoutPage = () => {
                                 <hr />
                                 <div className="d-flex justify-content-between fw-bold fs-5">
                                     <span>Total</span>
-                                    <span className="text-primary">N{total.toFixed(2)}</span>
+                                    <span className="text-primary">₦{total.toFixed(2)}</span>
                                 </div>
                             </div>
 
@@ -1312,7 +1337,7 @@ const CheckoutPage = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-6 text-end">
+                        <div className="col-12 text-end">
                             {
                                 payment === "credit-paid" ? <div className="badge bg-success fs-6 p-2">
                                     <i className="fas fa-check-circle me-1"></i>
@@ -1323,7 +1348,7 @@ const CheckoutPage = () => {
                                 </div>
                             }
 
-                            <p className="text-muted small mb-0 mt-1">Order Date: {new Date().toLocaleDateString()}</p>
+                            <p className="text-muted small mb-0 mt-1">Order Date: {new Date().toLocaleDateString()} </p>
                         </div>
                     </div>
 
@@ -1418,7 +1443,7 @@ const CheckoutPage = () => {
 
                                     <div className="d-flex justify-content-between mb-2">
                                         <span className="text-muted">Payment Reference:</span>
-                                        <span className="fw-semibold">  {""} </span>
+                                        <span className="fw-semibold">  {showPaymentReference} </span>
                                     </div>
                                     <hr />
                                     {

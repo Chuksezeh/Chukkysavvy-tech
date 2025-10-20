@@ -205,7 +205,7 @@ const BuyProducts = (() => {
                     <div className="">
                       <div className="clearfix ">
                         <span className="float-start badge rounded-pill bg-success price-badge">
-                          N{parseFloat(product.productPrice).toFixed(2)}
+                          ₦{parseFloat(product.productPrice).toFixed(2)}
                         </span>
                       </div>
 

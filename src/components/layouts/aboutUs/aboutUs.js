@@ -29,6 +29,7 @@ import WhatsAppFloat from "../whatsappFloat/whatsAppFloat"
 import { useEffect, useState } from "react"
 import ReadMoreText from "../readMoreText"
 import { Fade, Zoom } from "react-awesome-reveal"
+import useGetData from "../../Utility/getFunction"
 
 const AboutUs = (() => {
   const scrolltop = () => {
@@ -76,6 +77,13 @@ const AboutUs = (() => {
     { number: "90+", label: "Days Warranty" }
   ];
 
+
+
+  const {data, isPending, error} = useGetData("general/getGeneralSettings");
+
+  const generalData = data?.data;
+
+
   return (
     <section className="about-body-show">
 
@@ -119,7 +127,7 @@ const AboutUs = (() => {
                     </div>
                     <div className="contact-details">
                       <h4>Visit Us</h4>
-                      <p>3c Durban Street, Wuse 2, Abuja</p>
+                      <p> {generalData?.locationMainAddress} </p>
                     </div>
                   </div>
                   
@@ -129,7 +137,7 @@ const AboutUs = (() => {
                     </div>
                     <div className="contact-details">
                       <h4>Call Us</h4>
-                      <a href="tel:08020653456">08020653456</a>
+                      <a href="tel:08020653456">  {generalData?.customerSupportPhoneNumber} </a>
                     </div>
                   </div>
                   
@@ -139,7 +147,7 @@ const AboutUs = (() => {
                     </div>
                     <div className="contact-details">
                       <h4>Email Us</h4>
-                      <a href="mailto:support@chukkytech.ng">support@chukkytech.ng</a>
+                      <a href="mailto:support@chukkytech.ng"> {generalData?.customerSupportEmail} </a>
                     </div>
                   </div>
                 </div>

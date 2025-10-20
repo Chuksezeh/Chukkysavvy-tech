@@ -1,412 +1,368 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { chukkytechAxios } from "../../Utility/axios";
 import Modal from 'react-bootstrap/Modal';
 import chukkyLogo from "../../images/CHUKKY-BRAND-BACKGROUND-removebg-preview.png"
-import moment from "moment/moment";
-import { GiSaveArrow } from "react-icons/gi";
-import { IoMdShare } from "react-icons/io";
-import { html2pdf } from "html2pdf.js";
-import { IoCheckmarkDoneOutline } from "react-icons/io5";
-import Receipt from "../Receipt/repairOrderReceipt";
-import { Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import useGetData from "../../Utility/getFunction";
-import UserLogin from "../UserLoginPage/userlogin";
+import { Button } from "react-bootstrap";
+import "./iphoneInstoreRepair.css"
+import { 
+  IoPhonePortrait, 
+  IoCalendar, 
+  IoLocation, 
+  IoDocumentText,
+  IoTimer,
+  IoCar,
+  IoHome
+} from "react-icons/io5";
+import Receipt from "../Receipt/repairOrderReceipt";
 
-
-
-
-
-
-
-let renderCount = 0;
-
-const IphoneInstoreRepair = (() => {
-
-
-
-    const { register, handleSubmit, setValue, reset,
-        watch, formState: { errors, isDirty, isValid  } } = useForm({
-        defaultValues: {
-          reserveDate: null,
-        }
-      });
-   const [reserveDate, setReserveDate] = useState(null);
-
-    renderCount++;
+const IphonePickupRepair = () => {
+    const { 
+        register, 
+        handleSubmit, 
+        setValue,
+        formState: { errors } 
+    } = useForm();
+    
+    const [reserveDate, setReserveDate] = useState(null);
     const [loading, setLoading] = useState(false);
     const [successMessage, setSuccessMessage] = useState(false);
     const [errorMessage, setErrorMessage] = useState(false);
-    const [successTex, setSuccessText] = useState("");
+    const [successText, setSuccessText] = useState("");
     const [errMessage, setErrMessage] = useState("");
-    const [show, setShow] = useState(false);
-    const [orderData, setOrderData] = useState("");
-    const [showMainModal, setShowMainModal] = useState(true);
-    const [showResult, setShowResult] = useState(false);
-
     const [showNoLogin, setShowNoLogin] = useState(false);
-
-
-    const handleShowNoLogin = (()=>setShowNoLogin(true));
-    const handleHideNoLogin = (()=>setShowNoLogin(false))
-
-
-    const handleClose = () => setShow(false);
-
-    const handleOpen = () =>{
-          setShow(true);
-    }
-
-    const navigate = useNavigate(); 
-
+    const [orderData, setOrderData] = useState(null);
+    const [showForm, setShowForm] = useState(true);
+    const [selectedModel, setSelectedModel] = useState("");
+    
+    const navigate = useNavigate();
+    
     const userData = JSON.parse(localStorage.getItem('userInfo') || "null");
-   const encodedEmail = encodeURIComponent(userData?.email);
+    const encodedEmail = encodeURIComponent(userData?.email);
+    const { data: users, isPending: isPendingUsers } = useGetData(`/auth/getUser/${encodedEmail}`);
 
-   const {data: users, isPending: ispendingUsers, error: errorUsers} = useGetData(`/auth/getUser/${encodedEmail}`)
+    // iPhone models organized by generation
+    const iphoneModels = [
+        "iPhone 4", "iPhone 4S", "iPhone 5", "iPhone 5S", "iPhone 5C",
+        "iPhone 6", "iPhone 6 Plus", "iPhone 6S", "iPhone 6S Plus", 
+        "iPhone SE (1st gen)", "iPhone 7", "iPhone 7 Plus", "iPhone 8", 
+        "iPhone 8 Plus", "iPhone X", "iPhone XS", "iPhone XR", "iPhone XS Max",
+        "iPhone 11", "iPhone 11 Pro", "iPhone 11 Pro Max", "iPhone SE (2nd gen)",
+        "iPhone 12", "iPhone 12 mini", "iPhone 12 Pro", "iPhone 12 Pro Max",
+        "iPhone 13", "iPhone 13 mini", "iPhone 13 Pro", "iPhone 13 Pro Max",
+        "iPhone SE (3rd gen)", "iPhone 14", "iPhone 14 Plus", "iPhone 14 Pro", 
+        "iPhone 14 Pro Max", "iPhone 15", "iPhone 15 Plus", "iPhone 15 Pro", 
+        "iPhone 15 Pro Max", "iPhone 16", "iPhone 16 Pro", "iPhone 16 Plus", 
+        "iPhone 16 Pro Max", "iPhone 17", "iPhone 17 Air", "iPhone 17 Pro", "iPhone 17 Pro Max"
+    ];
 
-  
-  
-  
-       const handleSubmitDeviceData = async (data) => {
+    const handleSubmitDeviceData = async (formData) => {
         try {
             setLoading(true);
-            setShowResult(false);
-            setShowMainModal(true);
+            setErrorMessage(false);
 
-            const deviceData = {
-                ...data,
-                repairOrderType: "Pickup",
-                userId: users.userId, 
-                status: "Processing"
-            };
-    
-            if (!userData || !users.userId) {
-                console.error("No user data found. Redirecting to login.");
+            if (!userData || !users?.userId) {
+                // Save form data to localStorage for after login
+                const deviceData = {
+                    ...formData,
+                    deviceType: "iPhone",
+                    deviceModel: selectedModel,
+                    repairOrderType: "Pickup",
+                    status: "Processing"
+                };
+                localStorage.setItem('pendingRepairOrder', JSON.stringify(deviceData));
                 setShowNoLogin(true);
-                localStorage.setItem('initialData', JSON.stringify(deviceData));
                 setLoading(false);
-
                 return;
             }
-    
-            
 
-          
-                
-            console.log("Sending data:", deviceData);
-    
-            const res = await chukkytechAxios.post('repair/repairorder', deviceData);
-            const result = res.data;
-    
-            console.log("API response:", result);
-    
-            setLoading(false);
-            setShowMainModal(false);
-            setShowResult(true);
-            setOrderData(result?.repairOrder);
-            setSuccessText(res?.data?.message);
+            const deviceData = {
+                ...formData,
+                deviceType: "iPhone",
+                deviceModel: selectedModel,
+                repairOrderType: "Pickup",
+                userId: users?.userId,
+                status: "Processing"
+            };
+
+            const response = await chukkytechAxios.post('repair/repairorder', deviceData);
+            
+            setOrderData(response.data?.repairOrder);
+            setSuccessText(response.data?.message);
             setSuccessMessage(true);
-            handleOpen();
+            setShowForm(false);
+            
+            // Clear pending order from storage
+            localStorage.removeItem('pendingRepairOrder');
+            
         } catch (err) {
             console.error("API error:", err);
-            setLoading(false);
             setErrorMessage(true);
-            setErrMessage(err.response?.data || "An error occurred");
+            setErrMessage(err.response?.data?.message || "An error occurred while scheduling your pickup");
+        } finally {
+            setLoading(false);
         }
     };
 
-   
-// const handleCheckLogin = (()=>{
-    
-//   if(userData){
-//     handleSubmitDeviceData();  
-//   }else{
-//     handleShowNoLogin();
-//     setLoading(false)
-     
-//   }
+    const navigateLogin = () => {
+        navigate("/user-login");
+    };
 
-// })
+    const handleModelSelect = (model) => {
+        setSelectedModel(model);
+        setValue("deviceModel", model);
+    };
 
-const navigateLogin = () =>  navigate("/user-login");
-    
+    if (!showForm && orderData) {
+        return <Receipt orderData={orderData} chukkyLogo={chukkyLogo} />;
+    }
 
-    
     return (
-
-        <>
-{
-
-
-showMainModal && 
-
-<div className="container">
-
-<div className="form-wra">
-    <p id="description" className="text-center">
-       
- Please provide required details of your repair
-  request. Our team will contact you promptly to arrange pickup and begin the repair process.
-    </p>
-
-   
-    <form id="survey-form" onSubmit={handleSubmit((data, event) => {
-
-        console.log('seedataNow', data);
-        handleSubmitDeviceData(data);
-    })}>
-
-        <div className="row">
-
-            <div className="col-md-6">
-                <div className="form-group">
-                    <label id="number-label" for="number">Device type</label>
-                    <input type="text" readOnly className="form-control"
-                        value="iPhone"
-                        {...register("deviceType", {
-                            required: 'Pickup address is required',
-                            maxLength: {},
-                        })}
-                    />
-                    <span className="cum-error">{errors.deviceType?.message}</span>
+        <div className="iphone-pickup-conta">
+            {/* Success Message */}
+            {successMessage && (
+                <div className="alert alert-success alert-improved">
+                    <strong>Success!</strong> {successText}
                 </div>
-            </div>
+            )}
 
-            <div className="col-md-6">
-                <div className="form-group">
-                    <label>Choose iPhone model</label>
-                    <select id="dropdown" name="role" className="form-control"  {...register("deviceModel", {
-                        required: 'iPhone  name is required',
-                        maxLength: {},
-                    })}  >
-                        <option disabled >Choose...</option>
-                        <option>iPhone 4</option>
-                        <option>iPhone 4S</option>
-                        <option>iPhone 5</option>
-                        <option>iPhone 5S</option>
-                        <option>iPhone 5C</option>
-                        <option>iPhone 6</option>
-                        <option>iPhone 6Plus</option>
-                        <option>iPhone 6S</option>
-                        <option>iPhone 6S Plus</option>
-                        <option>SE(1st generation)</option>
-                        <option>iPhone 7 </option>
-                        <option>iPhone 7 Plus</option>
-                        <option>iPhone 8</option>
-                        <option>iPhone 8 Plus</option>
-                        <option>iPhone X</option>
-                        <option>iPhone XS</option>
-                        <option>iPhone XR</option>
-                        <option>iPhone XS Max</option>
-                        <option>iPhone 11</option>
-                        <option>iPhone 11 Pro</option>
-                        <option>iPhone 11 Pro Max</option>
-                        <option>iPhone SE(2nd generation)</option>
-                        <option>iPhone 12 </option>
-                        <option>iPhone 12 mini</option>
-                        <option>iPhone 12 Pro </option>
-                        <option>iPhone 12 Pro Max</option>
-                        <option>iPhone 13 </option>
-                        <option>iPhone 13 mini</option>
-                        <option>iPhone 13 Pro</option>
-                        <option>iPhone 13 Pro Max</option>
-                        <option>iPhone SE(3rd generation)</option>
-                        <option>iPhone 14</option>
-                        <option>iPhone 14 Pro</option>
-                        <option>iPhone 14 Plus</option>
-                        <option>iPhone 14 Pro Max</option>
-                        <option>iPhone 15</option>
-                        <option>iPhone 15 Pro</option>
-                        <option>iPhone 15 Plus</option>
-                        <option>iPhone 15 Pro Max</option>
-                        <option>iPhone 16</option>
-                        <option>iPhone 16 Pro</option>
-                        <option>iPhone 16 Plus</option>
-                        <option>iPhone 16 Pro Max</option>
-                    </select>
-
+            {/* Error Message */}
+            {errorMessage && (
+                <div className="alert alert-error alert-improved">
+                    <strong>Error!</strong> {errMessage}
                 </div>
-            </div>
+            )}
 
+            {/* Main Form */}
+            {showForm && (
+                <div className="iphone-pickup-card">
+                    <div className="pickup-header">
+                        <h2>
+                            <IoPhonePortrait />
+                            iPhone Pickup Service
+                        </h2>
+                        <p>
+                            Schedule a convenient pickup for your iPhone repair. 
+                            We'll come to you, diagnose the issue, and provide expert repair service.
+                        </p>
+                    </div>
 
-
-           <div className="col-md-6">
-             <div className="form-group">
-               <label htmlFor="reserveDate">Reservation date and time</label>
-               <DatePicker
-                 selected={reserveDate}
-                 onChange={(date) => {
-                   setReserveDate(date);
-                   setValue("reserveDate", date); // set value for react-hook-form
-                 }}
-                 showTimeSelect
-                 timeFormat="hh:mm aa"
-                 timeIntervals={15}
-                 dateFormat="MMMM d, yyyy h:mm aa"
-                 minDate={new Date()}
-                 className="form-control"
-                 placeholderText="Select date and time"
-               />
-               <span className="cum-error">{errors.reserveDate?.message}</span>
-             </div>
-           </div>
-            <div className="col-md-6">
-                <div className="form-group">
-                    <label id="number-label" for="number">Phone number</label>
-                    <input type="text" placeholder="Enter phone number" className="form-control"
-
-                        {...register("phone", {
-                            required: 'Phone number is required',
-                            maxLength: {},
-                        })}
-                    />
-                    <span className="cum-error">{errors.phone?.message}</span>
-                </div>
-            </div>
-
-
-            <div className="col-md-12">
-                <div className="form-group">
-                    <label id="number-label" for="number">Pick up address</label>
-                    <input type="text" placeholder="Enter detailed address" className="form-control"
-                        {...register("pickUpAddress", {
-                            required: 'Pickup address is required',
-                            maxLength: {},
-                        })}
-                    />
-                    <span className="cum-error">{errors.pickUpAddress?.message}</span>
-                </div>
-            </div>
-
-
-
-        </div>
-        <div className="row">
-            <div className="col-md-12">
-                <div className="form-group">
-                    <label>Details</label>
-                    <textarea id="comments" className="form-control" name="comment" placeholder="Please describe your requirement in details, for direct diagnosis and immediate fix"
-                        {...register("details", {
-                            required: 'Details is required',
-                            maxLength: {},
-                        })}  >
-
-                    </textarea>
-                    <span className="cum-error">{errors.details?.message}</span>
-                </div>
-            </div>
-        </div>
-
-
-        {
-
-            successMessage &&
-            <div className="container mt-2">
-                <div className="row">
-
-                    <div className="col-sm-12">
-                        <div className="alert fade  alert-success alert-dismissible text-left font__family-montserrat font__size-16 font__weight-light brk-library-rendered rendered show">
-
-                            <i className="start-icon far fa-check-circle faa-tada animated"></i>
-                            <strong className="font__weight-semibold" style={{ color: "white" }}>Well done!</strong> {successTex}
+                    {/* Service Features */}
+                    <div className="pickup-features">
+                        <div className="feature-item">
+                            <IoTimer className="feature-icon" />
+                            <div className="feature-text">Flexible Scheduling</div>
+                        </div>
+                        <div className="feature-item">
+                            <IoCar className="feature-icon" />
+                            <div className="feature-text">Free Pickup</div>
+                        </div>
+                        <div className="feature-item">
+                            <IoHome className="feature-icon" />
+                            <div className="feature-text">At Your Location</div>
                         </div>
                     </div>
 
-
-
-                </div>
-            </div>
-
-
-        }
-
-           {
-
-            errorMessage &&
-            <div className="container mt-2">
-                <div className="row">
-
-                    <div class="col-sm-12">
-                        <div className="alert  alert-danger  " role="alert" >
-
-                            <span> {errMessage}   </span>
-
+                    <form onSubmit={handleSubmit(handleSubmitDeviceData)}>
+                        {/* Device Type (Fixed as iPhone) */}
+                        <div className="form-group">
+                            <label className="form-label">Device Type</label>
+                            <input 
+                                type="text"
+                                className="form-input"
+                                value="iPhone"
+                                readOnly
+                                {...register("deviceType")}
+                                style={{background: '#e9ecef', color: '#6c757d', fontWeight: '600'}}
+                            />
                         </div>
-                    </div>
 
+                        {/* iPhone Model Selection */}
+                        <div className="form-group">
+                            <label className="form-label">Select Your iPhone Model</label>
+                            <div className="model-selection">
+                                <div className="model-grid">
+                                    {iphoneModels.map((model) => (
+                                        <div
+                                            key={model}
+                                            className={`model-option ${selectedModel === model ? 'selected' : ''}`}
+                                            onClick={() => handleModelSelect(model)}
+                                        >
+                                            {model}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            <input
+                                type="hidden"
+                                {...register("deviceModel", {
+                                    required: 'Please select your iPhone model'
+                                })}
+                            />
+                            {errors.deviceModel && (
+                                <span className="text-danger small mt-1 d-block">
+                                    {errors.deviceModel.message}
+                                </span>
+                            )}
+                        </div>
 
+                        {/* Preferred Pickup Time */}
+                        <div className="form-group">
+                            <label className="form-label">
+                                <IoCalendar className="me-2" />
+                                Preferred Pickup Time
+                            </label>
+                            <DatePicker
+                                selected={reserveDate}
+                                onChange={(date) => {
+                                    setReserveDate(date);
+                                    setValue("reserveDate", date);
+                                }}
+                                showTimeSelect
+                                timeFormat="HH:mm"
+                                timeIntervals={30}
+                                dateFormat="MMMM d, yyyy h:mm aa"
+                                minDate={new Date()}
+                                className="form-input"
+                                placeholderText="Select your preferred pickup time"
+                            />
+                            {errors.reserveDate && (
+                                <span className="text-danger small mt-1 d-block">
+                                    {errors.reserveDate.message}
+                                </span>
+                            )}
+                        </div>
 
+                        {/* Contact Information */}
+                        <div className="form-group">
+                            <label className="form-label">
+                                <IoPhonePortrait className="me-2" />
+                                Contact Number
+                            </label>
+                            <input 
+                                type="tel"
+                                className="form-input"
+                                placeholder="Your phone number for updates"
+                                {...register("phone", {
+                                    required: 'Phone number is required',
+                                    pattern: {
+                                        value: /^[0-9+\-\s()]+$/,
+                                        message: 'Please enter a valid phone number'
+                                    }
+                                })}
+                            />
+                            {errors.phone && (
+                                <span className="text-danger small mt-1 d-block">
+                                    {errors.phone.message}
+                                </span>
+                            )}
+                        </div>
+
+                        {/* Pickup Address */}
+                        <div className="form-group">
+                            <label className="form-label">
+                                <IoLocation className="me-2" />
+                                Pickup Address
+                            </label>
+                            <textarea 
+                                className="form-input address-input"
+                                placeholder="Enter your complete address for pickup (include apartment/unit number, landmarks, etc.)"
+                                {...register("pickUpAddress", {
+                                    required: 'Pickup address is required',
+                                    minLength: {
+                                        value: 10,
+                                        message: 'Please provide a detailed address'
+                                    }
+                                })}
+                            />
+                            {errors.pickUpAddress && (
+                                <span className="text-danger small mt-1 d-block">
+                                    {errors.pickUpAddress.message}
+                                </span>
+                            )}
+                        </div>
+
+                        {/* Problem Description */}
+                        <div className="form-group">
+                            <label className="form-label">
+                                <IoDocumentText className="me-2" />
+                                Repair Details
+                            </label>
+                            <textarea 
+                                className="form-input form-textarea"
+                                placeholder="Describe the issue with your iPhone (e.g., screen damage, battery issues, water damage, etc.)"
+                                {...register("details", {
+                                    required: 'Please describe the repair needed',
+                                    minLength: {
+                                        value: 10,
+                                        message: 'Please provide more details about the issue'
+                                    }
+                                })}
+                            />
+                            {errors.details && (
+                                <span className="text-danger small mt-1 d-block">
+                                    {errors.details.message}
+                                </span>
+                            )}
+                        </div>
+
+                        {/* Submit Button */}
+                        <button 
+                            type="submit" 
+                            className="pickup-submit-btn"
+                            disabled={loading || !selectedModel}
+                        >
+                            {loading ? (
+                                <>
+                                    <span className="loader"></span>
+                                   
+                                </>
+                            ) : (
+                                "Schedule Free Pickup"
+                            )}
+                        </button>
+                    </form>
                 </div>
-            </div>
-              }
+            )}
 
+            {/* Login Required Modal */}
+            <Modal
+                show={showNoLogin}
+                onHide={() => setShowNoLogin(false)}
+                backdrop="static"
+                centered
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title className="text-primary">
+                        Login Required
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <p>
+                        Please log in to schedule your iPhone pickup service. 
+                        We'll save your repair details so you can continue right where you left off after logging in.
+                    </p>
+                    <div className="text-center mt-3">
+                        <small className="text-muted">
+                            Your repair information has been saved and will be automatically loaded after login.
+                        </small>
+                    </div>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowNoLogin(false)}>
+                        Cancel
+                    </Button>
+                    <Button variant="primary" onClick={navigateLogin}>
+                        Continue to Login
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </div>
+    );
+};
 
-        <div className="row">
-            <div className="col-md-4 setbtnDiv">
-                {
-                    loading ? <button  className="picckBtnDiv" 
-                     disabled> <span class="loader">
-                        </span></button> :
-                        <button disabled={showNoLogin}
-                        className="picckBtnDiv" 
-                        type="submit">Submit</button>
-                }
-
-            </div>
-          </div>
-
-        </form>
-      </div>
-    </div>
-
-}
-
-{
-showResult && 
-<Receipt orderData={orderData} chukkyLogo={chukkyLogo} />
-         
-}
-            
-
-
-    <Modal
-        show={showNoLogin}
-        onHide={handleHideNoLogin}
-        backdrop="static"
-        keyboard={false}
-        size="md"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered >
-        <Modal.Header closeButton>
-          <Modal.Title style={{ fontWeight: 'bold' }} className="text-info">
-            {' '}
-            LOGIN REQUEST{' '}
-          </Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body>
-          <p>
-          Hey, looks like you're not logged in yet! login for a smoother ride,
-          or register to unlock the full experience, let's get you started!
-          
-          </p>
-           
-
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleHideNoLogin}>
-            Cancel
-          </Button>
-          <Button className="WProceedBtn" onClick={navigateLogin}>
-            Proceed Login
-          </Button>
-        </Modal.Footer>
-      </Modal>
-            
-     </>
-    )
-})
-export default IphoneInstoreRepair
+export default IphonePickupRepair;

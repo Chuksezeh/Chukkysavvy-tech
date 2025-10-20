@@ -145,7 +145,7 @@ const ProductCart = () => {
    window.scrollTo(0, 0);
   },[])
   
-  const shipping = subtotal > 0 ? 15 : 0;
+  const shipping = subtotal > 0 ? 0 : 0;
   const total = subtotal + shipping;
 
   useEffect(() => {
@@ -439,10 +439,10 @@ const ProductCart = () => {
                 <span>Subtotal ({productItems?.length || 0} items)</span>
                 <span className="fw-bold">N{subtotal.toFixed(2)}</span>
               </div>
-              <div className="d-flex justify-content-between mb-2">
+              {/* <div className="d-flex justify-content-between mb-2">
                 <span>Shipping</span>
                 <span className="fw-bold">N{shipping.toFixed(2)}</span>
-              </div>
+              </div> */}
               {subtotal > 0 && (
                 <div className="d-flex justify-content-between mb-2 text-muted small">
                   <span>Estimated Delivery</span>

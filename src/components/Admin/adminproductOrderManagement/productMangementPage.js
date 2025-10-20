@@ -51,6 +51,7 @@ import {
 import { chukkytechAxios } from '../../Utility/axios';
 import AdminDashboard from '../adminDashboard';
 import moment from 'moment/moment';
+import { IoCheckmarkDone } from 'react-icons/io5';
 
 const ProductManagementPage = () => {
     const [selectedItem, setSelectedItem] = useState(null);
@@ -484,7 +485,7 @@ const ProductManagementPage = () => {
                                     </Button>
                                      <Button
                                         variant="contained"
-                                        startIcon={<Schedule />}
+                                        startIcon={<IoCheckmarkDone />}
                                         color="primary"
                                         onClick={() => handleAction('delivered')}
                                         disabled={orderStatus === 'delivered'}

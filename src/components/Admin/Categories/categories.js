@@ -46,6 +46,11 @@ const ViewCategories = () => {
         }
     };
 
+
+
+
+   
+
     useEffect(() => {
         fetchCategories();
     }, []);

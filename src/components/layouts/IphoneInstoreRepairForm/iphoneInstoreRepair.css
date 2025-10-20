@@ -1,382 +1,165 @@
+/* iPhone Pickup Repair Form Styles */
+.iphone-pickup-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
 
-#invoice-POS{
-    /* box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5); */
-    /* padding:2mm;
-    margin: 0 auto;
-    width: 100%;
-    background: #FFF; */
-    
-    
-  ::selection {background: #f31544; color: #FFF;}
-  ::moz-selection {background: #f31544; color: #FFF;}
-  h1{
-    font-size: 1.5em;
-    color: #222;
-  }
-  h2{font-size: .9em;}
-  h3{
-    font-size: 1.2em;
-    font-weight: 300;
-    line-height: 2em;
-  }
-  p{
-    font-size: .7em;
-    color: #666;
-    line-height: 1.2em;
-  }
-   
-  #top, #mid,#bot{ /* Targets all id with 'col-' */
-    border-bottom: 1px solid #EEE;
-  }
-  /* .logu{
-    width: 80px;
-  
-  } */
-  .loguDiv{
-    justify-content: center;
-    text-align: center;
-    background-color: #DDE6ED;
-  }
-  .divHeadvitel{
-    font-size: 25px;
-  }
-  .divHeadetail{
-    font-size: 20px;
-  }
-  
-  #top{min-height: 100px;
-  
-  justify-content: center;
+.iphone-pickup-card {
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e9ecef;
+}
+
+.pickup-header {
   text-align: center;
-  }
-  #mid{min-height: 80px;} 
-  #bot{ min-height: 50px;}
-  
-  #top .logo{
-    float: left;
-      height: 60px;
-      width: 60px;
-      background: url(../../../../images/newLogo.png) no-repeat;
-      background-size: cover;
-    padding: 20px !important;
-  }
-  .clientlogo{
-    float: left;
-      height: 60px;
-      width: 60px;
-      background: url(../../../../images/newLogo.png) no-repeat;
-      background-size: 60px 60px;
-    border-radius: 50px;
-  }
-  .info{
-    display: block;
-    float:left;
-    margin-left: 0;
-  }
-  .title{
-    float: right;
-  }
-  .title p{text-align: right;} 
-  table{
-    width: 100%;
-    border-collapse: collapse;
-  }
-  td{
-    padding: 5px 0 5px 15px;
-    font-size: 25px;
-    border: 1px solid #EEE
-  }
-  
-  .tabletitle{
-    padding: 5px;
-    font-size: .5em;
-    background: #EEE;
-  }
-  .service{border-bottom: 1px solid #EEE;}
-  .item{width: 24mm;}
-  .itemtext{font-size: .5em;}
-  
-  #legalcopy{
-    margin-top: 5mm;
-  }
-  }
-  
-  .walletTopH{
-  
-  }
-  .imgSideEmptydiv{
-    justify-content: center;
-    text-align: center;
-    padding-top: 2%;
-  }
-  .imgSideEmptygif{
-    border-radius: 10px;
-    width: 150px;
-  }
-  .wTuRn {
-  background-color: #F1F1F4;
-  padding: 10px;
+  margin-bottom: 32px;
+}
+
+.pickup-header h2 {
+  color: #2c3e50;
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.pickup-header p {
+  color: #6c757d;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+.pickup-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.feature-item {
+  text-align: center;
+  padding: 16px;
+  background: #f8f9fa;
   border-radius: 10px;
+  border: 2px solid #e9ecef;
+}
+
+.feature-icon {
+  font-size: 1.5rem;
+  color: #667eea;
+  margin-bottom: 8px;
+}
+
+.feature-text {
+  font-size: 0.875rem;
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+.model-selection {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.model-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+  max-height: 200px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.model-grid::-webkit-scrollbar {
+  width: 6px;
+}
+
+.model-grid::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.model-grid::-webkit-scrollbar-thumb {
+  background: #667eea;
+  border-radius: 10px;
+}
+
+.model-option {
+  padding: 12px 8px;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: white;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.model-option:hover {
+  border-color: #667eea;
+  transform: translateY(-2px);
+}
+
+.model-option.selected {
+  border-color: #667eea;
+  background: #667eea;
+  color: white;
+}
+
+.pickup-submit-btn {
+  background: linear-gradient(135deg, #667eea 0%, #011B58 100%);
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-top: 24px;
+}
+
+.pickup-submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+}
+
+.pickup-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.address-input {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .iphone-pickup-card {
+    padding: 24px 20px;
+    margin: 10px;
   }
-  .CoverWallet-top{
-      background-color: #DDE6ED;
-      padding: 20px;
-      background-image: url("../../../../images/vitel-wallet-back.jpg");
-      background-size: cover;
-  }
-  .walletTopH-Div{
-      display: flex !important;
-      justify-content: space-between;
-     
+  
+  .pickup-features {
+    grid-template-columns: 1fr;
   }
   
-  .w_Eye{
-      background-color: #F1F1F4;
-      padding: 5px;
-      border-radius: 10px;
-  }
-  .W-amountDiv{
-      display: flex;
-      gap: 4%;
-      
-  }
-  .W-amountDivAll{
-      margin-top: 2%; 
-  }
-  .W-amount{
-      font-size: 25px;
-      font-weight: 800;
-  }
-  .allTopUPDiv{
-      display: flex;
-      text-align: center;
-     justify-content: space-around;
-      margin-top: 5%;
-      
-  }
-  .recenttranStext{
-      font-size: 20px;
-      margin-top: 2%;
-  }
-  .eachStatemt, .caRRy_top {
-        background-color:  #2193F0;
-        color: white;
-      /* width: 200px; */
-        box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
-        padding: 10px;
-        cursor: pointer;
-        border-radius: 10px;
-  }
-  .eachStatemt p{
-      font-size: 18px;
-  }
-  .caRRy_top p{
-      font-size: 18px; 
-  }
-  .text-red{
-      color: red;
-  }
-  .comSample{
-      color: green;
-  }
-  .headBOsttap{
-      font-size: 20px !important;
-     font-weight: 800;
-  }
-  .fmPushInputamount{
-      width: 100%;
-      height: 60px;
-      background-color: #FFFF;
-      border: 2px solid #DEE2E6 ;
-      border-radius: 5px;
-     ;
-  }
-  .waletALert{
-    padding: 15px !important;
+  .model-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   }
   
-  input[type=number]::-webkit-inner-spin-button,
-  input[type=number]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+  .pickup-header h2 {
+    font-size: 1.5rem;
   }
-  .sestAnother-receipt{
-      width: 100% !important;
-  }
-  .WProceedBtn{
-      background-color: #163EA4;
-      padding: 8px;
-      color: white;
-      border-radius: 5px;
-  }
-  
-  .tableInerSet {
-      border: 1px solid #ccc;
-      border-collapse: collapse;
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      table-layout: fixed;
-    }
-    
-    .tableInerSet caption {
-      font-size: 1.5em;
-      margin: .5em 0 .75em;
-    }
-    
-    .tableInerSet tr {
-      background-color: #f8f8f8;
-      border: 1px solid #ddd;
-      padding: .35em;
-    }
-    
-    .tableInerSet th,
-    .tableInerSet td {
-      padding: .625em;
-      text-align: center;
-    }
-    
-    .tableInerSet th {
-      font-size: .85em;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-    }
-    .fullSetBack{
-      background-color: #FFFF;
-      width: 50px;
-    }
-    .backToHome{
-        display: flex !important;
-    }
-  
-  
-  
-    .loaderRefresh {
-      width: 28px;
-      height: 28px;
-      display: inline-block;
-      position: relative;
-      border-width: 3px 2px 3px 2px;
-      border-style: solid dotted solid dotted;
-      border-color: black rgba(255, 255, 255,0.3) rgb(21, 21, 105) rgba(151, 107, 93, 0.3);
-      border-radius: 50%;
-      box-sizing: border-box;
-      animation: 1s rotate linear infinite;
-   }
-   .loaderRefresh:before , .loaderRefresh:after{
-      content: '';
-      top: 0;
-      left: 0;
-      position: absolute;
-      /* border: 2px solid transparent; */
-      border-bottom-color:rgb(21, 21, 105);
-      transform: translate(-10px, 19px) rotate(-35deg);
-    }
-   .loaderRefresh:after {
-      border-color: black #0000 #0000 #0000 ;
-      transform: translate(32px, 3px) rotate(-35deg);
-    }
-     @keyframes rotate {
-      100%{    transform: rotate(360deg)}
-    }
-    .W-PEndingDiv{
-  margin-top: 2%;
-    }
-    .w-FullDiv{
-      display: flex;
-      gap: 20%;
-      
-    }
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-    
-    @media screen and (max-width: 600px) {
-      .tableInerSet {
-        border: 0;
-      }
-    
-      .tableInerSet caption {
-        font-size: 1.3em;
-      }
-      
-      .tableInerSet thead {
-        border: none;
-        clip: rect(0 0 0 0);
-        height: 1px;
-        margin: -1px;
-        overflow: hidden;
-        padding: 0;
-        position: absolute;
-        width: 1px;
-      }
-      
-      .tableInerSet tr {
-        border-bottom: 3px solid #ddd;
-        display: block;
-        margin-bottom: .625em;
-      }
-      
-      .tableInerSet td {
-        border-bottom: 1px solid #ddd;
-        display: block;
-        font-size: .8em;
-        text-align: right;
-      }
-      
-      .tableInerSet td::before {
-        /*
-        * aria-label has no advantage, it won't be read inside a .tableInerSet
-        content: attr(aria-label);
-        */
-        content: attr(data-label);
-        float: left;
-        font-weight: bold;
-        text-transform: uppercase;
-      }
-      
-      .tableInerSet td:last-child {
-        border-bottom: 0;
-      }
-      .eachStatemt p{
-        font-size: 12px;
-    }
-    .caRRy_top p{
-        font-size: 12px; 
-    }
-  
-     
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+}

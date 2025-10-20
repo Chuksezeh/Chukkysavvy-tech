@@ -22,6 +22,7 @@ import { IoCheckmarkDoneOutline, IoCloseCircle } from "react-icons/io5";
 import moment from "moment";
 import { chukkytechAxios } from "../../Utility/axios";
 import logo from "../../images/CHUKKY-BRAND-BACKGROUND-removebg-preview.png"
+import useGetData from "../../Utility/getFunction";
 
 const NavtrackRepair = () => {
   const [showTrackOrder, setShowTrackOrder] = useState(false);
@@ -38,6 +39,12 @@ const NavtrackRepair = () => {
   useEffect(() => {
     scrolltop();
   }, []);
+
+
+  
+    const {data:getData, isPending, error: errorData} = useGetData("general/getGeneralSettings");
+    const generalData = getData?.data;
+
 
   const navigate = useNavigate();
 
@@ -401,7 +408,7 @@ const NavtrackRepair = () => {
                     {firstOrder?.repairOrderType === "Pickup" ? (
                       <div className="additional-info">
                         <p>
-                          <strong>Note:</strong> A delivery fee of <strong>₦2,000</strong> applies for the
+                          <strong>Note:</strong> A delivery fee of <strong>₦{parseInt(generalData?.returnRepairDeliveryFee)}</strong> applies for the
                           return of unrepaired devices. Your device will be safely returned to you shortly.
                         </p>
                       </div>

@@ -15,6 +15,7 @@ const CreateProduct = () => {
   const [errMessage, setErrMessage] = useState("");
   const [previews, setPreviews] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [fileSizeError, setFileSizeError] = useState("");
 
   const {
     register,
@@ -94,6 +95,7 @@ const CreateProduct = () => {
       reset();
       setPreviews([]);
       setSelectedFiles([]);
+      setFileSizeError("");
     } catch (err) {
       console.error("❌ Error from backend:", err.response?.data || err.message);
       setLoading(false);
@@ -104,31 +106,69 @@ const CreateProduct = () => {
 
   const handleFileSelect = (event) => {
     const files = Array.from(event.target.files);
-    
+    setFileSizeError(""); // Clear previous errors
+
     if (files.length === 0) return;
 
-    // Create preview URLs
-    const newPreviews = files.map((file) => ({
+    // Validate file sizes (2MB = 2 * 1024 * 1024 bytes)
+    const maxSize = 2 * 1024 * 1024;
+    const validFiles = [];
+    const oversizedFiles = [];
+
+    files.forEach(file => {
+      if (file.size > maxSize) {
+        oversizedFiles.push({
+          name: file.name,
+          size: (file.size / (1024 * 1024)).toFixed(2)
+        });
+      } else {
+        validFiles.push(file);
+      }
+    });
+
+    // Show error if any files are oversized
+    if (oversizedFiles.length > 0) {
+      const oversizedNames = oversizedFiles.map(f => `${f.name} (${f.size} MB)`).join(', ');
+      setFileSizeError(`The following files exceed 2MB limit: ${oversizedNames}`);
+      
+      // If all files are invalid, clear the input and return
+      if (validFiles.length === 0) {
+        event.target.value = "";
+        return;
+      }
+    }
+
+    // Create preview URLs only for valid files
+    const newPreviews = validFiles.map((file) => ({
       file,
       url: URL.createObjectURL(file),
       name: file.name,
-      size: file.size
+      size: file.size,
+      sizeMB: (file.size / (1024 * 1024)).toFixed(2)
     }));
 
-    // Update states
-    setSelectedFiles(prev => [...prev, ...files]);
+    // Update states with valid files only
+    setSelectedFiles(prev => [...prev, ...validFiles]);
     setPreviews(prev => [...prev, ...newPreviews]);
     
-    // Update react-hook-form value (optional, for validation)
-    setValue("productImages", [...selectedFiles, ...files]);
+    // Update react-hook-form value
+    setValue("productImages", [...selectedFiles, ...validFiles]);
   };
 
   const removePreview = (index) => {
+    // Revoke the object URL to prevent memory leaks
+    URL.revokeObjectURL(previews[index].url);
+    
     setPreviews(prev => prev.filter((_, i) => i !== index));
     setSelectedFiles(prev => prev.filter((_, i) => i !== index));
     
     // Update react-hook-form value after removal
     setValue("productImages", selectedFiles.filter((_, i) => i !== index));
+    
+    // Clear file size error if no files left
+    if (selectedFiles.length === 1) {
+      setFileSizeError("");
+    }
   };
 
   // Clean up object URLs when component unmounts
@@ -143,13 +183,25 @@ const CreateProduct = () => {
   return (
     <>
       <AdminDashboard />
-      <div className="header-bar">
-        <ul className="action-bar">
-          <li>
-            Home / Users / <span className="addash"> Create Product </span>
-          </li>
-        </ul>
+
+      <div className="container-fluid py-4" style={{ backgroundColor: '#f8f9fa', marginTop: '-20px' }}>
+        <div className="row align-items-center">
+          <div className="col">
+            <nav aria-label="breadcrumb">
+              <ol className="breadcrumb mb-0">
+                <li className="breadcrumb-item"><a href="/" className="text-decoration-none">Home</a></li>
+                <li className="breadcrumb-item"><a href="/admin" className="text-decoration-none">Users</a></li>
+                <li className="breadcrumb-item active text-dark">Create Product </li>
+              </ol>
+            </nav>
+            <h1 className="h3 mb-0 mt-2 text-dark">Create Products</h1>
+            <p className="text-muted mb-0">Create all the Products</p>
+          </div>
+          <div className="col-auto">
+          </div>
+        </div>
       </div>
+      <br/>
 
       <div className="container">
         <div className="form-wr">
@@ -312,7 +364,7 @@ const CreateProduct = () => {
                 </div>
               </div>
 
-              {/* File Upload */}
+              {/* File Upload with 2MB Validation */}
               <div className="col-md-12">
                 <div className="form-group">
                   <label>Upload product images</label>
@@ -323,12 +375,30 @@ const CreateProduct = () => {
                     className="form-control"
                     onChange={handleFileSelect}
                   />
-                  {selectedFiles.length === 0 && (
+                  
+                  {/* Error Messages */}
+                  {selectedFiles.length === 0 && !fileSizeError && (
                     <span className="cum-error">Product images are required</span>
                   )}
-                  <small className="text-muted">
-                    Selected files: {selectedFiles.length}
-                  </small>
+                  {fileSizeError && (
+                    <div className="cum-error">
+                      <i className="fas fa-exclamation-triangle me-2"></i>
+                      {fileSizeError}
+                    </div>
+                  )}
+                  
+                  {/* File Info */}
+                  <div className="mt-2">
+                    <small className="text-muted d-block">
+                      Selected files: {selectedFiles.length} | Maximum file size: 2MB per image
+                    </small>
+                    {selectedFiles.length > 0 && !fileSizeError && (
+                      <small className="text-success d-block">
+                        <i className="fas fa-check-circle me-1"></i>
+                        All files are within size limit
+                      </small>
+                    )}
+                  </div>
                 </div>
               </div>
 
@@ -347,7 +417,7 @@ const CreateProduct = () => {
                       }}
                     >
                       {previews.map((preview, index) => (
-                        <div key={index} style={{ position: "relative" }}>
+                        <div key={index} style={{ position: "relative" }} className="image-preview-item">
                           <img
                             src={preview.url}
                             alt={`preview-${index}`}
@@ -382,7 +452,8 @@ const CreateProduct = () => {
                             ×
                           </button>
                           <div style={{ fontSize: "10px", textAlign: "center", marginTop: "5px" }}>
-                            {preview.name}
+                            <div>{preview.name}</div>
+                            <div className="text-muted">{preview.sizeMB} MB</div>
                           </div>
                         </div>
                       ))}
@@ -417,7 +488,7 @@ const CreateProduct = () => {
                   <button 
                     className="picckBtn-create-product" 
                     type="submit"
-                    disabled={selectedFiles.length === 0}
+                    disabled={selectedFiles.length === 0 || fileSizeError}
                   >
                     Submit
                   </button>

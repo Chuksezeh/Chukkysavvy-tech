@@ -203,7 +203,7 @@ const AdminDashboard = () => {
                            
                         </NavItem>
 
-                 <NavItem eventKey="8">
+                        <NavItem eventKey="8">
                             <NavIcon> <PiOfficeChairFill className="side-main-icon"/>  </NavIcon>
                             <NavText>Company   <MdOutlineKeyboardArrowRight size={20} /></NavText>
                             <NavItem eventKey="8-1">
@@ -211,6 +211,20 @@ const AdminDashboard = () => {
                                     <li className="shift-nav" onClick={() => navigate("/view-companies")}>
                                         <CiCircleList className="inicon" size={18} />
                                         <span className="p-2" style={{fontSize:"16px"}}>List Companies</span>
+                                    </li>
+                                </NavText>
+                            </NavItem>
+                           
+                        </NavItem>
+
+                         <NavItem eventKey="10">
+                            <NavIcon> <PiOfficeChairFill className="side-main-icon"/>  </NavIcon>
+                            <NavText>Settings   <MdOutlineKeyboardArrowRight size={20} /></NavText>
+                            <NavItem eventKey="10-1">
+                                <NavText className="move-side">
+                                    <li className="shift-nav" onClick={() => navigate("/admin-general-update")}>
+                                        <CiCircleList className="inicon" size={18} />
+                                        <span className="p-2" style={{fontSize:"16px"}}>General Update</span>
                                     </li>
                                 </NavText>
                             </NavItem>

@@ -9,11 +9,22 @@ import { FaXTwitter } from "react-icons/fa6";
 import { FaInstagram } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import useGetData from "../Utility/getFunction";
 
 
 
 
 const Footer = () => {
+
+
+
+const {data, isPending, error} = useGetData("general/getGeneralSettings");
+
+const generalData = data?.data;
+
+
+
+
     return (
         <>
    <footer className="footer-section">
@@ -25,7 +36,7 @@ const Footer = () => {
                             <i className="fas fa-map-marker-alt"></i>
                             <div className="cta-text">
                                 <h4>Find us</h4>
-                                <span>Wuse 2, Fedral Capital Territory, Nigeria.</span>
+                                <span> {generalData?.locationMainAddress} </span>
                             </div>
                         </div>
                     </div>
@@ -34,7 +45,7 @@ const Footer = () => {
                             <i > <IoCall className="call-icon" size={30} /></i>
                             <div className="cta-text">
                                 <h4>Call / Whatsapp us</h4>
-                                <span>08020653456</span>
+                                <span>  {generalData?.customerSupportPhoneNumber} </span>
                             </div>
                         </div>
                     </div>
@@ -46,7 +57,7 @@ const Footer = () => {
                                 <h4>Mail us</h4>
                               
 
-                                <span>support@chukkytech.ng</span>
+                                <span> {generalData?.customerSupportEmail} </span>
                             </div>
                         </div>
                     </div>

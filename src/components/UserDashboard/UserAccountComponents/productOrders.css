@@ -28,6 +28,12 @@
   box-shadow: var(--shadow);
   border-left: 4px solid var(--primary);
 }
+.loGO-ReceIpt{
+    width: 50px;
+}
+.nameBrand-Receipt{
+    font-size: 1rem;
+}
 
 .back-nav {
   display: flex;
