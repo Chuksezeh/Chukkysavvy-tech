@@ -36,7 +36,7 @@ const filterCompletedOders = products.data && products.data?.filter((product)=>(
 ))
 
 const filterCanceledOders = products.data && products.data?.filter((product)=>(
-             product.orderStatus === "canceled"
+             product.orderStatus === "cancelled"
 
 ))
 

@@ -28,8 +28,7 @@ import { chukkytechAxios } from "../../Utility/axios";
 import { Badge, Card, Button, Modal, Table, Row, Col } from "react-bootstrap";
 import moment from "moment";
 import "./productOrders.css";
-import { Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@mui/material";
-import { Pending } from "@mui/icons-material";
+
 
 const ProductOrders = (() => {
   const navigate = useNavigate();
