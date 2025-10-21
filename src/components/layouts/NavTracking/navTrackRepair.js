@@ -194,7 +194,7 @@ const NavtrackRepair = () => {
                   <FaSearch className="input-icon" />
                   <input
                     type="text"
-                    placeholder="Enter your repair order code (e.g., ROC-12345)..."
+                    placeholder="Enter your repair order code (e.g., RO-12345)..."
                     value={orderCode}
                     onChange={handleGetCode}
                     className="tracking-input"

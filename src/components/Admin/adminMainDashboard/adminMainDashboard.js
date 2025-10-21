@@ -1,17 +1,105 @@
 import { useNavigate } from "react-router-dom";
-import Header from "../../layouts/Header"
+import Header from "../../layouts/Header";
 import useGetData from "../../Utility/getFunction";
-import AdminDashboard from "../adminDashboard"
-import "./adminMainDashboard.css"
-import { useEffect } from "react";
+import AdminDashboard from "../adminDashboard";
+import "./adminMainDashboard.css";
+import { useEffect, useMemo } from "react";
 
-
-const AdminMainDashboard = (()=>{
-
-
+const AdminMainDashboard = () => {
   const { data, isPending, error } = useGetData("adminRepair/getAllRepairOrder");
+  const navigate = useNavigate();
 
 
+   const { data:products, isPending: isPendingProduct, error: isPendingError } = useGetData("/order/all-orders");
+
+
+   console.log("all products", products.data)
+
+const filterPendingOrders = products.data && products.data?.filter((product)=>(
+             product.orderStatus === "pending"  
+
+))
+
+const filterConfirmedOders = products.data && products.data?.filter((product)=>(
+             product.orderStatus === "confirmed"  
+
+))
+
+const filterProccessingOders = products.data && products.data?.filter((product)=>(
+             product.orderStatus === "processing"  
+
+))
+
+const filterCompletedOders = products.data && products.data?.filter((product)=>(
+             product.orderStatus === "delivered"
+
+))
+
+const filterCanceledOders = products.data && products.data?.filter((product)=>(
+             product.orderStatus === "canceled"
+
+))
+
+
+
+console.log("filterPendingOrders", filterPendingOrders)
+ 
+
+  // Memoized data processing for better performance
+  // const dashboardData = useMemo(() => {
+  //   if (!data || !Array.isArray(data.repairOrders)) {
+  //     return {
+  //       latestOrders: [],
+  //       statusCounts: {
+  //         processing: 0,
+  //         fixing: 0,
+  //         pickedUp: 0,
+  //         fixed: 0,
+  //         delivered: 0,
+  //         cancel: 0,
+  //         irreparable: 0,
+  //         settled: 0
+  //       }
+  //     };
+  //   }
+
+  //   const ordersArray = data.repairOrders;
+    
+  //   // Get latest orders by repairOrderCode
+  //   const latestOrders = ordersArray.reduce((acc, order) => {
+  //     if (!acc[order.repairOrderCode] || 
+  //         new Date(order.createdDateTime) > new Date(acc[order.repairOrderCode].createdDateTime)) {
+  //       acc[order.repairOrderCode] = order;
+  //     }
+  //     return acc;
+  //   }, {});
+
+  //   const latestOrdersArray = Object.values(latestOrders);
+
+  //    console.log("latestOrdersArray ", latestOrdersArray )
+
+  //   // Count orders by status
+  //   const statusCount = latestOrdersArray.reduce((acc, order) => {
+  //     const status = order.status?.toLowerCase();
+  //     if (status && acc.hasOwnProperty(status)) {
+  //       acc[status]++;
+  //     }
+  //     return acc;
+  //   }, {
+  //     processing: 0,
+  //     fixing: 0,
+  //     pickedup: 0,
+  //     fixed: 0,
+  //     delivered: 0,
+  //     cancel: 0,
+  //     irreparable: 0,
+  //     settled: 0
+  //   });
+
+  //   return { latestOrders: latestOrdersArray, statusCount };
+  // }, [data]);
+
+ 
   const getLatestRepairOrders = (orders) => {
     if (!Array.isArray(orders)) {
       console.error("Expected an array, but got:", orders);
@@ -72,7 +160,6 @@ const filterOrderSettled = latestOrders.filter((data)=>(
 
 // console.log("filterOrderProcessing", filterOrderProcessing?.length)
 
- const navigate = useNavigate();
 
     useEffect(() => {
         const adminsInfo = localStorage.getItem('adminsInfo');
@@ -84,179 +171,259 @@ const filterOrderSettled = latestOrders.filter((data)=>(
       }, [navigate]);
 
 
+  // Dashboard cards configuration
+  const repairOrderCards = [
+    {
+      title: "Pending Repair Orders",
+      count: filterOrderProcessing?.length,
+      status: "processing",
+      color: "warning",
+      icon: "⏳",
+      description: "Awaiting technician assignment"
+    },
+    {
+      title: "Repair Order Picked Up",
+      count: filterOrderpickedUp?.length,
+      status: "pickedUp",
+      color: "info",
+      icon: "📦",
+      description: "Devices collected from customers"
+    },
+    {
+      title: "Fixing Repair Orders",
+      count: filterOrderFixing?.length,
+      status: "fixing",
+      color: "primary",
+      icon: "🔧",
+      description: "Currently being repaired"
+    },
+    {
+      title: "Fixed Orders",
+      count: filterOrderFixed?.length,
+      status: "fixed",
+      color: "success",
+      icon: "✅",
+      description: "Repairs completed successfully"
+    },
+    {
+      title: "Delivered Orders",
+      count: filterOrderDelivered?.length,
+      status: "delivered",
+      color: "secondary",
+      icon: "🚚",
+      description: "Returned to customers"
+    },
+    {
+      title: "Cancelled Orders",
+      count: filterOrderCancel?.length,
+      status: "cancel",
+      color: "danger",
+      icon: "❌",
+      description: "Cancelled repair requests"
+    },
+    {
+      title: "Unable to Repair",
+      count: filterOrderIrreparable?.length,
+      status: "irreparable",
+      color: "dark",
+      icon: "⚠️",
+      description: "Devices beyond repair"
+    },
+    {
+      title: "Repair Settled",
+      count: filterOrderSettled?.length,
+      status: "settled",
+      color: "light",
+      icon: "💰",
+      description: "Financial settlements completed"
+    }
+  ];
 
+  const productOrderCards = [
+    {
+      title: "Pending Product Orders",
+      count: filterPendingOrders?.length,
+      status: "pending",
+      color: "warning",
+      icon: "🛒",
+      description: "Awaiting processing"
+    },
+    {
+      title: "Confirmed Product Orders",
+      count: filterConfirmedOders?.length,
+      status: "confirmed",
+      color: "info",
+      icon: "✓",
+      description: "Orders confirmed"
+    },
+    {
+      title: "Processing Product Orders",
+      count: filterProccessingOders?.length,
+      status: "processing",
+      color: "primary",
+      icon: "⚙️",
+      description: "Being prepared for shipment"
+    },
+    {
+      title: "Completed Product Orders",
+      count: filterCompletedOders?.length,
+      status: "completed",
+      color: "success",
+      icon: "🎉",
+      description: "Successfully delivered"
+    },
+    {
+      title: "Cancelled Product Orders",
+      count: filterCanceledOders?.length,
+      status: "cancelled",
+      color: "danger",
+      icon: "🚫",
+      description: "Cancelled orders"
+    }
+  ];
 
+  useEffect(() => {
+    const adminsInfo = localStorage.getItem('adminsInfo');
+    if (!adminsInfo) {
+      navigate('/admin-login');
+    }
+  }, [navigate]);
 
-
-    return(
-<>
-        
-     
-
-<AdminDashboard/>
-
-<div className="header-bar">
-
-<ul className="action-bar">
-
-  <li>Home /<span className="addash">Dashboard</span></li>
-</ul>
-</div>
-
-        <div id="root">
-  <div className="container pt-5">
-    <div className="row align-items-stretch">
-      <div className="c-dashboardInfo col-lg-3 col-md-6" onClick={() => navigate("/user-repair-orders")} style={{cursor:"pointer"}}>
-
-        <div className="wrap">
-          <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Pending Repair Orders<svg
-              className="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
-              <path fill="none" d="M0 0h24v24H0z"></path>
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
-              </path>
-            </svg></h4>
-            {
-              isPending ? 
-              <div style={{justifyContent:"center", textAlign:"center"}} className="centefrotate"><a className=" loader-circle"> </a></div>:
-              <span className="hind-font caption-12 c-dashboardInfo__count"> {filterOrderProcessing?.length} </span>
-            }
-            
-        </div>
+  // Skeleton loader component
+  const CardSkeleton = () => (
+    <div className="dashboard-card skeleton">
+      <div className="card-header-skeleton">
+        <div className="skeleton-icon"></div>
+        <div className="skeleton-title"></div>
       </div>
-      <div className="c-dashboardInfo col-lg-3 col-md-6"  onClick={() => navigate("/user-repair-orders")} style={{cursor:"pointer"}}>
-        <div className="wrap">
-          <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Repair Order PickedUp<svg
-              className="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
-              <path fill="none" d="M0 0h24v24H0z"></path>
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
-              </path>
-            </svg></h4>
-            {
-              isPending ?
-               <div style={{justifyContent:"center", textAlign:"center"}} className="centefrotate"><a className=" loader-circle"> </a></div>:
-           <span className="hind-font caption-12 c-dashboardInfo__count">{filterOrderpickedUp?.length}</span>
-            }
-           
-        </div>
-      </div>
-      <div className="c-dashboardInfo col-lg-3 col-md-6"  onClick={() => navigate("/user-repair-orders")} style={{cursor:"pointer"}}>
-        <div className="wrap">
-          <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title"> Fixing Repair Orders <svg
-              className="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
-              <path fill="none" d="M0 0h24v24H0z"></path>
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
-              </path>
-            </svg></h4>
-            {
-              isPending ?
-              <div style={{justifyContent:"center", textAlign:"center"}} className="centefrotate"><a className=" loader-circle"> </a></div>:
-               <span className="hind-font caption-12 c-dashboardInfo__count"> {filterOrderFixing?.length} </span>
-            }
-           <span
-            className="hind-font caption-12 c-dashboardInfo__subInfo"></span>
-        </div>
-      </div>
-      <div className="c-dashboardInfo col-lg-3 col-md-6"  onClick={() => navigate("/user-repair-orders")} style={{cursor:"pointer"}}>
-        <div className="wrap">
-          <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Fixed<svg
-              className="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
-              <path fill="none" d="M0 0h24v24H0z"></path>
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
-              </path>
-            </svg></h4>
-            {
-              isPending ?
-              <div style={{justifyContent:"center", textAlign:"center"}} className="centefrotate"><a className=" loader-circle"> </a></div>:
-             <span className="hind-font caption-12 c-dashboardInfo__count">{filterOrderFixed?.length}</span>
-            }
-           
-        </div>
-      </div>
-     
-      <div className="c-dashboardInfo col-lg-3 col-md-6"  onClick={() => navigate("/user-repair-orders")} style={{cursor:"pointer"}}>
-        <div className="wrap">
-          <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Repair Order Delivered<svg
-              className="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
-              <path fill="none" d="M0 0h24v24H0z"></path>
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
-              </path>
-            </svg></h4>
-            {
-              isPending ?
-              <div style={{justifyContent:"center", textAlign:"center"}} className="centefrotate"><a className=" loader-circle"> </a></div>:
-              <span className="hind-font caption-12 c-dashboardInfo__count">{filterOrderDelivered?.length}</span>
-           }
-            
-        </div>
-      </div>
-      <div className="c-dashboardInfo col-lg-3 col-md-6"  onClick={() => navigate("/user-repair-orders")} style={{cursor:"pointer"}}>
-        <div className="wrap">
-          <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Cancel Repair Orders<svg
-              className="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
-              <path fill="none" d="M0 0h24v24H0z"></path>
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
-              </path>
-            </svg></h4>
-            {
-              isPending ? 
-              <div style={{justifyContent:"center", textAlign:"center"}} className="centefrotate"><a className=" loader-circle"> </a></div>:
-                       <span className="hind-font caption-12 c-dashboardInfo__count">{filterOrderCancel?.length}</span>
-            }
-
-        </div>
-      </div>
-      <div className="c-dashboardInfo col-lg-3 col-md-6"  onClick={() => navigate("/user-repair-orders")} style={{cursor:"pointer"}}>
-        <div className="wrap">
-          <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Unable to Repair<svg
-              className="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
-              <path fill="none" d="M0 0h24v24H0z"></path>
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
-              </path>
-            </svg></h4>
-
-            {
-              isPending ? 
-              <div style={{justifyContent:"center", textAlign:"center"}} className="centefrotate"><a className=" loader-circle"> </a></div>:
-         <span className="hind-font caption-12 c-dashboardInfo__count"> {filterOrderIrreparable?.length} </span>
-            }
-          
-        </div>
-      </div>
-
-      <div className="c-dashboardInfo col-lg-3 col-md-6"  onClick={() => navigate("/user-repair-orders")} style={{cursor:"pointer"}}>
-        <div className="wrap">
-          <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title"> Repair Settled<svg
-              className="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
-              <path fill="none" d="M0 0h24v24H0z"></path>
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
-              </path>
-            </svg></h4>
-
-            {
-              isPending ?
-              <div style={{justifyContent:"center", textAlign:"center"}} className="centefrotate"><a className=" loader-circle"> </a></div>:
-            <span className="hind-font caption-12 c-dashboardInfo__count">{filterOrderSettled?.length} </span>
-           }
-            
-           
-        </div>
+      <div className="card-content-skeleton">
+        <div className="skeleton-count"></div>
+        <div className="skeleton-description"></div>
       </div>
     </div>
-  </div>
-</div>
-        
-        
-        
-        </>
-    )
-})
+  );
 
-export default AdminMainDashboard
+  // Dashboard Card Component
+  const DashboardCard = ({ title, count, icon, color, description, onClick }) => (
+    <div 
+      className={`dashboard-card card-${color}`}
+      onClick={onClick}
+      role="button"
+      tabIndex={0}
+      onKeyPress={(e) => e.key === 'Enter' && onClick?.()}
+    >
+      <div className="card-header">
+        <div className="card-icon">{icon}</div>
+        <h3 className="card-title">{title}</h3>
+      </div>
+      <div className="card-content">
+        <div className="card-count">{count}</div>
+        <p className="card-description">{description}</p>
+      </div>
+      <div className="card-footer">
+        <span className="view-link">View Details →</span>
+      </div>
+    </div>
+  );
+
+  return (
+    <>
+      <AdminDashboard />
+      
+      <div className="admin-dashboard-container container ">
+        {/* Header Section */}
+        <div className="dashboard-header">
+          <div className="header-content">
+            <h1 className="dashboard-title">Admin Dashboard</h1>
+            <p className="dashboard-subtitle">Monitor and manage repair orders and product sales</p>
+          </div>
+          <div className="header-actions">
+            <div className="quick-stats">
+              <div className="quick-stat">
+                <span className="stat-label">Total Repair Orders</span>
+                <span className="stat-value">{latestOrders?.length}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Main Content */}
+        <div className="dashboard-content">
+          {/* Repair Orders Section */}
+          <section className="dashboard-section">
+            <div className="section-header">
+              <h2 className="section-title">
+                <span className="section-icon">🔧</span>
+                Device Repair Orders
+              </h2>
+              <button 
+                className="view-all-btn"
+                onClick={() => navigate("/user-repair-orders")}
+              >
+                View All Orders
+              </button>
+            </div>
+            
+            <div className="cards-grid">
+              {isPending ? (
+                Array.from({ length: 8 }).map((_, index) => (
+                  <CardSkeleton key={index} />
+                ))
+              ) : error ? (
+                <div className="error-state">
+                  <div className="error-icon">⚠️</div>
+                  <h3 >Unable to load data</h3>
+                  <p>Please try refreshing the page</p>
+                </div>
+              ) : (
+                repairOrderCards.map((card, index) => (
+                  <DashboardCard
+                    key={index}
+                    title={card.title}
+                    count={card.count}
+                    icon={card.icon}
+                    color={card.color}
+                    description={card.description}
+                    onClick={() => navigate("/user-repair-orders")}
+                  />
+                ))
+              )}
+            </div>
+          </section>
+
+          {/* Product Orders Section */}
+          <section className="dashboard-section">
+            <div className="section-header">
+              <h2 className="section-title">
+                <span className="section-icon">📦</span>
+                Product Orders
+              </h2>
+              <button 
+                className="view-all-btn"
+                onClick={() => navigate("/product-orders")}
+              >
+                View All Orders
+              </button>
+            </div>
+            
+            <div className="cards-grid">
+              {productOrderCards.map((card, index) => (
+                <DashboardCard
+                  key={index}
+                  title={card.title}
+                  count={card.count}
+                  icon={card.icon}
+                  color={card.color}
+                  description={card.description}
+                  onClick={() => navigate("/product-orders")}
+                />
+              ))}
+            </div>
+          </section>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default AdminMainDashboard;

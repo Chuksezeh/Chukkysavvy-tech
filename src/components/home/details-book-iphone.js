@@ -95,7 +95,7 @@ Launch static backdrop modal
 
         <div className='fixlineDiv'>
           <div style={{ justifyContent: "start", textAlign: "start" }} className='container'> <Goback /></div>
-          <h1 className="iphone-d">Iphones</h1>
+          <h1 className="iphone-d">iPhones</h1>
           <div className='fixLine' ></div>
         </div>
         <div className="iphone-detaials-cover " >
