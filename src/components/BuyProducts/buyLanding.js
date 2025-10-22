@@ -74,6 +74,14 @@ const BuyProducts = (() => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+   // Format currency
+    const formatCurrency = (amount) => {
+        return new Intl.NumberFormat('en-NG', {
+            style: 'currency',
+            currency: 'NGN'
+        }).format(amount);
+    };
+
   const navigateProductCart = (() => {
     navigate("/product-cart")
   });
@@ -95,6 +103,18 @@ const BuyProducts = (() => {
 
     fetchProducts();
   }, []);
+
+  const scrolltop = () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
+      };
+    
+      useEffect(() => {
+        scrolltop();
+      }, []);
+    
 
   // Helper function for status badge classes
   const getStatusBadgeClass = (status) => {
@@ -205,7 +225,9 @@ const BuyProducts = (() => {
                     <div className="">
                       <div className="clearfix ">
                         <span className="float-start badge rounded-pill bg-success price-badge">
-                          ₦{parseFloat(product.productPrice).toFixed(2)}
+                          
+                          {formatCurrency(product.productPrice)  }
+                          {/* ₦{parseFloat(product.productPrice).toFixed(2)} */}
                         </span>
                       </div>
 
@@ -214,7 +236,7 @@ const BuyProducts = (() => {
                           onClick={() => navigateProductDetails(product.productId)} 
                           style={{ cursor: 'pointer', textDecoration: 'none' }}
                         >
-                          {product?.productName?.slice(0,25)} 
+                          {product?.productName} 
                         </a>
                       </div>
                       

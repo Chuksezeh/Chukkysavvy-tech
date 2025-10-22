@@ -358,7 +358,7 @@ const downloadReceipt = async () => {
               <Row className="g-3 align-items-center">
                 <Col md={6}>
                   <div className="search-box">
-                    <MdOutlineSearch className="search-icon" />
+                    {/* <MdOutlineSearch className="search-icon" /> */}
                     <input
                       type="text"
                       placeholder="Search orders by ID, customer name..."

@@ -97,7 +97,7 @@ const PickupRepairForm = () => {
     }
 
     return (
-        <div className="pickup-repair-contai">
+        <div className="">
             {/* Success Message */}
             {successMessage && (
                 <div className="alert alert-success alert-improved">
@@ -114,7 +114,7 @@ const PickupRepairForm = () => {
 
             {/* Main Form */}
             {showForm && (
-                <div className="pickup-repair-card">
+                <div className="">
                     <div className="pickup-header">
                         <h2>
                             <IoCar />

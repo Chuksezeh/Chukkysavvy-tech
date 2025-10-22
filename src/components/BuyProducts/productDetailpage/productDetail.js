@@ -116,15 +116,27 @@ const ProductDetailPage = () => {
   const [showAdded, setShowAdded] = useState(false);
   const [item, setItem] = useState("");
 
+  const [allProducts, setAllProducts] = useState("");
+
   useEffect(() => {
     fetchProductDetail();
     fetchRelatedProducts();
+   
   }, [productId]);
 
 
   useEffect(()=>{
      window.scrollTo(0, 0);
     },[])
+
+
+     // Format currency
+    const formatCurrency = (amount) => {
+        return new Intl.NumberFormat('en-NG', {
+            style: 'currency',
+            currency: 'NGN'
+        }).format(amount);
+    };
 
   const dispatch = useDispatch();
 
@@ -139,6 +151,7 @@ const ProductDetailPage = () => {
       if (productData.productImages && productData.productImages.length > 0) {
         setMainImage(productData.productImages[0].imageUrl);
       }
+      // await fetchRelatedProducts();
       
       setError(null);
     } catch (err) {
@@ -149,16 +162,44 @@ const ProductDetailPage = () => {
     }
   };
 
+  
+
   const fetchRelatedProducts = async () => {
     try {
       const response = await chukkytechAxios.get('/product/getAllProducts');
+           setAllProducts(response.data)
+
       // Filter to show products from same category (optional)
-      const related = response.data.filter(p => p.productId !== productId).slice(0, 4);
-      setRelatedProducts(related);
+    
+    console.log("...product", allProducts)
     } catch (err) {
       console.error('Error fetching related products:', err);
     }
   };
+
+
+  const related = allProducts && allProducts.filter(p => {
+  // Exclude current product
+  if (p.productId === productId) return false;
+  
+  // Check if product is active and in stock
+  if (p.status !== 'active' || p.productQuantity <= 0) return false;
+  
+  // Multiple matching criteria
+  const sameCategory = p.categoryId === product?.categoryId;
+  const sameCategoryName = p.categoryName === product?.categoryName;
+  const sameCompany = p.companyName === product?.companyName;
+  const similarPrice = 
+    Math.abs(parseFloat(p.productPrice) - parseFloat(product?.productPrice)) < 
+    (parseFloat(product?.productPrice) * 0.5); // Within 50% price range
+  
+  // Return products that match at least one criteria
+  return sameCategory || sameCategoryName || sameCompany || similarPrice;
+}).slice(0, 8);
+
+
+
+
 
   const allImages = product?.productImages || [];
   const mainImageUrl = mainImage || (allImages.length > 0 ? allImages[0].imageUrl : img1);
@@ -322,12 +363,14 @@ const ProductDetailPage = () => {
             {/* Price */}
             <div className="price-section mb-3">
               <h3 className="product-price text-primary">
-                ₦{parseFloat(product.productPrice).toFixed(2)}
+                {formatCurrency(product.productPrice) }
+                {/* ₦{parseFloat(product.productPrice).toFixed(2)} */}
               </h3>
               {product.discount && product.discount > 0 && (
                 <div className="discount-info">
                   <span className="text-muted text-decoration-line-through me-2">
-                    N{parseFloat(product.purchasePrice).toFixed(2)}
+                    {formatCurrency(product.purchasePrice)  }
+                    {/* N{parseFloat(product.purchasePrice).toFixed(2)} */}
                   </span>
                   <span className="badge bg-danger">
                     Save {product.discount}%
@@ -405,9 +448,10 @@ const ProductDetailPage = () => {
       <section> 
         <div className="centSoon">
           <div className="container-fluid bg-transparent my-4 p-3" style={{position:"relative"}}>
-            <h2>You may also like</h2>
+            <h4 className="relatedHEader">You may also like</h4>
+            <hr/>
             <div className="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
-              {relatedProducts.map((relatedProduct) => (
+              {related && related.map((relatedProduct) => (
                 <div className="col hp" key={relatedProduct.productId}>
                   <div className="cardo shadow-sm p-2">
                     <a onClick={() => navigateToProduct(relatedProduct.productId)} style={{cursor: 'pointer'}}>
@@ -426,7 +470,8 @@ const ProductDetailPage = () => {
                     <div className="card-bod">
                       <div className="clearfix mb-3">
                         <span className="float-start badge rounded-pill bg-success">
-                          ₦{parseFloat(relatedProduct.productPrice).toFixed(2)}
+                          {formatCurrency(relatedProduct.productPrice)  }
+                          {/* ₦{parseFloat(relatedProduct.productPrice).toFixed(2)} */}
                         </span>
                         {/* {relatedProduct.discount && relatedProduct.discount > 0 && (
                           <span className="float-end badge rounded-pill bg-danger">

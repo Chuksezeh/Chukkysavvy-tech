@@ -439,6 +439,15 @@
   opacity: 1;
 }
 
+@media(max-width: 1400px){
+  .section-hero {
+  background-color: transparent;
+   /* padding: 3rem 0 3rem 0; */
+  height: auto;
+  justify-content: center;
+}
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .chs-hero__actions {

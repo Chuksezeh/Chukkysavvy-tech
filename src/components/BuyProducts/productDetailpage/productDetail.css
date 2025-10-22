@@ -21,6 +21,10 @@
 .thumbs {
   gap: 10px;
 }
+.relatedHEader{
+  /* background-color: #243a6f; */
+  text-align: start !important;
+}
 
 .thumb-img {
   width: 70px;

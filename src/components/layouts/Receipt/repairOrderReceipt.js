@@ -4,9 +4,18 @@ import html2canvas from "html2canvas";
 import { IoCheckmarkDoneOutline } from "react-icons/io5";
 import { GiSaveArrow } from "react-icons/gi";
 import { IoMdShare } from "react-icons/io";
+import useGetData from "../../Utility/getFunction";
 
 const Receipt = ({ orderData, chukkyLogo }) => {
   const receiptRef = useRef(null);
+
+  // Format currency
+    const formatCurrency = (amount) => {
+        return new Intl.NumberFormat('en-NG', {
+            style: 'currency',
+            currency: 'NGN'
+        }).format(amount);
+    };
 
   const downloadReceipt = async () => {
     if (receiptRef.current) {
@@ -51,6 +60,9 @@ const Receipt = ({ orderData, chukkyLogo }) => {
       scrolltop();
     }, []);
   
+
+    const {data:getData, isPending, error: errorData} = useGetData("general/getGeneralSettings");
+        const generalData = getData?.data;
 
   return (
     <div id="invo" >
@@ -125,7 +137,7 @@ const Receipt = ({ orderData, chukkyLogo }) => {
         <td className="tableitem"><p className="itemtext">{orderData.pickUpAddress}</p></td>
       </tr>
       <tr className="service">
-        <td className="tableitem"><p className="itemtext">Due Reserved Date Time:</p></td>
+        <td className="tableitem"><p className="itemtext">Scheduled Date :</p></td>
         <td className="tableitem"><p className="itemtext">{moment(orderData.reserveDate).format("lll")}</p></td>
       </tr>
       <tr className="service">
@@ -137,7 +149,9 @@ const Receipt = ({ orderData, chukkyLogo }) => {
         {
           orderData.status === "cancel" ?  
             <td className="tableitem"><p className="itemtext"> <span style={{color:"red"}}>Canceled</span> on  {moment(orderData.createdDateTime).format("lll")}</p></td> :
-            <td className="tableitem"><p className="itemtext" style={{fontStyle:''}}> <span style={{color:"green", textTransform:"capitalize"}}> { orderData.status === "irreparable" ? <span style={{color:"red"}}>Cannot be Fixed</span>: <span> {orderData.status} </span> }   </span>  :  {moment(orderData.createdDateTime).format("lll")}</p></td>
+            <td className="tableitem"><p className="itemtext" style={{fontStyle:''}}> <span style={{color:"green", textTransform:"capitalize"}}>
+               { orderData.status === "irreparable" ?<span> <span style={{color:"red"}}>Cannot be Fixed</span> -  <span>Note: Return of this device attracts <strong>  {formatCurrency(generalData?.returnRepairDeliveryFee)}    </strong> return fee </span> </span> :
+                <span> {orderData.status} </span> }   </span>  :  {moment(orderData.createdDateTime).format("lll")}</p></td>
         }
       </tr>
       <tr className="service">

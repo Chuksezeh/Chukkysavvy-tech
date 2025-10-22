@@ -77,6 +77,11 @@ const navigateHomeFeedback = (()=>{
 const handleBuyDevice = (()=>{
   navigate("/buy-products")
 })
+const handleRepairDevice = (()=>{
+  navigate("/bookingpage")
+})
+
+
   
   
   const userInfo = localStorage.getItem('userInfo');
@@ -139,11 +144,13 @@ const handleBuyDevice = (()=>{
   </div>
   
   <div className="nav-links">
-    <a  onClick={navigateHome} >Home</a>
+    <a onClick={navigateHome} >Home</a>
+    <a onClick={handleRepairDevice} style={{ cursor: "pointer" }}>Repair Device</a> 
+    <a onClick={handleBuyDevice} style={{ cursor: "pointer" }}>Buy Device</a> 
     <a onClick={navigateTracking}>Track  repair</a>
     <a onClick={navigateFindLocation}>Find location</a>
     <a onClick={navigateContactus}>Contact us</a>
-    <a onClick={handleBuyDevice} style={{ cursor: "pointer" }}>Buy Device</a> 
+     
 
     {
       userData ? <span  onClick={navigateProfilePage} className="btn-log-Sign">My Account</span> : <span  onClick={navigateUserLogin}  className="btn-log-Sign">Login</span>

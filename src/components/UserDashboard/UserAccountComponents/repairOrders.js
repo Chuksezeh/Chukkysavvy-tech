@@ -299,7 +299,7 @@ const RepairOrders = (() => {
                 {/* Search and Filter Bar */}
                 <div className="search-filter-bar">
                   <div className="search-box">
-                    <FaSearch className="search-icon" />
+                    {/* <FaSearch className="search-icon" /> */}
                     <input
                       type="text"
                       placeholder="Search by order code, device name or model..."
@@ -323,7 +323,7 @@ const RepairOrders = (() => {
                         <Card.Body>
                           <div className="order-header">
                             <div className="order-code">
-                              <strong>#{item.repairOrderCode}</strong>
+                              <strong>{item.repairOrderCode}</strong>
                             </div>
                             <Badge bg={getStatusVariant(item.status)} className="status-badge">
                               {item.status}
@@ -342,7 +342,7 @@ const RepairOrders = (() => {
                                 <span className="meta-value">{item.repairOrderType}</span>
                               </div>
                               <div className="meta-item">
-                                <span className="meta-label">Due Date</span>
+                                <span className="meta-label">Scheduled Date</span>
                                 <span className="meta-value">{moment(item.reserveDate).format("MMM D, YYYY")}</span>
                               </div>
                               <div className="meta-item">
@@ -399,7 +399,7 @@ const RepairOrders = (() => {
                 {/* Search Bar */}
                 <div className="search-filter-bar">
                   <div className="search-box">
-                    <FaSearch className="search-icon" />
+                    {/* <FaSearch className="search-icon" /> */}
                     <input
                       type="text"
                       placeholder="Search order history..."
@@ -425,7 +425,7 @@ const RepairOrders = (() => {
                             <th>Device</th>
                             <th>Fault</th>
                             <th>Type</th>
-                            <th> Pickup/Due Date</th>
+                            <th> Scheduled Date</th>
                             <th>Status</th>
                             <th>Actions</th>
                           </tr>
@@ -434,7 +434,7 @@ const RepairOrders = (() => {
                           {filteredHistoryOrders.map((item) => (
                             <tr key={item.repairOrderCode}>
                               <td  className="order-code-cell" data-label="Order Code">
-                                <strong>#{item.repairOrderCode}</strong>
+                                <strong>{item.repairOrderCode}</strong>
                               </td>
                               <td className="device-cell" data-label="Device">
                                 <div className="device-cell">
@@ -446,7 +446,7 @@ const RepairOrders = (() => {
                                 {truncateText(item.details, 8)}
                               </td>
                               <td data-label="Type">{item.repairOrderType}</td>
-                              <td data-label="Pickup/Due">{moment(item.reserveDate).format("MMM D, YYYY")}</td>
+                              <td data-label="Scheduled Date">{moment(item.reserveDate).format("MMM D, YYYY")}</td>
                               <td data-label="Status">
                                 <Badge bg={getStatusVariant(item.status)}>
                                   {item.status}
@@ -536,7 +536,7 @@ const RepairOrders = (() => {
             <div className="tracking-container">
               <div className="tracking-header">
                 <h5>{getRepairData?.deviceType} {getRepairData?.deviceModel}</h5>
-                <p className="text-muted">Order: #{getRepairData?.repairOrderCode}</p>
+                <p className="text-muted">Order: {getRepairData?.repairOrderCode}</p>
               </div>
               
               <div className="tracking-timeline">

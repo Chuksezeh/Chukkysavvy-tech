@@ -102,7 +102,7 @@ const IphoneRepairForm = () => {
     }
 
     return (
-        <div className="iphone-repair-contain">
+        <div className="">
             {/* Success Message */}
             {successMessage && (
                 <div className="alert alert-success alert-improved">
@@ -119,7 +119,7 @@ const IphoneRepairForm = () => {
 
             {/* Main Form */}
             {showForm && (
-                <div className="iphone-form-card">
+                <div className="">
                     <div className="iphone-header">
                         <h2>
                             <IoPhonePortrait />

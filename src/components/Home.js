@@ -31,6 +31,7 @@ const Home = () => {
 
      
       <Testmony ref={feedbackRef} />
+       <br/>
 
       <Footer />
     </>

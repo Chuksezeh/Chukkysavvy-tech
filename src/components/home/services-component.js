@@ -188,12 +188,12 @@ const ServicesComponent = () => {
                   <FaMobileAlt />
                   Book Repair Service
                 </NavLink>
-                <NavLink 
+                {/* <NavLink 
                 // to="/software-development" 
                 className="cta-btn secondary">
                   <FaCode />
                   Start Development Project
-                </NavLink>
+                </NavLink> */}
               </div>
             </div>
           </Fade>

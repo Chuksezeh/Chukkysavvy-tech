@@ -361,7 +361,7 @@ const RepairOrderTable = () => {
                     <th className="py-3 fw-semibold">Device</th>
                     <th className="py-3 fw-semibold">Fault</th>
                     <th className="py-3 fw-semibold">Type</th>
-                    <th className="py-3 fw-semibold">Due Date</th>
+                    <th className="py-3 fw-semibold">Scheduled Date</th>
                     <th className="py-3 fw-semibold">Status</th>
                     <th className="pe-4 py-3 fw-semibold text-center">Actions</th>
                   </tr>
@@ -587,7 +587,7 @@ const RepairOrderTable = () => {
             </div>
             <div className="col-md-6">
               <div className="mb-3">
-                <label className="form-label fw-semibold text-muted">Due Date</label>
+                <label className="form-label fw-semibold text-muted">Scheduled Date</label>
                 <p className="mb-0">{moment(itemData.reserveDate).format("MMM DD, YYYY h:mm A")}</p>
               </div>
               <div className="mb-3">

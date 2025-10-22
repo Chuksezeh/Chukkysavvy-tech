@@ -89,7 +89,7 @@ const navigateAdmin = (()=>{
 <br/>
 <br/>
 {
-  userData && userData && <div> <button className="btn btn-primary" onClick={navigateAdmin}> <GrUserAdmin /> Admin Dashboard </button>  </div>
+  userData && userData && <div className="adminin-div"> <button className="btn btn-primary admin-pushinbtn" onClick={navigateAdmin}> <GrUserAdmin /> Admin Dashboard </button>  </div>
 
 }
 

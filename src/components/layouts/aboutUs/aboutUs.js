@@ -137,7 +137,7 @@ const AboutUs = (() => {
                     </div>
                     <div className="contact-details">
                       <h4>Call Us</h4>
-                      <a href="tel:08020653456">  {generalData?.customerSupportPhoneNumber} </a>
+                      <a href={generalData?.customerSupportPhoneNumber}>  {generalData?.customerSupportPhoneNumber} </a>
                     </div>
                   </div>
                   

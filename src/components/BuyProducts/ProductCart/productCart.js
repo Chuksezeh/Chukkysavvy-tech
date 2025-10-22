@@ -139,6 +139,13 @@ const ProductCart = () => {
     0
   ) || 0;
 
+// Format currency
+    const formatCurrency = (amount) => {
+        return new Intl.NumberFormat('en-NG', {
+            style: 'currency',
+            currency: 'NGN'
+        }).format(amount);
+    };
 
 
   useEffect(()=>{
@@ -366,7 +373,8 @@ const ProductCart = () => {
                       </div>
                       <p className="text-muted mb-1">{item.categoryName}</p>
                       <p className="fw-bold text-primary mb-2">
-                        N{parseFloat(item.productPrice).toFixed(2)}
+                        {formatCurrency(item.productPrice)}
+                        {/* N{parseFloat(item.productPrice).toFixed(2)} */}
                       </p>
 
                       {!isAvailable ? (
@@ -402,7 +410,8 @@ const ProductCart = () => {
                     
                     <div className="cart-subtotal text-end">
                       <p className={`fw-bold h5 ${!isAvailable ? 'text-muted' : 'text-primary'}`}>
-                        N{((parseFloat(item.productPrice) * currentQuantity)).toFixed(2)}
+                         {formatCurrency(item.productPrice * currentQuantity)}
+                        {/* N{((parseFloat(item.productPrice) * currentQuantity)).toFixed(2)} */}
                         {!isAvailable && <small className="d-block text-danger" style={{fontSize:"10px"}}>Unavailable</small>}
                       </p>
                       <button
@@ -437,7 +446,7 @@ const ProductCart = () => {
               
               <div className="d-flex justify-content-between mb-2">
                 <span>Subtotal ({productItems?.length || 0} items)</span>
-                <span className="fw-bold">N{subtotal.toFixed(2)}</span>
+                <span className="fw-bold"> {formatCurrency(subtotal)} </span>
               </div>
               {/* <div className="d-flex justify-content-between mb-2">
                 <span>Shipping</span>
@@ -452,7 +461,7 @@ const ProductCart = () => {
               <hr />
               <div className="d-flex justify-content-between fw-bold fs-5 mb-4">
                 <span>Total</span>
-                <span className="text-primary">N{total.toFixed(2)}</span>
+                <span className="text-primary">  {formatCurrency(total)}</span>
               </div>
               
               <button 
@@ -490,7 +499,8 @@ const ProductCart = () => {
         <section>
           <div className="centSoon">
             <div className="container-fluid bg-transparent my-4 p-3">
-              <h2>Recently Viewed</h2>
+               <h4 className="relatedHEader">More Products</h4>
+            <hr/>
               <div className="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
                 {recentlyViewed.map((product) => (
                   <div className="col hp" key={product.productId}>
@@ -510,7 +520,8 @@ const ProductCart = () => {
                       <div className="card-bod d-flex flex-column">
                         <div className="clearfix mb-2">
                           <span className="float-start badge rounded-pill bg-success">
-                            N{parseFloat(product.productPrice).toFixed(2)}
+                            {formatCurrency(product.productPrice)}
+                            {/* N{parseFloat(product.productPrice).toFixed(2)} */}
                           </span>
                           {/* {product.discount && product.discount > 0 && (
                             <span className="float-end badge rounded-pill bg-danger">

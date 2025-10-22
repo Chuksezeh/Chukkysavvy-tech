@@ -122,7 +122,7 @@ const IphonePickupRepair = () => {
     }
 
     return (
-        <div className="iphone-pickup-conta">
+        <div className="">
             {/* Success Message */}
             {successMessage && (
                 <div className="alert alert-success alert-improved">
@@ -139,7 +139,7 @@ const IphonePickupRepair = () => {
 
             {/* Main Form */}
             {showForm && (
-                <div className="iphone-pickup-card">
+                <div className="">
                     <div className="pickup-header">
                         <h2>
                             <IoPhonePortrait />

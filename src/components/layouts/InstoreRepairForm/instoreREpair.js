@@ -78,7 +78,7 @@ const InstoreRepairForm = () => {
     }
 
     return (
-        <div className="instore-repair-containe">
+        <div className="">
             {/* Success Message */}
             {successMessage && (
                 <div className="alert alert-success alert-improved">
@@ -95,7 +95,7 @@ const InstoreRepairForm = () => {
 
             {/* Main Form */}
             {showForm && (
-                <div className="repair-form-card">
+                <div className="">
                     <div className="form-header">
                         <h2>Book In-Store Repair</h2>
                         <p>

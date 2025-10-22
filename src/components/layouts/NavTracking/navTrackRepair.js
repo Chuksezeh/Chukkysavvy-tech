@@ -171,6 +171,15 @@ const NavtrackRepair = () => {
     return colors[status] || "#4361ee";
   };
 
+  // Format currency
+    const formatCurrency = (amount) => {
+        return new Intl.NumberFormat('en-NG', {
+            style: 'currency',
+            currency: 'NGN'
+        }).format(amount);
+    };
+const whatsapLink = `https://api.whatsapp.com/send/?phone=${parseInt(generalData?.customerSupportPhoneNumber)}&text=Hi`
+
   return (
     <>
       <Header />
@@ -408,7 +417,7 @@ const NavtrackRepair = () => {
                     {firstOrder?.repairOrderType === "Pickup" ? (
                       <div className="additional-info">
                         <p>
-                          <strong>Note:</strong> A delivery fee of <strong>₦{parseInt(generalData?.returnRepairDeliveryFee)}</strong> applies for the
+                          <strong>Note:</strong> A delivery fee of <strong>  {formatCurrency(generalData?.returnRepairDeliveryFee)}    </strong> applies for the
                           return of unrepaired devices. Your device will be safely returned to you shortly.
                         </p>
                       </div>
@@ -432,12 +441,16 @@ const NavtrackRepair = () => {
                     <h5>Contact Support</h5>
                     <p>Our team is here to help you with any questions</p>
                     <div className="support-actions">
-                      <Button variant="primary" size="sm" className="me-2">
+                      
+                      <a target="blank" href={parseInt(generalData?.customerSupportPhoneNumber)}>  <Button variant="primary" size="sm" className="me-2">
                         Call Support
-                      </Button>
+                      </Button> </a>
+                     <a href= {whatsapLink}  target="blank">
                       <Button variant="outline-primary" size="sm">
-                        Send Message
+                        Send Message/WhatsApp 
                       </Button>
+
+                       </a>
                     </div>
                   </div>
                 </div>

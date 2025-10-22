@@ -19,6 +19,15 @@
     font-size: 20px;
     font-weight: 700;
 }
+.adminin-div{
+  
+  /* background-color: #4CAF50; */
+}
+.admin-pushinbtn{
+  width: 100%;
+  margin-top: 2%;
+  
+}
 .form input {
   font-family: "Roboto", sans-serif;
   outline: 0;

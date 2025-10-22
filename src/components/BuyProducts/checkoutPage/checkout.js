@@ -55,7 +55,7 @@ const CheckoutPage = () => {
     const [productStock, setProductStock] = useState({});
     const [showLogin, setShowLogin] = useState(false);
     const [showPaymentReference, setShowPaymentReference] = useState("");
-    const [insuficientButton, setInsufficientButton]= useState(false);
+    const [insuficientButton, setInsufficientButton] = useState(false);
     const receiptRef = useRef(null);
     const {
         register,
@@ -73,9 +73,9 @@ const CheckoutPage = () => {
     const handleShowNoLogin = (() => setShowNoLogin(true));
     const handleHideNoLogin = (() => setShowNoLogin(false))
 
- useEffect(()=>{
-   window.scrollTo(0, 0);
-  },[])
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [])
     const navigateLogin = () => navigate("/user-login");
     // Get cart items from navigation state - handle both cart and buy-now flows
     const {
@@ -86,20 +86,28 @@ const CheckoutPage = () => {
         source = 'cart' // 'cart' or 'buy-now'
     } = location.state || {};
 
+    // Format currency
+    const formatCurrency = (amount) => {
+        return new Intl.NumberFormat('en-NG', {
+            style: 'currency',
+            currency: 'NGN'
+        }).format(amount);
+    };
 
 
-    const {data, isPending, error} = useGetData("general/getGeneralSettings");
+
+    const { data, isPending, error } = useGetData("general/getGeneralSettings");
     const generalData = data?.data;
-    
+
 
     // Calculate totals - handle both single item and multiple items
     const subtotal = passedSubtotal || cartItems.reduce(
         (acc, item) => acc + (parseFloat(item.productPrice) * (item.quantity || 1)),
         0
     );
-    const shipping =  parseInt(generalData?.productDeliveryFeeAbuja)   || (subtotal > 0 ? parseInt(generalData?.productDeliveryFeeAbuja) : 0);
+    const shipping = parseInt(generalData?.productDeliveryFeeAbuja) || (subtotal > 0 ? parseInt(generalData?.productDeliveryFeeAbuja) : 0);
 
-    console.log("looooooog", shipping)
+    // console.log("looooooog", shipping)
 
 
     const total = passedTotal + shipping || (subtotal + shipping);
@@ -161,7 +169,7 @@ const CheckoutPage = () => {
             };
 
         } catch (error) {
-            console.error('Error checking product stock:', error);
+            // console.error('Error checking product stock:', error);
             return {
                 allAvailable: false,
                 unavailableProducts: [],
@@ -274,13 +282,13 @@ const CheckoutPage = () => {
                 defaultAddress: addressForm.setAsDefault || false
             };
 
-            console.log("Submitting address data:", userData);
+            // console.log("Submitting address data:", userData);
 
             const response = await chukkytechAxios.post('/general/createDeliveryAddress', userData);
 
             setLoading(false);
             setSuccessMessage("Address saved successfully!");
-             
+
             // Refresh addresses
             if (userDetails?.userId) {
                 await fetchUserData();
@@ -300,7 +308,7 @@ const CheckoutPage = () => {
             setLoading(false);
             setErrorMessage(err.response?.data?.error || "Failed to save address. Please try again.");
         }
-     };
+    };
 
     // Handle delete address
     const handleDeleteAddress = async (addressId) => {
@@ -465,14 +473,14 @@ const CheckoutPage = () => {
             deliveryFee: shipping,
             paymentReference: selectedPaymentReference || reference
         };
-      
+
         // console.log("Processing checkout:", paymentData);
 
         try {
             const response = await chukkytechAxios.post("/order/orders/create", paymentData);
 
             console.log("Checkout response:", response);
-             setShowPaymentReference(response.data.paymentReference)
+            setShowPaymentReference(response.data.paymentReference)
             if (response.data && response.data.success) {
                 // Order created successfully
                 setShowReceipt(true);
@@ -504,7 +512,7 @@ const CheckoutPage = () => {
     };
 
 
-console.log("InsufficientButton", checkingStock)
+    // console.log("InsufficientButton", checkingStock)
 
 
     // State and LGA handlers
@@ -564,9 +572,9 @@ console.log("InsufficientButton", checkingStock)
 
         const isSufficient = stockInfo.available >= (item.quantity || 1);
 
-        console.log(".../",isSufficient)
+        console.log(".../", isSufficient)
         //  if (isSufficient === false){
-            
+
         //  }
         // setInsufficientButton(true);
 
@@ -660,20 +668,20 @@ console.log("InsufficientButton", checkingStock)
     })
 
 
-    
- 
+
+
 
     const payWithPaystack = async () => {
         setLoading(true);
 
         console.log("all====chechAmount", total)
-                
-        
+
+
         const handler = window.PaystackPop.setup({
             key: process.env.REACT_APP_PAYSTACK_KEY,
             email: userDetails?.email,
             amount: total * 100,
-            fullName: userDetails?.firstName +" "+ userDetails?.firstName,
+            fullName: userDetails?.firstName + " " + userDetails?.firstName,
             userId: userDetails?.userId,
             currency: 'NGN',
             callback: function (response) {
@@ -689,7 +697,7 @@ console.log("InsufficientButton", checkingStock)
     };
 
 
-   
+
 
     return (
         <>
@@ -1029,7 +1037,7 @@ console.log("InsufficientButton", checkingStock)
                                             <span className="btn-loader"></span> Processing Order...
                                         </>
                                     ) : (
-                                        `Pay Now - N${total?.toFixed(2)}`
+                                        `Pay Now - ${formatCurrency(total)}`
                                     )}
                                 </button> : <button
                                     type="button"
@@ -1037,7 +1045,7 @@ console.log("InsufficientButton", checkingStock)
                                     onClick={handleCheckout}
 
 
-                                    disabled={ checkingStock  ||  loading || !selectedAddress }
+                                    disabled={checkingStock || loading || !selectedAddress}
                                 >
                                     {checkingStock ? (
                                         <>
@@ -1048,7 +1056,7 @@ console.log("InsufficientButton", checkingStock)
                                             <span className="btn-loader"></span> Processing Order...
                                         </>
                                     ) : (
-                                        `Place Order - ₦${total?.toFixed(2)}`
+                                        `Place Order - ${formatCurrency(total)}`
                                     )}
                                 </button>
                             }
@@ -1072,9 +1080,14 @@ console.log("InsufficientButton", checkingStock)
                                         style={{ width: "60px", height: "60px", objectFit: "cover" }}
                                     />
                                     <div className="flex-grow-1">
-                                        <p className="mb-1 fw-semibold">{item.productName}</p>
+                                        <p className="mb-1 fw-semibold">
+                                            {item.productName?.length > 25
+                                                ? `${item.productName.slice(0, 30)}...`
+                                                : item.productName}
+                                        </p>
                                         <small className="text-muted">
-                                            {item.quantity || 1} × ₦{parseFloat(item.productPrice).toFixed(2)}
+
+                                            {item.quantity || 1} ×   {formatCurrency(item.productPrice)}
                                         </small>
                                         <br />
                                         <small className="text-muted">
@@ -1084,7 +1097,8 @@ console.log("InsufficientButton", checkingStock)
                                         {getStockStatus(item)}
                                     </div>
                                     <p className="fw-bold mb-0 text-primary">
-                                        ₦{((parseFloat(item.productPrice) * (item.quantity || 1))).toFixed(2)}
+                                        {formatCurrency(item.productPrice * item.quantity || 1 )}
+                                        {/* {(((item.productPrice) * (item.quantity || 1))).toFixed(2)} */}
                                     </p>
                                 </div>
                             ))}
@@ -1095,11 +1109,11 @@ console.log("InsufficientButton", checkingStock)
                             <div className="order-totals">
                                 <div className="d-flex justify-content-between mb-2">
                                     <span>Subtotal</span>
-                                    <span>₦{subtotal.toFixed(2)}</span>
+                                    <span> {formatCurrency(subtotal)}  </span>
                                 </div>
                                 <div className="d-flex justify-content-between mb-2">
                                     <span>Delivery</span>
-                                    <span>₦{shipping.toFixed(2)}</span>
+                                    <span>  {formatCurrency(shipping)} </span>
                                 </div>
                                 {subtotal > 0 && (
                                     <div className="d-flex justify-content-between mb-2 text-muted small">
@@ -1110,7 +1124,7 @@ console.log("InsufficientButton", checkingStock)
                                 <hr />
                                 <div className="d-flex justify-content-between fw-bold fs-5">
                                     <span>Total</span>
-                                    <span className="text-primary">₦{total.toFixed(2)}</span>
+                                    <span className="text-primary">{formatCurrency(total)} </span>
                                 </div>
                             </div>
 

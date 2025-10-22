@@ -521,7 +521,7 @@ font-weight: 800;
 @media(max-width:1400px){
 .nav-links {
     display: inline;
-    margin-left: 30%;
+    margin-left: 15%;
     font-size: 18px;
     color: white;
   
@@ -582,7 +582,7 @@ font-weight: 800;
     transition: all 0.3s ease-in;
     overflow-y: hidden;
     top: 50px;
-    margin-left: 0px;
+    margin-left: auto;
   }
   .nav-main-NAv > .nav-links > a {
     display: block;
