@@ -4,6 +4,7 @@ import "./createUser.css";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { chukkytechAxios } from "../../Utility/axios";
+import Footer from "../../layouts/Footer";
 
 
 
@@ -104,7 +105,7 @@ const CreateUser = (() => {
 
 				<ul className="action-bar">
 
-					<li>Home / Users / <span className="addash"> Create User </span></li>
+					<li> <a href="/admin-dashboard-card">Dashboard</a>   / Users / <span className="addash"> Create User </span></li>
 				</ul>
 			</div>
 
@@ -291,6 +292,10 @@ const CreateUser = (() => {
 				</div>
 			</div>
 
+
+ <section style={{marginTop: "5%" }}>
+			  <Footer/>
+			</section>
 
 		</>
 	)

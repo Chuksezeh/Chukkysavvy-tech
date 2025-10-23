@@ -2,7 +2,7 @@
  
   --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   --radius: 16px;
-  --gradient: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+  --gradient: linear-gradient(135deg, #011B58 0%, #3a0ca3 100%);
 }
 
 /* Services Header */
@@ -235,7 +235,7 @@
 /* CTA Section */
 .services-cta-section {
   padding: 4rem 0;
-  background: var(--gradient);
+  background: linear-gradient(135deg, #011B58 0%, #3a0ca3 100%);
   color: white;
   text-align: center;
 }

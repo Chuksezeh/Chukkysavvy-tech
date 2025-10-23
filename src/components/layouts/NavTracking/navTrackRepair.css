@@ -1,6 +1,6 @@
 :root {
-  --primary: #4361ee;
-  --primary-dark: #3a56d4;
+  --primary: #011B58;
+  --primary-dark: #011B58;
   --secondary: #6c757d;
   --success: #28a745;
   --danger: #dc3545;
@@ -11,12 +11,12 @@
   --border: #e9ecef;
   --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   --radius: 12px;
-  --gradient: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+  --gradient: linear-gradient(135deg, #011B58 0%, #3a0ca3 100%);
 }
 
 /* Hero Section */
 .tracking-hero {
-  background: var(--gradient);
+  background: #011B58;
   color: white;
   padding: 4rem 0;
   position: relative;

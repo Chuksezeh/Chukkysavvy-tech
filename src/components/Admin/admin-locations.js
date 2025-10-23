@@ -6,6 +6,7 @@ import { chukkytechAxios } from "../Utility/axios";
 import { useForm } from "react-hook-form";
 import { ButtonGroup, DropdownButton, Dropdown } from "react-bootstrap";
 import moment from "moment";
+import Footer from "../layouts/Footer";
 
 const AdminLocations = () => {
     const {
@@ -200,8 +201,8 @@ const AdminLocations = () => {
                     <div className="col">
                         <nav aria-label="breadcrumb">
                             <ol className="breadcrumb mb-0">
-                                <li className="breadcrumb-item"><a href="/" className="text-decoration-none">Home</a></li>
-                                <li className="breadcrumb-item"><a href="/admin" className="text-decoration-none">Admin</a></li>
+                                <li className="breadcrumb-item"><a href="/admin-dashboard-card" className="text-decoration-none">Dashboard</a></li>
+                                <li className="breadcrumb-item"><a  className="text-decoration-none">Locations</a></li>
                                 <li className="breadcrumb-item active text-dark">Location Management</li>
                             </ol>
                         </nav>
@@ -757,6 +758,10 @@ const AdminLocations = () => {
                     </Button>
                 </Modal.Footer>
             </Modal>
+
+             <section style={{marginTop: "5%" }}>
+                          <Footer/>
+                        </section>
         </>
     );
 };

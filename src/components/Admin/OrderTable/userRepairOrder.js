@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import AdminDashboard from "../adminDashboard";
 import { chukkytechAxios } from "../../Utility/axios";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import Footer from "../../layouts/Footer";
 
 const RepairOrderTable = () => {
   const [showDropDown, setShowDropDown] = useState(null);
@@ -25,7 +26,7 @@ const RepairOrderTable = () => {
   const [showModal, setShowModal] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const ordersPerPage = 10;
+  const ordersPerPage = 20;
 
   const navigate = useNavigate();
 
@@ -57,9 +58,11 @@ const RepairOrderTable = () => {
       return [];
     }
 
-    const latestOrders = data.reduce((acc, order) => {
-      if (!acc[order.repairOrderCode] || 
-          new Date(order.createdDateTime) > new Date(acc[order.repairOrderCode].createdDateTime)) {
+    const latestOrders = orders.reduce((acc, order) => {
+      if (
+        !acc[order.repairOrderCode] ||
+        new Date(order.createdDateTime) > new Date(acc[order.repairOrderCode].createdDateTime)
+      ) {
         acc[order.repairOrderCode] = order;
       }
       return acc;
@@ -68,27 +71,71 @@ const RepairOrderTable = () => {
     return Object.values(latestOrders);
   };
 
-  const ordersArray = Array.isArray(data.repairOrders) ? data.repairOrders : [];
+  const ordersArray = Array.isArray(data)
+    ? data
+    : Array.isArray(data.repairOrders)
+    ? data.repairOrders
+    : [];
   const latestOrders = getLatestRepairOrders(ordersArray);
 
-  useEffect(() => {
+  const filterOrders = () => {
     const lowerSearch = searchTerm.toLowerCase();
-  
-    const results = latestOrders.filter((order) => {
+
+    return latestOrders.filter((order) => {
       const matchesSearch =
         order.repairOrderCode?.toLowerCase().includes(lowerSearch) ||
         order.deviceType?.toLowerCase().includes(lowerSearch) ||
         order.deviceModel?.toLowerCase().includes(lowerSearch);
 
-      const matchesStatus = selectedStatus === "all" ? true : order.status === selectedStatus;
-      const matchesOrderType = selectedOrderType === "all" ? true : order.repairOrderType === selectedOrderType;
+      const matchesStatus =
+        selectedStatus === "all" ? true : order.status?.toLowerCase() === selectedStatus.toLowerCase();
+      const matchesOrderType =
+        selectedOrderType === "all" ? true : order.repairOrderType === selectedOrderType;
 
       return matchesSearch && matchesStatus && matchesOrderType;
     });
-  
-    setFilteredOrders(results);
-    setCurrentPage(1);
-  }, [searchTerm, selectedStatus, selectedOrderType, latestOrders]);
+  };
+
+  // ✅ FIXED: Prevent pagination reset when only navigating pages
+  useEffect(() => {
+    const filtered = filterOrders();
+    setFilteredOrders(filtered);
+    // Reset only when filters or search term change — not when currentPage changes
+  }, [searchTerm, selectedStatus, selectedOrderType, data]);
+
+  const totalPages = Math.ceil(filteredOrders.length / ordersPerPage);
+
+  const paginatedOrders = useMemo(() => {
+    const startIndex = (currentPage - 1) * ordersPerPage;
+    return filteredOrders.slice(startIndex, startIndex + ordersPerPage);
+  }, [filteredOrders, currentPage]);
+
+  const pageNumbers = useMemo(() => {
+    const pages = [];
+    const maxVisiblePages = 20;
+
+    if (totalPages <= maxVisiblePages) {
+      for (let i = 1; i <= totalPages; i++) pages.push(i);
+    } else {
+      if (currentPage <= 3) {
+        for (let i = 1; i <= 4; i++) pages.push(i);
+        pages.push("...");
+        pages.push(totalPages);
+      } else if (currentPage >= totalPages - 2) {
+        pages.push(1);
+        pages.push("...");
+        for (let i = totalPages - 3; i <= totalPages; i++) pages.push(i);
+      } else {
+        pages.push(1);
+        pages.push("...");
+        for (let i = currentPage - 1; i <= currentPage + 1; i++) pages.push(i);
+        pages.push("...");
+        pages.push(totalPages);
+      }
+    }
+
+    return pages;
+  }, [currentPage, totalPages]);
 
   const handleGetDetails = (item) => {
     setItemData(item);
@@ -120,17 +167,16 @@ const RepairOrderTable = () => {
         repairOrderId: itemData?.repairOrderId,
         repairOrderType: itemData?.repairOrderType,
         status: progressStatus,
-        repairOrderCode: itemData?.repairOrderCode
+        repairOrderCode: itemData?.repairOrderCode,
       };
 
-      const res = await chukkytechAxios.post('repair/repairorder', deviceData);
+      const res = await chukkytechAxios.post("repair/repairorder", deviceData);
       setLoading(false);
       setSuccessText(res?.data?.message);
       setSuccessMessage(true);
       setShowModal(false);
       setTimeout(() => setSuccessMessage(false), 4000);
       fetchAdminRepairOrder();
-
     } catch (err) {
       console.error("API error:", err);
       setLoading(false);
@@ -150,10 +196,11 @@ const RepairOrderTable = () => {
       delivered: { class: "badge bg-success", label: "Delivered" },
       irreparable: { class: "badge bg-danger", label: "Cannot Fix" },
       cancel: { class: "badge bg-secondary", label: "Cancelled" },
-      settled: { class: "badge bg-dark", label: "Settled" }
+      settled: { class: "badge bg-dark", label: "Settled" },
     };
 
-    const config = statusConfig[status?.toLowerCase()] || { class: "badge bg-secondary", label: status };
+    const config =
+      statusConfig[status?.toLowerCase()] || { class: "badge bg-secondary", label: status };
     return <span className={config.class}>{config.label}</span>;
   };
 
@@ -165,19 +212,20 @@ const RepairOrderTable = () => {
       delivered: "Delivered",
       irreparable: "Unable to Repair",
       settled: "Settled",
-      cancel: "Cancel"
+      cancel: "Cancel",
     };
     return actionLabels[action] || action;
   };
 
-  const totalPages = Math.ceil(filteredOrders.length / ordersPerPage);
-  const paginatedOrders = filteredOrders.slice(
-    (currentPage - 1) * ordersPerPage,
-    currentPage * ordersPerPage
-  );
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+    }
+  };
 
   const handleRefresh = () => {
     fetchAdminRepairOrder();
+    setCurrentPage(1);
   };
 
   return (
@@ -190,8 +238,8 @@ const RepairOrderTable = () => {
           <div className="col">
             <nav aria-label="breadcrumb">
               <ol className="breadcrumb mb-0">
-                <li className="breadcrumb-item"><a href="/" className="text-decoration-none">Home</a></li>
-                <li className="breadcrumb-item"><a href="/admin" className="text-decoration-none">Admin</a></li>
+                <li className="breadcrumb-item"><a href="/admin-dashboard-card" className="text-decoration-none">Dashboard</a></li>
+                <li className="breadcrumb-item"><a  className="text-decoration-none">Orders</a></li>
                 <li className="breadcrumb-item active text-dark">Repair Orders</li>
               </ol>
             </nav>
@@ -455,8 +503,8 @@ const RepairOrderTable = () => {
             </div>
           </div>
 
-          {/* Pagination */}
-          {!isPending && paginatedOrders.length > 0 && (
+          {/* Fixed Pagination */}
+          {!isPending && filteredOrders.length > 0 && (
             <div className="card-footer bg-white py-3">
               <div className="d-flex justify-content-between align-items-center">
                 <div className="text-muted">
@@ -464,32 +512,41 @@ const RepairOrderTable = () => {
                 </div>
                 <nav>
                   <ul className="pagination mb-0">
+                    {/* Previous Button */}
                     <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
                       <button 
                         className="page-link"
-                        onClick={() => setCurrentPage(currentPage - 1)}
+                        onClick={() => handlePageChange(currentPage - 1)}
                         disabled={currentPage === 1}
                       >
-                        Previous
+                        &laquo; Previous
                       </button>
                     </li>
-                    {[...Array(totalPages)].map((_, index) => (
-                      <li key={index} className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}>
-                        <button 
-                          className="page-link"
-                          onClick={() => setCurrentPage(index + 1)}
-                        >
-                          {index + 1}
-                        </button>
+
+                    {/* Page Numbers - FIXED: Use the memoized pageNumbers */}
+                    {pageNumbers.map((page, index) => (
+                      <li key={index} className={`page-item ${page === currentPage ? 'active' : ''} ${page === '...' ? 'disabled' : ''}`}>
+                        {page === '...' ? (
+                          <span className="page-link">...</span>
+                        ) : (
+                          <button 
+                            className="page-link"
+                            onClick={() => handlePageChange(page)}
+                          >
+                            {page}
+                          </button>
+                        )}
                       </li>
                     ))}
+
+                    {/* Next Button */}
                     <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
                       <button 
                         className="page-link"
-                        onClick={() => setCurrentPage(currentPage + 1)}
+                        onClick={() => handlePageChange(currentPage + 1)}
                         disabled={currentPage === totalPages}
                       >
-                        Next
+                        Next &raquo;
                       </button>
                     </li>
                   </ul>
@@ -617,6 +674,12 @@ const RepairOrderTable = () => {
           </Button>
         </Modal.Footer>
       </Modal>
+
+
+      <section style={{marginTop: "5%" }}>
+        <Footer/>
+            </section>
+      
     </>
   );
 };

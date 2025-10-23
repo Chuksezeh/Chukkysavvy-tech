@@ -12,6 +12,7 @@ import "react-quill/dist/quill.snow.css";
 import { useForm, Controller } from 'react-hook-form';
 import "./EditProductModal.css";
 import { Alert } from 'react-bootstrap';
+import Footer from '../../layouts/Footer';
 
 const ProductDetail = () => {
   const { productId } = useParams();
@@ -372,7 +373,7 @@ const handleStatusAction = (actionType, newStatus) => {
       <AdminDashboard />
       <div className="header-bar">
         <ul className="action-bar">
-          <li>Home / Products / View Products  /<span className="addash"> Product Details </span></li>
+          <li> <a href='/admin-dashboard-card'> Dashboard</a> / Products / View Products  /<span className="addash"> Product Details </span></li>
         </ul>
       </div>
 
@@ -979,6 +980,10 @@ const handleStatusAction = (actionType, newStatus) => {
           </Button>
         </Modal.Footer>
       </Modal>
+
+       <section style={{marginTop: "5%" }}>
+              <Footer/>
+            </section>
     </>
   );
 };

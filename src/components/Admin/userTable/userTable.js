@@ -6,6 +6,7 @@ import moment from "moment";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useNavigate } from "react-router-dom";
+import Footer from "../../layouts/Footer";
 
 const UserTable = () => {
   const [showDropDown, setShowDropDown] = useState("");
@@ -25,7 +26,7 @@ const UserTable = () => {
   
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const [usersPerPage] = useState(10);
+  const [usersPerPage] = useState(20);
 
   const navigate = useNavigate();
 
@@ -152,6 +153,10 @@ const UserTable = () => {
     fetchUsers();
   };
 
+const handleStepBack = (()=>{
+  navigate(-1)
+})
+
   return (
     <>
       <AdminDashboard />
@@ -162,8 +167,8 @@ const UserTable = () => {
           <div className="col">
             <nav aria-label="breadcrumb">
               <ol className="breadcrumb mb-0">
-                <li className="breadcrumb-item"><a href="/" className="text-decoration-none">Home</a></li>
-                <li className="breadcrumb-item"><a href="/admin" className="text-decoration-none">Admin</a></li>
+                <li className="breadcrumb-item"><a href="admin-dashboard-card" className="text-decoration-none">Dashboard</a></li>
+                <li className="breadcrumb-item"><a  className="text-decoration-none">Users</a></li>
                 <li className="breadcrumb-item active text-dark">User Management</li>
               </ol>
             </nav>
@@ -543,6 +548,11 @@ const UserTable = () => {
           </Button>
         </Modal.Footer>
       </Modal>
+
+      <section style={{marginTop: "5%" }}>
+        <Footer/>
+            </section>
+      
     </>
   );
 };

@@ -6,6 +6,7 @@ import moment from 'moment/moment';
 import { IoCheckmarkDone, IoCart, IoPerson, IoLocation, IoCall, IoMail, IoCard, IoCube, IoPricetag, IoChevronForward, IoClose, IoCheckmarkCircle, IoTime, IoStorefront, IoBagCheck } from 'react-icons/io5';
 import { FaShippingFast, FaEdit, FaBoxOpen, FaMoneyCheckAlt } from 'react-icons/fa';
 import './ProductManagementPage.css';
+import Footer from '../../layouts/Footer';
 
 const ProductManagementPage = () => {
     const [selectedItem, setSelectedItem] = useState(null);
@@ -690,6 +691,11 @@ const ProductManagementPage = () => {
                     </div>
                 )}
             </div>
+
+            <section style={{marginTop: "5%" }}>
+  <Footer/>
+      </section>
+
         </>
     );
 };

@@ -4,6 +4,7 @@ import useGetData from "../../Utility/getFunction";
 import AdminDashboard from "../adminDashboard";
 import "./adminMainDashboard.css";
 import { useEffect, useMemo } from "react";
+import Footer from "../../layouts/Footer";
 
 const AdminMainDashboard = () => {
   const { data, isPending, error } = useGetData("adminRepair/getAllRepairOrder");
@@ -422,6 +423,12 @@ const filterOrderSettled = latestOrders.filter((data)=>(
           </section>
         </div>
       </div>
+
+
+      <section style={{marginTop: "5%" }}>
+  <Footer/>
+      </section>
+
     </>
   );
 };

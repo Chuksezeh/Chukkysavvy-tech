@@ -340,7 +340,7 @@ const downloadReceipt = async () => {
                 <MdOutlineShoppingBag size={32} className="header-icon" />
                 <div>
                   <div>Product Orders</div>
-                  <p style={{fontSize:"12px"}}>Manage and track your product purchases</p>
+                  <p style={{fontSize:"12px"}}>Manage and track your orders</p>
                 </div>
               </div>
               <div className="order-stats">

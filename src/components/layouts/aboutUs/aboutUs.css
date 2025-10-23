@@ -1,6 +1,6 @@
 :root {
-  --primary: #4361ee;
-  --primary-dark: #3a56d4;
+  --primary: #011B58;
+  --primary-dark: #011B58;
   --secondary: #6c757d;
   --success: #06d6a0;
   --danger: #ef476f;
@@ -10,8 +10,8 @@
   --light: #f8f9fa;
   --white: #ffffff;
   
-  --gradient: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
-  --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient: linear-gradient(135deg, #011B58 0%, #3a0ca3 100%);
+  --gradient-hero: linear-gradient(135deg, #011B58 0%, #764ba2 100%);
   --shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
   --shadow-hover: 0 20px 60px rgba(0, 0, 0, 0.15);
   --radius: 16px;
@@ -30,7 +30,7 @@
 
 /* Hero Section */
 .about-hero {
-  background: var(--gradient-hero);
+  background: #011B58;
   color: var(--white);
   padding: 6rem 0 4rem;
   text-align: center;

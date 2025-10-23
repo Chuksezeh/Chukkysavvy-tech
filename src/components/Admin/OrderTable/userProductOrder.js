@@ -4,6 +4,7 @@ import "./userRepairOrder.css"
 import { useNavigate } from "react-router-dom";
 import { chukkytechAxios } from "../../Utility/axios";
 import moment from "moment";
+import Footer from "../../layouts/Footer";
 
 const ProductOrderTable = () => {
   const [showDropDown, setShowDropDown] = useState("");
@@ -19,7 +20,7 @@ const ProductOrderTable = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [totalOrders, setTotalOrders] = useState(0);
 
-  const ordersPerPage = 10;
+  const ordersPerPage = 20;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -147,8 +148,8 @@ const ProductOrderTable = () => {
           <div className="col">
             <nav aria-label="breadcrumb">
               <ol className="breadcrumb mb-0">
-                <li className="breadcrumb-item"><a href="/" className="text-decoration-none">Home</a></li>
-                <li className="breadcrumb-item"><a href="/admin" className="text-decoration-none">Admin</a></li>
+                <li className="breadcrumb-item"><a href="/admin-dashboard-card" className="text-decoration-none">Home</a></li>
+                <li className="breadcrumb-item"><a  className="text-decoration-none">Orders</a></li>
                 <li className="breadcrumb-item active text-dark">Product Orders</li>
               </ol>
             </nav>
@@ -460,6 +461,13 @@ const ProductOrderTable = () => {
           )}
         </div>
       </div>
+
+      <section style={{marginTop: "5%" }}>
+  <Footer/>
+      </section>
+
+
+    
     </>
   );
 };

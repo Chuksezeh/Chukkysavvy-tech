@@ -7,6 +7,7 @@ import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
 import useGetData from "../../Utility/getFunction";
 import "./createProduct.css";
+import Footer from "../../layouts/Footer";
 
 const CreateProduct = () => {
   const [loading, setLoading] = useState(false);
@@ -189,8 +190,8 @@ const CreateProduct = () => {
           <div className="col">
             <nav aria-label="breadcrumb">
               <ol className="breadcrumb mb-0">
-                <li className="breadcrumb-item"><a href="/" className="text-decoration-none">Home</a></li>
-                <li className="breadcrumb-item"><a href="/admin" className="text-decoration-none">Users</a></li>
+                <li className="breadcrumb-item"><a href="/admin-dashboard-card" className="text-decoration-none">Dashboard</a></li>
+                <li className="breadcrumb-item"><a  className="text-decoration-none">Products</a></li>
                 <li className="breadcrumb-item active text-dark">Create Product </li>
               </ol>
             </nav>
@@ -498,6 +499,11 @@ const CreateProduct = () => {
           </form>
         </div>
       </div>
+
+
+       <section style={{marginTop: "5%" }}>
+                    <Footer/>
+                  </section>
     </>
   );
 };

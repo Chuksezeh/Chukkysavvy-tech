@@ -17,6 +17,7 @@ import {
   FaExclamationTriangle,
   FaCheckCircle
 } from "react-icons/fa";
+import Footer from "../../layouts/Footer";
 
 const ManageComments = () => {
     const {
@@ -404,6 +405,11 @@ const ManageComments = () => {
                     </Button>
                 </Modal.Footer>
             </Modal>
+            
+            <section style={{marginTop: "5%" }}>
+              <Footer/>
+            </section>
+            
         </>
     );
 };
