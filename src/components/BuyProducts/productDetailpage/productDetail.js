@@ -420,7 +420,7 @@ const ProductDetailPage = () => {
                     Add to Cart
                   </button>
                   <button 
-                    className="btn btn-primary btn-lg" 
+                    className="btn btn-primary btn-lg but-buyNow" 
                     style={{borderRadius:"10px"}}
                     onClick={handleBuyNow}
                   >
