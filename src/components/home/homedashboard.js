@@ -106,7 +106,7 @@ const HomeDashBoard = () => {
       </div>
       <div className="chs-hero__cta-text">
         <span className="chs-hero__cta-main">Repair A Device</span>
-        <span className="chs-hero__cta-sub">Fast & Professional Service</span>
+        <span className="chs-hero__cta-sub">Fast & Professional </span>
       </div>
       <div className="chs-hero__cta-arrow">
         <FaArrowRight className="chs-hero__cta-arrow-icon" />

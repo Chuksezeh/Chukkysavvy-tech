@@ -1,6 +1,6 @@
 :root {
-  --primary: #4361ee;
-  --primary-dark: #3a56d4;
+  --primary: #011B58;
+  --primary-dark: #011B58;
   --secondary: #6c757d;
   --success: #28a745;
   --danger: #dc3545;
@@ -578,7 +578,7 @@
 }
 
 .call-btn {
-  background: var(--success);
+  background: var(--gradient);
   color: white;
   border: 1px solid var(--success);
 }

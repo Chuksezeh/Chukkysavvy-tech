@@ -180,6 +180,11 @@ const NavtrackRepair = () => {
     };
 const whatsapLink = `https://api.whatsapp.com/send/?phone=${parseInt(generalData?.customerSupportPhoneNumber)}&text=Hi`
 
+const handleCall = () => {
+    window.location.href = `tel:${generalData?.customerSupportPhoneNumber}`;
+  };
+
+
   return (
     <>
       <Header />
@@ -350,9 +355,10 @@ const whatsapLink = `https://api.whatsapp.com/send/?phone=${parseInt(generalData
                   <div className="support-content">
                     <h5>Need Help?</h5>
                     <p>Contact our support team for assistance with your repair order</p>
-                    <Button variant="outline-primary" size="sm">
+                    <a onClick={handleCall}>  <Button variant="outline-primary" size="sm">
                       Contact Support
-                    </Button>
+                    </Button> </a>
+                   
                   </div>
                 </div>
               </div>
@@ -442,7 +448,7 @@ const whatsapLink = `https://api.whatsapp.com/send/?phone=${parseInt(generalData
                     <p>Our team is here to help you with any questions</p>
                     <div className="support-actions">
                       
-                      <a target="blank" href={parseInt(generalData?.customerSupportPhoneNumber)}>  <Button variant="primary" size="sm" className="me-2">
+                      <a target="blank" onClick={handleCall}>  <Button variant="primary" size="sm" className="me-2">
                         Call Support
                       </Button> </a>
                      <a href= {whatsapLink}  target="blank">

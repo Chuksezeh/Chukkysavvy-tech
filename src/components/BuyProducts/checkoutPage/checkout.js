@@ -222,7 +222,7 @@ const CheckoutPage = () => {
         } catch (error) {
             console.error('Error fetching user data:', error);
             setShowLogin(true);
-            setErrorMessage("Failed to load user data /  please login or register to continue");
+            setErrorMessage("Please log in or create an account to continue");
         }
     };
 
@@ -702,7 +702,7 @@ const CheckoutPage = () => {
     return (
         <>
             <Header />
-            {/* <SearchBar /> */}
+            <SearchBar />
 
             <Goback />
 
@@ -720,7 +720,7 @@ const CheckoutPage = () => {
                 <div className="container mt-3">
                     <div className="alert alert-danger alert-dismissible fade show" role="alert">
                         {errorMessage}
-                        {showLogin && <button className="loginSetStle btn btn-primary" onClick={handleNavigateLogin}>login</button>}
+                        {showLogin && <button className="loginSetStle btn btn-primary" onClick={handleNavigateLogin}>Login</button>}
 
                         <button type="button" className="btn-close" onClick={() => setErrorMessage("")}></button>
                     </div>

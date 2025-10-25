@@ -325,10 +325,15 @@
 .feature-card {
   background: var(--white);
   padding: 2rem;
+  display: grid;
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   transition: var(--transition);
   border: 1px solid rgba(0, 0, 0, 0.05);
+}
+.feature-card-sec{
+  display: flex;
+  gap: 10%;
 }
 
 .feature-card:hover {
@@ -352,7 +357,8 @@
   font-size: 1.3rem;
   font-weight: 600;
   color: var(--dark);
-  margin-bottom: 0.75rem;
+  margin-top: 5%;
+  /* margin-bottom: 0.75rem; */
 }
 
 .feature-description {
@@ -499,7 +505,10 @@
 
 @media (max-width: 768px) {
   .about-container {
-    padding: 0 1rem;
+    padding: 10px;
+    padding-right: 10px;
+
+    /* width: -400px !important; */
   }
   
   .about-hero-title {

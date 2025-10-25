@@ -84,6 +84,12 @@ const AboutUs = (() => {
   const generalData = data?.data;
 
 
+   const handleCall = () => {
+    window.location.href = `tel:${generalData?.customerSupportPhoneNumber}`;
+  };
+
+
+
   return (
     <section className="about-body-show">
 
@@ -137,7 +143,7 @@ const AboutUs = (() => {
                     </div>
                     <div className="contact-details">
                       <h4>Call Us</h4>
-                      <a href={generalData?.customerSupportPhoneNumber}>  {generalData?.customerSupportPhoneNumber} </a>
+                      <a   onClick={handleCall} style={{cursor:"pointer"}}>  {generalData?.customerSupportPhoneNumber} </a>
                     </div>
                   </div>
                   
@@ -252,14 +258,18 @@ const AboutUs = (() => {
                 <div className="features-grid">
                   {features.map((feature, index) => (
                     <div key={index} className="feature-card">
+                      <div className="feature-card-sec">
                       <div 
                         className="feature-icon-wrapper"
                         style={{ backgroundColor: feature.color }}
                       >
                         {feature.icon}
+                      
                       </div>
-                      <h4 className="feature-title">{feature.title}</h4>
-                      <p className="feature-description">{feature.description}</p>
+                        <h4 className="feature-title">{feature.title}</h4>
+                        </div>
+                      <div><p className="feature-description">{feature.description}</p></div>
+                      
                     </div>
                   ))}
                 </div>
@@ -304,7 +314,7 @@ const AboutUs = (() => {
                   <FaTools />
                   Book a Repair
                 </a>
-                <a href="tel:08020653456" className="cta-btn secondary">
+                <a onClick={handleCall} className="cta-btn secondary">
                   <FaUsers />
                   Call Now
                 </a>

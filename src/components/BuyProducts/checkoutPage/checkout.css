@@ -60,7 +60,10 @@ button.btn-primary {
 }
 
 .loginSetStle{
-    margin-left: 20px;
+    margin-left: 50% !important;
+    
+    width: 150px;
+
 }
 
 .btn-loader {
