@@ -103,6 +103,12 @@ const InstoreRepairForm = () => {
                             we'll be ready to assist you.
                         </p>
                     </div>
+                     <div className="container mt-3">
+                    <div className="alert alert-warning alert-dismissible fade show" role="alert">
+                        Delivery and pickup are currently available in Abuja only. We’re working to bring our services to more cities soon — stay tuned! 
+
+                        </div>
+                    </div>
 
                     <form onSubmit={handleSubmit(handleSubmitDeviceData)}>
                         <div className="form-grid">

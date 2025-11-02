@@ -150,9 +150,15 @@ const IphonePickupRepair = () => {
                             We'll come to you, diagnose the issue, and provide expert repair service.
                         </p>
                     </div>
+                     <div className="container mt-3">
+                    <div className="alert alert-warning alert-dismissible fade show" role="alert">
+                        Delivery and pickup are currently available in Abuja only. We’re working to bring our services to more cities soon — stay tuned! 
+
+                        </div>
+                    </div>
 
                     {/* Service Features */}
-                    <div className="pickup-features">
+                    {/* <div className="pickup-features">
                         <div className="feature-item">
                             <IoTimer className="feature-icon" />
                             <div className="feature-text">Flexible Scheduling</div>
@@ -165,7 +171,7 @@ const IphonePickupRepair = () => {
                             <IoHome className="feature-icon" />
                             <div className="feature-text">At Your Location</div>
                         </div>
-                    </div>
+                    </div> */}
 
                     <form onSubmit={handleSubmit(handleSubmitDeviceData)}>
                         {/* Device Type (Fixed as iPhone) */}

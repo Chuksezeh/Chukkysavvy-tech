@@ -403,23 +403,23 @@ const AdminLocations = () => {
                                     ) : (
                                         currentLocations.map((location, index) => (
                                             <tr key={location.locationId} className="align-middle">
-                                                <td className="ps-4">{(currentPage - 1) * locationsPerPage + index + 1}</td>
-                                                <td>
+                                                <td className="ps-4" data-label = "SN">{(currentPage - 1) * locationsPerPage + index + 1}</td>
+                                                <td data-label = "Location name">
                                                     <div className="fw-semibold">{location.locationName}</div>
                                                 </td>
-                                                <td>
+                                                <td data-label = "Address">
                                                     <span className="text-muted">{location.locationAddress}</span>
                                                 </td>
-                                                <td>
+                                                <td data-label = "Shop name">
                                                     <span className="text-muted">{location.shopName}</span>
                                                 </td>
-                                                <td>
+                                                <td data-label = "Contact">
                                                     <span className="text-muted">{location.phone}</span>
                                                 </td>
-                                                <td>
+                                                <td data-label = "Status">
                                                     {getStatusBadge(location.status)}
                                                 </td>
-                                                <td>
+                                                <td data-label = "Coordinates">
                                                     <small className="text-muted">
                                                         {location.longitude && location.latitude ? 
                                                             `${location.longitude}, ${location.latitude}` : 
@@ -427,7 +427,7 @@ const AdminLocations = () => {
                                                         }
                                                     </small>
                                                 </td>
-                                                <td>
+                                                <td data-label = "Created date">
                                                     <span className="text-muted">
                                                         {moment(location.createdDateTime).format("MMM DD, YYYY")}
                                                     </span>

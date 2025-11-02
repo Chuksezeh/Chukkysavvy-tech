@@ -338,9 +338,9 @@ const handleStepBack = (()=>{
                   ) : (
                     currentUsers.map((user, index) => (
                       <tr key={user.userId} className="align-middle">
-                        <td className="ps-4">{(currentPage - 1) * usersPerPage + index + 1}</td>
-                        <td>
-                          <div className="d-flex align-items-center">
+                        <td className="ps-4" data-label="SN">{(currentPage - 1) * usersPerPage + index + 1}</td>
+                        <td data-label="User">
+                          <div className="d-flex align-items-center p-2">
                             <div className="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" 
                                  style={{ width: '40px', height: '40px' }}>
                               <i className="fas fa-user text-primary"></i>
@@ -351,13 +351,13 @@ const handleStepBack = (()=>{
                             </div>
                           </div>
                         </td>
-                        <td>
+                        <td data-label="Email">
                           <span className="text-muted">{user.email}</span>
                         </td>
-                        <td>
+                        <td data-label="Status">
                           {getStatusBadge(user.status)}
                         </td>
-                        <td>
+                        <td data-label="Registered">
                           <span className="text-muted">
                             {moment(user.createdDateTime).format("MMM DD, YYYY")}
                           </span>

@@ -158,7 +158,7 @@ const ProductOrders = (() => {
       {
         key: 'pending',
         title: 'Order Placed',
-        description: 'Your order has been received and payment is being processed',
+        description: 'Your order has been received and  is pending confirmation',
         icon: <MdOutlinePendingActions />,
         completed: true, // Always completed once order exists
         active: status === 'pending'
@@ -166,7 +166,7 @@ const ProductOrders = (() => {
       {
         key: 'confirmed',
         title: 'Order Confirmed',
-        description: 'Payment confirmed and order is being processed',
+        description: 'Order confirmed and order is being processed',
         icon: <FaUserCheck />,
         completed: ['confirmed', 'processing', 'shipped', 'delivered', 'completed'].includes(status),
         active: status === 'confirmed'
@@ -174,7 +174,7 @@ const ProductOrders = (() => {
       {
         key: 'processing',
         title: 'Processing',
-        description: 'Your items are being prepared for shipment',
+        description: 'Your items are being prepared for shipment/delivery',
         icon: <FaTruckLoading />,
         completed: ['processing', 'shipped', 'delivered', 'completed'].includes(status),
         active: status === 'processing'

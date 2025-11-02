@@ -57,6 +57,7 @@ const CreateProduct = () => {
     try {
       const formData = new FormData();
       formData.append("productName", formDataValues.productName);
+      formData.append("productName", formDataValues.payOnDelivery || "Yes");
       formData.append("productPrice", formDataValues.productPrice);
       formData.append("purchasePrice", formDataValues.purchasePrice);
       formData.append("productQuantity", formDataValues.productQuantity);
@@ -322,6 +323,21 @@ const CreateProduct = () => {
                       ))}
                   </select>
                   <span className="cum-error">{errors.companyId?.message}</span>
+                </div>
+              </div>
+
+                <div className="col-md-12">
+                <div className="form-group">
+                  <label>Pay on delivery</label>
+                  <select
+                    className="form-control"
+                    {...register("payOnDelivery")}
+                  >
+                    <option>Yes</option>
+                    <option>No</option>
+                   
+                  </select>
+                  {/* <span className="cum-error">{errors.companyId?.message}</span> */}
                 </div>
               </div>
 

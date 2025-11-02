@@ -317,9 +317,9 @@ const AdminUserPage = () => {
                   ) : (
                     currentUsers.map((user, index) => (
                       <tr key={user.userId} className="align-middle">
-                        <td className="ps-4">{(currentPage - 1) * usersPerPage + index + 1}</td>
-                        <td>
-                          <div className="d-flex align-items-center">
+                        <td className="ps-4" data-label="SN">{(currentPage - 1) * usersPerPage + index + 1}</td>
+                        <td data-label="Admin User">
+                          <div className="d-flex align-items-center p-2">
                             <div className="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" 
                                  style={{ width: '40px', height: '40px' }}>
                               <i className="fas fa-user-shield text-primary"></i>
@@ -330,13 +330,13 @@ const AdminUserPage = () => {
                             </div>
                           </div>
                         </td>
-                        <td>
+                        <td data-label="Email">
                           <span className="text-muted">{user.email}</span>
                         </td>
-                        <td>
+                        <td data-label ="Status">
                           {getStatusBadge(user.status)}
                         </td>
-                        <td>
+                        <td data-label ="Registered">
                           <span className="text-muted">
                             {moment(user.createdDateTime).format("MMM DD, YYYY")}
                           </span>
@@ -345,7 +345,7 @@ const AdminUserPage = () => {
                             {moment(user.createdDateTime).format("h:mm A")}
                           </small>
                         </td>
-                        <td className="pe-4 text-center">
+                        <td className="pe-4 text-center" >
                           <select 
                             className="form-select form-select-sm"
                             onChange={(e) => handleChangeAction(e, user)}

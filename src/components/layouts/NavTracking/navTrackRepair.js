@@ -303,7 +303,7 @@ const handleCall = () => {
                 </div>
                 <div className="order-info">
                   <h3>{getRepairData?.deviceType} {getRepairData?.deviceModel}</h3>
-                  <p className="order-code">Order: #{getRepairData?.repairOrderCode}</p>
+                  <p className="order-code">Order: {getRepairData?.repairOrderCode}</p>
                   <div className="order-meta">
                     <span className="order-date">
                       <FaClock />

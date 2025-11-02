@@ -448,25 +448,25 @@ const RepairOrderTable = () => {
                   ) : (
                     paginatedOrders.map((item, index) => (
                       <tr key={item.repairOrderCode} className="align-middle">
-                        <td className="ps-4">{(currentPage - 1) * ordersPerPage + index + 1}</td>
-                        <td>
+                        <td className="ps-4" data-label="SN">{(currentPage - 1) * ordersPerPage + index + 1}</td>
+                        <td data-label="Order Code">
                           <span className="fw-semibold text-primary">{item.repairOrderCode}</span>
                         </td>
-                        <td>
+                        <td data-label = "Device"> 
                           <div>
                             <div className="fw-semibold">{item.deviceType}</div>
                             <small className="text-muted">{item.deviceModel}</small>
                           </div>
                         </td>
-                        <td>
+                        <td data-label = "Fault">
                           <span className="text-muted" title={item.details}>
                             {item.details?.length > 50 ? `${item.details.substring(0, 50)}...` : item.details}
                           </span>
                         </td>
-                        <td>
+                        <td data-label = "Type">
                           <span className="badge bg-light text-dark">{item.repairOrderType}</span>
                         </td>
-                        <td>
+                        <td data-label = "Scheduled Date">
                           <span className="text-muted">
                             {moment(item.reserveDate).format("MMM DD")}
                           </span>
@@ -475,7 +475,7 @@ const RepairOrderTable = () => {
                             {moment(item.reserveDate).format("h:mm A")}
                           </small>
                         </td>
-                        <td>
+                        <td data-label = "Status">
                           {getStatusBadge(item.status)}
                         </td>
                         <td className="pe-4 text-center">

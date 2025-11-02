@@ -331,20 +331,20 @@ const ViewCreatedProducts = () => {
                                     ) : (
                                         currentProducts.map((product, index) => (
                                             <tr key={product.productId} className="align-middle">
-                                                <td className="ps-4">{(currentPage - 1) * productsPerPage + index + 1}</td>
-                                                <td>
+                                                <td className="ps-4" data-label = "SN">{(currentPage - 1) * productsPerPage + index + 1}</td>
+                                                <td data-label = "Product Name:">
                                                     <div className="fw-semibold">{product.productName}</div>
                                                     <small className="text-muted">{product.categoryName}</small>
                                                 </td>
-                                                <td>
+                                                <td data-label = "Company">
                                                     <span className="text-muted">{product.companyName}</span>
                                                 </td>
-                                                <td>
+                                                <td data-label = "Price">
                                                     <span className="fw-semibold text-success">
                                                         ₦{parseFloat(product.productPrice).toLocaleString()}
                                                     </span>
                                                 </td>
-                                                <td>
+                                                <td data-label = "Quantity">
                                                     <span className={`fw-semibold ${
                                                         parseInt(product.productQuantity) === 0 ? 'text-danger' :
                                                         parseInt(product.productQuantity) <= 5 ? 'text-warning' : 'text-success'
@@ -358,10 +358,10 @@ const ViewCreatedProducts = () => {
                                                         <small className="text-danger d-block">Out of Stock</small>
                                                     )}
                                                 </td>
-                                                <td>
+                                                <td data-label = "Status">
                                                     {getStatusBadge(product.status)}
                                                 </td>
-                                                <td>
+                                                <td data-label = "Created date">
                                                     <span className="text-muted">
                                                         {moment(product.createdDateTime).format("MMM DD, YYYY")}
                                                     </span>

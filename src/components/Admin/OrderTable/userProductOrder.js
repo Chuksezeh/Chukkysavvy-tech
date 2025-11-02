@@ -362,27 +362,27 @@ const ProductOrderTable = () => {
                   ) : (
                     filteredOrders.map((item, i) => (
                       <tr key={item.orderId} className="align-middle">
-                        <td className="ps-4">{(currentPage - 1) * ordersPerPage + i + 1}</td>
-                        <td>
+                        <td className="ps-4" data-label = "SN">{(currentPage - 1) * ordersPerPage + i + 1}</td>
+                        <td data-label = "Order ID">
                           <code className="text-primary">{item.orderId}</code>
                         </td>
-                        <td>
+                        <td data-label = "Payment method">
                           <span className="fw-semibold text-primary" style={{textTransform:"capitalize"}}>
                             {item.paymentMethod}
                           </span>
                         </td>
-                        <td>
+                        <td data-label = "Customer">
                           <div>
                             <div className="fw-semibold">{item.customerName}</div>
                           </div>
                         </td>
-                        <td>
+                        <td data-label = "Email">
                           <span className="text-muted">{item.customerEmail}</span>
                         </td>
-                        <td>
+                        <td data-label = "Status">
                           {getStatusBadge(item.orderStatus)}
                         </td>
-                        <td>
+                        <td data-label = "Created date">
                           <span className="text-muted">
                             {moment(item.createdDate).format("MMM DD, YYYY")}
                           </span>

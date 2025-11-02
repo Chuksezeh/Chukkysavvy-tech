@@ -354,15 +354,15 @@ const ViewCategories = () => {
                                     ) : (
                                         currentCategories.map((category, index) => (
                                             <tr key={category.categoryId} className="align-middle">
-                                                <td className="ps-4">{(currentPage - 1) * categoriesPerPage + index + 1}</td>
-                                                <td>
+                                                <td className="ps-4" data-label = "SN">{(currentPage - 1) * categoriesPerPage + index + 1}</td>
+                                                <td data-label = "Category name">
                                                     <div className="fw-semibold">{category.categoryName}</div>
                                                     <small className="text-muted">ID: {category.categoryId}</small>
                                                 </td>
-                                                <td>
+                                                <td data-label = "Status">
                                                     {getStatusBadge(category.status)}
                                                 </td>
-                                                <td>
+                                                <td data-label = "Created date">
                                                     <span className="text-muted">
                                                         {moment(category.createdDateTime).format("MMM DD, YYYY")}
                                                     </span>

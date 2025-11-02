@@ -51,6 +51,7 @@ import ProductManagementPage from './components/Admin/adminproductOrderManagemen
 import GeneralSettings from './components/Admin/generalSettings/generalSettings';
 
 import SearchResults from './components/BuyProducts/SearchResults/SearchResults';
+import ChukkytechAi from './components/ChukkytechAi/chukkytechai';
 
 function App() {
   const [authState, setAuthState] = useState({
@@ -89,6 +90,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/track-repair" element={<NavtrackRepair />} />
+         <Route path="/chukkytechai" element={<ChukkytechAi />} />
 
         {/* User Protected Routes */}
         <Route path="/profilepage" element={<ProfilePage />} />

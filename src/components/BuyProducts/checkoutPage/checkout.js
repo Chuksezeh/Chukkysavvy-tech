@@ -572,7 +572,13 @@ const CheckoutPage = () => {
 
         const isSufficient = stockInfo.available >= (item.quantity || 1);
 
-        console.log(".../", isSufficient)
+       
+
+
+
+       
+
+        //  console.log(".../filteredDeliveryState", filteredDeliveryState)
         //  if (isSufficient === false){
 
         //  }
@@ -697,7 +703,9 @@ const CheckoutPage = () => {
     };
 
 
-
+ const filteredDeliveryState = allStateLocalGov?.allState && allStateLocalGov?.allState?.filter((state)=>(
+                      state.name === "FCT-Abuja"
+        ))
 
     return (
         <>
@@ -733,6 +741,12 @@ const CheckoutPage = () => {
                     <div className="col-lg-8">
                         <form className="checkout-form shadow-sm p-4 rounded">
                             <h5 className="mb-3">Delivery Information</h5>
+                <div className="container mt-3">
+                    <div className="alert bg-light alert-dismissible fade show" role="alert">
+                        Delivery and pickup are currently available in Abuja only. We’re working to bring our services to more cities soon — stay tuned! 
+
+                        </div>
+                    </div>
 
                             {/* Address Selection */}
                             <div className="cover-address">
@@ -921,7 +935,7 @@ const CheckoutPage = () => {
                                                     required
                                                 >
                                                     <option value="">Select State</option>
-                                                    {allStateLocalGov?.allState?.map((state, index) => (
+                                                    {filteredDeliveryState && filteredDeliveryState?.map((state, index) => (
                                                         <option value={state.stateId} key={index}>
                                                             {state.name}
                                                         </option>
@@ -1392,7 +1406,7 @@ const CheckoutPage = () => {
                                     <tbody>
                                         {cartItems.map((item, index) => (
                                             <tr key={item.productId}>
-                                                <td className="ps-4">
+                                                <td className="ps-4" data-label="Product">
                                                     <div className="d-flex align-items-center">
                                                         <img
                                                             src={getProductImage(item)}
@@ -1406,14 +1420,14 @@ const CheckoutPage = () => {
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td className="text-center">
+                                                <td className="text-center" data-label="Qty">
                                                     <span className="badge bg-secondary">{item.quantity || 1}</span>
                                                 </td>
-                                                <td className="text-end">
-                                                    N{parseFloat(item.productPrice).toFixed(2)}
+                                                <td className="text-end" data-label="Price"  >
+                                                    ₦{parseFloat(item.productPrice).toFixed(2)}
                                                 </td>
-                                                <td className="text-end pe-4 fw-semibold">
-                                                    N{((parseFloat(item.productPrice) * (item.quantity || 1))).toFixed(2)}
+                                                <td className="text-end pe-4 fw-semibold"  data-label="Total">
+                                                    ₦{((parseFloat(item.productPrice) * (item.quantity || 1))).toFixed(2)}
                                                 </td>
                                             </tr>
                                         ))}
@@ -1431,11 +1445,11 @@ const CheckoutPage = () => {
                                     <h6 className="card-title fw-bold mb-3">Order Summary</h6>
                                     <div className="d-flex justify-content-between mb-2">
                                         <span className="text-muted">Subtotal:</span>
-                                        <span className="fw-semibold">N{subtotal.toFixed(2)}</span>
+                                        <span className="fw-semibold">₦{subtotal.toFixed(2)}</span>
                                     </div>
                                     <div className="d-flex justify-content-between mb-2">
                                         <span className="text-muted">Delivery Fee:</span>
-                                        <span className="fw-semibold">N{shipping.toFixed(2)}</span>
+                                        <span className="fw-semibold">₦{shipping.toFixed(2)}</span>
                                     </div>
                                     {payment === 'credit-paid' ? (
                                         <div className="d-flex justify-content-between mb-2">
@@ -1467,10 +1481,10 @@ const CheckoutPage = () => {
                                     {
                                         payment === "credit-paid" ? <div className="d-flex justify-content-between mb-3">
                                             <span className="fw-bold fs-5">Total Amount Paid:</span>
-                                            <span className="fw-bold fs-5 text-primary">N{total.toFixed(2)}</span>
+                                            <span className="fw-bold fs-5 text-primary">₦{total.toFixed(2)}</span>
                                         </div> : <div className="d-flex justify-content-between mb-3">
                                             <span className="fw-bold fs-5">Total Amount to be Paid on Delivery:</span>
-                                            <span className="fw-bold fs-5 text-primary">N{total.toFixed(2)}</span>
+                                            <span className="fw-bold fs-5 text-primary">₦{total.toFixed(2)}</span>
                                         </div>
                                     }
 

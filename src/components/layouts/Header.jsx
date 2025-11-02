@@ -81,6 +81,10 @@ const handleRepairDevice = (()=>{
   navigate("/bookingpage")
 })
 
+const handleChukkytechAi = (()=>{
+  navigate("/chukkytechai")
+})
+
 
   
   
@@ -150,6 +154,7 @@ const handleRepairDevice = (()=>{
     <a onClick={navigateTracking}>Track  repair</a>
     <a onClick={navigateFindLocation}>Find location</a>
     <a onClick={navigateContactus}>Contact us</a>
+     <a onClick={handleChukkytechAi}>ChukkyAi</a>
      
 
     {

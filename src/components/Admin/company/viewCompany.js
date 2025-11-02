@@ -364,33 +364,33 @@ const ViewCompanies = () => {
                                     ) : (
                                         currentCompanies.map((company, index) => (
                                             <tr key={company.companyId} className="align-middle">
-                                                <td className="ps-4">{(currentPage - 1) * companiesPerPage + index + 1}</td>
-                                                <td>
+                                                <td className="ps-4" data-label = "SN">{(currentPage - 1) * companiesPerPage + index + 1}</td>
+                                                <td data-label = "Company code">
                                                     <span className="fw-semibold text-primary">{company.companyCode}</span>
                                                 </td>
-                                                <td>
+                                                <td data-label = "Company name">
                                                     <div className="fw-semibold">{company.companyName}</div>
                                                     <small className="text-muted">{company.companyAddress}</small>
                                                 </td>
-                                                <td>
+                                                <td data-label = "Location">
                                                     <span className="text-muted">{company.location}</span>
                                                 </td>
-                                                <td>
+                                                <td data-label = "Owner">
                                                     <div>
                                                         <div className="fw-semibold">{company.firstName} {company.lastName}</div>
                                                         <small className="text-muted">Owner</small>
                                                     </div>
                                                 </td>
-                                                <td>
+                                                <td data-label = "Contact">
                                                     <div>
                                                         <div>{company.phoneNumber}</div>
                                                         <small className="text-muted">{company.emailAddress}</small>
                                                     </div>
                                                 </td>
-                                                <td>
+                                                <td data-label = "Status">
                                                     {getStatusBadge(company.status)}
                                                 </td>
-                                                <td>
+                                                <td data-label = "Created date">
                                                     <span className="text-muted">
                                                         {moment(company.createdDateTime).format("MMM DD, YYYY")}
                                                     </span>

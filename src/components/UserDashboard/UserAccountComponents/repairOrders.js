@@ -162,12 +162,13 @@ const RepairOrders = (() => {
   const latestOrder = sortedOrders[sortedOrders.length - 1];
 
   const stages = [
-    { name: "Ordered", status: "Processing", icon: <FaClipboardList />, date: null },
-    { name: "Picked", status: "pickedUp", icon: <FaTruckPickup />, date: null },
-    { name: "Fixing", status: "fixing", icon: <FaTools />, date: null },
-    { name: "Fixed", status: "fixed", icon: <FaTruckMoving />, date: null },
-    { name: "Delivered", status: "delivered", icon: <FaCheckCircle />, date: null },
-    { name: "Settled", status: "settled", icon: <IoCheckmarkDoneOutline />, date: null },
+    { name: "Ordered",  message: "Your repair request has been received and is now being processed.",  status: "Processing", icon: <FaClipboardList />, date: null },
+    { name: "Picked",   message: "Your device has been collected and is awaiting technical diagnosis.",  status: "pickedUp", icon: <FaTruckPickup />, date: null },
+    { name: "Fixing",    message: "Our technicians are currently diagnosing and repairing your device.",  status: "fixing", icon: <FaTools />, date: null },
+    { name: "Fixed",  message: "Your device has been successfully repaired and is undergoing final quality checks.",  status: "fixed", icon: <FaTruckMoving />, date: null },
+    { name: "Delivered", message: "Your device has been delivered back to you. We hope you’re satisfied with our service!", 
+    status: "delivered",  status: "delivered", icon: <FaCheckCircle />, date: null },
+    { name: "Settled",   message: "Your repair order has been successfully completed. Thank you for choosing our service!",  status: "settled", icon: <IoCheckmarkDoneOutline />, date: null },
   ];
 
   const updatedStages = stages.map((stage) => {
@@ -544,11 +545,16 @@ const RepairOrders = (() => {
                   <div key={index} className={`timeline-item ${stage.isCompleted ? 'completed' : ''} ${stage.isActive ? 'active' : ''}`}>
                     <div className="timeline-marker-repair">
                       <div className="marker-icon">
-                        {stage.isCompleted ? <IoCheckmarkDoneOutline /> : stage.icon}
+                       
+                        {stage.isCompleted ? <IoCheckmarkDoneOutline /> : stage.icon}    
+                     
                       </div>
+                      
                     </div>
+                 
                     <div className="timeline-content-repair">
                       <h6 className="stage-name">{stage.name}</h6>
+                     { stage.date &&  <div>  {stage.message} </div>   } 
                       <p className="stage-date">
                         {stage.date ? moment(stage.date).format("MMM D, YYYY h:mm A") : "Pending"}
                       </p>
