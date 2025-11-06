@@ -2,7 +2,7 @@ import Header from "../layouts/Header"
 import iphoneImage from '../images/iphone4.jpg';
 import { Form, useNavigate } from "react-router-dom";
 import { Button, Row } from "react-bootstrap";
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Card from 'react-bootstrap/Card';
 import rep1 from '../images/Designer.jpeg';
@@ -18,6 +18,7 @@ import WhatsAppFloat from "../layouts/whatsappFloat/whatsAppFloat";
 import ReadMoreText from "../layouts/readMoreText";
 import { GiCardPickup } from "react-icons/gi";
 import { FaPersonWalkingArrowRight } from "react-icons/fa6";
+import DirectLogin from "../layouts/UserLoginPage/directLogin";
 
 
 
@@ -36,6 +37,8 @@ const DetailsBookIphone = (() => {
 
   const handleShowPickUpForm = () => setShowPickUpForm(true);
   const handleClosePickupForm = () => setShowPickUpForm(false);
+
+  const handleRemoveLoginRef = useRef();
 
 
 
@@ -81,9 +84,17 @@ Launch static backdrop modal
       behavior: 'smooth',
     })
   }
+
+   handleRemoveLoginRef.current = userData
   useEffect(() => {
     scrolltop()
-  }, [])
+   
+    if (handleRemoveLoginRef.current){
+     setShowNoLogin(false); 
+    }else{
+      return
+    }
+  }, [userData])
 
   return (
 
@@ -245,33 +256,18 @@ Launch static backdrop modal
           onHide={handleHideNoLogin}
           backdrop="static"
           keyboard={false}
-          size="md"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
+          size=""
+         
+          
         >
           <Modal.Header closeButton>
-            <Modal.Title style={{ fontWeight: 'bold' }} className="text-info">
-              {' '}
-              LOGIN REQUEST{' '}
-            </Modal.Title>
+            
           </Modal.Header>
 
-          <Modal.Body>
-            <p>
-              Hey, looks like you're not logged in yet! login for a smoother ride, or register to unlock the full experience, let's get you started!
+      
 
-            </p>
-          </Modal.Body>
-          <Modal.Footer>
+             <DirectLogin onLoginSuccess={() => setShowNoLogin(false)} />
            
-            <Button className="WProceedBtn" onClick={navigateLogin}>
-              Proceed Login
-            </Button>
-
-             <Button variant="secondary" onClick={handleHideNoLogin}>
-              Cancel
-            </Button>
-          </Modal.Footer>
         </Modal>
 
 

@@ -20,6 +20,7 @@ import Goback from "../../layouts/goBack";
 import myLogo from "../../images/CHUKKY-BRAND-BACKGROUND-removebg-preview.png"
 import moment from "moment/moment";
 import useGetData from "../../Utility/getFunction";
+import DirectLogin from "../../layouts/UserLoginPage/directLogin";
 
 const CheckoutPage = () => {
     const location = useLocation();
@@ -72,6 +73,7 @@ const CheckoutPage = () => {
     const [showNoLogin, setShowNoLogin] = useState(false);
     const handleShowNoLogin = (() => setShowNoLogin(true));
     const handleHideNoLogin = (() => setShowNoLogin(false))
+    
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -670,7 +672,7 @@ const CheckoutPage = () => {
     })
 
     const handleNavigateLogin = (() => {
-        navigate("/user-login")
+       handleShowNoLogin();
     })
 
 
@@ -706,6 +708,14 @@ const CheckoutPage = () => {
  const filteredDeliveryState = allStateLocalGov?.allState && allStateLocalGov?.allState?.filter((state)=>(
                       state.name === "FCT-Abuja"
         ))
+
+
+const handleHideModalLOgin = (() => {
+    handleHideNoLogin(false);
+    setErrorMessage("")
+})
+
+
 
     return (
         <>
@@ -1424,7 +1434,7 @@ const CheckoutPage = () => {
                                                     <span className="badge bg-secondary">{item.quantity || 1}</span>
                                                 </td>
                                                 <td className="text-end" data-label="Price"  >
-                                                    ₦{parseFloat(item.productPrice).toFixed(2)}
+                                                     {parseFloat(item.productPrice).toFixed(2)}
                                                 </td>
                                                 <td className="text-end pe-4 fw-semibold"  data-label="Total">
                                                     ₦{((parseFloat(item.productPrice) * (item.quantity || 1))).toFixed(2)}
@@ -1552,33 +1562,13 @@ const CheckoutPage = () => {
                 onHide={handleHideNoLogin}
                 backdrop="static"
                 keyboard={false}
-                size="md"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
+               
             >
                 <Modal.Header closeButton>
-                    <Modal.Title style={{ fontWeight: 'bold' }} className="text-info">
-                        {' '}
-                        LOGIN REQUEST{' '}
-                    </Modal.Title>
+                   
                 </Modal.Header>
 
-                <Modal.Body>
-                    <p>
-                        Hey, looks like you're not logged in yet! login for a smoother ride, or register to unlock the full experience, let's get you started!
-
-                    </p>
-                </Modal.Body>
-                <Modal.Footer>
-
-                    <Button className="WProceedBtn" onClick={navigateLogin}>
-                        Proceed Login
-                    </Button>
-
-                    <Button variant="secondary" onClick={handleHideNoLogin}>
-                        Cancel
-                    </Button>
-                </Modal.Footer>
+                <DirectLogin onLoginSuccess={() => handleHideModalLOgin()} />
             </Modal>
 
             <Footer />

@@ -17,6 +17,7 @@ import ReadMoreText from "../layouts/readMoreText";
 import { GiCardPickup } from "react-icons/gi";
 import { FaPersonWalkingArrowRight } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import DirectLogin from "../layouts/UserLoginPage/directLogin";
 
 
 const IpadDetails = (() => {
@@ -254,33 +255,14 @@ const IpadDetails = (() => {
           onHide={handleHideNoLogin}
           backdrop="static"
           keyboard={false}
-          size="md"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
+         
+         
         >
           <Modal.Header closeButton>
-            <Modal.Title style={{ fontWeight: 'bold' }} className="text-info">
-              {' '}
-              LOGIN REQUEST{' '}
-            </Modal.Title>
+           
           </Modal.Header>
 
-          <Modal.Body>
-            <p>
-              Hey, looks like you're not logged in yet! login for a smoother ride, or register to unlock the full experience, let's get you started!
-
-            </p>
-          </Modal.Body>
-          <Modal.Footer>
-           
-            <Button className="WProceedBtn" onClick={navigateLogin}>
-              Proceed Login
-            </Button>
-
-             <Button variant="secondary" onClick={handleHideNoLogin}>
-              Cancel
-            </Button>
-          </Modal.Footer>
+            <DirectLogin onLoginSuccess={() => setShowNoLogin(false)} />
         </Modal>
 
 
