@@ -294,8 +294,8 @@ const ProductDetailPage = () => {
             <div className="col-sm-6">
               <div className="alert fade alert-success alert-dismissible text-left font__family-montserrat font__size-16 font__weight-light brk-library-rendered rendered show">
                 <i className="start-icon far fa-check-circle faa-tada animated"></i>
-                <strong className="font__weight-semibold" style={{ color: "white" }}> Well done! </strong>
-                <span>  <span style={{fontWeight:"bold"}}> {product.productName}  </span>  added to cart </span> 
+                
+                <span>  <span style={{fontWeight:"bold"}}> {product.productName?.slice(0,10)}...  </span>  added to cart </span> 
                 <span className="closebtn" onClick={() => setShowAdded(false)} style={{ cursor: "pointer", fontWeight: "bold", color: "red", marginLeft: "30px"}}> X</span>
               </div>
             </div>

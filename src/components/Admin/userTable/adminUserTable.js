@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useNavigate } from "react-router-dom";
 import Footer from "../../layouts/Footer";
+import { all } from "axios";
 
 const AdminUserPage = () => {
   const [pendingUser, setPendingUser] = useState(true);
@@ -48,6 +49,10 @@ const AdminUserPage = () => {
   useEffect(() => {
     fetchUsers();
   }, []);
+
+
+
+  console.log("admin user data>>>", allUsers)
 
   // Filter users based on search term
   const filteredUsers = allUsers.filter(user => {
@@ -338,12 +343,14 @@ const AdminUserPage = () => {
                         </td>
                         <td data-label ="Registered">
                           <span className="text-muted">
-                            {moment(user.createdDateTime).format("MMM DD, YYYY")}
+                            { user.createdDateTime}
+                           
+                            {/* {moment(user.createdDateTime).format("MMM DD, YYYY")} */}
                           </span>
-                          <br />
-                          <small className="text-muted">
+                          {/* <br /> */}
+                          {/* <small className="text-muted">
                             {moment(user.createdDateTime).format("h:mm A")}
-                          </small>
+                          </small> */}
                         </td>
                         <td className="pe-4 text-center" >
                           <select 

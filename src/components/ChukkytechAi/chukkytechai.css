@@ -555,7 +555,9 @@
 
   .chat-header {
     padding: 1rem 1.25rem;
-    position: fixed;
+    /* position: fixed; */
+     /* position: static; */
+
     z-index: 20;
     margin-top: -5% !important;
   }
@@ -564,9 +566,9 @@
     padding: 1rem 1.25rem;
     padding-top: 90px !important;
   }
-  /* .ai_HeadAssit{
+  .ai_HeadAssit{
     font-size: 15px !important;
-  } */
+  }
 
   .chat-input-container {
     padding: 1rem 1.25rem;
@@ -586,6 +588,7 @@
 
   .chat-header-info h3 {
     font-size: 1rem;
+   
   }
 
   .message-content {

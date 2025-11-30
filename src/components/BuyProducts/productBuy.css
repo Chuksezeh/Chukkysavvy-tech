@@ -452,8 +452,9 @@
 
 .price-badge {
   font-size: 1rem;
-  font-weight: 600;
-  padding: 0.5rem 0.75rem;
+  font-weight: 700 !important;
+  /* padding: 0.5rem 0.75rem; */
+  color: black;
 }
 
 .add-to-cart-btn {

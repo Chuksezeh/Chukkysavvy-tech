@@ -472,6 +472,10 @@
 .quantity-control {
   gap: 0.5rem;
 }
+.item-major_price{
+  color: black;
+  opacity: 0.5;
+}
 
 .quantity-control button {
   width: 32px;

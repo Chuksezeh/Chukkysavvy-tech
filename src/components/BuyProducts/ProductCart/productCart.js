@@ -373,6 +373,7 @@ const ProductCart = () => {
                       </div>
                       <p className="text-muted mb-1">{item.categoryName}</p>
                       <p className="fw-bold text-primary mb-2">
+                         <span className="item-major_price">Item price: </span>
                         {formatCurrency(item.productPrice)}
                         {/* N{parseFloat(item.productPrice).toFixed(2)} */}
                       </p>
@@ -410,6 +411,7 @@ const ProductCart = () => {
                     
                     <div className="cart-subtotal text-end">
                       <p className={`fw-bold h5 ${!isAvailable ? 'text-muted' : 'text-primary'}`}>
+                         <span className="item-major_price"> Item total: </span>
                          {formatCurrency(item.productPrice * currentQuantity)}
                         {/* N{((parseFloat(item.productPrice) * currentQuantity)).toFixed(2)} */}
                         {!isAvailable && <small className="d-block text-danger" style={{fontSize:"10px"}}>Unavailable</small>}
@@ -519,6 +521,7 @@ const ProductCart = () => {
 
                       <div className="card-bod d-flex flex-column">
                         <div className="clearfix mb-2">
+                         
                           <span className="float-start badge rounded-pill bg-success">
                             {formatCurrency(product.productPrice)}
                             {/* N{parseFloat(product.productPrice).toFixed(2)} */}

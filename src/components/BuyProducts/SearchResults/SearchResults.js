@@ -121,13 +121,10 @@ const SearchResults = () => {
             <div className="col-sm-6">
               <div className="alert fade alert-success alert-dismissible text-left font__family-montserrat font__size-16 font__weight-light brk-library-rendered rendered show">
                 <i className="start-icon far fa-check-circle faa-tada animated"></i>
-                <strong className="font__weight-semibold" style={{ color: "white" }}>
-                  {" "}
-                  Well done!{" "}
-                </strong>
+              
                 <span>
                   {" "}
-                  <span style={{ fontWeight: "bold" }}> {item.productName} </span> added to cart{" "}
+                  <span style={{ fontWeight: "bold" }}> {item.productName?.slice(0,10)}... </span> added to cart{" "}
                 </span>
                 <span
                   className="closebtn"
@@ -214,7 +211,7 @@ const SearchResults = () => {
 
                     <div className="">
                       <div className="clearfix ">
-                        <span className="float-start badge rounded-pill bg-success price-badge">
+                        <span className="float-start badge  price-badge">
                           ₦{parseFloat(product.productPrice).toFixed(2)}
                         </span>
                       </div>

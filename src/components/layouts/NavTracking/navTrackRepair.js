@@ -387,7 +387,7 @@ const handleCall = () => {
                 </div>
                 <div className="order-info">
                   <h3>{firstOrder?.deviceType} {firstOrder?.deviceModel}</h3>
-                  <p className="order-code">Order: #{firstOrder?.repairOrderCode}</p>
+                  <p className="order-code">Order: {firstOrder?.repairOrderCode}</p>
                   <div className={`status-badge ${firstOrder?.status}`}>
                     {firstOrder?.status === "cancel" ? "Cancelled" : "Unrepairable"}
                   </div>

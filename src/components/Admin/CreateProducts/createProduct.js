@@ -57,11 +57,11 @@ const CreateProduct = () => {
     try {
       const formData = new FormData();
       formData.append("productName", formDataValues.productName);
-      formData.append("productName", formDataValues.payOnDelivery || "Yes");
       formData.append("productPrice", formDataValues.productPrice);
       formData.append("purchasePrice", formDataValues.purchasePrice);
       formData.append("productQuantity", formDataValues.productQuantity);
       formData.append("discount", formDataValues.discount || "");
+       formData.append("payOnDelivery", formDataValues.payOnDelivery || "Yes");
       formData.append("productType", formDataValues.productType);
       formData.append("companyName", selectedCompany?.companyName || "");
       formData.append("companyId", selectedCompany?.companyId || "");

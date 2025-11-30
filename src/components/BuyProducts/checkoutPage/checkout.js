@@ -73,7 +73,7 @@ const CheckoutPage = () => {
     const [showNoLogin, setShowNoLogin] = useState(false);
     const handleShowNoLogin = (() => setShowNoLogin(true));
     const handleHideNoLogin = (() => setShowNoLogin(false))
-    
+      const [paymentMethod, setPaymentMethod] = useState("");
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -88,6 +88,14 @@ const CheckoutPage = () => {
         source = 'cart' // 'cart' or 'buy-now'
     } = location.state || {};
 
+
+   
+
+  // Check if any product has payOnDelivery = "No"
+  const hasNoPayOnDelivery = cartItems.some(
+    (item) => item.payOnDelivery?.toLowerCase() === "no"
+  );
+
     // Format currency
     const formatCurrency = (amount) => {
         return new Intl.NumberFormat('en-NG', {
@@ -96,7 +104,7 @@ const CheckoutPage = () => {
         }).format(amount);
     };
 
-
+console.log("cartItems in checkout:", cartItems);
 
     const { data, isPending, error } = useGetData("general/getGeneralSettings");
     const generalData = data?.data;
@@ -1016,30 +1024,33 @@ const handleHideModalLOgin = (() => {
                             )}
 
                             {/* Payment Method */}
-                            <h5 className="mt-4 mb-3">Payment Method</h5>
-                            <div className="payment-methods">
-                                <div className="form-check mb-2">
-                                    <input
-                                        className="form-check-input"
-                                        type="radio"
-                                        value="credit-paid"
-                                        checked={payment === "credit-paid"}
-                                        onChange={(e) => setPayment(e.target.value)}
-                                    />
-                                    <label className="form-check-label">Credit / Debit Card</label>
-                                </div>
+                           <h5 className="mt-4 mb-3">Payment Method</h5>
+      <div className="payment-methods">
+        <div className="form-check mb-2">
+          <input
+            className="form-check-input"
+            type="radio"
+            value="credit-paid"
+            checked={payment === "credit-paid"}
+            onChange={(e) => setPayment(e.target.value)}
+          />
+          <label className="form-check-label">Credit / Debit Card</label>
+        </div>
 
-                                <div className="form-check mb-2">
-                                    <input
-                                        className="form-check-input"
-                                        type="radio"
-                                        value="pay-on-delivery"
-                                        checked={payment === "pay-on-delivery"}
-                                        onChange={(e) => setPayment(e.target.value)}
-                                    />
-                                    <label className="form-check-label">Pay on Delivery</label>
-                                </div>
-                            </div>
+        {/* Hide Pay on Delivery if any product disables it */}
+        {!hasNoPayOnDelivery && (
+          <div className="form-check mb-2">
+            <input
+              className="form-check-input"
+              type="radio"
+              value="pay-on-delivery"
+              checked={payment === "pay-on-delivery"}
+              onChange={(e) => setPayment(e.target.value)}
+            />
+            <label className="form-check-label">Pay on Delivery</label>
+          </div>
+        )}
+      </div>
 
                             {/* Place Order Button */}
 
@@ -1520,7 +1531,7 @@ const handleHideModalLOgin = (() => {
                                     <div className="col-md-4 my-2 my-md-0">
                                         <small className="text-muted">
                                             <i className="fas fa-envelope me-1"></i>
-                                            support@chukkytech.com
+                                            support@chukkytech.ng
                                         </small>
                                     </div>
                                     <div className="col-md-4 text-md-end">

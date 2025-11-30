@@ -81,7 +81,7 @@ const ChukkytechAi = () => {
     } catch (error) {
       console.error('Error sending message:', error);
       const errorMessage = {
-        text: "I'm having connection issues. Please try again or contact us directly at +234-XXX-XXXX for immediate assistance.",
+        text: "I'm having connection issues. Please try again or contact us directly at 08020653456 for immediate assistance.",
         sender: 'ai',
         timestamp: new Date(),
         type: 'error'
@@ -166,6 +166,21 @@ const ChukkytechAi = () => {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+
+
+const scrolltop = () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
+      };
+    
+      useEffect(() => {
+        scrolltop(); 
+      }, []);
+
+
+
 
   return (
     <>
@@ -258,7 +273,7 @@ const ChukkytechAi = () => {
                
                 <div className="chat-container">
                   <div className="chat-header">
-                    <div className="chat-header-left">
+                    <div className="chat-header-left p-2">
                       {/* Mobile Toggle Button - Only show on mobile */}
                       <button 
                         className="sidebar-toggle-btn"
@@ -272,14 +287,14 @@ const ChukkytechAi = () => {
                         <div className="ai-avatar">
                           <i className="fas fa-robot"></i>
                         </div>
-                        <div>
-                          <h3 className='ai_HeadAssit'>ChukkyAI Assistant</h3>
+                        <div className=''>
+                          <h3 className='ai_HeadAssit'>Chukky Assistant</h3>
                           <span className="status online">Online</span>
                         </div>
                       </div>
                     </div>
                     
-                    <div className="chat-controls">
+                    <div className="chat-controls p-2" >
                       <button onClick={clearChat} className="control-btn" title="Clear Chat">
                         <i className="fas fa-trash"></i>
                       </button>

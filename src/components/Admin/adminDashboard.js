@@ -133,7 +133,7 @@ const AdminDashboard = () => {
                             <NavText>Orders <MdOutlineKeyboardArrowRight size={20} /> </NavText>
                             <NavItem eventKey="3-1">
                                 <NavText className="move-side">
-                                    <li className="shift-nav" onClick={() => navigate("/user-repair-orders")}>
+                                    <li className="shift-nav p-1" onClick={() => navigate("/user-repair-orders")}>
                                         <IoIosPeople className="inicon" size={18} />
                                         <span className="p-2" style={{fontSize:"16px"}} >Repair Order</span>
                                     </li>
@@ -141,7 +141,7 @@ const AdminDashboard = () => {
                             </NavItem>
                             <NavItem eventKey="3-2">
                                 <NavText className="move-side">
-                                    <li className="shift-nav" onClick={() => navigate("/product-orders")}>
+                                    <li className="shift-nav p-1"  onClick={() => navigate("/product-orders")}>
                                         <MdProductionQuantityLimits className="inicon" size={16} />
                                         <span className="p-2" style={{fontSize:"16px"}} >Product Order</span>
                                     </li>
