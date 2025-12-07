@@ -406,7 +406,7 @@ const downloadReceipt = async () => {
                       {/* Order Header */}
                       <div className="order-header">
                         <div className="order-info">
-                          <div className="order-id">Order #{order.order_id}</div>
+                          <div className="order-id">Order ID: {order.order_id}</div>
                           <div className="order-date">
                             <FaClock />
                             {formatDate(order.created_date)}
@@ -505,7 +505,7 @@ const downloadReceipt = async () => {
             <Modal.Title className="w-100">
               <div className="d-flex justify-content-between align-items-center">
                 <div>
-                  <h4 className="mb-1">Order #{selectedOrder?.order_id}</h4>
+                  <h4 className="mb-1">Order ID: {selectedOrder?.order_id}</h4>
                   <small className="text-muted">
                     Placed on {selectedOrder && formatDate(selectedOrder.created_date)}
                   </small>

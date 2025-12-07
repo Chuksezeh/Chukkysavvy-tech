@@ -52,7 +52,7 @@ const AdminUserPage = () => {
 
 
 
-  console.log("admin user data>>>", allUsers)
+  // console.log("admin user data>>>", allUsers)
 
   // Filter users based on search term
   const filteredUsers = allUsers.filter(user => {
@@ -197,7 +197,8 @@ const AdminUserPage = () => {
                   <div>
                     <h6 className="card-title text-muted mb-2">Active Admins</h6>
                     <h3 className="mb-0">
-                      {allUsers.filter(user => user.status === 'active').length}
+                     {allUsers.filter(user => user.status?.toLowerCase() === 'active').length}
+
                     </h3>
                   </div>
                   <div className="bg-success bg-opacity-10 p-3 rounded">
@@ -287,6 +288,7 @@ const AdminUserPage = () => {
                     <th className="ps-4 py-3 fw-semibold">#</th>
                     <th className="py-3 fw-semibold">Admin User</th>
                     <th className="py-3 fw-semibold">Email</th>
+                    <th className="py-3 fw-semibold">Access Role</th>
                     <th className="py-3 fw-semibold">Status</th>
                     <th className="py-3 fw-semibold">Registered</th>
                     <th className="pe-4 py-3 fw-semibold text-center">Actions</th>
@@ -337,6 +339,9 @@ const AdminUserPage = () => {
                         </td>
                         <td data-label="Email">
                           <span className="text-muted">{user.email}</span>
+                        </td>
+                         <td data-label="Access Role">
+                          <span className="text-muted">{user.role}</span>
                         </td>
                         <td data-label ="Status">
                           {getStatusBadge(user.status)}

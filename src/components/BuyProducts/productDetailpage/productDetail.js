@@ -341,7 +341,7 @@ const ProductDetailPage = () => {
           <div className="col-md-6 product-info">
             <h2 className="product-title">{product.productName}</h2>
             <p className="text-muted">Category: {product.categoryName}</p>
-            <p className="text-muted">Brand: {product.companyName}</p>
+            <p className="text-muted"> {product.companyName}</p>
 
             {/* Status Badge */}
             <div className="mb-3">
@@ -356,9 +356,9 @@ const ProductDetailPage = () => {
             </div>
 
             {/* Ratings */}
-            <div className="rating mb-3">
+            {/* <div className="rating mb-3">
               ⭐⭐⭐⭐☆ <span className="text-muted">(120 reviews)</span>
-            </div>
+            </div> */}
 
             {/* Price */}
             <div className="price-section mb-3">

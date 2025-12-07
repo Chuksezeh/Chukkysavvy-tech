@@ -791,6 +791,7 @@ const handleHideModalLOgin = (() => {
                                             <h3>{mainDefaultAddress.firstName} {mainDefaultAddress.lastName}</h3>
                                             <p>{mainDefaultAddress.deliveryAddress}</p>
                                             <p>{mainDefaultAddress.phoneNumber}</p>
+                                            <p> {mainDefaultAddress.emailAddress} </p>
                                             <div className="address-btn-holder p-2">
                                                 <span className="addres-badge">Default Address</span>
                                             </div>
@@ -1445,7 +1446,7 @@ const handleHideModalLOgin = (() => {
                                                     <span className="badge bg-secondary">{item.quantity || 1}</span>
                                                 </td>
                                                 <td className="text-end" data-label="Price"  >
-                                                     {parseFloat(item.productPrice).toFixed(2)}
+                                                     ₦{parseFloat(item.productPrice).toFixed(2)}
                                                 </td>
                                                 <td className="text-end pe-4 fw-semibold"  data-label="Total">
                                                     ₦{((parseFloat(item.productPrice) * (item.quantity || 1))).toFixed(2)}

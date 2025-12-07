@@ -62,62 +62,65 @@ const UserLogin = (() => {
    const navigateTo = (path) => () => navigate(path);
 
    const handleGoogleSignIn = async () => {
+  setLoadingGoogle(true);
 
-    setLoadingGoogle(true);
-     try {
-       const result = await auth.signInWithPopup(googleProvider);
-   
-       const nameResult = result?.additionalUserInfo?.profile
+  try {
+    const result = await auth.signInWithPopup(googleProvider);
+    const nameResult = result?.additionalUserInfo?.profile;
 
+    // Fetch all users from backend
+    const getUsersData = await chukkytechAxios.get("/auth/getAllUsers");
+    const users = getUsersData.data;
 
+    // Check if user already exists
+    const existingUser = users.find(
+      (u) => u.email?.toLowerCase() === nameResult.email?.toLowerCase()
+    );
 
-    const handleCreateUser = async () => {
-    // const formattedPhoneNumber = userMSISDN?.startsWith('0') ? `234${userMSISDN?.slice(1)}` : userMSISDN;
-    try {
-      const userData = { 
-      firstName:  nameResult.given_name,
-      lastName: nameResult.family_name,
-      email: nameResult.email,
-      userType: "Google User",
-			status: "Active",
-      password: ""
-      
-      };
- 
-     const createUserData = await chukkytechAxios.post('/auth/registeration', userData);
-      console.log('createUserData>>>>', createUserData);
-       setLoadingGoogle(false);
- 
-      } catch (err) {
-      console.error('Error in handleCreate:', err);
+    // 🚫 Block suspended Google users
+    if (existingUser && existingUser.status === "suspended") {
       setLoadingGoogle(false);
-      
+      setError("Your account has been suspended. Please contact support.");
+      return;
     }
-  };
 
-  handleCreateUser();
- 
-   
-       // Store user info and redirect
-       localStorage.setItem('userInfo', JSON.stringify({
-         email: nameResult.email,
-         firstName: nameResult.given_name,
-         lastName: nameResult.family_name,
-         image: nameResult.picture
-       }))
+    // If user does NOT exist → create the user
+    if (!existingUser) {
+      const newUser = {
+        firstName: nameResult.given_name,
+        lastName: nameResult.family_name,
+        email: nameResult.email,
+        userType: "Google User",
+        status: "Active",
+        password: ""
+      };
 
-      
-     navigateTo("/user-profile")();
-       }catch (error) {
-        setLoadingGoogle(false);
-       setError({
-         message: "Google sign-in failed",
-         details: error.message
-          
-       });
-     }
-   };
- 
+      await chukkytechAxios.post("/auth/registeration", newUser);
+    }
+
+    // Store user info locally
+    localStorage.setItem(
+      "userInfo",
+      JSON.stringify({
+        email: nameResult.email,
+        firstName: nameResult.given_name,
+        lastName: nameResult.family_name,
+        image: nameResult.picture
+      })
+    );
+
+    setLoadingGoogle(false);
+    navigateTo("/user-profile")();
+
+  } catch (error) {
+    setLoadingGoogle(false);
+    setError({
+      message: "Google sign-in failed",
+      details: error.message
+    });
+  }
+};
+
 
     const handleSubmitLoginData = async data => {
     setLoading(true);

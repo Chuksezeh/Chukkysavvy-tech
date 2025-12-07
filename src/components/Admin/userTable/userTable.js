@@ -213,7 +213,7 @@ const handleStepBack = (()=>{
                   <div>
                     <h6 className="card-title text-muted mb-2">Active Users</h6>
                     <h3 className="mb-0">
-                      {allUsers.filter(user => user.status === 'active').length}
+                      {allUsers.filter(user => user.status?.toLowerCase() === 'active').length}
                     </h3>
                   </div>
                   <div className="bg-success bg-opacity-10 p-3 rounded">

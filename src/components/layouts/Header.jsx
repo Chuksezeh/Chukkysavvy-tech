@@ -154,7 +154,7 @@ const handleChukkytechAi = (()=>{
     <a onClick={navigateTracking}>Track  repair</a>
     <a onClick={navigateFindLocation}>Find location</a>
     <a onClick={navigateContactus}>Contact us</a>
-     <a onClick={handleChukkytechAi}>ChukkyAi</a>
+     <a onClick={handleChukkytechAi}>Assistant</a>
      
 
     {

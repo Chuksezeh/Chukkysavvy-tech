@@ -157,7 +157,6 @@ const ChukkytechAi = () => {
 
   const suggestedQuestions = [
     "How much for iPhone screen repair?",
-    "Best laptop under ₦200,000?",
     "My phone won't turn on",
     "Do you fix water damaged devices?",
     "Warranty on repairs?"

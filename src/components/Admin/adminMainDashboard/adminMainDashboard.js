@@ -43,7 +43,7 @@ const filterCanceledOders = products.data && products.data?.filter((product)=>(
 
 
 
-console.log("filterPendingOrders", filterPendingOrders)
+// console.log("filterPendingOrders", filterPendingOrders)
  
 
   // Memoized data processing for better performance
@@ -107,10 +107,10 @@ console.log("filterPendingOrders", filterPendingOrders)
       return [];
     }
   
-    console.log("Processing Orders:", orders);
+    // console.log("Processing Orders:", orders);
   
     const latestOrders = data.reduce((acc, order) => {
-      console.log("Checking Order:", order);
+      // console.log("Checking Order:", order);
   
       if (
         !acc[order.repairOrderCode] || 
@@ -121,7 +121,7 @@ console.log("filterPendingOrders", filterPendingOrders)
       return acc;
     }, {}); // Store latest orders in an object
   
-    console.log("Latest Orders Object:", latestOrders);
+    // console.log("Latest Orders Object:", latestOrders);
   
     return Object.values(latestOrders); // Convert the object to an array
   };
@@ -327,6 +327,8 @@ const filterOrderSettled = latestOrders.filter((data)=>(
     </div>
   );
 
+const storedUser = JSON.parse(localStorage.getItem("adminsInfo")); 
+
   return (
     <>
       <AdminDashboard />
@@ -335,7 +337,7 @@ const filterOrderSettled = latestOrders.filter((data)=>(
         {/* Header Section */}
         <div className="dashboard-header">
           <div className="header-content">
-            <h1 className="dashboard-title">Admin Dashboard</h1>
+            <h1 className="dashboard-title"> Hello! {storedUser?.firstName}  <span style={{fontStyle:"italic", fontSize:"22px"}}>( {storedUser?.role} )</span>  </h1>
             <p className="dashboard-subtitle">Monitor and manage repair orders and product sales</p>
           </div>
           <div className="header-actions">

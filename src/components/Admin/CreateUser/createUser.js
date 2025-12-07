@@ -16,9 +16,9 @@ const CreateUser = (() => {
 	const [errMessage, setErrMessage] = useState("");
 	const [hideAdminAccess, setHideAdminAccess] = useState("");
 
-	const handleHideAdminAccess = () => {
-		setHideAdminAccess(!hideAdminAccess)
-	}
+	// const handleHideAdminAccess = () => {
+	// 	setHideAdminAccess(!hideAdminAccess)
+	// }
 
 	const {
 		register,
@@ -212,26 +212,25 @@ const CreateUser = (() => {
 
 
 
-							<div> <input type="checkbox" className="" onClick={handleHideAdminAccess} />  Admin Access </div>
+							{/* <div> <input type="checkbox" className="" onClick={handleHideAdminAccess} />  Admin Access </div>
 							<p></p>
 							{
-								hideAdminAccess &&
+								hideAdminAccess && */}
 								<div className="row">
-									<div className="col-md-6">
+									<div className="col-md-12">
 										<div className="form-group">
 											<label id="number-label" for="number">Employee role</label>
 											<select className="form-control"{...register('role')} >
-												<option>Admin</option>
-												<option>ICT</option>
-												<option>Manager</option>
-												<option>Others</option>
+												<option value="admin">Admin</option>
+												<option value="super-admin">Super Admin</option>
+												
 											</select>
 											{/* <input type="text" required   placeholder="Enter detailed address" className="form-control" /> */}
 										</div>
 									</div>
 
 								</div>
-							}
+							{/* } */}
 
 
 						</div>

@@ -41,43 +41,67 @@ const FindLocation = (() => {
   }, []);
 
   // Function to open directions in Google Maps
-  const openDirections = (location) => {
-    const { latitude, longitude, locationAddress, locationName } = location;
-    
-    // Check if we have coordinates
-    if (latitude && longitude && latitude !== "1234737744" && longitude !== "1234737744") {
-      // Open Google Maps with coordinates
-      const url = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}&destination_place_name=${encodeURIComponent(locationName)}`;
-      window.open(url, '_blank');
-    } else if (locationAddress) {
-      // Fallback to address-based directions
-      const url = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(locationAddress + ', ' + locationName)}`;
-      window.open(url, '_blank');
-    } else {
-      alert('Location information not available for directions.');
-    }
-  };
+ const openDirections = (location) => {
+  const { latitude, longitude, locationAddress, locationName } = location;
+
+  // Prefer accurate coordinates if available
+  const hasValidCoords =
+    latitude && longitude &&
+    latitude !== "1234737744" &&
+    longitude !== "1234737744";
+
+  if (hasValidCoords) {
+    const url = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
+    window.open(url, "_blank");
+    return;
+  }
+
+  // Fallback to address
+  if (locationAddress || locationName) {
+    const encodedAddress = encodeURIComponent(
+      `${locationAddress || ""} ${locationName || ""}`
+    );
+    const url = `https://www.google.com/maps/dir/?api=1&destination=${encodedAddress}`;
+    window.open(url, "_blank");
+    return;
+  }
+
+  alert("Location information not available for directions.");
+};
+
 
   // Function to open native maps app on mobile
-  const openNativeMaps = (location) => {
-    const { latitude, longitude, locationAddress, locationName } = location;
-    
-    if (latitude && longitude && latitude !== "1234737744" && longitude !== "1234737744") {
-      // For iOS and Android - open native maps app
-      if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        window.open(`http://maps.apple.com/?daddr=${latitude},${longitude}&q=${encodeURIComponent(locationName)}`);
-      } else {
-        window.open(`https://maps.google.com/maps?daddr=${latitude},${longitude}&q=${encodeURIComponent(locationName)}`);
-      }
-    } else if (locationAddress) {
-      const address = encodeURIComponent(locationAddress + ', ' + locationName);
-      if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        window.open(`http://maps.apple.com/?daddr=${address}`);
-      } else {
-        window.open(`https://maps.google.com/maps?daddr=${address}`);
-      }
+ const openNativeMaps = (location) => {
+  const { latitude, longitude, locationAddress, locationName } = location;
+
+  const hasValidCoords =
+    latitude && longitude &&
+    latitude !== "1234737744" &&
+    longitude !== "1234737744";
+
+  // iPhone maps link
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  if (hasValidCoords) {
+    const coords = `${latitude},${longitude}`;
+    if (isIOS) {
+      window.open(`http://maps.apple.com/?daddr=${coords}`);
+    } else {
+      window.open(`https://maps.google.com/maps?daddr=${coords}`);
     }
-  };
+    return;
+  }
+
+  // fallback to address
+  const encoded = encodeURIComponent(`${locationAddress || ""} ${locationName || ""}`);
+
+  if (isIOS) {
+    window.open(`http://maps.apple.com/?daddr=${encoded}`);
+  } else {
+    window.open(`https://maps.google.com/maps?daddr=${encoded}`);
+  }
+};
+
 
   // Function to handle direction button click
   const handleGetDirections = (location) => {

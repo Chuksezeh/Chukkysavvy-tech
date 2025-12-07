@@ -52,6 +52,7 @@ import GeneralSettings from './components/Admin/generalSettings/generalSettings'
 
 import SearchResults from './components/BuyProducts/SearchResults/SearchResults';
 import ChukkytechAi from './components/ChukkytechAi/chukkytechai';
+import ProtectedRoute from './components/Admin/protectedRoute';
 
 function App() {
   const [authState, setAuthState] = useState({
@@ -61,75 +62,76 @@ function App() {
   });
 
   usePageTracking();
-  
+
   return (
-       <>
-     <UserProvider value={{ user: authState.user, admin: authState.admin }}>
-      {/* <Header /> */}
-      <Routes>
-      
-        {/* Public Routes */}
-        <Route path="/" element={<Home />} />
-        <Route path="/signinpage" element={<SignInPage />} />
-        <Route path="/signuppage" element={<SignUpPage />} />
-        <Route path="/bookingpage" element={<BookingPage />} />
-        <Route path="/details-book-Iphone" element={<DetailsBookIphone />} />
-        <Route path="/samsung-details" element={<SamsungDetails />} />
-        <Route path="/ipad-details" element={<IpadDetails />} />
-        <Route path="/other-phones-details" element={<OtherPhonesDetails />} />
-        <Route path="/laptop-details" element={<LaptopBookDetails />} />
-        <Route path="/admin-login" element={<AdminLoginPage />} />
-        <Route path="/user-login" element={<UserLogin />} />
-        <Route path="/user-signup" element={<UserSignUp />} />
-        <Route path="/buy-products" element={<BuyProducts />} />
-        <Route path="/product-cart" element={<ProductCart />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/product-details/:productId" element={<ProductDetailPage />} />
-        <Route path="/terms-conditions" element={<TermsAndConditions />} />
-        <Route path="/find-location" element={<FindLocation />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/about-us" element={<AboutUs />} />
-        <Route path="/track-repair" element={<NavtrackRepair />} />
-         <Route path="/chukkytechai" element={<ChukkytechAi />} />
+    <>
+      <UserProvider value={{ user: authState.user, admin: authState.admin }}>
+        {/* <Header /> */}
+        <Routes>
 
-        {/* User Protected Routes */}
-        <Route path="/profilepage" element={<ProfilePage />} />
-        <Route path="/user-profile" element={<AccountOverView />} />
-        <Route path="/user-dashboard" element={<UserDashBoard />} />
-        <Route path="/user-profile-dashboard" element={<AccountOverMobile />} />
-        <Route path="/repair-orders" element={<RepairOrders />} />
-        <Route path="/user-product-orders" element={<ProductOrders />} />
-        <Route path="/checkout-payment" element={<CheckoutPage />} />
-
-        {/* Admin Protected Routes */}
-        <Route path="/admin-dashboard" element={<AdminDashboard />} />
-        <Route path="/user-table" element={<UserTable />} />
-        <Route path="/admin-dashboard-card" element={<AdminMainDashboard />} />
-        <Route path="/user-repair-orders" element={<RepairOrderTable />} />
-        <Route path="/product-orders" element={<ProductOrderTable />} />
-        <Route path="/admin-user" element={<AdminUserPage />} />
-        <Route path="/admin-service-locations" element={<AdminLocations />} />
-        <Route path="/manage-comments" element={<ManageComments />} />
-        <Route path="/create-user" element={<CreateUser />} />
-        <Route path="/create-products" element={<CreateProduct />} />
-        {/* <Route path="/view-categories" element={<Categories />} /> */}
-         <Route path="/view-categories" element={<ViewCategories />} />
-         <Route path="/product/:productId" element={<ProductDetail />} />
-        <Route path="/view-companies" element={<ViewCompanies />} />
-        <Route path="/admin-product-order-management/:orderId" element={<ProductManagementPage  />} />
-
-         <Route path="/view-created-products" element={<ViewCreatedProducts  />} />
-          <Route path="/admin-general-update" element={<GeneralSettings  />} />
-
+          {/* Public Routes */}
+          <Route path="/" element={<Home />} />
+          <Route path="/signinpage" element={<SignInPage />} />
+          <Route path="/signuppage" element={<SignUpPage />} />
+          <Route path="/bookingpage" element={<BookingPage />} />
+          <Route path="/details-book-Iphone" element={<DetailsBookIphone />} />
+          <Route path="/samsung-details" element={<SamsungDetails />} />
+          <Route path="/ipad-details" element={<IpadDetails />} />
+          <Route path="/other-phones-details" element={<OtherPhonesDetails />} />
+          <Route path="/laptop-details" element={<LaptopBookDetails />} />
+          <Route path="/admin-login" element={<AdminLoginPage />} />
+          <Route path="/user-login" element={<UserLogin />} />
+          <Route path="/user-signup" element={<UserSignUp />} />
+          <Route path="/buy-products" element={<BuyProducts />} />
+          <Route path="/product-cart" element={<ProductCart />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/product-details/:productId" element={<ProductDetailPage />} />
+          <Route path="/terms-conditions" element={<TermsAndConditions />} />
+          <Route path="/find-location" element={<FindLocation />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/track-repair" element={<NavtrackRepair />} />
+          <Route path="/chukkytechai" element={<ChukkytechAi />} />
           <Route path="/search-results" element={<SearchResults />} />
+          {/* User Protected Routes */}
+          <Route path="/profilepage" element={<ProfilePage />} />
+          <Route path="/user-profile" element={<AccountOverView />} />
+          <Route path="/user-dashboard" element={<UserDashBoard />} />
+          <Route path="/user-profile-dashboard" element={<AccountOverMobile />} />
+          <Route path="/repair-orders" element={<RepairOrders />} />
+          <Route path="/user-product-orders" element={<ProductOrders />} />
+          <Route path="/checkout-payment" element={<CheckoutPage />} />
 
+          {/* Admin Protected Routes */}
 
-    
+          <Route element={<ProtectedRoute allowedRoles={["super-admin"]} />}>
+            <Route path="/user-table" element={<UserTable />} />
+            {/* <Route path="/admin-dashboard" element={<AdminDashboard />} />
+            <Route path="/admin-dashboard-card" element={<AdminMainDashboard />} /> */}
+            <Route path="/admin-user" element={<AdminUserPage />} />
+            <Route path="/admin-service-locations" element={<AdminLocations />} />
+            <Route path="/manage-comments" element={<ManageComments />} />
+            <Route path="/create-user" element={<CreateUser />} />
+            <Route path="/create-products" element={<CreateProduct />} />
+            <Route path="/view-categories" element={<ViewCategories />} />
+            <Route path="/product/:productId" element={<ProductDetail />} />
+            <Route path="/view-companies" element={<ViewCompanies />} />
+            <Route path="/admin-product-order-management/:orderId" element={<ProductManagementPage />} />
+            <Route path="/view-created-products" element={<ViewCreatedProducts />} />
+            <Route path="/admin-general-update" element={<GeneralSettings />} />
+          </Route>
 
-        {/* 404 Page */}
-        <Route path="*" element={<NoFoundPage />} />
-      </Routes>
-    </UserProvider>
+          <Route element={<ProtectedRoute allowedRoles={["admin", "super-admin"]} />}>
+            <Route path="/admin-dashboard" element={<AdminDashboard />} />
+            <Route path="/admin-dashboard-card" element={<AdminMainDashboard />} />
+            <Route path="/user-repair-orders" element={<RepairOrderTable />} />
+            <Route path="/product-orders" element={<ProductOrderTable />} />
+          </Route>
+
+          {/* 404 Page */}
+          <Route path="*" element={<NoFoundPage />} />
+        </Routes>
+      </UserProvider>
     </>
   );
 }
