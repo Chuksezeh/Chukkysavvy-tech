@@ -328,7 +328,7 @@ const IphonePickupRepair = () => {
                                    
                                 </>
                             ) : (
-                                "Schedule Free Pickup"
+                                "Schedule  Pickup"
                             )}
                         </button>
                     </form>

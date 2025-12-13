@@ -40,6 +40,11 @@
   border: 2px solid #007bff;
 }
 
+.review-card:hover {
+  transform: translateY(-3px);
+  transition: 0.2s ease-in-out;
+}
+
 .thumb-img.active {
   border: 2px solid #007bff;
   transform: scale(1.05);

@@ -302,7 +302,7 @@ const PickupRepairForm = () => {
                                     
                                 </>
                             ) : (
-                                "Schedule Free Pickup"
+                                "Schedule  Pickup"
                             )}
                         </button>
                         </div>

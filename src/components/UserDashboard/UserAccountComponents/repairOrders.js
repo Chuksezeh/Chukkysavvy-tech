@@ -59,6 +59,13 @@ const RepairOrders = (() => {
   const [statusFilter, setStatusFilter] = useState("all");
   const [successMessage, setSuccessMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
+  const [loadingCancel, setLoadingCancel] = useState(false);
+  const [orderCancelSuccess, setOrderCancelSuccess] = useState(false);
+  const [orderCancelError, setOrderCancelError] = useState(false)
+  const [data, setData]= useState([]);
+  const [isPending, setIsPending] = useState(true)
+
+  const [showCancelOrderConfirmation, setShowCancelOrderConfirmation] = useState(false);
 
 
   const userInfo = localStorage.getItem('userInfo');
@@ -68,22 +75,29 @@ const RepairOrders = (() => {
   
   const encodedEmail = encodeURIComponent(userData.email);
   const { data: users, isPending: userIsPending, error: userError } = useGetData(`/auth/getUser/${encodedEmail}`);
-  const { data, isPending, error } = useGetData(`repair/getUserRepairOrders/${users?.userId}`);
+  // const { data, isPending, error } = useGetData(`repair/getUserRepairOrders/${users?.userId}`);
 
-  // Status color mapping
-  // const getStatusColor = (status) => {
-  //   const statusColors = {
-  //     Processing: "var(--primary)",
-  //     pickedUp: "var(--warning)",
-  //     fixing: "var(--info)",
-  //     fixed: "var(--success)",
-  //     delivered: "var(--success)",
-  //     settled: "var(--dark)",
-  //     cancel: "var(--danger)",
-  //     irreparable: "var(--danger)"
-  //   };
-  //   return statusColors[status] || "var(--secondary)";
-  // };
+
+  const fetchData = async () => {
+    
+    await users?.userId;
+
+    setIsPending(true);
+    try {
+      const response = await chukkytechAxios.get(`repair/getUserRepairOrders/${users?.userId}`);
+      setData(response.data);
+      console.log("show id", response)
+      setIsPending(false);
+    } catch (error) {
+      setIsPending(false);
+      console.error('Error fetching order:', error);
+    }
+  };
+
+  useEffect(()=>{
+   fetchData();
+  },[users?.userId]);
+
 
   const getStatusVariant = (status) => {
     const variants = {
@@ -228,6 +242,44 @@ const RepairOrders = (() => {
     }
   }, [navigate]);
 
+
+
+   const handleSubmitCancelOrder = async ()=>{
+     setLoadingCancel(true)
+
+    const payLoad = {
+       status: "cancel",
+      
+    }
+
+     await chukkytechAxios.put(`/repair/repair-order/status/${orderData.repairOrderId}`, payLoad)
+      .then(res  =>{
+        fetchData();
+        console.log("confirmation cancel", res)
+        setOrderCancelSuccess(true)
+        setLoadingCancel(false);
+        setShowCancelOrderConfirmation(false)
+        setShowResult(false)
+      
+         setTimeout(() => {
+      setOrderCancelSuccess(false)
+    }, 3000);
+      })
+      .catch(err=>{
+        setLoadingCancel(false)
+         setShowCancelOrderConfirmation(false)
+        setOrderCancelError(true)
+        console.log("err", err);
+      })
+
+
+}
+
+
+
+
+
+
   return (
 
 
@@ -238,6 +290,23 @@ const RepairOrders = (() => {
       <div className="tec-main-Hide">
         <UserDashBoard />
       </div>
+
+
+        {
+        orderCancelSuccess ? (  <div className="container mt-2 cart-alert">
+          <div className="row">
+            <div className="col-sm-6">
+              <div className="alert fade alert-success alert-dismissible text-left font__family-montserrat font__size-16 font__weight-light brk-library-rendered rendered show">
+                <i className="start-icon far fa-check-circle faa-tada animated"></i>
+                
+                <span>  <span style={{fontWeight:"bold"}}>  </span>  Your device repair order booking has been cancelled succesfully </span> 
+                {/* <span className="closebtn"  style={{ cursor: "pointer", fontWeight: "bold", color: "red", marginLeft: "30px"}}> X</span> */}
+              </div>
+            </div>
+          </div>
+        </div>) : null  
+        }
+      
 
       <div className="main-content">
         {/* <div onClick={() => navigate(-1)}> <MdKeyboardBackspace size={35} /> </div> */}
@@ -505,6 +574,26 @@ const RepairOrders = (() => {
         </Modal.Header>
         <Modal.Body>
           <Receipt orderData={orderData} chukkyLogo={chukkyLogo} />
+           <div className="d-flex justify-content-end gap-2">
+            {
+            orderData.status === "Processing"  && (
+      <button className="btn btn-danger mt-3" onClick={() => setShowCancelOrderConfirmation(true)}>Cancel repair order</button>
+            )
+            }
+        
+          <button className="btn btn-secondary mt-3" onClick={() => setShowResult(false)}>Close</button>
+           </div>
+
+            {
+              orderCancelError? (
+                <div className="container mt-3">
+                  <div className="alert alert-danger bg-light alert-dismissible fade show" role="alert">
+                    An error occurred while trying to cancel this order. Please try again later.
+                  </div>
+                </div>
+              ) : null
+            }
+          
         </Modal.Body>
       </Modal>
 
@@ -628,7 +717,43 @@ const RepairOrders = (() => {
       </Modal>
 
 
-
+            <Modal show={showCancelOrderConfirmation} onHide={() => setShowCancelOrderConfirmation(false)} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title className="text-danger">Cancel Order Confirmation</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div className="text-center">
+                        <div className="bg-danger bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" 
+                             style={{ width: '60px', height: '60px' }}>
+                            <i className="fas fa-trash text-danger fa-lg"></i>
+                        </div>
+                        
+                        <p className="text-muted">
+                            Are you sure you want to  <strong>cancel</strong> this device repair booking?
+                            This action cannot be undone
+                        </p>
+                    </div>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="outline-secondary" onClick={() => setShowCancelOrderConfirmation(false)}>
+                        Cancel
+                    </Button>
+                    <Button 
+                        variant="danger" 
+                        onClick={handleSubmitCancelOrder}
+                        disabled={loadingCancel}
+                    >
+                        {loadingCancel ? (
+                            <>
+                                <span className="spinner-border spinner-border-sm me-2"></span>
+                                Cancelling...
+                            </>
+                        ) : (
+                            "Yes, Cancel Order"
+                        )}
+                    </Button>
+                </Modal.Footer>
+            </Modal>
 
 
     </>

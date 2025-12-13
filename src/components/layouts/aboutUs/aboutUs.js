@@ -71,10 +71,10 @@ const AboutUs = (() => {
   ];
 
   const stats = [
-    { number: "5,000+", label: "Devices Repaired" },
+    { number: "8,000+", label: "Devices Repaired" },
     { number: "98%", label: "Success Rate" },
     { number: "24/7", label: "Customer Support" },
-    { number: "90+", label: "Days Warranty" }
+    // { number: "90+", label: "Days Warranty" }
   ];
 
 
@@ -188,7 +188,7 @@ const AboutUs = (() => {
                   <div className="image-overlay">
                     <div className="experience-badge">
                       <FaAward />
-                      <span>Trusted Since 2023</span>
+                      <span>Trusted Since 2019</span>
                     </div>
                   </div>
                 </div>
@@ -285,7 +285,7 @@ const AboutUs = (() => {
           <Fade triggerOnce>
             <div className="section-header centered" style={{display:"center", justifyContent:"center"}}>
               <h2>Our Impact in Numbers</h2>
-              <p style={{display:"center", width:"100%"}}>Delivering excellence across every service</p>
+              <p style={{display:"center", width:"100%", textAlign:"center"}}>Delivering excellence across every service</p>
             </div>
           </Fade>
           

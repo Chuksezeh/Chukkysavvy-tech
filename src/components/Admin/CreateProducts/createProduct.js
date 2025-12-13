@@ -107,55 +107,67 @@ const CreateProduct = () => {
   };
 
   const handleFileSelect = (event) => {
-    const files = Array.from(event.target.files);
-    setFileSizeError(""); // Clear previous errors
+  const files = Array.from(event.target.files);
+  setFileSizeError(""); // Clear previous errors
 
-    if (files.length === 0) return;
+  if (files.length === 0) return;
 
-    // Validate file sizes (2MB = 2 * 1024 * 1024 bytes)
-    const maxSize = 2 * 1024 * 1024;
-    const validFiles = [];
-    const oversizedFiles = [];
+  const maxSize = 2 * 1024 * 1024; // 2MB
+  const maxImages = 3;
 
-    files.forEach(file => {
-      if (file.size > maxSize) {
-        oversizedFiles.push({
-          name: file.name,
-          size: (file.size / (1024 * 1024)).toFixed(2)
-        });
-      } else {
-        validFiles.push(file);
-      }
-    });
+  const validFiles = [];
+  const oversizedFiles = [];
 
-    // Show error if any files are oversized
-    if (oversizedFiles.length > 0) {
-      const oversizedNames = oversizedFiles.map(f => `${f.name} (${f.size} MB)`).join(', ');
-      setFileSizeError(`The following files exceed 2MB limit: ${oversizedNames}`);
-      
-      // If all files are invalid, clear the input and return
-      if (validFiles.length === 0) {
-        event.target.value = "";
-        return;
-      }
+  // Check size
+  files.forEach(file => {
+    if (file.size > maxSize) {
+      oversizedFiles.push({
+        name: file.name,
+        size: (file.size / (1024 * 1024)).toFixed(2)
+      });
+    } else {
+      validFiles.push(file);
     }
+  });
 
-    // Create preview URLs only for valid files
-    const newPreviews = validFiles.map((file) => ({
-      file,
-      url: URL.createObjectURL(file),
-      name: file.name,
-      size: file.size,
-      sizeMB: (file.size / (1024 * 1024)).toFixed(2)
-    }));
+  // Reject oversized files
+  if (oversizedFiles.length > 0) {
+    const names = oversizedFiles.map(f => `${f.name} (${f.size} MB)`).join(", ");
+    setFileSizeError(`The following files exceed the 2MB limit: ${names}`);
 
-    // Update states with valid files only
-    setSelectedFiles(prev => [...prev, ...validFiles]);
-    setPreviews(prev => [...prev, ...newPreviews]);
-    
-    // Update react-hook-form value
-    setValue("productImages", [...selectedFiles, ...validFiles]);
-  };
+    if (validFiles.length === 0) {
+      event.target.value = "";
+      return;
+    }
+  }
+
+  // 🚫 Restrict to maximum of 3 images
+  if (selectedFiles.length + validFiles.length > maxImages) {
+    setFileSizeError(`You can only upload a maximum of ${maxImages} images.`);
+
+    event.target.value = "";
+    return;
+  }
+
+  // Create preview URLs for valid files
+  const newPreviews = validFiles.map(file => ({
+    file,
+    url: URL.createObjectURL(file),
+    name: file.name,
+    size: file.size,
+    sizeMB: (file.size / (1024 * 1024)).toFixed(2)
+  }));
+
+  // Update state
+  setSelectedFiles(prev => [...prev, ...validFiles]);
+  setPreviews(prev => [...prev, ...newPreviews]);
+
+  // Update react-hook-form field
+  setValue("productImages", [...selectedFiles, ...validFiles]);
+};
+
+
+
 
   const removePreview = (index) => {
     // Revoke the object URL to prevent memory leaks
@@ -343,24 +355,57 @@ const CreateProduct = () => {
 
               {/* Short & Full Description */}
               <div className="col-md-12">
-                <div className="form-group">
-                  <label>Short description</label>
-                  <Controller
-                    name="shortDiscription"
-                    control={control}
-                    defaultValue=""
-                    render={({ field }) => (
-                      <ReactQuill
-                        theme="snow"
-                        value={field.value}
-                        onChange={field.onChange}
-                        placeholder="Write short product description..."
-                        style={{ height: "100px", marginBottom: "50px" }}
-                      />
-                    )}
-                  />
-                </div>
-              </div>
+  <div className="form-group">
+    <label>Short description (max 250 characters)</label>
+
+    <Controller
+      name="shortDiscription"
+      control={control}
+      defaultValue=""
+      render={({ field }) => {
+        
+        const handleChange = (value) => {
+          // Strip HTML tags to get plain text length
+          const plainText = value.replace(/<[^>]*>/g, "").trim();
+
+          if (plainText.length <= 250) {
+            field.onChange(value);
+          }
+        };
+
+        // Remaining characters
+        const plainTextLength = field.value.replace(/<[^>]*>/g, "").trim().length;
+        const remaining = 250 - plainTextLength;
+
+        return (
+          <>
+            <ReactQuill
+              theme="snow"
+              value={field.value}
+              onChange={handleChange}
+              placeholder="Write short product description..."
+              style={{ height: "100px", marginBottom: "50px" }}
+            />
+
+            <small
+              style={{
+                display: "block",
+                textAlign: "right",
+                marginTop: "-40px",
+                marginBottom: "10px",
+                color: remaining < 0 ? "red" : "#555",
+                fontSize: "12px",
+              }}
+            >
+              {remaining} characters remaining
+            </small>
+          </>
+        );
+      }}
+    />
+  </div>
+</div>
+
               <div className="col-md-12">
                 <div className="form-group">
                   <label>Full description</label>
@@ -497,9 +542,9 @@ const CreateProduct = () => {
             {/* Submit */}
             <div className="row">
               <div className="col-md-12">
-                {loading ? (
-                  <button disabled className="picckBtn-create-product">
-                    <span className="loader"></span> Creating Product...
+                { loading ? (
+                  <button disabled className="picckBtn-create-product ">
+                    <span className="loader"></span> <span> </span>
                   </button>
                 ) : (
                   <button 

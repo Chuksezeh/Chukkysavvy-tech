@@ -12,6 +12,12 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCartProduct } from "../../redux/productCounter";
 
+import Alert from 'react-bootstrap/Alert';
+import Button from 'react-bootstrap/Button';
+import Offcanvas from 'react-bootstrap/Offcanvas';
+import useGetData from "../../Utility/getFunction";
+import moment from "moment";
+
 // Skeleton Loader Components
 const ProductDetailSkeleton = () => {
   return (
@@ -130,6 +136,13 @@ const ProductDetailPage = () => {
     },[])
 
 
+
+  const [showReview, setShowReview] = useState(false);
+
+  const handleCloseReview = () => setShowReview(false);
+  const handleShowReview = () => setShowReview(true);
+
+
      // Format currency
     const formatCurrency = (amount) => {
         return new Intl.NumberFormat('en-NG', {
@@ -162,7 +175,10 @@ const ProductDetailPage = () => {
     }
   };
 
+  const {data: productReviewData, isPending: isPendingReview, error: errorReview} = useGetData(`/review/getProductReviews/${productId}` )
   
+
+   console.log("...productReviewData", productReviewData)
 
   const fetchRelatedProducts = async () => {
     try {
@@ -283,6 +299,32 @@ const ProductDetailPage = () => {
     );
   }
 
+
+
+
+
+  const reviews = [
+  {
+    customerName: "John Doe",
+    rating: 4,
+    message: "Product works perfectly. Delivery was fast!",
+    date: "2025-01-22",
+  },
+  {
+    customerName: "Sarah Adams",
+    rating: 5,
+    message: "Amazing quality. I will definitely buy again.",
+    date: "2025-01-20",
+  },
+  {
+    customerName: "Michael Brown",
+    rating: 3,
+    message: "Good but could be improved in packaging.",
+    date: "2025-01-18",
+  },
+];
+
+
   return (
     <>
       <Header />
@@ -354,11 +396,15 @@ const ProductDetailPage = () => {
                 {product.status === 'sold' && ' - Out of Stock'}
               </span>
             </div>
+            
 
             {/* Ratings */}
-            {/* <div className="rating mb-3">
-              ⭐⭐⭐⭐☆ <span className="text-muted">(120 reviews)</span>
-            </div> */}
+            <div className="rating mb-3" style={{fontSize: "18px", color: "#ffc107", cursor: "pointer"}} onClick={handleShowReview}>
+              See customer reviews &nbsp;
+             
+               
+              <span className="text-muted">({productReviewData?.count} reviews)</span>
+            </div>
 
             {/* Price */}
             <div className="price-section mb-3">
@@ -378,6 +424,8 @@ const ProductDetailPage = () => {
                 </div>
               )}
             </div>
+
+             
 
             {/* Quantity Info */}
             <div className="quantity-info mb-3">
@@ -511,6 +559,65 @@ const ProductDetailPage = () => {
           </div> 
         </div>
       </section>
+
+
+    
+
+        <Offcanvas show={showReview} onHide={handleCloseReview} 
+        // backdrop="static"  
+        placement="end">
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>Customer Feedback</Offcanvas.Title>
+        </Offcanvas.Header>
+       <Offcanvas.Body>
+
+  <h5 className="mb-3">What customers are saying</h5>
+
+  <div className="reviews-container">
+
+    {productReviewData?.reviews && productReviewData?.reviews?.length > 0 ? (
+      productReviewData?.reviews.map((review, index) => (
+        <div 
+          key={index} 
+          className="review-card shadow-sm p-3 mb-3 rounded"
+          style={{ background: "#f8f9fa" }}
+        >
+          {/* Customer name and date */}
+          <div className="d-flex justify-content-between mb-2">
+            <strong>{review.customerName}</strong>
+            <small className="text-muted"> {moment(review.createdDateTime).format("lll")} </small>
+          </div>
+            
+          {/* Rating stars */}
+          <div className="mb-2">
+            {Array.from({ length: review.rating }, (_, i) => (
+              <span key={i} style={{ color: "#ffc107", fontSize: "18px" }}>
+                ★
+              </span>
+              ))}
+             {Array.from({ length: 5 - review.rating }, (_, i) => (
+              <span key={i} style={{ color: "#e4e5e9", fontSize: "18px" }}>
+                ★
+              </span>
+            ))}
+            </div>
+
+          {/* Feedback text */}
+          <p className="mb-1" style={{ fontSize: "14px", lineHeight: "1.5" }}>
+            {review.message}
+          </p>
+        </div>
+      ))
+    ) : (
+      <p className="text-muted">No customer feedback available yet.</p>
+    )}
+
+  </div>
+</Offcanvas.Body>
+
+        </Offcanvas>
+
+
 
       <Footer />
     </>

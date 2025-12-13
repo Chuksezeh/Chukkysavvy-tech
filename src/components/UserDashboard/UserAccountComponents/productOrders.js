@@ -4,8 +4,8 @@ import UserDashBoard from "../userDashboard";
 import { useNavigate } from "react-router-dom";
 import html2canvas from "html2canvas";
 import brandLogo from "../../images/CHUKKY-BRAND-BACKGROUND-removebg-preview.png"
-import { 
-  MdKeyboardBackspace, 
+import {
+  MdKeyboardBackspace,
   MdOutlineShoppingBag,
   MdOutlinePendingActions,
   MdOutlineLocalShipping,
@@ -14,9 +14,9 @@ import {
   MdOutlineRemoveRedEye,
   MdOutlineSearch
 } from "react-icons/md";
-import { 
-  FaBox, 
-  FaMoneyBillWave, 
+import {
+  FaBox,
+  FaMoneyBillWave,
   FaMapMarkerAlt,
   FaClock,
   FaFilter,
@@ -28,6 +28,7 @@ import { chukkytechAxios } from "../../Utility/axios";
 import { Badge, Card, Button, Modal, Table, Row, Col } from "react-bootstrap";
 import moment from "moment";
 import "./productOrders.css";
+import { set } from "date-fns";
 
 
 const ProductOrders = (() => {
@@ -40,9 +41,24 @@ const ProductOrders = (() => {
   const [showOrderModal, setShowOrderModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
-   const [actionDialog, setActionDialog] = useState(false);
-   const [statusPending, setStatusPending] = useState(false);
-    const receiptRef = useRef(null);
+  const [actionDialog, setActionDialog] = useState(false);
+  const [statusPending, setStatusPending] = useState(false);
+  const [reviewOrderId, setReviewOrderId] = useState('');
+  const receiptRef = useRef(null);
+
+  const [reviewModalShow, setReviewModalShow] = useState(false);
+
+  const [rating, setRating] = useState(0);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [orderStatus, setOrderStatus] = useState("");
+
+  const [reviewSuccessMessage, setReviewSuccessMessage] = useState(false);
+  const [reviewErrorMessage, setReviewErrorMessage] = useState(false);
+  const [reviewSubmitting, setReviewSubmitting] = useState(false);
+  const [completedReviews, setCompletedReviews] = useState("");
+
 
   useEffect(() => {
     const userInfo = localStorage.getItem('userInfo');
@@ -59,7 +75,7 @@ const ProductOrders = (() => {
     try {
       const userResponse = await chukkytechAxios.get(`/auth/getUser/${encodedEmail}`);
       const userData = userResponse.data;
-      
+
       if (userData.userId) {
         await fetchUserProductOrders(userData.userId);
       }
@@ -74,7 +90,7 @@ const ProductOrders = (() => {
     try {
       const response = await chukkytechAxios.get(`/order/orders/user/${userId}`);
       console.log('User Products Response:', response.data);
-      
+
       if (response.data && response.data.data) {
         setUserProducts(response.data.data);
       } else {
@@ -94,7 +110,7 @@ const ProductOrders = (() => {
       console.log('Order Details Response:', response.data);
 
       setOrderItems(response.data.data);
-       
+
     } catch (error) {
       console.error('Error fetching order details:', error);
       return null;
@@ -141,19 +157,24 @@ const ProductOrders = (() => {
 
   const handleViewOrder = async (order) => {
     setSelectedOrder(order);
+    setOrderStatus(order.order_status);
 
-        
     await fetchOrderDetails(order.order_id);
-    
+
     setShowOrderModal(true);
   };
+
+   
+
+
+
 
 
 
   // Order Tracking Status Configuration
   const getOrderTrackingSteps = (orderStatus) => {
     const status = orderStatus?.toLowerCase() || 'pending';
-    
+
     const allSteps = [
       {
         key: 'pending',
@@ -221,10 +242,10 @@ const ProductOrders = (() => {
   // Get estimated delivery date based on status
   const getEstimatedDelivery = (orderDate, status) => {
     if (!orderDate) return 'N/A';
-    
+
     const orderMoment = moment(orderDate);
     const statusLower = status?.toLowerCase();
-    
+
     switch (statusLower) {
       case 'pending':
         return orderMoment.add(2, 'days').format('MMM D, YYYY');
@@ -247,7 +268,7 @@ const ProductOrders = (() => {
   // Get status description message
   const getStatusDescription = (status) => {
     const statusLower = status?.toLowerCase();
-    
+
     const messages = {
       pending: "Your order is being processed. You will receive a confirmation soon.",
       confirmed: "Your order has been confirmed and is being prepared for processing.",
@@ -257,18 +278,18 @@ const ProductOrders = (() => {
       completed: "Your order has been completed. We hope you enjoy your products!",
       cancelled: "This order has been cancelled. Please contact support if you have any questions."
     };
-    
+
     return messages[statusLower] || "Your order is being processed.";
   };
 
   const filteredOrders = userProducts.filter(order => {
-    const matchesSearch = 
+    const matchesSearch =
       order.order_id?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       order.customer_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       order.customer_email?.toLowerCase().includes(searchTerm.toLowerCase());
-    
+
     const matchesStatus = statusFilter === "all" || order.order_status === statusFilter;
-    
+
     return matchesSearch && matchesStatus;
   });
 
@@ -277,38 +298,42 @@ const ProductOrders = (() => {
   }, []);
 
   const handleAction = (action) => {
-        setActionDialog(true);
-     };
+    setActionDialog(true);
+  };
 
-    const handleCloseDialog = () => {
-        setActionDialog(false);
-        // setSelectedItem(null);
-    };
-
-
-         const handleChangeStatus = async data => {
-           setStatusPending(true);
-             const status = "cancelled"
-             console.log("...selectedOrder?.order_id", selectedOrder?.order_id)
-           
-        await chukkytechAxios
-            .put(`/order/orders/${selectedOrder?.order_id}/${status}`)
-            .then(res => {
-                console.log('res', res);
-                  setStatusPending(false);
-                   fetchUserData();
-                  handleCloseDialog();
-                  setShowOrderModal(false);
-              })
-            .catch(err => {
-                console.log('err', err);
-                setStatusPending(false);
-               });
-              };
+  const handleCloseDialog = () => {
+    setActionDialog(false);
+    // setSelectedItem(null);
+  };
 
 
+  const handleChangeStatus = async data => {
+    setStatusPending(true);
+    const status = "cancelled"
+    // console.log("...selectedOrder?.order_id", selectedOrder?.order_id)
 
-const downloadReceipt = async () => {
+    await chukkytechAxios
+      .put(`/order/orders/${selectedOrder?.order_id}/${status}`)
+      .then(res => {
+        console.log('res', res);
+        setStatusPending(false);
+        fetchUserData();
+        handleCloseDialog();
+        setShowOrderModal(false);
+      })
+      .catch(err => {
+        console.log('err', err);
+        setStatusPending(false);
+      });
+  };
+
+const handleShowReviewModal = (id)=>{
+  setShowOrderModal(false);
+   setReviewOrderId(id);
+  setReviewModalShow(true);
+}
+
+  const downloadReceipt = async () => {
     if (receiptRef.current) {
       const canvas = await html2canvas(receiptRef.current);
       const imgData = canvas.toDataURL("image/png");
@@ -321,13 +346,75 @@ const downloadReceipt = async () => {
 
 
 
+  const handleSubmitFeedback = async () => {
+   
+    if (!rating  || !message) {
+     setCompletedReviews(true);
+      return;
+    }
+   setReviewSubmitting(true);
+    const payload = {
+      rating,
+      customerName: name || user.firstName,
+      emailAddress: email,
+      message,
+      productId: reviewOrderId,
+      status: "active"
+    };
+
+
+    console.log("review data>>>>>", payload)
+
+    await chukkytechAxios
+    .post("/review/createProductReview", payload)
+    .then(res =>{
+         console.log("response>>>>", res)
+      setReviewSuccessMessage(true);
+      setReviewModalShow(false);
+      setRating(0);
+      setName("");
+      setEmail("");
+      setMessage("");
+      setTimeout(() => {
+     setReviewSuccessMessage(false);
+    }, 3000);
+      setReviewSubmitting(false);
+
+
+    })
+    .catch(error =>{
+      console.log("error>>>>", error)
+      setReviewSubmitting(false);  
+      setReviewErrorMessage(true);
+    })
+
+    };
+
+
+
   return (
     <>
       <Header />
       <div className="tec-main-Hide">
         <UserDashBoard />
       </div>
+
+       {
+        reviewSuccessMessage ? (  <div className="container mt-2 cart-alert">
+          <div className="row">
+            <div className="col-sm-6">
+              <div className="alert fade alert-success alert-dismissible text-left font__family-montserrat font__size-16 font__weight-light brk-library-rendered rendered show">
+                <i className="start-icon far fa-check-circle faa-tada animated"></i>
+                
+                <span>  <span style={{fontWeight:"bold"}}>  </span>  Thank you! Your feedback has been submitted succesfully </span> 
+                {/* <span className="closebtn"  style={{ cursor: "pointer", fontWeight: "bold", color: "red", marginLeft: "30px"}}> X</span> */}
+              </div>
+            </div>
+          </div>
+        </div>) : null  
+        }
       
+
       <div className="main-content">
         <div className="product-orders-container">
           <div className="orders-header">
@@ -340,7 +427,7 @@ const downloadReceipt = async () => {
                 <MdOutlineShoppingBag size={32} className="header-icon" />
                 <div>
                   <div>Product Orders</div>
-                  <p style={{fontSize:"12px"}}>Manage and track your orders</p>
+                  <p style={{ fontSize: "12px" }}>Manage and track your orders</p>
                 </div>
               </div>
               <div className="order-stats">
@@ -371,7 +458,7 @@ const downloadReceipt = async () => {
                 <Col md={6}>
                   <div className="filter-group">
                     <FaFilter className="filter-icon" />
-                    <select 
+                    <select
                       className="filter-select"
                       value={statusFilter}
                       onChange={(e) => setStatusFilter(e.target.value)}
@@ -412,13 +499,15 @@ const downloadReceipt = async () => {
                             {formatDate(order.created_date)}
                           </div>
                         </div>
-                        <Badge 
-                          bg={getStatusVariant(order.order_status)} 
+                        <Badge
+                          bg={getStatusVariant(order.order_status)}
                           className="status-badge"
                         >
                           {getStatusIcon(order.order_status)}
                           {order.order_status}
                         </Badge>
+
+
                       </div>
 
                       {/* Customer Info */}
@@ -430,6 +519,10 @@ const downloadReceipt = async () => {
                           {order.customer_email}
                         </div>
                       </div>
+
+                     
+
+
 
                       {/* Order Summary */}
                       <div className="order-summary">
@@ -455,14 +548,14 @@ const downloadReceipt = async () => {
 
                       {/* Action Buttons */}
                       <div className="order-actions">
-                        <Button 
-                          variant="outline-primary" 
+                        <Button
+                          variant="outline-primary"
                           size="sm"
                           onClick={() => handleViewOrder(order)}
                           className="action-btn"
                         >
                           <MdOutlineRemoveRedEye />
-                          View Details & Tracking
+                          View Details, Tracking & Feedback
                         </Button>
                       </div>
                     </Card.Body>
@@ -474,14 +567,14 @@ const downloadReceipt = async () => {
                 <MdOutlineShoppingBag size={64} className="empty-icon" />
                 <h4>No Orders Found</h4>
                 <p>
-                  {searchTerm || statusFilter !== "all" 
+                  {searchTerm || statusFilter !== "all"
                     ? "No orders match your search criteria. Try adjusting your filters."
                     : "You haven't placed any orders yet. Start shopping to see your orders here."
                   }
                 </p>
                 {!searchTerm && statusFilter === "all" && (
-                  <Button 
-                    variant="primary" 
+                  <Button
+                    variant="primary"
                     onClick={() => navigate('/buy-products')}
                   >
                     Start Shopping
@@ -493,13 +586,13 @@ const downloadReceipt = async () => {
         </div>
 
         {/* Order Details Modal with Tracking */}
-        <Modal 
-          show={showOrderModal} 
-          onHide={() => setShowOrderModal(false)} 
-          size="lg"
+        <Modal
+          show={showOrderModal}
+          onHide={() => setShowOrderModal(false)}
+          size="xl"
           centered
           className="order-tracking-modal"
-         
+
         >
           <Modal.Header closeButton className="border-bottom-0 bg-light">
             <Modal.Title className="w-100">
@@ -510,25 +603,25 @@ const downloadReceipt = async () => {
                     Placed on {selectedOrder && formatDate(selectedOrder.created_date)}
                   </small>
                 </div>
-               
+
               </div>
-               <div>
+              <div>
                 {selectedOrder && (
-                  <Badge 
-                    bg={getStatusVariant(selectedOrder.order_status)} 
+                  <Badge
+                    bg={getStatusVariant(selectedOrder.order_status)}
                     className="fs-6 px-3 py-2"
                   >
                     {getStatusIcon(selectedOrder.order_status)}
                     <span className="ms-2 text-capitalize">{selectedOrder.order_status}</span>
                   </Badge>
                 )}
-                </div>
+              </div>
             </Modal.Title>
           </Modal.Header>
           <Modal.Body className="pt-0">
             {selectedOrder && (
-              <div className="order-details-modal"  id="download-receipt" ref={receiptRef} >
-            <div style={{justifyContent:"center", textAlign:"center", padding:"5px"}}>    <img src={brandLogo} className="loGO-ReceIpt"/> <span className="nameBrand-Receipt"> Chukkytech</span></div>
+              <div className="order-details-modal" id="download-receipt" ref={receiptRef} >
+                <div style={{ justifyContent: "center", textAlign: "center", padding: "5px" }}>    <img src={brandLogo} className="loGO-ReceIpt" /> <span className="nameBrand-Receipt"> Chukkytech</span></div>
                 {/* Order Tracking Timeline */}
                 <div className="border-0 shadow-sm mb-4">
                   <Card.Body className="p-4">
@@ -536,14 +629,13 @@ const downloadReceipt = async () => {
                       <FaClock className="me-2 text-primary" />
                       Order Tracking
                     </h5>
-                    
+
                     <div className="order-tracking-timeline">
                       {getOrderTrackingSteps(selectedOrder.order_status).map((step, index, array) => (
-                        <div 
+                        <div
                           key={step.key}
-                          className={`tracking-step ${step.completed ? 'completed' : ''} ${
-                            step.active ? 'active' : ''
-                          } ${step.cancelled ? 'cancelled' : ''}`}
+                          className={`tracking-step ${step.completed ? 'completed' : ''} ${step.active ? 'active' : ''
+                            } ${step.cancelled ? 'cancelled' : ''}`}
                         >
                           <div className="step-indicator">
                             <div className={`step-icon ${step.completed ? 'completed' : ''} ${step.active ? 'active' : ''}`}>
@@ -615,6 +707,57 @@ const downloadReceipt = async () => {
                   </Card.Body>
                 </div>
 
+                <div className="border-0 shadow-sm">
+                  <Card.Body>
+                    <h6 className="section-title mb-3">Order Items ({orderItems?.selectedProduct?.length})</h6>
+                    {orderItems?.selectedProduct?.length > 0 ? (
+                      <div className="order-items-table">
+                        <Table borderless responsive className="mb-0">
+                          <thead className="bg-light">
+                            <tr>
+                              <th>Product</th>
+                              <th className="text-center">Price</th>
+                              <th className="text-center">Quantity</th>
+                              <th className="text-end">Total</th>
+                              <th>Feedback</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {orderItems?.selectedProduct?.map((item, index) => (
+                              <tr key={index} className="border-bottom">
+                                <td data-label="Product">
+                                  <div className="product-info">
+                                    <strong>{item.productName}</strong>
+                                    {item.categoryName && (
+                                      <small className="text-muted d-block">{item.categoryName}</small>
+                                    )}
+                                  </div>
+                                </td>
+                                <td className="text-center" data-label="Price">{formatCurrency(item.productPrice)}</td>
+                                <td className="text-center" data-label="Quantity">{item.quantity}</td>
+                                <td className="text-end fw-bold" data-label="Total">
+                                  {formatCurrency(item.productPrice * item.quantity)}
+                                </td>
+                                <td data-label="Feedback">  {
+                           orderStatus === 'delivered' || orderStatus === 'completed' ? (
+                             <div style={{ marginBottom: "10px" }}>
+                            <button onClick={() => handleShowReviewModal(item.productId)} className="btn btn-primary">Review</button>
+                          </div>
+                             ) : null
+                           }  </td>
+                              </tr>
+                             ))}
+                          </tbody>
+                        </Table>
+                      </div>
+                    ) : (
+                      <div className="text-center py-4">
+                        <p className="text-muted">No items found for this order.</p>
+                      </div>
+                    )}
+                  </Card.Body>
+                </div>
+
                 {/* Order Information */}
                 <Row className="g-3 mb-4">
                   <Col md={6}>
@@ -647,7 +790,7 @@ const downloadReceipt = async () => {
                       </Card.Body>
                     </Card>
                   </Col>
-                  
+
                   <Col md={6}>
                     <div className="border-0 shadow-sm h-100">
                       <Card.Body>
@@ -674,66 +817,25 @@ const downloadReceipt = async () => {
                 </Row>
 
                 {/* Order Items */}
-                <div className="border-0 shadow-sm">
-                  <Card.Body>
-                    <h6 className="section-title mb-3">Order Items ({orderItems?.selectedProduct?.length})</h6>
-                    {orderItems?.selectedProduct?.length > 0 ? (
-                      <div className="order-items-table">
-                        <Table borderless responsive className="mb-0">
-                          <thead className="bg-light">
-                            <tr>
-                              <th>Product</th>
-                              <th className="text-center">Price</th>
-                              <th className="text-center">Quantity</th>
-                              <th className="text-end">Total</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {orderItems?.selectedProduct?.map((item, index) => (
-                              <tr key={index} className="border-bottom">
-                                <td data-label ="Product">
-                                  <div className="product-info">
-                                    <strong>{item.productName}</strong>
-                                    {item.categoryName && (
-                                      <small className="text-muted d-block">{item.categoryName}</small>
-                                    )}
-                                  </div>
-                                </td>
-                                <td className="text-center" data-label ="Price">{formatCurrency(item.productPrice)}</td>
-                                <td className="text-center" data-label="Quantity">{item.quantity}</td>
-                                <td className="text-end fw-bold" data-label="Total">
-                                  {formatCurrency(item.productPrice * item.quantity)}
-                                </td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </Table>
-                      </div>
-                    ) : (
-                      <div className="text-center py-4">
-                        <p className="text-muted">No items found for this order.</p>
-                      </div>
-                    )}
-                  </Card.Body>
-                </div>
+                
               </div>
             )}
           </Modal.Body>
           <Modal.Footer className="border-top-0">
-            <Button 
-              variant="outline-secondary" 
+            <Button
+              variant="outline-secondary"
               onClick={() => setShowOrderModal(false)}
             >
               Close
             </Button>
             {selectedOrder?.order_status === 'pending' && (
               <Button variant="outline-danger" color="error"
-                                        onClick={() => handleAction('cancelled')}>
+                onClick={() => handleAction('cancelled')}>
                 Cancel Order
               </Button>
             )}
             {(selectedOrder?.order_status === 'delivered' || selectedOrder?.order_status === 'completed') && (
-              <Button variant="primary" onClick={downloadReceipt }>
+              <Button variant="primary" onClick={downloadReceipt}>
                 Download Invoice
               </Button>
             )}
@@ -741,27 +843,27 @@ const downloadReceipt = async () => {
         </Modal>
 
 
-        <Modal show={actionDialog} onHide={()=>setActionDialog(false)} animation={false}   centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Confirm elete Order</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>  Are you sure you want to cancel this order? This action cannot be undone.</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={()=>setActionDialog(false)}>
-            Close
-          </Button>
-          {
-           statusPending ? <Button variant="" style={{backgroundColor:"red", color:"white"}}  disabled>
-            <span className="loader"></span>
-          </Button>:<Button variant="" style={{backgroundColor:"red", color:"white"}}  onClick={handleChangeStatus}>
-            Proceed to Cancel
-          </Button>
-          }
-         
-        </Modal.Footer>
-      </Modal>
+        <Modal show={actionDialog} onHide={() => setActionDialog(false)} animation={false} centered>
+          <Modal.Header closeButton>
+            <Modal.Title>Confirm elete Order</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>  Are you sure you want to cancel this order? This action cannot be undone.</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setActionDialog(false)}>
+              Close
+            </Button>
+            {
+              statusPending ? <Button variant="" style={{ backgroundColor: "red", color: "white" }} disabled>
+                <span className="loader"></span>
+              </Button> : <Button variant="" style={{ backgroundColor: "red", color: "white" }} onClick={handleChangeStatus}>
+                Proceed to Cancel
+              </Button>
+            }
 
-                {/* <Dialog open={actionDialog.open} onClose={handleCloseDialog}>
+          </Modal.Footer>
+        </Modal>
+
+        {/* <Dialog open={actionDialog.open} onClose={handleCloseDialog}>
                     <DialogTitle>
                         Confirm {actionDialog.action.charAt(0).toUpperCase() + actionDialog.action.slice(1)} Order
                     </DialogTitle>
@@ -784,6 +886,109 @@ const downloadReceipt = async () => {
 
 
 
+        <Modal show={reviewModalShow} onHide={() => setReviewModalShow(false)} animation={false} size="lg" >
+          <Modal.Header closeButton>
+            <Modal.Title>We would appreciate your feedback on this product</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+
+
+            <div className="container">
+
+              {/* Rating Section */}
+              <div className="mb-3">
+                <label className="form-label fw-semibold">Rate this product</label>
+                <div style={{ fontSize: "30px", cursor: "pointer" }}>
+                  {Array.from({ length: 5 }, (_, index) => (
+                    <span
+                      key={index}
+                      onClick={() => setRating(index + 1)}
+                      style={{ color: index < rating ? "#ffc107" : "#e4e5e9" }}>
+                      ★
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Name Input */}
+              <div className="mb-3">
+                <label className="form-label fw-semibold">Your Name</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Enter your name"
+                  defaultValue={user.firstName}
+                  // value={name}
+                  onChange={e => setName(e.target.value)}
+                />
+              </div>
+
+              {/* Email Input (optional) */}
+              <div className="mb-3">
+                <label className="form-label fw-semibold">Email (optional)</label>
+                <input
+                  type="email"
+                  className="form-control"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                />
+              </div>
+
+              {/* Textarea */}
+              <div className="mb-3">
+                <label className="form-label fw-semibold">Your Feedback</label>
+                <textarea
+                  className="form-control"
+                  rows="4"
+                  placeholder="Write your feedback here..."
+                  value={message}
+                  onChange={e => setMessage(e.target.value)}
+                ></textarea>
+              </div>
+
+            </div>
+            {
+              completedReviews ? (
+                <div className="container mt-3">
+                  <div className="alert alert-danger bg-light alert-dismissible fade show" role="alert">
+                    Please provide both rating and feedback message.
+                  </div>
+                </div>
+              ) : null
+            }
+            {
+              reviewErrorMessage ? (
+                <div className="container mt-3">
+                  <div className="alert alert-danger bg-light alert-dismissible fade show" role="alert">
+                    An error occurred while submitting your feedback. Please try again later.
+                  </div>
+                </div>
+              ) : null
+            }
+        
+
+          </Modal.Body>
+          <Modal.Footer>
+              {
+            reviewSubmitting ? (
+              <Button variant="primary" disabled>
+                <span className="loader"></span>
+              </Button>
+            ) :  <Button variant="primary" onClick={handleSubmitFeedback}>
+              Submit Feedback
+            </Button>
+              }
+           
+            <Button variant="secondary" onClick={() => setReviewModalShow(false)}>
+              Close
+            </Button>
+
+
+
+
+          </Modal.Footer>
+        </Modal>
 
 
       </div>
