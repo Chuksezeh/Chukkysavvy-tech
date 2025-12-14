@@ -509,7 +509,7 @@ font-weight: 800;
 @media(max-width: 1700px){
   .nav-links {
     display: inline;
-    margin-left: 50%;
+    margin-left: 10%;
     font-size: 18px;
     color: white;
   
@@ -518,16 +518,19 @@ font-weight: 800;
 
 
 }
-@media(max-width:1400px){
+/* @media(max-width:1400px){
 .nav-links {
     display: inline;
-    margin-left: 15%;
+    margin-left: 12% !important;
     font-size: 18px;
     color: white;
   
     width: 100%;
    }
-}
+} */
+
+
+
 
 @media(max-width: 1200px){
   .nav-links {
@@ -545,7 +548,7 @@ font-weight: 800;
 
 
 
-@media (max-width:993px) {
+@media (max-width:1200px) {
   .nav-main-NAv > .nav-btn {
     display: inline-block;
     position: absolute;

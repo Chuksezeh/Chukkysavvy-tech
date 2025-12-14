@@ -658,7 +658,7 @@ const RepairOrders = (() => {
       </Modal>
 
       {/* Comment Modal */}
-      <Modal show={showComment} onHide={() => setShowComment(false)} size="md" centered>
+      <Modal show={showComment} onHide={() => setShowComment(false)} size="lg" centered>
         <Modal.Header closeButton>
           <Modal.Title>Provide Feedback</Modal.Title>
         </Modal.Header>

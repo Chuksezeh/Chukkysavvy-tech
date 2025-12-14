@@ -219,9 +219,9 @@ const CreateProduct = () => {
 
       <div className="container">
         <div className="form-wr">
-          <p id="description" className="text-center">
+          <h3  style={{justifyContent:"center", textAlign:"center"}}>
             Create Product
-          </p>
+          </h3>
 
           <form
             id="survey-form"
@@ -237,6 +237,7 @@ const CreateProduct = () => {
                 <div className="form-group">
                   <label>Product Name</label>
                   <input
+                    placeholder="Enter product name"
                     className="form-control"
                     {...register("productName", { required: "Product name is required" })}
                   />
@@ -249,6 +250,7 @@ const CreateProduct = () => {
                 <div className="form-group">
                   <label>Category Name</label>
                   <select className="form-control" {...register("categoryId")}>
+                    <option disabled>Select category</option>
                     {categoryData &&
                       categoryData.map((category) => (
                         <option key={category.categoryId} value={category.categoryId}>
@@ -262,8 +264,9 @@ const CreateProduct = () => {
               {/* Price & Purchase Price */}
               <div className="col-md-6">
                 <div className="form-group">
-                  <label>Product Price</label>
+                  <label>Product Price(selling price)</label>
                   <input
+                  placeholder="Enter product price- this is the actual price after discount"
                     className="form-control"
                     {...register("productPrice", { required: "Product price is required" })}
                   />
@@ -272,8 +275,9 @@ const CreateProduct = () => {
               </div>
               <div className="col-md-6">
                 <div className="form-group">
-                  <label>Purchase Price</label>
+                  <label>Market Price(higher than selling price)</label>
                   <input
+                  placeholder="Enter market price, including discount"
                     type="text"
                     className="form-control"
                     {...register("purchasePrice", { required: "Purchase price is required" })}
@@ -287,6 +291,7 @@ const CreateProduct = () => {
                 <div className="form-group">
                   <label>Product Quantity</label>
                   <input
+                  placeholder="Enter product quantity"
                     type="text"
                     className="form-control"
                     {...register("productQuantity", { required: "Product quantity is required" })}
@@ -296,19 +301,20 @@ const CreateProduct = () => {
               </div>
               <div className="col-md-6">
                 <div className="form-group">
-                  <label>Discount</label>
-                  <input type="text" className="form-control" {...register("discount")} />
+                  <label>Discount(Enter percentage 1-100%)</label>
+                  <input placeholder="Enter discount percentage if any" type="text" className="form-control" {...register("discount")} />
                 </div>
               </div>
 
               {/* Product type */}
               <div className="col-md-6">
                 <div className="form-group">
-                  <label>Select product type</label>
+                  <label>Select Product Type</label>
                   <select
                     className="form-control"
                     {...register("productType", { required: "Product type is required" })}
                   >
+                    <option disabled>Select Product Type</option>
                     <option>Brand new</option>
                     <option>Second hand</option>
                     <option>Refurbished</option>
@@ -321,11 +327,12 @@ const CreateProduct = () => {
               {/* Company */}
               <div className="col-md-6">
                 <div className="form-group">
-                  <label>Select company</label>
+                  <label>Select Company</label>
                   <select
                     className="form-control"
                     {...register("companyId", { required: "Company name is required" })}
                   >
+                    <option disabled> Select Company/Distributor</option>
                     <option>All</option>
                     {data &&
                       data.map((company) => (
@@ -340,13 +347,14 @@ const CreateProduct = () => {
 
                 <div className="col-md-12">
                 <div className="form-group">
-                  <label>Pay on delivery</label>
+                  <label>Pay On Delivery</label>
                   <select
                     className="form-control"
                     {...register("payOnDelivery")}
                   >
-                    <option>Yes</option>
                     <option>No</option>
+                    <option>Yes</option>
+                    
                    
                   </select>
                   {/* <span className="cum-error">{errors.companyId?.message}</span> */}
@@ -355,60 +363,27 @@ const CreateProduct = () => {
 
               {/* Short & Full Description */}
               <div className="col-md-12">
-  <div className="form-group">
-    <label>Short description (max 250 characters)</label>
-
-    <Controller
-      name="shortDiscription"
-      control={control}
-      defaultValue=""
-      render={({ field }) => {
-        
-        const handleChange = (value) => {
-          // Strip HTML tags to get plain text length
-          const plainText = value.replace(/<[^>]*>/g, "").trim();
-
-          if (plainText.length <= 250) {
-            field.onChange(value);
-          }
-        };
-
-        // Remaining characters
-        const plainTextLength = field.value.replace(/<[^>]*>/g, "").trim().length;
-        const remaining = 250 - plainTextLength;
-
-        return (
-          <>
-            <ReactQuill
-              theme="snow"
-              value={field.value}
-              onChange={handleChange}
-              placeholder="Write short product description..."
-              style={{ height: "100px", marginBottom: "50px" }}
-            />
-
-            <small
-              style={{
-                display: "block",
-                textAlign: "right",
-                marginTop: "-40px",
-                marginBottom: "10px",
-                color: remaining < 0 ? "red" : "#555",
-                fontSize: "12px",
-              }}
-            >
-              {remaining} characters remaining
-            </small>
-          </>
-        );
-      }}
-    />
-  </div>
-</div>
-
+                <div className="form-group">
+                  <label>Short Description</label>
+                  <Controller
+                    name="shortDiscription"
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
+                      <ReactQuill
+                        theme="snow"
+                        value={field.value}
+                        onChange={field.onChange}
+                        placeholder="Write short product description..."
+                        style={{ height: "100px", marginBottom: "50px" }}
+                      />
+                    )}
+                  />
+                </div>
+              </div>
               <div className="col-md-12">
                 <div className="form-group">
-                  <label>Full description</label>
+                  <label>Full Description</label>
                   <Controller
                     name="fullDiscription"
                     control={control}
@@ -429,7 +404,7 @@ const CreateProduct = () => {
               {/* File Upload with 2MB Validation */}
               <div className="col-md-12">
                 <div className="form-group">
-                  <label>Upload product images</label>
+                  <label>Upload Product Images</label>
                   <input
                     type="file"
                     multiple
@@ -542,9 +517,9 @@ const CreateProduct = () => {
             {/* Submit */}
             <div className="row">
               <div className="col-md-12">
-                { loading ? (
-                  <button disabled className="picckBtn-create-product ">
-                    <span className="loader"></span> <span> </span>
+                {loading ? (
+                  <button disabled className="picckBtn-create-product">
+                    <span className="loader"></span> 
                   </button>
                 ) : (
                   <button 

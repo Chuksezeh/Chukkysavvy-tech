@@ -328,7 +328,7 @@ const ProductOrders = (() => {
   };
 
 const handleShowReviewModal = (id)=>{
-  setShowOrderModal(false);
+  // setShowOrderModal(false);
    setReviewOrderId(id);
   setReviewModalShow(true);
 }
@@ -371,6 +371,7 @@ const handleShowReviewModal = (id)=>{
          console.log("response>>>>", res)
       setReviewSuccessMessage(true);
       setReviewModalShow(false);
+      setShowOrderModal(false);
       setRating(0);
       setName("");
       setEmail("");

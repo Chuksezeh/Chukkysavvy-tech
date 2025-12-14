@@ -441,16 +441,8 @@ const ProductDetailPage = () => {
               <span className="text-muted">{product.productType}</span>
             </div>
 
-            {/* Short Description */}
-            {product.shortDiscription && (
-              <div 
-                className="product-desc mb-4"
-                dangerouslySetInnerHTML={{ __html: product.shortDiscription }}
-              />
-            )}
 
-            {/* Buttons */}
-            <div className="d-flex gap-3 mt-4 flex-wrap">
+           <div className="d-flex gap-3 mt-4 flex-wrap button-group-detail">
               {(product.status === 'sold' || product.productQuantity <= 0) ? (
                 <button className="btn btn-secondary btn-lg" disabled>
                   Out of Stock
@@ -478,6 +470,27 @@ const ProductDetailPage = () => {
               )}
             </div>
 
+
+         
+          </div>
+        </div>
+         <br/>
+          <h4>Product Details</h4>
+        <hr/>
+      
+
+
+           {/* Short Description */}
+            {product.shortDiscription && (
+              <div 
+                className="product-desc mb-4"
+                dangerouslySetInnerHTML={{ __html: product.shortDiscription }}
+              />
+            )}
+
+            {/* Buttons */}
+           
+
             {/* Full Description */}
             {product.fullDiscription && (
               <div className="mt-4">
@@ -488,8 +501,6 @@ const ProductDetailPage = () => {
                 />
               </div>
             )}
-          </div>
-        </div>
       </div>
 
       {/* Related Products Section */}
