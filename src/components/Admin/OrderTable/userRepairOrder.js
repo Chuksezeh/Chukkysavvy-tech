@@ -4,8 +4,10 @@ import { chukkytechAxios } from "../../Utility/axios";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Footer from "../../layouts/Footer";
+import { FaPlus } from "react-icons/fa";
+import useGetData from "../../Utility/getFunction";
 
 const RepairOrderTable = () => {
   const [showDropDown, setShowDropDown] = useState(null);
@@ -74,8 +76,8 @@ const RepairOrderTable = () => {
   const ordersArray = Array.isArray(data)
     ? data
     : Array.isArray(data.repairOrders)
-    ? data.repairOrders
-    : [];
+      ? data.repairOrders
+      : [];
   const latestOrders = getLatestRepairOrders(ordersArray);
 
   const filterOrders = () => {
@@ -197,6 +199,7 @@ const RepairOrderTable = () => {
       irreparable: { class: "badge bg-danger", label: "Cannot Fix" },
       cancel: { class: "badge bg-secondary", label: "Cancelled" },
       settled: { class: "badge bg-dark", label: "Settled" },
+      paid: { class: "badge bg-success", label: "Paid" },
     };
 
     const config =
@@ -228,10 +231,21 @@ const RepairOrderTable = () => {
     setCurrentPage(1);
   };
 
+
+  const navigatePaymentData = (item) => {
+    navigate("/add-view-payment", { state: { item } });
+  };
+
+
+  const { data: paymentGetAllData, isPending: orderPendingPayment, error } = useGetData('/repairPayment/getAllPayments');
+
+
+  console.log("paymentGetAllData", paymentGetAllData);
+
   return (
     <>
       <AdminDashboard />
-      
+
       {/* Header Section */}
       <div className="container-fluid py-4" style={{ backgroundColor: '#f8f9fa', marginTop: '-20px' }}>
         <div className="row align-items-center">
@@ -239,7 +253,7 @@ const RepairOrderTable = () => {
             <nav aria-label="breadcrumb">
               <ol className="breadcrumb mb-0">
                 <li className="breadcrumb-item"><a href="/admin-dashboard-card" className="text-decoration-none">Dashboard</a></li>
-                <li className="breadcrumb-item"><a  className="text-decoration-none">Orders</a></li>
+                <li className="breadcrumb-item"><a className="text-decoration-none">Orders</a></li>
                 <li className="breadcrumb-item active text-dark">Repair Orders</li>
               </ol>
             </nav>
@@ -247,7 +261,7 @@ const RepairOrderTable = () => {
             <p className="text-muted mb-0">Manage and track all device repair orders</p>
           </div>
           <div className="col-auto">
-            <button 
+            <button
               className="btn btn-outline-primary d-flex align-items-center"
               onClick={handleRefresh}
               disabled={isPending}
@@ -284,7 +298,7 @@ const RepairOrderTable = () => {
                   <div>
                     <h6 className="card-title text-muted mb-2">In Progress</h6>
                     <h3 className="mb-0">
-                      {latestOrders.filter(order => 
+                      {latestOrders.filter(order =>
                         ['processing', 'pickedup', 'fixing'].includes(order.status?.toLowerCase())
                       ).length}
                     </h3>
@@ -303,7 +317,7 @@ const RepairOrderTable = () => {
                   <div>
                     <h6 className="card-title text-muted mb-2">Completed</h6>
                     <h3 className="mb-0">
-                      {latestOrders.filter(order => 
+                      {latestOrders.filter(order =>
                         ['fixed', 'delivered', 'settled'].includes(order.status?.toLowerCase())
                       ).length}
                     </h3>
@@ -322,7 +336,7 @@ const RepairOrderTable = () => {
                   <div>
                     <h6 className="card-title text-muted mb-2">Issues</h6>
                     <h3 className="mb-0">
-                      {latestOrders.filter(order => 
+                      {latestOrders.filter(order =>
                         ['irreparable', 'cancel'].includes(order.status?.toLowerCase())
                       ).length}
                     </h3>
@@ -360,7 +374,7 @@ const RepairOrderTable = () => {
               </div>
               <div className="col-lg-4">
                 <label className="form-label fw-semibold">Order Status</label>
-                <select 
+                <select
                   className="form-select"
                   value={selectedStatus}
                   onChange={(e) => setSelectedStatus(e.target.value)}
@@ -377,7 +391,7 @@ const RepairOrderTable = () => {
               </div>
               <div className="col-lg-4">
                 <label className="form-label fw-semibold">Order Type</label>
-                <select 
+                <select
                   className="form-select"
                   value={selectedOrderType}
                   onChange={(e) => setSelectedOrderType(e.target.value)}
@@ -410,8 +424,12 @@ const RepairOrderTable = () => {
                     <th className="py-3 fw-semibold">Fault</th>
                     <th className="py-3 fw-semibold">Type</th>
                     <th className="py-3 fw-semibold">Scheduled Date</th>
+                    <th className="py-3 fw-semibold">Total Amount</th>
+                    <th className="py-3 fw-semibold">Payment Status</th>
                     <th className="py-3 fw-semibold">Status</th>
+
                     <th className="pe-4 py-3 fw-semibold text-center">Actions</th>
+                    <th className="py-3 fw-semibold">Add/view payment</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -431,7 +449,7 @@ const RepairOrderTable = () => {
                           <i className="fas fa-tools fa-3x mb-3"></i>
                           <p>{searchTerm || selectedStatus !== "all" || selectedOrderType !== "all" ? "No orders match your filters" : "No repair orders found"}</p>
                           {(searchTerm || selectedStatus !== "all" || selectedOrderType !== "all") && (
-                            <button 
+                            <button
                               className="btn btn-outline-primary mt-2"
                               onClick={() => {
                                 setSearchTerm("");
@@ -452,21 +470,21 @@ const RepairOrderTable = () => {
                         <td data-label="Order Code">
                           <span className="fw-semibold text-primary">{item.repairOrderCode}</span>
                         </td>
-                        <td data-label = "Device"> 
+                        <td data-label="Device">
                           <div>
                             <div className="fw-semibold">{item.deviceType}</div>
                             <small className="text-muted">{item.deviceModel}</small>
                           </div>
                         </td>
-                        <td data-label = "Fault">
+                        <td data-label="Fault">
                           <span className="text-muted" title={item.details}>
                             {item.details?.length > 50 ? `${item.details.substring(0, 50)}...` : item.details}
                           </span>
                         </td>
-                        <td data-label = "Type">
+                        <td data-label="Type">
                           <span className="badge bg-light text-dark">{item.repairOrderType}</span>
                         </td>
-                        <td data-label = "Scheduled Date">
+                        <td data-label="Scheduled Date">
                           <span className="text-muted">
                             {moment(item.reserveDate).format("MMM DD")}
                           </span>
@@ -475,11 +493,29 @@ const RepairOrderTable = () => {
                             {moment(item.reserveDate).format("h:mm A")}
                           </small>
                         </td>
-                        <td data-label = "Status">
+                        <td data-label="Total Amount">
+                          <strong>
+                            {
+                              paymentGetAllData?.data?.some(
+                                payment => payment.repairOrderId === item.repairOrderId
+                              )
+                                ? `₦${paymentGetAllData.data.find(
+                                  payment => payment.repairOrderId === item.repairOrderId
+                                ).totalAmount}`
+                                : "Pending"
+                            }
+                          </strong>
+
+                        </td>
+                        <td data-label="Payment Status">
+                          {getStatusBadge(item.paymentStatus || "Pending")} 
+                        </td>
+                        <td data-label="Status">
                           {getStatusBadge(item.status)}
                         </td>
+
                         <td className="pe-4 text-center">
-                          <select 
+                          <select
                             className="form-select form-select-sm"
                             onChange={(e) => handleUpdateKeys(e, item)}
                             style={{ minWidth: '150px' }}
@@ -494,6 +530,10 @@ const RepairOrderTable = () => {
                             <option value="settled">Mark as Settled</option>
                             <option value="cancel">Cancel Order</option>
                           </select>
+                        </td>
+                        <td data-label="Add/view payment" onClick={() => navigatePaymentData(item)} style={{ cursor: 'pointer' }}>
+                          <FaPlus />
+
                         </td>
                       </tr>
                     ))
@@ -514,7 +554,7 @@ const RepairOrderTable = () => {
                   <ul className="pagination mb-0">
                     {/* Previous Button */}
                     <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-                      <button 
+                      <button
                         className="page-link"
                         onClick={() => handlePageChange(currentPage - 1)}
                         disabled={currentPage === 1}
@@ -529,7 +569,7 @@ const RepairOrderTable = () => {
                         {page === '...' ? (
                           <span className="page-link">...</span>
                         ) : (
-                          <button 
+                          <button
                             className="page-link"
                             onClick={() => handlePageChange(page)}
                           >
@@ -541,7 +581,7 @@ const RepairOrderTable = () => {
 
                     {/* Next Button */}
                     <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-                      <button 
+                      <button
                         className="page-link"
                         onClick={() => handlePageChange(currentPage + 1)}
                         disabled={currentPage === totalPages}
@@ -586,8 +626,8 @@ const RepairOrderTable = () => {
         </Modal.Header>
         <Modal.Body>
           <div className="text-center">
-            <div className={`bg-${progressStatus === 'cancel' || progressStatus === 'irreparable' ? 'danger' : 'primary'} bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3`} 
-                 style={{ width: '60px', height: '60px' }}>
+            <div className={`bg-${progressStatus === 'cancel' || progressStatus === 'irreparable' ? 'danger' : 'primary'} bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3`}
+              style={{ width: '60px', height: '60px' }}>
               <i className={`fas fa-${progressStatus === 'cancel' ? 'times' : 'cog'} text-${progressStatus === 'cancel' || progressStatus === 'irreparable' ? 'danger' : 'primary'} fa-lg`}></i>
             </div>
             <h5>Update to {getActionLabel(progressStatus)}</h5>
@@ -600,8 +640,8 @@ const RepairOrderTable = () => {
           <Button variant="outline-secondary" onClick={() => setShowModal(false)}>
             Cancel
           </Button>
-          <Button 
-            variant={progressStatus === 'cancel' || progressStatus === 'irreparable' ? 'danger' : 'primary'} 
+          <Button
+            variant={progressStatus === 'cancel' || progressStatus === 'irreparable' ? 'danger' : 'primary'}
             onClick={handleUpdateDeviceData}
             disabled={loading}
           >
@@ -676,10 +716,10 @@ const RepairOrderTable = () => {
       </Modal>
 
 
-      <section style={{marginTop: "5%" }}>
-        <Footer/>
-            </section>
-      
+      <section style={{ marginTop: "5%" }}>
+        <Footer />
+      </section>
+
     </>
   );
 };

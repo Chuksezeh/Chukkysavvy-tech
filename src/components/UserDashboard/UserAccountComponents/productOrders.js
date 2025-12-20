@@ -550,10 +550,10 @@ const handleShowReviewModal = (id)=>{
                       {/* Action Buttons */}
                       <div className="order-actions">
                         <Button
-                          variant="outline-primary"
+                         
                           size="sm"
                           onClick={() => handleViewOrder(order)}
-                          className="action-btn"
+                          className="btn btn-primary"
                         >
                           <MdOutlineRemoveRedEye />
                           View Details, Tracking & Feedback

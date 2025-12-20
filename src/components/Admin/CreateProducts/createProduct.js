@@ -235,7 +235,7 @@ const CreateProduct = () => {
               {/* Product Name */}
               <div className="col-md-6">
                 <div className="form-group">
-                  <label>Product Name</label>
+                  <label>Product Name <span style={{color:"red"}}>*</span></label>
                   <input
                     placeholder="Enter product name"
                     className="form-control"
@@ -248,7 +248,7 @@ const CreateProduct = () => {
               {/* Category */}
               <div className="col-md-6">
                 <div className="form-group">
-                  <label>Category Name</label>
+                  <label>Category Name <span style={{color:"red"}}>*</span></label>
                   <select className="form-control" {...register("categoryId")}>
                     <option disabled>Select category</option>
                     {categoryData &&
@@ -264,7 +264,7 @@ const CreateProduct = () => {
               {/* Price & Purchase Price */}
               <div className="col-md-6">
                 <div className="form-group">
-                  <label>Product Price(selling price)</label>
+                  <label>Product Price(selling price) <span style={{color:"red"}}>*</span></label>
                   <input
                   placeholder="Enter product price- this is the actual price after discount"
                     className="form-control"
@@ -275,7 +275,7 @@ const CreateProduct = () => {
               </div>
               <div className="col-md-6">
                 <div className="form-group">
-                  <label>Market Price(higher than selling price)</label>
+                  <label>Market Price(higher or equal to selling price) <span style={{color:"red"}}>*</span></label>
                   <input
                   placeholder="Enter market price, including discount"
                     type="text"
@@ -289,7 +289,7 @@ const CreateProduct = () => {
               {/* Quantity & Discount */}
               <div className="col-md-6">
                 <div className="form-group">
-                  <label>Product Quantity</label>
+                  <label>Product Quantity <span style={{color:"red"}}>*</span></label>
                   <input
                   placeholder="Enter product quantity"
                     type="text"
@@ -314,7 +314,7 @@ const CreateProduct = () => {
                     className="form-control"
                     {...register("productType", { required: "Product type is required" })}
                   >
-                    <option disabled>Select Product Type</option>
+                    <option disabled>Select Product Type <span style={{color:"red"}}>*</span></option>
                     <option>Brand new</option>
                     <option>Second hand</option>
                     <option>Refurbished</option>
@@ -327,7 +327,7 @@ const CreateProduct = () => {
               {/* Company */}
               <div className="col-md-6">
                 <div className="form-group">
-                  <label>Select Company</label>
+                  <label>Select Company <span style={{color:"red"}}>*</span></label>
                   <select
                     className="form-control"
                     {...register("companyId", { required: "Company name is required" })}
@@ -347,7 +347,7 @@ const CreateProduct = () => {
 
                 <div className="col-md-12">
                 <div className="form-group">
-                  <label>Pay On Delivery</label>
+                  <label>Pay On Delivery <span style={{color:"red"}}>*</span></label>
                   <select
                     className="form-control"
                     {...register("payOnDelivery")}
@@ -364,7 +364,7 @@ const CreateProduct = () => {
               {/* Short & Full Description */}
               <div className="col-md-12">
                 <div className="form-group">
-                  <label>Short Description</label>
+                  <label>Short Description  <span style={{color:"red"}}>*</span></label>
                   <Controller
                     name="shortDiscription"
                     control={control}
@@ -383,7 +383,7 @@ const CreateProduct = () => {
               </div>
               <div className="col-md-12">
                 <div className="form-group">
-                  <label>Full Description</label>
+                  <label>Full Description <span style={{color:"red"}}>*</span></label>
                   <Controller
                     name="fullDiscription"
                     control={control}
@@ -404,7 +404,7 @@ const CreateProduct = () => {
               {/* File Upload with 2MB Validation */}
               <div className="col-md-12">
                 <div className="form-group">
-                  <label>Upload Product Images</label>
+                  <label>Upload Product Images <span style={{color:"red"}}>*</span></label>
                   <input
                     type="file"
                     multiple

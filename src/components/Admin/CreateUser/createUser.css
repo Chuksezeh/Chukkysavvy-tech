@@ -2,3 +2,17 @@
     border: rgba(100, 95, 95, 0.377) solid 1px;
     padding: 30px;
 }
+.picckBtnUser{
+    /* background-color: #4CAF50;  */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}

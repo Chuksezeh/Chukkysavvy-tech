@@ -277,8 +277,9 @@ const RepairOrders = (() => {
 
 
 
-
-
+const handleNavigateRepairCostPayment = (orderData) => {
+  navigate('/repair-cost-payment', { state: { orderData } });
+};
 
   return (
 
@@ -391,15 +392,24 @@ const RepairOrders = (() => {
                     {filteredActiveOrders.map((item) => (
                       <div key={item.repairOrderCode} className="order-card">
                         <Card.Body>
+                           <Badge bg={getStatusVariant(item.status)} className="status-badge">
+                              {item.status}
+                            </Badge>
                           <div className="order-header">
                             <div className="order-code">
                               <strong>{item.repairOrderCode}</strong>
                             </div>
-                            <Badge bg={getStatusVariant(item.status)} className="status-badge">
-                              {item.status}
-                            </Badge>
+
+                             <Button 
+                              variant="outline-primary" 
+                              size="sm"
+                              onClick={() => handleShowTrackOrder(item.repairOrderCode)}
+                            >
+                              Track Order
+                            </Button> 
+                            
                           </div>
-                          
+                         
                           <div className="order-details">
                             <div className="device-info">
                               <h6>{item.deviceType} {item.deviceModel}</h6>
@@ -436,11 +446,12 @@ const RepairOrders = (() => {
                             <Button 
                               variant="primary" 
                               size="sm"
-                              onClick={() => handleShowTrackOrder(item.repairOrderCode)}
+                              onClick={() => handleNavigateRepairCostPayment(item)}
                             >
-                              Track Order
+                              Cost/Payment
                             </Button>
                           </div>
+                         
                         </Card.Body>
                       </div>
                     ))}

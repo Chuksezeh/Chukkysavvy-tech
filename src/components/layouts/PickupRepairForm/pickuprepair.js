@@ -54,7 +54,8 @@ const PickupRepairForm = () => {
                 const deviceData = {
                     ...formData,
                     repairOrderType: "Pickup",
-                    status: "Processing"
+                    status: "Processing",
+                    paymentStatus: "Pending"
                 };
                 localStorage.setItem('pendingPickupOrder', JSON.stringify(deviceData));
                 setShowNoLogin(true);
@@ -134,7 +135,7 @@ const PickupRepairForm = () => {
                     </div>
 
                     {/* Pickup Benefits */}
-                    <div className="pickup-benefits">
+                    {/* <div className="pickup-benefits">
                         <div className="benefit-item">
                             <IoCar className="benefit-icon" />
                             <div className="benefit-text">Free Pickup Service</div>
@@ -147,7 +148,7 @@ const PickupRepairForm = () => {
                             <IoCheckmarkCircle className="benefit-icon" />
                             <div className="benefit-text">Quick Diagnosis</div>
                         </div>
-                    </div>
+                    </div> */}
 
                     <form onSubmit={handleSubmit(handleSubmitDeviceData)}>
                         <div className="form-grid">

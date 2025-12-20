@@ -136,7 +136,7 @@
 }
 
 .main-content {
-	background-color: #fafafa;
+	/* background-color: #fafafa; */
 	width: calc(100% - 250px);
 	height: 100%;
 	margin-left: 250px;

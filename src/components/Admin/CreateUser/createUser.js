@@ -101,13 +101,26 @@ const CreateUser = (() => {
 		<>
 			<AdminDashboard />
 
-			<div className="header-bar">
+			 <div className="container-fluid py-4" style={{ backgroundColor: '#f8f9fa', marginTop: '-20px' }}>
+        <div className="row align-items-center">
+          <div className="col">
+            <nav aria-label="breadcrumb">
+              <ol className="breadcrumb mb-0">
+                <li className="breadcrumb-item"><a href="/admin-dashboard-card" className="text-decoration-none">Dashboard</a></li>
+                <li className="breadcrumb-item"><a  className="text-decoration-none">Users</a></li>
+                <li className="breadcrumb-item active text-dark">Create Admin User </li>
+              </ol>
+            </nav>
+               <h1 className="h3 mb-0 mt-2 text-dark">Create Admin User</h1>
+            <p className="text-muted mb-0">Create all admin users and their permissions</p>
+          </div>
+              <div className="col-auto">
+          </div>
+        </div>
+      </div>
+      <br/>
 
-				<ul className="action-bar">
-
-					<li> <a href="/admin-dashboard-card">Dashboard</a>   / Users / <span className="addash"> Create User </span></li>
-				</ul>
-			</div>
+			
 
 
 			<div className="container">
@@ -277,11 +290,11 @@ const CreateUser = (() => {
 						}
 
 						<div className="row">
-							<div className="col-md-4">
+							<div className="col-md-12">
 
 
 								{
-									loading ? <button > <span class="loader"></span></button> : <button className="picckBtn" type="submit">Submit</button>
+									loading ? <button  className="picckBtnUser btn btn-primary" > <span class="loader"></span></button> : <button className="picckBtnUser btn btn-primary" type="submit">Create Admin User</button>
 								}
 
 							</div>

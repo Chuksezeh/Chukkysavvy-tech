@@ -72,7 +72,8 @@ const IphonePickupRepair = () => {
                     deviceType: "iPhone",
                     deviceModel: selectedModel,
                     repairOrderType: "Pickup",
-                    status: "Processing"
+                    status: "Processing",
+                    paymentStatus: "Pending"
                 };
                 localStorage.setItem('pendingRepairOrder', JSON.stringify(deviceData));
                 setShowNoLogin(true);

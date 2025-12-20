@@ -1,0 +1,103 @@
+
+
+
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.panel-wrapper {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+}
+
+.panel-head h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.panel-head p {
+  color: #666;
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+.panel-body {
+  margin-top: 20px;
+}
+
+.device-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  background: #f9fafb;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 25px;
+  font-size: 14px;
+}
+
+.cost-breakdown h3 {
+  margin-bottom: 15px;
+}
+
+.cost-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  font-size: 15px;
+}
+
+.cost-row.total {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.payment-section {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.pay-btn {
+  background: #0f172a;
+  color: #fff;
+  border: none;
+  padding: 14px 30px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 320px;
+}
+
+.pay-btn:hover {
+  background: #1e293b;
+}
+
+.payment-note {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #777;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .panel-head h2 {
+    font-size: 18px;
+  }
+  .proceed-payment-btn {
+    width: 100%;
+    font-size: 14px;
+    padding: 12px 20px;
+  }
+
+  .cost-row {
+    font-size: 14px;
+  }
+}
+

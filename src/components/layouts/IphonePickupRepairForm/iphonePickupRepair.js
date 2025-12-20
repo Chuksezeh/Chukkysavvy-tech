@@ -71,7 +71,8 @@ const IphoneRepairForm = () => {
                 deviceModel: selectedModel,
                 repairOrderType: "Instore Appointment",
                 userId: users?.userId,
-                status: "Processing"
+                status: "Processing",
+                paymentStatus: "Pending"
             };
 
             const response = await chukkytechAxios.post('repair/repairorder', deviceData);
