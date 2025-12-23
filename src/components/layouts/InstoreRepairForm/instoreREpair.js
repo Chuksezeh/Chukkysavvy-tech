@@ -13,13 +13,13 @@ import { IoCalendar, IoPhonePortrait, IoLocation, IoDocumentText } from "react-i
 import Receipt from "../Receipt/repairOrderReceipt";
 
 const InstoreRepairForm = () => {
-    const { 
-        register, 
-        handleSubmit, 
+    const {
+        register,
+        handleSubmit,
         setValue,
-        formState: { errors } 
+        formState: { errors }
     } = useForm();
-    
+
     const [reserveDate, setReserveDate] = useState(null);
     const [loading, setLoading] = useState(false);
     const [successMessage, setSuccessMessage] = useState(false);
@@ -29,9 +29,9 @@ const InstoreRepairForm = () => {
     const [showNoLogin, setShowNoLogin] = useState(false);
     const [orderData, setOrderData] = useState(null);
     const [showForm, setShowForm] = useState(true);
-    
+
     const navigate = useNavigate();
-    
+
     const userData = JSON.parse(localStorage.getItem('userInfo') || "null");
     const encodedEmail = encodeURIComponent(userData?.email);
     const { data: users, isPending: isPendingUsers } = useGetData(`/auth/getUser/${encodedEmail}`);
@@ -57,12 +57,12 @@ const InstoreRepairForm = () => {
             };
 
             const response = await chukkytechAxios.post('repair/repairorder', deviceData);
-            
+
             setOrderData(response.data?.repairOrder);
             setSuccessText(response.data?.message);
             setSuccessMessage(true);
             setShowForm(false);
-            
+
         } catch (err) {
             console.error("API error:", err);
             setErrorMessage(true);
@@ -100,11 +100,11 @@ const InstoreRepairForm = () => {
                     <div className="form-header">
                         <h2>Book In-Store Repair</h2>
                         <p>
-                            Reserve a date and visit our service center at your convenience — 
+                            Reserve a date and visit our service center at your convenience —
                             we'll be ready to assist you.
                         </p>
                     </div>
-                     {/* <div className="container mt-3">
+                    {/* <div className="container mt-3">
                     <div className="alert alert-warning alert-dismissible fade show" role="alert">
                         Delivery and pickup are currently available in Abuja only. We’re working to bring our services to more cities soon — stay tuned! 
 
@@ -119,7 +119,7 @@ const InstoreRepairForm = () => {
                                     <IoPhonePortrait className="me-2" />
                                     Device Name
                                 </label>
-                                <input 
+                                <input
                                     type="text"
                                     className="form-input"
                                     placeholder="e.g., Samsung Galaxy S21"
@@ -136,7 +136,7 @@ const InstoreRepairForm = () => {
 
                             <div className="form-group">
                                 <label className="form-label">Device Model</label>
-                                <input 
+                                <input
                                     type="text"
                                     className="form-input"
                                     placeholder="e.g., SM-G991B"
@@ -151,12 +151,13 @@ const InstoreRepairForm = () => {
                                 )}
                             </div>
 
-                            {/* Contact Information */}
+                            {/* Reservation Date & Time */}
                             <div className="form-group">
                                 <label className="form-label">
                                     <IoCalendar className="me-2" />
-                                    Reservation Date & Time
+                                    Preferred Pickup / Repair Date & Time
                                 </label>
+
                                 <DatePicker
                                     selected={reserveDate}
                                     onChange={(date) => {
@@ -164,13 +165,19 @@ const InstoreRepairForm = () => {
                                         setValue("reserveDate", date);
                                     }}
                                     showTimeSelect
-                                    timeFormat="HH:mm"
-                                    timeIntervals={15}
-                                    dateFormat="MMMM d, yyyy h:mm aa"
+                                    timeFormat="hh:mm aa"           // AM / PM
+                                    timeIntervals={30}              // Easier selection
+                                    dateFormat="MMMM d, yyyy  •  h:mm aa"
                                     minDate={new Date()}
                                     className="form-input"
-                                    placeholderText="Select date and time"
+                                    placeholderText="Select date, then choose time (AM / PM)"
+                                    popperPlacement="bottom-start"
                                 />
+
+                                <small className="text-muted d-block mt-1">
+                                    Example: <strong>June 20, 2025 • 10:30 AM</strong>
+                                </small>
+
                                 {errors.reserveDate && (
                                     <span className="text-danger small mt-1 d-block">
                                         {errors.reserveDate.message}
@@ -178,12 +185,13 @@ const InstoreRepairForm = () => {
                                 )}
                             </div>
 
+
                             <div className="form-group">
                                 <label className="form-label">
                                     <IoPhonePortrait className="me-2" />
                                     Phone Number
                                 </label>
-                                <input 
+                                <input
                                     type="tel"
                                     className="form-input"
                                     placeholder="Your phone number"
@@ -204,7 +212,7 @@ const InstoreRepairForm = () => {
                                     <IoLocation className="me-2" />
                                     Service Center
                                 </label>
-                                <select 
+                                <select
                                     className="form-input"
                                     {...register("pickUpAddress", {
                                         required: 'Please select a service center'
@@ -230,7 +238,7 @@ const InstoreRepairForm = () => {
                                     <IoDocumentText className="me-2" />
                                     Problem Description
                                 </label>
-                                <textarea 
+                                <textarea
                                     className="form-input form-textarea"
                                     placeholder="Please describe the issue in detail for direct diagnosis and immediate fix..."
                                     {...register("details", {
@@ -247,15 +255,15 @@ const InstoreRepairForm = () => {
 
                         {/* Submit Button */}
                         <div className="submit-section">
-                            <button 
-                                type="submit" 
+                            <button
+                                type="submit"
                                 className="submit-btn"
                                 disabled={loading}
                             >
                                 {loading ? (
                                     <>
                                         <span className="loader"></span>
-                                    
+
                                     </>
                                 ) : (
                                     "Book Appointment"
@@ -280,7 +288,7 @@ const InstoreRepairForm = () => {
                 </Modal.Header>
                 <Modal.Body>
                     <p>
-                        Please log in to book your repair appointment. 
+                        Please log in to book your repair appointment.
                         This helps us keep track of your service history and provide better support.
                     </p>
                 </Modal.Body>

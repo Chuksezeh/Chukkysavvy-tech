@@ -223,7 +223,7 @@ const LaptopBookDetails = (() => {
             onHide={handleClosePickupForm}
             backdrop="static"
             keyboard={false}
-            size="lg"
+            size="xl"
             aria-labelledby="contained-modal-title-vcenter"
 
          >

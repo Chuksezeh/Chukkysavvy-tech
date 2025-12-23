@@ -10,7 +10,7 @@ import { SlPeople } from "react-icons/sl";
 import { IoIosPeople } from "react-icons/io";
 import { IoPersonAddOutline } from "react-icons/io5";
 import { GoListOrdered } from "react-icons/go";
-import { MdOutlineCreateNewFolder, MdOutlineKeyboardArrowRight, MdOutlineLogout, MdProductionQuantityLimits } from "react-icons/md";
+import { MdOutlineCreateNewFolder, MdOutlineKeyboardArrowRight, MdOutlineLogout, MdPlaylistAdd, MdProductionQuantityLimits } from "react-icons/md";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FaComment, FaLocationDot, FaMagnifyingGlassLocation } from "react-icons/fa6";
@@ -18,6 +18,9 @@ import { CiCircleList } from "react-icons/ci";
 import { TbCategoryFilled, TbCategoryPlus } from "react-icons/tb";
 import { PiOfficeChairFill } from "react-icons/pi";
 import useGetData from "../Utility/getFunction";
+import { HiDocumentReport } from "react-icons/hi";
+import { LuListChecks } from "react-icons/lu";
+
 
 
 
@@ -259,6 +262,28 @@ const AdminDashboard = () => {
                                     </li>
                                 </NavText>
                             </NavItem> */}
+
+                            </NavItem>
+
+                            <NavItem eventKey="11">
+                                <NavIcon> <HiDocumentReport className="side-main-icon" />  </NavIcon>
+                                <NavText>Reports </NavText>
+                                <NavItem eventKey="11-1">
+                                    <NavText className="move-side">
+                                        <li className="shift-nav p-1" onClick={() => navigate("/repair-order-report")}>
+                                            <LuListChecks className="inicon" size={18} />
+                                            <span className="p-2" style={{ fontSize: "16px" }}>Repair Order Report</span>
+                                        </li>
+                                    </NavText>
+                                </NavItem>
+                                <NavItem eventKey="11-2">
+                                    <NavText className="move-side">
+                                        <li className="shift-nav  p-1" onClick={() => navigate("/product-purchase-report")}>
+                                            <CiCircleList className="inicon" size={18} />
+                                            <span className="p-2" style={{ fontSize: "16px" }}>Product Purchase Report</span>
+                                        </li>
+                                    </NavText>
+                                </NavItem>
 
                             </NavItem>
 

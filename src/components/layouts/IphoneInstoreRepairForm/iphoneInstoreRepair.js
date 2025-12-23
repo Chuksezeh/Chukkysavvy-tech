@@ -9,25 +9,25 @@ import "react-datepicker/dist/react-datepicker.css";
 import useGetData from "../../Utility/getFunction";
 import { Button } from "react-bootstrap";
 import "./iphoneInstoreRepair.css"
-import { 
-  IoPhonePortrait, 
-  IoCalendar, 
-  IoLocation, 
-  IoDocumentText,
-  IoTimer,
-  IoCar,
-  IoHome
+import {
+    IoPhonePortrait,
+    IoCalendar,
+    IoLocation,
+    IoDocumentText,
+    IoTimer,
+    IoCar,
+    IoHome
 } from "react-icons/io5";
 import Receipt from "../Receipt/repairOrderReceipt";
 
 const IphonePickupRepair = () => {
-    const { 
-        register, 
-        handleSubmit, 
+    const {
+        register,
+        handleSubmit,
         setValue,
-        formState: { errors } 
+        formState: { errors }
     } = useForm();
-    
+
     const [reserveDate, setReserveDate] = useState(null);
     const [loading, setLoading] = useState(false);
     const [successMessage, setSuccessMessage] = useState(false);
@@ -38,9 +38,9 @@ const IphonePickupRepair = () => {
     const [orderData, setOrderData] = useState(null);
     const [showForm, setShowForm] = useState(true);
     const [selectedModel, setSelectedModel] = useState("");
-    
+
     const navigate = useNavigate();
-    
+
     const userData = JSON.parse(localStorage.getItem('userInfo') || "null");
     const encodedEmail = encodeURIComponent(userData?.email);
     const { data: users, isPending: isPendingUsers } = useGetData(`/auth/getUser/${encodedEmail}`);
@@ -48,15 +48,15 @@ const IphonePickupRepair = () => {
     // iPhone models organized by generation
     const iphoneModels = [
         "iPhone 4", "iPhone 4S", "iPhone 5", "iPhone 5S", "iPhone 5C",
-        "iPhone 6", "iPhone 6 Plus", "iPhone 6S", "iPhone 6S Plus", 
-        "iPhone SE (1st gen)", "iPhone 7", "iPhone 7 Plus", "iPhone 8", 
+        "iPhone 6", "iPhone 6 Plus", "iPhone 6S", "iPhone 6S Plus",
+        "iPhone SE (1st gen)", "iPhone 7", "iPhone 7 Plus", "iPhone 8",
         "iPhone 8 Plus", "iPhone X", "iPhone XS", "iPhone XR", "iPhone XS Max",
         "iPhone 11", "iPhone 11 Pro", "iPhone 11 Pro Max", "iPhone SE (2nd gen)",
         "iPhone 12", "iPhone 12 mini", "iPhone 12 Pro", "iPhone 12 Pro Max",
         "iPhone 13", "iPhone 13 mini", "iPhone 13 Pro", "iPhone 13 Pro Max",
-        "iPhone SE (3rd gen)", "iPhone 14", "iPhone 14 Plus", "iPhone 14 Pro", 
-        "iPhone 14 Pro Max", "iPhone 15", "iPhone 15 Plus", "iPhone 15 Pro", 
-        "iPhone 15 Pro Max", "iPhone 16", "iPhone 16 Pro", "iPhone 16 Plus", 
+        "iPhone SE (3rd gen)", "iPhone 14", "iPhone 14 Plus", "iPhone 14 Pro",
+        "iPhone 14 Pro Max", "iPhone 15", "iPhone 15 Plus", "iPhone 15 Pro",
+        "iPhone 15 Pro Max", "iPhone 16", "iPhone 16 Pro", "iPhone 16 Plus",
         "iPhone 16 Pro Max", "iPhone 17", "iPhone 17 Air", "iPhone 17 Pro", "iPhone 17 Pro Max"
     ];
 
@@ -91,15 +91,15 @@ const IphonePickupRepair = () => {
             };
 
             const response = await chukkytechAxios.post('repair/repairorder', deviceData);
-            
+
             setOrderData(response.data?.repairOrder);
             setSuccessText(response.data?.message);
             setSuccessMessage(true);
             setShowForm(false);
-            
+
             // Clear pending order from storage
             localStorage.removeItem('pendingRepairOrder');
-            
+
         } catch (err) {
             console.error("API error:", err);
             setErrorMessage(true);
@@ -147,13 +147,13 @@ const IphonePickupRepair = () => {
                             iPhone Pickup Service
                         </h2>
                         <p>
-                            Schedule a convenient pickup for your iPhone repair. 
+                            Schedule a convenient pickup for your iPhone repair.
                             We'll come to you, diagnose the issue, and provide expert repair service.
                         </p>
                     </div>
-                     <div className="container mt-3">
-                    <div className="alert alert-warning alert-dismissible fade show" role="alert">
-                        Delivery and pickup are currently available in Abuja only. We’re working to bring our services to more cities soon — stay tuned! 
+                    <div className="container mt-3">
+                        <div className="alert alert-warning alert-dismissible fade show" role="alert">
+                            Delivery and pickup are currently available in Abuja only. We’re working to bring our services to more cities soon — stay tuned!
 
                         </div>
                     </div>
@@ -178,13 +178,13 @@ const IphonePickupRepair = () => {
                         {/* Device Type (Fixed as iPhone) */}
                         <div className="form-group">
                             <label className="form-label">Device Type</label>
-                            <input 
+                            <input
                                 type="text"
                                 className="form-input"
                                 value="iPhone"
                                 readOnly
                                 {...register("deviceType")}
-                                style={{background: '#e9ecef', color: '#6c757d', fontWeight: '600'}}
+                                style={{ background: '#e9ecef', color: '#6c757d', fontWeight: '600' }}
                             />
                         </div>
 
@@ -217,12 +217,13 @@ const IphonePickupRepair = () => {
                             )}
                         </div>
 
-                        {/* Preferred Pickup Time */}
+                        {/* Reservation Date & Time */}
                         <div className="form-group">
                             <label className="form-label">
                                 <IoCalendar className="me-2" />
-                                Preferred Pickup Time
+                                Preferred Pickup / Repair Date & Time
                             </label>
+
                             <DatePicker
                                 selected={reserveDate}
                                 onChange={(date) => {
@@ -230,13 +231,19 @@ const IphonePickupRepair = () => {
                                     setValue("reserveDate", date);
                                 }}
                                 showTimeSelect
-                                timeFormat="HH:mm"
-                                timeIntervals={30}
-                                dateFormat="MMMM d, yyyy h:mm aa"
+                                timeFormat="hh:mm aa"           // AM / PM
+                                timeIntervals={30}              // Easier selection
+                                dateFormat="MMMM d, yyyy  •  h:mm aa"
                                 minDate={new Date()}
                                 className="form-input"
-                                placeholderText="Select your preferred pickup time"
+                                placeholderText="Select date, then choose time (AM / PM)"
+                                popperPlacement="bottom-start"
                             />
+
+                            <small className="text-muted d-block mt-1">
+                                Example: <strong>June 20, 2025 • 10:30 AM</strong>
+                            </small>
+
                             {errors.reserveDate && (
                                 <span className="text-danger small mt-1 d-block">
                                     {errors.reserveDate.message}
@@ -244,13 +251,14 @@ const IphonePickupRepair = () => {
                             )}
                         </div>
 
+
                         {/* Contact Information */}
                         <div className="form-group">
                             <label className="form-label">
                                 <IoPhonePortrait className="me-2" />
                                 Contact Number
                             </label>
-                            <input 
+                            <input
                                 type="tel"
                                 className="form-input"
                                 placeholder="Your phone number for updates"
@@ -275,7 +283,7 @@ const IphonePickupRepair = () => {
                                 <IoLocation className="me-2" />
                                 Pickup Address
                             </label>
-                            <textarea 
+                            <textarea
                                 className="form-input address-input"
                                 placeholder="Enter your complete address for pickup (include apartment/unit number, landmarks, etc.)"
                                 {...register("pickUpAddress", {
@@ -299,7 +307,7 @@ const IphonePickupRepair = () => {
                                 <IoDocumentText className="me-2" />
                                 Repair Details
                             </label>
-                            <textarea 
+                            <textarea
                                 className="form-input form-textarea"
                                 placeholder="Describe the issue with your iPhone (e.g., screen damage, battery issues, water damage, etc.)"
                                 {...register("details", {
@@ -318,15 +326,15 @@ const IphonePickupRepair = () => {
                         </div>
 
                         {/* Submit Button */}
-                        <button 
-                            type="submit" 
+                        <button
+                            type="submit"
                             className="pickup-submit-btn"
                             disabled={loading || !selectedModel}
                         >
                             {loading ? (
                                 <>
                                     <span className="loader"></span>
-                                   
+
                                 </>
                             ) : (
                                 "Schedule  Pickup"
@@ -350,7 +358,7 @@ const IphonePickupRepair = () => {
                 </Modal.Header>
                 <Modal.Body>
                     <p>
-                        Please log in to schedule your iPhone pickup service. 
+                        Please log in to schedule your iPhone pickup service.
                         We'll save your repair details so you can continue right where you left off after logging in.
                     </p>
                     <div className="text-center mt-3">

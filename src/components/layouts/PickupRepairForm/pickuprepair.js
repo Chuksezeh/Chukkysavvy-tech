@@ -9,25 +9,25 @@ import "react-datepicker/dist/react-datepicker.css";
 import useGetData from "../../Utility/getFunction";
 import { Button } from "react-bootstrap";
 import "./pickupRepair.css";
-import { 
-  IoPhonePortrait, 
-  IoCalendar, 
-  IoLocation, 
-  IoDocumentText,
-  IoCar,
-  IoTime,
-  IoCheckmarkCircle
+import {
+    IoPhonePortrait,
+    IoCalendar,
+    IoLocation,
+    IoDocumentText,
+    IoCar,
+    IoTime,
+    IoCheckmarkCircle
 } from "react-icons/io5";
 import Receipt from "../Receipt/repairOrderReceipt";
 
 const PickupRepairForm = () => {
-    const { 
-        register, 
-        handleSubmit, 
+    const {
+        register,
+        handleSubmit,
         setValue,
-        formState: { errors } 
+        formState: { errors }
     } = useForm();
-    
+
     const [reserveDate, setReserveDate] = useState(null);
     const [loading, setLoading] = useState(false);
     const [successMessage, setSuccessMessage] = useState(false);
@@ -37,9 +37,9 @@ const PickupRepairForm = () => {
     const [showNoLogin, setShowNoLogin] = useState(false);
     const [orderData, setOrderData] = useState(null);
     const [showForm, setShowForm] = useState(true);
-    
+
     const navigate = useNavigate();
-    
+
     const userData = JSON.parse(localStorage.getItem('userInfo') || "null");
     const encodedEmail = encodeURIComponent(userData?.email);
     const { data: users, isPending: isPendingUsers } = useGetData(`/auth/getUser/${encodedEmail}`);
@@ -71,15 +71,15 @@ const PickupRepairForm = () => {
             };
 
             const response = await chukkytechAxios.post('repair/repairorder', deviceData);
-            
+
             setOrderData(response.data?.repairOrder);
             setSuccessText(response.data?.message);
             setSuccessMessage(true);
             setShowForm(false);
-            
+
             // Clear pending order
             localStorage.removeItem('pendingPickupOrder');
-            
+
         } catch (err) {
             console.error("API error:", err);
             setErrorMessage(true);
@@ -122,14 +122,14 @@ const PickupRepairForm = () => {
                             Schedule Device Pickup
                         </h2>
                         <p>
-                            Provide your device details and we'll pick it up from your location. 
+                            Provide your device details and we'll pick it up from your location.
                             Our team will contact you to arrange a convenient pickup time.
                         </p>
                     </div>
 
-                     <div className="container mt-3">
-                    <div className="alert alert-warning alert-dismissible fade show" role="alert">
-                        Delivery and pickup are currently available in Abuja only. We’re working to bring our services to more cities soon — stay tuned! 
+                    <div className="container mt-3">
+                        <div className="alert alert-warning alert-dismissible fade show" role="alert">
+                            Delivery and pickup are currently available in Abuja only. We’re working to bring our services to more cities soon — stay tuned!
 
                         </div>
                     </div>
@@ -158,7 +158,7 @@ const PickupRepairForm = () => {
                                     <IoPhonePortrait className="me-2" />
                                     Device Type
                                 </label>
-                                <input 
+                                <input
                                     type="text"
                                     className="form-input"
                                     placeholder="e.g., Samsung,Tecno, Laptop"
@@ -175,7 +175,7 @@ const PickupRepairForm = () => {
 
                             <div className="form-group">
                                 <label className="form-label">Device Model</label>
-                                <input 
+                                <input
                                     type="text"
                                     className="form-input"
                                     placeholder="e.g., Galaxy S21, Tecno cc6"
@@ -190,12 +190,13 @@ const PickupRepairForm = () => {
                                 )}
                             </div>
 
-                            {/* Contact Information */}
+                            {/* Reservation Date & Time */}
                             <div className="form-group">
                                 <label className="form-label">
                                     <IoCalendar className="me-2" />
-                                    Preferred Pickup Time
+                                    Preferred Pickup / Repair Date & Time
                                 </label>
+
                                 <DatePicker
                                     selected={reserveDate}
                                     onChange={(date) => {
@@ -203,13 +204,19 @@ const PickupRepairForm = () => {
                                         setValue("reserveDate", date);
                                     }}
                                     showTimeSelect
-                                    timeFormat="HH:mm"
-                                    timeIntervals={30}
-                                    dateFormat="MMMM d, yyyy h:mm aa"
+                                    timeFormat="hh:mm aa"           // AM / PM
+                                    timeIntervals={30}              // Easier selection
+                                    dateFormat="MMMM d, yyyy  •  h:mm aa"
                                     minDate={new Date()}
                                     className="form-input"
-                                    placeholderText="Choose preferred pickup time"
+                                    placeholderText="Select date, then choose time (AM / PM)"
+                                    popperPlacement="bottom-start"
                                 />
+
+                                <small className="text-muted d-block mt-1">
+                                    Example: <strong>June 20, 2025 • 10:30 AM</strong>
+                                </small>
+
                                 {errors.reserveDate && (
                                     <span className="text-danger small mt-1 d-block">
                                         {errors.reserveDate.message}
@@ -222,7 +229,7 @@ const PickupRepairForm = () => {
                                     <IoPhonePortrait className="me-2" />
                                     Contact Number
                                 </label>
-                                <input 
+                                <input
                                     type="tel"
                                     className="form-input"
                                     placeholder="Your phone number for updates"
@@ -247,7 +254,7 @@ const PickupRepairForm = () => {
                                     <IoLocation className="me-2" />
                                     Pickup Address
                                 </label>
-                                <textarea 
+                                <textarea
                                     className="form-input address-textarea"
                                     placeholder="Enter your complete address for pickup (include apartment/unit number, landmarks, etc.)"
                                     {...register("pickUpAddress", {
@@ -271,7 +278,7 @@ const PickupRepairForm = () => {
                                     <IoDocumentText className="me-2" />
                                     Repair Details
                                 </label>
-                                <textarea 
+                                <textarea
                                     className="form-input form-textarea"
                                     placeholder="Please describe the issue with your device in detail (e.g., screen not working, battery draining fast, water damage, etc.)"
                                     {...register("details", {
@@ -291,21 +298,21 @@ const PickupRepairForm = () => {
                         </div>
 
                         {/* Submit Button */}
-                         <div className="submit-section">
-                        <button 
-                            type="submit" 
-                            className="pickup-submit-btn"
-                            disabled={loading}
-                        >
-                            {loading ? (
-                                <>
-                                    <span className="loader"></span>
-                                    
-                                </>
-                            ) : (
-                                "Schedule  Pickup"
-                            )}
-                        </button>
+                        <div className="submit-section">
+                            <button
+                                type="submit"
+                                className="pickup-submit-btn"
+                                disabled={loading}
+                            >
+                                {loading ? (
+                                    <>
+                                        <span className="loader"></span>
+
+                                    </>
+                                ) : (
+                                    "Schedule  Pickup"
+                                )}
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -325,7 +332,7 @@ const PickupRepairForm = () => {
                 </Modal.Header>
                 <Modal.Body>
                     <p>
-                        Please log in to schedule your device pickup. 
+                        Please log in to schedule your device pickup.
                         We'll save your repair details so you can continue right where you left off after logging in.
                     </p>
                     <div className="text-center mt-3">

@@ -673,9 +673,17 @@ const handleShowReviewModal = (id)=>{
                                 </span>
                               )}
                             </div>
-                            <div className="step-description">
+                              {
+                                step.completed &&  <div className="step-description">
                               {step.description}
                             </div>
+                              }
+                               {
+                                !step.completed &&  <div className="">
+                               pending...
+                            </div>
+                              }
+                           
                             {step.key === 'pending' && selectedOrder.created_date && (
                               <div className="step-time">
                                 {formatDate(selectedOrder.created_date)}

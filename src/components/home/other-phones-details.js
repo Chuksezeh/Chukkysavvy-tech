@@ -184,7 +184,7 @@ useEffect(() => {
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
-        size="lg"
+        size="xl"
         aria-labelledby="contained-modal-title-vcenter"
            
       >

@@ -77,6 +77,16 @@ const SearchResults = () => {
     navigate(`/product-details/${productId}`);
   };
 
+  const formatCurrency = (amount) => {
+  return new Intl.NumberFormat("en-NG", {
+    style: "currency",
+    currency: "NGN",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(amount);
+};
+
+
   // Skeleton Loader Component
   const ProductSkeleton = () => (
     <div className="col hp">
@@ -212,7 +222,7 @@ const SearchResults = () => {
                     <div className="">
                       <div className="clearfix ">
                         <span className="float-start badge  price-badge">
-                          ₦{parseFloat(product.productPrice).toFixed(2)}
+                          {formatCurrency(product.productPrice)}
                         </span>
                       </div>
 

@@ -123,13 +123,50 @@ const NavtrackRepair = () => {
   const latestOrder = sortedOrders[sortedOrders.length - 1];
 
   const stages = [
-    { name: "Order Placed", status: "Processing", icon: <FaClipboardList />, date: null, description: "Your repair order has been received" },
-    { name: "Device Picked Up", status: "pickedUp", icon: <FaTruckPickup />, date: null, description: "Your device has been collected" },
-    { name: "Repair in Progress", status: "fixing", icon: <FaTools />, date: null, description: "Our technicians are working on your device" },
-    { name: "Repair Completed", status: "fixed", icon: <FaTruckMoving />, date: null, description: "Your device has been repaired" },
-    { name: "Ready for Delivery", status: "delivered", icon: <FaCheckCircle />, date: null, description: "Your device is ready for delivery" },
-    { name: "Order Settled", status: "settled", icon: <IoCheckmarkDoneOutline />, date: null, description: "Repair process completed" },
-  ];
+  {
+    name: "Order Placed",
+    status: "Processing",
+    icon: <FaClipboardList />,
+    date: null,
+    description: "We have received your repair request and are preparing your order."
+  },
+  {
+    name: "Device Picked Up",
+    status: "pickedUp",
+    icon: <FaTruckPickup />,
+    date: null,
+    description: "Your device has been successfully picked up and is on its way to our service center."
+  },
+  {
+    name: "Repair in Progress",
+    status: "fixing",
+    icon: <FaTools />,
+    date: null,
+    description: "Our technicians are currently diagnosing and repairing your device."
+  },
+  {
+    name: "Repair Completed",
+    status: "fixed",
+    icon: <FaTruckMoving />,
+    date: null,
+    description: "The repair work has been completed and your device has passed quality checks."
+  },
+  {
+    name: "Ready for Delivery",
+    status: "delivered",
+    icon: <FaCheckCircle />,
+    date: null,
+    description: "Your device is ready and will be delivered to you or available for pickup."
+  },
+  {
+    name: "Order Settled",
+    status: "settled",
+    icon: <IoCheckmarkDoneOutline />,
+    date: null,
+    description: "The repair process is fully completed and your order has been successfully closed."
+  }
+];
+
 
   const updatedStages = stages.map((stage) => {
     const matchingOrder = sortedOrders.find((order) => order.status === stage.status);
@@ -301,7 +338,7 @@ const handleCall = () => {
                 <div className="order-badge">
                   <img src={logo} alt="Chukkytech" className="order-logo" />
                 </div>
-                <div className="order-info">
+                <div className="order-info " style={{borderLeft: `4px solid ${getStatusColor(latestOrder?.status)}`, paddingLeft: '10px'}}>
                   <h3>{getRepairData?.deviceType} {getRepairData?.deviceModel}</h3>
                   <p className="order-code">Order: {getRepairData?.repairOrderCode}</p>
                   <div className="order-meta">
@@ -318,7 +355,13 @@ const handleCall = () => {
                 <h4 className="timeline-title">Repair Progress</h4>
                 <div className="timeline-track">
                   {updatedStages.map((stage, index) => (
-                    <div key={index} className={`timeline-item ${stage.isCompleted ? 'completed' : ''} ${stage.isActive ? 'active' : ''}`}>
+                   <div
+  key={index}
+  className={`timeline-item 
+    ${stage.isCompleted ? 'completed' : 'pending'} 
+    ${stage.isActive ? 'active' : ''}`}
+>
+
                       <div className="timeline-marker">
                         <div className="marker-icon">
                           {stage.icon}
@@ -327,16 +370,21 @@ const handleCall = () => {
                           <div className="timeline-connector"></div>
                         )}
                       </div>
-                      <div className="timeline-content">
+                      <div className="timeline-content " style={{ paddingLeft: '10px'}}>
                         <div className="stage-header">
                           <h5 className="stage-name">{stage.name}</h5>
                           {stage.isActive && <span className="current-badge">Current</span>}
                         </div>
-                        <p className="stage-description">{stage.description}</p>
+{(stage.isCompleted || stage.isActive) && (
+  <p className="stage-description">
+    {stage.description}
+  </p>
+)}
+
                         <p className="stage-date">
                           {stage.date ? (
                             <span className="date-completed">
-                              Completed: {moment(stage.date).format("MMM D, YYYY [at] h:mm A")}
+                            {moment(stage.date).format("MMM D, YYYY [at] h:mm A")}
                             </span>
                           ) : (
                             <span className="date-pending">Pending</span>

@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { chukkytechAxios } from "../../Utility/axios";
 import useGetData from "../../Utility/getFunction";
 import { Button, Modal } from "react-bootstrap";
+import { MdKeyboardBackspace } from "react-icons/md";
 
 const AddViewPayment = () => {
 
@@ -19,6 +20,9 @@ const AddViewPayment = () => {
     const [paymentGetData, setPaymentGetData] = useState('');
     const [isPending, setIsPending] = useState(false);
     const [errorMessageDisplay, setErrorMessageDisplay] = useState(false);
+    const [showUpdateModal, setShowUpdateModal] = useState(false);
+    const [pendingPaymentData, setPendingPaymentData] = useState(false);
+    const [showGoBack, setShowGoBack] = useState(false);
 
     const [paymentData, setPaymentData] = useState({
         inspectionFee: "",
@@ -35,6 +39,8 @@ const AddViewPayment = () => {
     const [pickupFee, setPickupFee] = useState("");
     const [deliveryFee, setDeliveryFee] = useState("");
     const [adminNote, setAdminNote] = useState("");
+    //  const [paymentData, setPaymentData] = useState("");
+    const [isPendingPayment, setIsPendingPayment] = useState(false);
 
     const { state } = location;
 
@@ -77,7 +83,7 @@ const AddViewPayment = () => {
                 'repairPayment/sendPayment',
                 paymentDataToSend
             );
-             setLoading(false);
+            setLoading(false);
             setSuccessMessage(true);
             setSuccessText(response.data.message || "Payment sent successfully");
 
@@ -94,28 +100,28 @@ const AddViewPayment = () => {
 
 
     const fetchPaymentData = async () => {
-            setIsPending(true);
-            try {
-                const response = await chukkytechAxios.get(`/repairPayment/getPayment/${item?.repairOrderId}`);
-                setPaymentGetData(response?.data || {});
-            } catch (error) {
-                console.error('Error fetching payment data:', error);
-                setErrorMessageDisplay(true)
-                setPaymentGetData({});
-            } finally {
-                setIsPending(false);
-            }
-        };
+        setIsPending(true);
+        try {
+            const response = await chukkytechAxios.get(`/repairPayment/getPayment/${item?.repairOrderId}`);
+            setPaymentGetData(response?.data || {});
+        } catch (error) {
+            console.error('Error fetching payment data:', error);
+            setErrorMessageDisplay(true)
+            setPaymentGetData({});
+        } finally {
+            setIsPending(false);
+        }
+    };
 
-        useEffect(() => {
-            fetchPaymentData();
-        }, [item?.repairOrderId]);
+    useEffect(() => {
+        fetchPaymentData();
+    }, [item?.repairOrderId]);
 
     // const { data: paymentGetData, isPending, error } = useGetData(`/repairPayment/getPayment/${item?.repairOrderId}`);
 
 
 
-   const handleUpdatePayment = async () => {
+    const handleUpdatePayment = async () => {
         setPendingUpdate(true);
 
         const paymentDataUpdate = {
@@ -132,7 +138,7 @@ const AddViewPayment = () => {
                 Number(+repairFee || paymentGetData?.data?.repairFee || 0) +
                 Number(+replacementPartsFee || paymentGetData?.data?.replacementPartsFee || 0) +
                 Number(+pickupFee || paymentGetData?.data?.pickupFee || 0) +
-                Number(+deliveryFee || paymentGetData?.data?.deliveryFee || 0)  ,
+                Number(+deliveryFee || paymentGetData?.data?.deliveryFee || 0),
             status: "active",
 
         };
@@ -146,6 +152,7 @@ const AddViewPayment = () => {
             );
             setSuccessMessage(true);
             setSuccessText(response.data.message || "Payment updated successfully");
+        
             setShowEditModal(false);
             fetchPaymentData();
 
@@ -160,7 +167,50 @@ const AddViewPayment = () => {
         }
     };
 
-   
+
+    const handleMarkAsPaid = async (payment) => {
+        setPendingPaymentData(true);
+
+        const payload = {
+            paymentStatus: payment
+        };
+
+
+        // console.log("review data>>>>>", payload);
+
+        await chukkytechAxios
+            .put(`/repair/repair-order/payment-status/${state?.item?.repairOrderId}`, payload)
+            .then(response => {
+                //  console.log("response>>>>", res)
+                setPendingPaymentData(false);
+                setSuccessMessage(true);
+                 setShowUpdateModal(false);
+                setShowGoBack(true);
+                setSuccessText(response.data.message || "Payment status updated successfully");
+
+            })
+            .catch(error => {
+                console.log("error>>>>", error)
+                 const errorMsg = error.response?.data?.message || error.response?.data?.error || "Failed to update payment";
+                setPendingPaymentData(false);
+                setErrorMessage(true);
+                setErrMessage(errorMsg);
+
+            })
+
+    };
+
+console.log("paymentGetData>>>  state?.item?.paymentStatus", state?.item?.paymentStatus);
+
+    const formatCurrency = (amount) => {
+        return new Intl.NumberFormat("en-NG", {
+            style: "currency",
+            currency: "NGN",
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+        }).format(amount);
+    };
+
 
 
     return (
@@ -238,27 +288,27 @@ const AddViewPayment = () => {
                                         <ul className="list-group mb-3">
                                             <li className="list-group-item d-flex justify-content-between">
                                                 <span>Diagnosis / Inspection Fee</span>
-                                                <strong>₦{paymentData.inspectionFee || 0}</strong>
+                                                <strong>{ formatCurrency(paymentData.inspectionFee) || 0}</strong>
                                             </li>
                                             <li className="list-group-item d-flex justify-content-between">
                                                 <span>Repair Labour</span>
-                                                <strong>₦{paymentData.repairFee || 0}</strong>
+                                                <strong>{ formatCurrency(paymentData.repairFee) || 0}</strong>
                                             </li>
                                             <li className="list-group-item d-flex justify-content-between">
                                                 <span>Replacement Parts</span>
-                                                <strong>₦{paymentData.replacementPartsFee || 0}</strong>
+                                                <strong>{ formatCurrency(paymentData.replacementPartsFee) || 0}</strong>
                                             </li>
                                             <li className="list-group-item d-flex justify-content-between">
                                                 <span>Pickup</span>
-                                                <strong>₦{paymentData.pickupFee || 0}</strong>
+                                                <strong>{ formatCurrency(paymentData.pickupFee) || 0}</strong>
                                             </li>
                                             <li className="list-group-item d-flex justify-content-between">
                                                 <span>Delivery</span>
-                                                <strong>₦{paymentData.deliveryFee || 0}</strong>
+                                                <strong>{ formatCurrency(paymentData.deliveryFee) || 0}</strong>
                                             </li>
                                             <li className="list-group-item d-flex justify-content-between bg-light fw-bold">
                                                 <span>Total</span>
-                                                <span>₦{totalAmount}</span>
+                                                <span>{ formatCurrency(totalAmount) || 0}</span>
                                             </li>
                                         </ul>
 
@@ -321,27 +371,27 @@ const AddViewPayment = () => {
                                         <ul className="list-group mb-3">
                                             <li className="list-group-item d-flex justify-content-between">
                                                 <span>Diagnosis / Inspection Fee</span>
-                                                <strong>₦{paymentGetData?.data?.inspectionFee || 0}</strong>
+                                                <strong>{ formatCurrency(paymentGetData?.data?.inspectionFee) || 0}</strong>
                                             </li>
                                             <li className="list-group-item d-flex justify-content-between">
                                                 <span>Repair Labour</span>
-                                                <strong>₦{paymentGetData?.data?.repairFee || 0}</strong>
+                                                <strong>{ formatCurrency(paymentGetData?.data?.repairFee) || 0}</strong>
                                             </li>
                                             <li className="list-group-item d-flex justify-content-between">
                                                 <span>Replacement Parts</span>
-                                                <strong>₦{paymentGetData?.data?.replacementPartsFee || 0}</strong>
+                                                <strong>{ formatCurrency(paymentGetData?.data?.replacementPartsFee) || 0}</strong>
                                             </li>
                                             <li className="list-group-item d-flex justify-content-between">
                                                 <span>Pickup</span>
-                                                <strong>₦{paymentGetData?.data?.pickupFee || 0}</strong>
+                                                <strong>{ formatCurrency(paymentGetData?.data?.pickupFee) || 0}</strong>
                                             </li>
                                             <li className="list-group-item d-flex justify-content-between">
                                                 <span>Delivery</span>
-                                                <strong>₦{paymentGetData?.data?.deliveryFee || 0}</strong>
+                                                <strong>{ formatCurrency(paymentGetData?.data?.deliveryFee) || 0}</strong>
                                             </li>
                                             <li className="list-group-item d-flex justify-content-between bg-light fw-bold">
                                                 <span>Total</span>
-                                                <span>₦{paymentGetData?.data?.totalAmount || 0}</span>
+                                                <span>{ formatCurrency(paymentGetData?.data?.totalAmount) || 0}</span>
                                             </li>
                                         </ul>
 
@@ -351,18 +401,34 @@ const AddViewPayment = () => {
                                             </div>
                                         )}
 
-                                       
 
 
 
+
+                                        <button
+                                            className="btn btn-primary w-100"
+                                            onClick={() => setShowEditModal(true)}
+                                        >
+                                            Edit and Resend Payment Request to Customer
+                                        </button>
+                                        <br />
+
+                                        {state?.item?.paymentStatus === "Paid" ?
                                             <button
-                                                className="btn btn-dark w-100"
-                                                onClick={() => setShowEditModal(true)}
+                                                className="btn btn-success w-100 mt-2"
+                                                onClick={() => setShowUpdateModal(true)}
                                             >
-                                                Edit and Resend Payment Request to Customer
-                                            </button> 
-                                       
-
+                                               <span style={{ fontWeight: 'bold' }}>(Paid)</span>  Reset to Pending
+                                               
+                                            </button> :
+                                            
+                                                <button  className="btn btn-dark w-100 mt-2"
+                                                    onClick={() => setShowUpdateModal(true)}
+                                                >
+                                                   Mark as Paid
+                                                </button> 
+                                                
+                                        }
 
                                     </div>
 
@@ -392,20 +458,20 @@ const AddViewPayment = () => {
                             </div>
                     }
 
-                   
 
-             </div>
+
+                </div>
             </div>
 
 
 
-        <Modal show={showEditModal} onHide={() => setShowEditModal(false)} size="lg"  backdrop="static" >
-        <Modal.Header closeButton>
-          <Modal.Title>Edit Payment</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-            <div className="card-body">
-                                {/* {[
+            <Modal show={showEditModal} onHide={() => setShowEditModal(false)} size="lg" backdrop="static" >
+                <Modal.Header closeButton>
+                    <Modal.Title>Edit Payment</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div className="card-body">
+                        {/* {[
                                     { label: "Diagnosis / Inspection Fee", name: "inspectionFee" },
                                     { label: "Repair Labour", name: "repairFee" },
                                     { label: "Replacement Parts", name: "replacementPartsFee" },
@@ -425,88 +491,88 @@ const AddViewPayment = () => {
                                     </div>
                                 ))} */}
 
-                                   <div className="mb-3" >
-                                        <label className="form-label">Diagnosis / Inspection Fee (₦)</label>
-                                        <input
-                                            type="number"
-                                            className="form-control"
-                                            onChange={(e) => setInspectionFee(e.target.value)}
-                                             defaultValue={paymentGetData?.data?.inspectionFee || 0}
-                                              placeholder="Enter amount"
-                                        />
-                                    </div>
-                                    <div className="mb-3" >
-                                        <label className="form-label">Repair Labour (₦)</label>
-                                        <input
-                                            type="number"
-                                            className="form-control"
-                                            onChange={(e) => setRepairFee(e.target.value)}
-                                            defaultValue={paymentGetData?.data?.repairFee || 0}
-                                            placeholder="Enter amount"
-                                        />
-                                    </div>
-                                    <div className="mb-3" >
-                                        <label className="form-label">Replacement Parts (₦)</label>
-                                        <input
-                                            type="number"
-                                            className="form-control"
-                                            defaultValue={paymentGetData?.data?.replacementPartsFee || 0}
-                                            placeholder="Enter amount"
-                                            onChange={(e) => setReplacementPartsFee(e.target.value)}
-                                        />
-                                    </div>
-                                    <div className="mb-3" >
-                                        <label className="form-label">Pickup Fee (₦)</label>
-                                        <input
-                                            type="number"
-                                            className="form-control"
-                                            defaultValue={paymentGetData?.data?.pickupFee || 0}
-                                            placeholder="Enter amount"
-                                            onChange={(e) => setPickupFee(e.target.value)}
-                                        />
-                                    </div>
-                                    <div className="mb-3" >
-                                        <label className="form-label">Delivery Fee (₦)</label>
-                                        <input
-                                            type="number"
-                                            className="form-control"
-                                            defaultValue={paymentGetData?.data?.deliveryFee || 0}
-                                            placeholder="Enter amount"
-                                            onChange={(e) => setDeliveryFee(e.target.value)}
-                                           
-                                        />
-                                    </div>
+                        <div className="mb-3" >
+                            <label className="form-label">Diagnosis / Inspection Fee (₦)</label>
+                            <input
+                                type="number"
+                                className="form-control"
+                                onChange={(e) => setInspectionFee(e.target.value)}
+                                defaultValue={paymentGetData?.data?.inspectionFee || 0}
+                                placeholder="Enter amount"
+                            />
+                        </div>
+                        <div className="mb-3" >
+                            <label className="form-label">Repair Labour (₦)</label>
+                            <input
+                                type="number"
+                                className="form-control"
+                                onChange={(e) => setRepairFee(e.target.value)}
+                                defaultValue={paymentGetData?.data?.repairFee || 0}
+                                placeholder="Enter amount"
+                            />
+                        </div>
+                        <div className="mb-3" >
+                            <label className="form-label">Replacement Parts (₦)</label>
+                            <input
+                                type="number"
+                                className="form-control"
+                                defaultValue={paymentGetData?.data?.replacementPartsFee || 0}
+                                placeholder="Enter amount"
+                                onChange={(e) => setReplacementPartsFee(e.target.value)}
+                            />
+                        </div>
+                        <div className="mb-3" >
+                            <label className="form-label">Pickup Fee (₦)</label>
+                            <input
+                                type="number"
+                                className="form-control"
+                                defaultValue={paymentGetData?.data?.pickupFee || 0}
+                                placeholder="Enter amount"
+                                onChange={(e) => setPickupFee(e.target.value)}
+                            />
+                        </div>
+                        <div className="mb-3" >
+                            <label className="form-label">Delivery Fee (₦)</label>
+                            <input
+                                type="number"
+                                className="form-control"
+                                defaultValue={paymentGetData?.data?.deliveryFee || 0}
+                                placeholder="Enter amount"
+                                onChange={(e) => setDeliveryFee(e.target.value)}
 
-                                     <div className="mb-3" >
-                                        <label className="form-label">Total (₦)</label>
-                                        <input
-                                            type="number"
-                                            className="form-control"
-                                            value={
-                                                Number(+inspectionFee || paymentGetData?.data?.inspectionFee || 0) +
-                                                Number(+repairFee || paymentGetData?.data?.repairFee || 0) +
-                                                Number(+replacementPartsFee || paymentGetData?.data?.replacementPartsFee || 0) +
-                                                Number(+pickupFee || paymentGetData?.data?.pickupFee || 0) +
-                                                Number(+deliveryFee || paymentGetData?.data?.deliveryFee || 0)
-                                            }
-                                            placeholder="Enter amount"
-                                            readOnly
-                                           
-                                        />
-                                    </div>
+                            />
+                        </div>
 
-                                    <div className="mb-3">
-                                        <label className="form-label">Admin Note</label>
-                                        <textarea
-                                            className="form-control"
-                                        rows="3"
-                                        name="adminNote"
-                                        defaultValue={paymentGetData?.data?.adminNote || ""}
-                                        placeholder="Optional note to customer"
-                                        onChange={(e) => setAdminNote(e.target.value)}
-                                    />
-                                </div>
-                            </div>
+                        <div className="mb-3" >
+                            <label className="form-label">Total (₦)</label>
+                            <input
+                                type="number"
+                                className="form-control"
+                                value={
+                                    Number(+inspectionFee || paymentGetData?.data?.inspectionFee || 0) +
+                                    Number(+repairFee || paymentGetData?.data?.repairFee || 0) +
+                                    Number(+replacementPartsFee || paymentGetData?.data?.replacementPartsFee || 0) +
+                                    Number(+pickupFee || paymentGetData?.data?.pickupFee || 0) +
+                                    Number(+deliveryFee || paymentGetData?.data?.deliveryFee || 0)
+                                }
+                                placeholder="Enter amount"
+                                readOnly
+
+                            />
+                        </div>
+
+                        <div className="mb-3">
+                            <label className="form-label">Admin Note</label>
+                            <textarea
+                                className="form-control"
+                                rows="3"
+                                name="adminNote"
+                                defaultValue={paymentGetData?.data?.adminNote || ""}
+                                placeholder="Optional note to customer"
+                                onChange={(e) => setAdminNote(e.target.value)}
+                            />
+                        </div>
+                    </div>
                 </Modal.Body>
                 <Modal.Footer>
 
@@ -526,7 +592,99 @@ const AddViewPayment = () => {
                 </Modal.Footer>
             </Modal>
 
+            <Modal
+                show={showUpdateModal}
+                onHide={() => setShowUpdateModal(false)}
+                //    backdrop="static"
+                keyboard={false}
 
+            >
+                <Modal.Header closeButton>
+
+                </Modal.Header>
+                <Modal.Body>
+
+                    {
+
+                       state?.item?.paymentStatus === "Paid" ?
+                            <h5>Are you want to reset this payment as pending?</h5> :
+                            <h5> Are you sure you want to mark this payment as paid?</h5>
+                    }
+   
+
+                   
+                </Modal.Body>
+                <Modal.Footer>
+
+                    {
+                        pendingPaymentData ? <Button variant="primary" disabled >
+                            <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Updating...
+                        </Button> :
+
+                               <>
+                         {
+                            state?.item?.paymentStatus === "Paid" ?
+                            <Button variant="primary"
+                                onClick={() => handleMarkAsPaid("Pending")}
+                            >
+                                Yes, Reset to Pending
+                            </Button> :
+                              <Button variant="primary"
+                                    onClick={() => handleMarkAsPaid("Paid")}
+                                >
+                                    Yes, Mark as Paid
+                                </Button>
+                         }
+
+                              
+
+                                <Button variant="secondary" onClick={() => setShowUpdateModal(false)}>
+                                    Cancel
+                                </Button>
+                               </>
+
+
+                    }
+
+                </Modal.Footer>
+            </Modal>
+
+
+
+             <Modal
+                show={showGoBack}
+                centered
+                 onHide={() => setShowGoBack(false)}
+                backdrop="static"
+                keyboard={false}
+
+            >
+                <Modal.Header >
+
+                </Modal.Header>
+                <Modal.Body>
+
+                    
+                            <h5> Payment Status Succesfully Changed</h5> 
+                            
+                    
+   
+
+                   
+                </Modal.Body>
+                <Modal.Footer>
+
+                <Button variant="primary" onClick={() => navigate(-1)}>
+                                  <MdKeyboardBackspace /> Go back
+                                </Button>
+                               
+
+
+                    
+
+                </Modal.Footer>
+            </Modal>
 
 
         </>

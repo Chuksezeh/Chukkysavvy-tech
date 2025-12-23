@@ -504,9 +504,10 @@ const handleNavigateRepairCostPayment = (orderData) => {
                           <tr>
                             <th>Order Code</th>
                             <th>Device</th>
-                            <th>Fault</th>
+                            
                             <th>Type</th>
                             <th> Scheduled Date</th>
+                            <th>Fault</th>
                             <th>Status</th>
                             <th>Actions</th>
                           </tr>
@@ -523,11 +524,12 @@ const handleNavigateRepairCostPayment = (orderData) => {
                                   <div className="device-model">{item.deviceModel}</div>
                                 </div>
                               </td>
-                              <td className="fault-cell" data-label="Fault">
-                                {truncateText(item.details, 8)}
-                              </td>
+                             
                               <td data-label="Type">{item.repairOrderType}</td>
                               <td data-label="Scheduled Date">{moment(item.reserveDate).format("MMM D, YYYY")}</td>
+                               <td className="fault-cell" data-label="Fault">
+                                {truncateText(item.details, 8)}
+                              </td>
                               <td data-label="Status">
                                 <Badge bg={getStatusVariant(item.status)}>
                                   {item.status}

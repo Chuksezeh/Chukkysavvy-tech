@@ -32,9 +32,12 @@ const RepairOrderTable = () => {
 
   const navigate = useNavigate();
 
+ const adminsInfo = localStorage.getItem('adminsInfo');
+
+ const parsedAdminsInfo = JSON.parse(adminsInfo);
   useEffect(() => {
-    const adminsInfo = localStorage.getItem('adminsInfo');
-    if (!adminsInfo) {
+
+    if (!parsedAdminsInfo) {
       navigate('/admin-login');
     }
   }, [navigate]);
@@ -236,11 +239,19 @@ const RepairOrderTable = () => {
     navigate("/add-view-payment", { state: { item } });
   };
 
+   const formatCurrency = (amount) => {
+        return new Intl.NumberFormat("en-NG", {
+            style: "currency",
+            currency: "NGN",
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+        }).format(amount);
+    };
 
   const { data: paymentGetAllData, isPending: orderPendingPayment, error } = useGetData('/repairPayment/getAllPayments');
 
 
-  console.log("paymentGetAllData", paymentGetAllData);
+ 
 
   return (
     <>
@@ -429,7 +440,10 @@ const RepairOrderTable = () => {
                     <th className="py-3 fw-semibold">Status</th>
 
                     <th className="pe-4 py-3 fw-semibold text-center">Actions</th>
-                    <th className="py-3 fw-semibold">Add/view payment</th>
+                    {
+                       parsedAdminsInfo?.role === 'super-admin' && <th className="py-3 fw-semibold">Add/view payment</th>
+                    }
+                    
                   </tr>
                 </thead>
                 <tbody>
@@ -531,10 +545,18 @@ const RepairOrderTable = () => {
                             <option value="cancel">Cancel Order</option>
                           </select>
                         </td>
+
+                        {
+                          parsedAdminsInfo?.role === 'super-admin' && (
                         <td data-label="Add/view payment" onClick={() => navigatePaymentData(item)} style={{ cursor: 'pointer' }}>
                           <FaPlus />
-
                         </td>
+                      )}
+
+                        {/* <td data-label="Add/view payment" onClick={() => navigatePaymentData(item)} style={{ cursor: 'pointer' }}>
+                          <FaPlus />
+
+                        </td> */}
                       </tr>
                     ))
                   )}

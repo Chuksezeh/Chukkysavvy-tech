@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import Header from "../../../layouts/Header";
 import UserDashBoard from "../../userDashboard";
@@ -15,6 +15,10 @@ const RepairCostPayment = () => {
  const [pendingPaymentData, setPendingPaymentData] = useState(false);
  const [paymentData, setPaymentData] = useState("");
  const [isPendingPayment, setIsPendingPayment] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(false);
+     const [successMessage, setSuccessMessage] = useState(false);
+     const [errMessage, setErrMessage] = useState("");
+     const [successText, setSuccessText] = useState("");
 
   const location = useLocation();
   const { orderData } = location.state || {};
@@ -22,23 +26,105 @@ const RepairCostPayment = () => {
 const userInfo = localStorage.getItem("userInfo" || null);
 const user = JSON.parse(userInfo);
 
+ const encodedEmail = encodeURIComponent(user?.email);
+
 const { data: paymentGetData, isPending, error } = useGetData(`/repairPayment/getPayment/${orderData?.repairOrderId}`);
 
- 
+const { data: userDetails, isPending: userPending, error:userError } = useGetData(`/auth/getUser/${encodedEmail}`);
 
 
-const payWithPaystack = async () => {
-         setPendingPaymentData(true);
+const transactionIdRef = useRef(null);
+const orderPaymentIdRef = useRef(null);
+
+// console.log("userDetails", userDetails.userId)
+
+
+  const handleFirstPaymentLog = async () => {
+   setPendingPaymentData(true);
+  
+    const payload = {
+     repairOrderCode: orderData?.repairOrderCode,
+        paymentStatus: "pending",
+        repairOrderId: orderData?.repairOrderId,
+        userId: userDetails?.userId,
+        amount: paymentGetData?.data?.totalAmount,
+        transactionId: "null",
+        transactionType: "repair-order-payment",
+        paymentStatus: "attempted",
+        
+    };
+
+
+    // console.log("review data>>>>>", payload)
+
+    await chukkytechAxios
+    .post("/payments/paymentLog", payload)
+    .then(res =>{
+         console.log("response>>>>", res)
+         transactionIdRef.current = res.data?.transactionId || null;
+         orderPaymentIdRef.current =  res.data?.repairOrderPaymentId || null;
+         setPendingPaymentData(false);
+        })
+    .catch(error =>{
+      console.log("error>>>>", error)
+      setPendingPaymentData(false);
+     
+    })
+
+    };
+
+
+
+     const handleLastPaymentLog = async () => {
+   setPendingPaymentData(true);
+  
+    const payload = {
+     repairOrderCode: orderData?.repairOrderCode,
+        paymentStatus: "Paid",
+        repairOrderId: orderData?.repairOrderId,
+        userId: user?.userId,
+        amount: paymentGetData?.data?.totalAmount,
+        transactionId: transactionIdRef.current,
+        transactionType: "repair-order-payment",
+        paymentStatus: "completed",
+        
+    };
+
+
+    // console.log("review data>>>>>", payload)
+
+    await chukkytechAxios
+    .put(`/payments/paymentLog/update/${transactionIdRef.current}`, payload)
+    .then(res =>{
+         console.log("response>>>>", res)
+         setPendingPaymentData(false);
+        })
+    .catch(error =>{
+      console.log("error>>>>", error)
+      setPendingPaymentData(false);
+     
+    })
+
+    };
+
+
+ const payWithPaystack = async () => {
+
+        await handleFirstPaymentLog();
+            setPendingPaymentData(true);
         const handler = window.PaystackPop.setup({
             key: process.env.REACT_APP_PAYSTACK_KEY,
             email: user?.email,
             amount: paymentGetData?.data?.totalAmount * 100,
             fullName: user?.firstName + " " + user?.lastName,
+            ref: transactionIdRef.current,
             // userId: user?.userId,
             currency: 'NGN',
             callback: function (response) {
                 console.log("paystack", response)
+                 handleLastPaymentLog();
                 handleUpdatePaymentStatus(response.reference);
+
             },
             onClose: function () {
                 // setErrorMessage("Payment window closed");
@@ -53,7 +139,8 @@ const payWithPaystack = async () => {
    setPendingPaymentData(true);
   
     const payload = {
-     paymentStatus: "Paid"
+     paymentStatus: "Paid",
+     paymentReference: transactionIdRef.current,
     };
 
 
@@ -64,14 +151,20 @@ const payWithPaystack = async () => {
     .then(res =>{
          console.log("response>>>>", res)
          setPendingPaymentData(false);
-          fetchPaymentData();
-    //   setTimeout(() => {
-    //  setReviewSuccessMessage(false);
-    // }, 3000);
+         setSuccessMessage(true);
+         setSuccessText("Congratulations! Payment completed succesfully")
+        fetchPaymentData();
+
+      setTimeout(() => {
+      setSuccessMessage(false);
+    }, 3000);
       
   })
     .catch(error =>{
       console.log("error>>>>", error)
+ const errorMsg = error.response?.data?.message || error.response?.data?.error || "Failed to update payment";
+ setErrorMessage(true);
+                setErrMessage(errorMsg);
       setPendingPaymentData(false);
      
     })
@@ -79,11 +172,14 @@ const payWithPaystack = async () => {
     };
 
     const formatCurrency = (amount) => {
-        return new Intl.NumberFormat('en-NG', {
-            style: 'currency',
-            currency: 'NGN'
-        }).format(amount);
-    };
+  return new Intl.NumberFormat("en-NG", {
+    style: "currency",
+    currency: "NGN",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(amount);
+};
+
 
 
     const fetchPaymentData = async () => {
@@ -129,6 +225,27 @@ console.log("useruser", user)
         </div>
 
         <hr />
+
+         {successMessage && (
+                                        <div className="position-fixed top-0 end-0 p-3" style={{ zIndex: 1050 }}>
+                                            <div className="alert alert-success alert-dismissible fade show" role="alert">
+                                                <i className="fas fa-check-circle me-2"></i>
+                                                <strong>Success!</strong> {successText || "Payment created successfully."}
+                                                <button type="button" className="btn-close" onClick={() => setSuccessMessage(false)}></button>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {/* Error Message */}
+                                    {errorMessage && (
+                                        <div className="position-fixed top-0 end-0 p-3" style={{ zIndex: 1050 }}>
+                                            <div className="alert alert-danger alert-dismissible fade show" role="alert">
+                                                <i className="fas fa-exclamation-circle me-2"></i>
+                                                <strong>Error!</strong> {errMessage.message || "Something went wrong, please try again."}
+                                                <button type="button" className="btn-close" onClick={() => setErrorMessage(false)}></button>
+                                            </div>
+                                        </div>
+                                    )}
 
         {
           paymentGetData.length === 0 ? (

@@ -66,6 +66,10 @@ const CheckoutPage = () => {
         formState: { errors },
     } = useForm();
 
+    const transactionIdRef = useRef(null);
+    const orderPaymentIdRef = useRef(null);
+
+
     const userInfo = localStorage.getItem("userInfo" || null);
     const user = JSON.parse(userInfo);
     const encodedEmail = encodeURIComponent(user?.email);
@@ -97,12 +101,14 @@ const CheckoutPage = () => {
   );
 
     // Format currency
-    const formatCurrency = (amount) => {
-        return new Intl.NumberFormat('en-NG', {
-            style: 'currency',
-            currency: 'NGN'
-        }).format(amount);
-    };
+   const formatCurrency = (amount) => {
+  return new Intl.NumberFormat("en-NG", {
+    style: "currency",
+    currency: "NGN",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(amount);
+};
 
 console.log("cartItems in checkout:", cartItems);
 
@@ -683,12 +689,81 @@ console.log("cartItems in checkout:", cartItems);
        handleShowNoLogin();
     })
 
+    
 
+ const handleFirstPaymentLog = async () => {
+      setLoading(true);
+  
+    const payload = {
+        repairOrderCode: "product-purchase",
+        paymentStatus: "pending",
+        repairOrderId: "product-01",
+        userId: userDetails?.userId,
+        amount: total,
+        transactionId: "null",
+        transactionType: "product-order-payment",
+        paymentStatus: "attempted",
+        
+    };
+
+
+    console.log("review data>>>>>", payload)
+
+    await chukkytechAxios
+    .post("/payments/paymentLog", payload)
+    .then(res =>{
+         console.log("response>>>>", res)
+         transactionIdRef.current = res.data?.transactionId || null;
+         orderPaymentIdRef.current =  res.data?.repairOrderPaymentId || null;
+        //  setPendingPaymentData(false)
+        })
+    .catch(error =>{
+      console.log("error>>>>", error)
+      setLoading(false);
+     
+    })
+
+    };
+
+
+
+     const handleLastPaymentLog = async () => {
+   setLoading(true);
+  
+    const payload = {
+     repairOrderCode: "product-purchase",
+        paymentStatus: "Paid",
+        repairOrderId: "product-01",
+        userId: userDetails?.userId,
+        amount: total,
+        transactionId: transactionIdRef.current,
+        transactionType: "product-order-payment",
+        paymentStatus: "completed",
+        
+    };
+
+
+    // console.log("review data>>>>>", payload)
+
+    await chukkytechAxios
+    .put(`/payments/paymentLog/update/${transactionIdRef.current}`, payload)
+    .then(res =>{
+        //  console.log("response>>>>", res)
+         setLoading(false);
+        })
+    .catch(error =>{
+      console.log("error>>>>", error)
+      setLoading(false);
+     
+    })
+
+    };
 
 
 
     const payWithPaystack = async () => {
         setLoading(true);
+        await handleFirstPaymentLog();
 
         console.log("all====chechAmount", total)
 
@@ -702,6 +777,7 @@ console.log("cartItems in checkout:", cartItems);
             currency: 'NGN',
             callback: function (response) {
                 console.log("paystack", response)
+                handleLastPaymentLog();
                 handleCheckout(response.reference);
             },
             onClose: function () {
@@ -1367,7 +1443,7 @@ const handleHideModalLOgin = (() => {
             </Modal>
 
             {/* Receipt Modal */}
-            <Modal show={showReceipt} onHide={() => setShowReceipt(false)} size="lg" centered>
+            <Modal show={showReceipt} onHide={() => setShowReceipt(false)} size="lg" centered backdrop="static">
                 <Modal.Header closeButton className="border-0 bg-light">
                     <Modal.Title className="w-100 text-center">
                         <div className="d-flex align-items-center justify-content-center">

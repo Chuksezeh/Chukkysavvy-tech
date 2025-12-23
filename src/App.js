@@ -55,6 +55,8 @@ import ChukkytechAi from './components/ChukkytechAi/chukkytechai';
 import ProtectedRoute from './components/Admin/protectedRoute';
 import RepairCostPayment from './components/UserDashboard/UserAccountComponents/repairOrderCostPayment/repairCostPayment';
 import AddViewPayment from './components/Admin/addViewRepairPayment/addViewPayment';
+import ProductPurchaseReport from './components/Admin/productPurcharseReport/productPurchaseReport';
+import RepairOrderReport from './components/Admin/repairOrderReport/repairOrderReport';
 
 function App() {
   const [authState, setAuthState] = useState({
@@ -123,6 +125,8 @@ function App() {
             <Route path="/view-created-products" element={<ViewCreatedProducts />} />
             <Route path="/admin-general-update" element={<GeneralSettings />} />
             <Route path="/add-view-payment" element={<AddViewPayment />} />
+            <Route path="/product-purchase-report" element={<ProductPurchaseReport />} />
+            <Route path="/repair-order-report" element={<RepairOrderReport />} />
           </Route>
 
           <Route element={<ProtectedRoute allowedRoles={["admin", "super-admin"]} />}>

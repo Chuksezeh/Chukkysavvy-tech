@@ -13,14 +13,14 @@ import Receipt from "../Receipt/repairOrderReceipt";
 import "./iphonePickupRepair.css";
 
 const IphoneRepairForm = () => {
-    const { 
-        register, 
-        handleSubmit, 
+    const {
+        register,
+        handleSubmit,
         setValue,
         watch,
-        formState: { errors } 
+        formState: { errors }
     } = useForm();
-    
+
     const [reserveDate, setReserveDate] = useState(null);
     const [loading, setLoading] = useState(false);
     const [successMessage, setSuccessMessage] = useState(false);
@@ -31,26 +31,26 @@ const IphoneRepairForm = () => {
     const [orderData, setOrderData] = useState(null);
     const [showForm, setShowForm] = useState(true);
     const [selectedModel, setSelectedModel] = useState("");
-    
+
     const navigate = useNavigate();
-    
+
     const userData = JSON.parse(localStorage.getItem('userInfo') || "null");
     const encodedEmail = encodeURIComponent(userData?.email);
     const { data: users, isPending: isPendingUsers } = useGetData(`/auth/getUser/${encodedEmail}`);
     const { data: locations, isPending: isPendingLocations } = useGetData('location/getAllLocations');
 
     // iPhone models organized by generation
-  const iphoneModels = [
+    const iphoneModels = [
         "iPhone 4", "iPhone 4S", "iPhone 5", "iPhone 5S", "iPhone 5C",
-        "iPhone 6", "iPhone 6 Plus", "iPhone 6S", "iPhone 6S Plus", 
-        "iPhone SE (1st gen)", "iPhone 7", "iPhone 7 Plus", "iPhone 8", 
+        "iPhone 6", "iPhone 6 Plus", "iPhone 6S", "iPhone 6S Plus",
+        "iPhone SE (1st gen)", "iPhone 7", "iPhone 7 Plus", "iPhone 8",
         "iPhone 8 Plus", "iPhone X", "iPhone XS", "iPhone XR", "iPhone XS Max",
         "iPhone 11", "iPhone 11 Pro", "iPhone 11 Pro Max", "iPhone SE (2nd gen)",
         "iPhone 12", "iPhone 12 mini", "iPhone 12 Pro", "iPhone 12 Pro Max",
         "iPhone 13", "iPhone 13 mini", "iPhone 13 Pro", "iPhone 13 Pro Max",
-        "iPhone SE (3rd gen)", "iPhone 14", "iPhone 14 Plus", "iPhone 14 Pro", 
-        "iPhone 14 Pro Max", "iPhone 15", "iPhone 15 Plus", "iPhone 15 Pro", 
-        "iPhone 15 Pro Max", "iPhone 16", "iPhone 16 Pro", "iPhone 16 Plus", 
+        "iPhone SE (3rd gen)", "iPhone 14", "iPhone 14 Plus", "iPhone 14 Pro",
+        "iPhone 14 Pro Max", "iPhone 15", "iPhone 15 Plus", "iPhone 15 Pro",
+        "iPhone 15 Pro Max", "iPhone 16", "iPhone 16 Pro", "iPhone 16 Plus",
         "iPhone 16 Pro Max", "iPhone 17", "iPhone 17 Air", "iPhone 17 Pro", "iPhone 17 Pro Max"
     ];
 
@@ -76,12 +76,12 @@ const IphoneRepairForm = () => {
             };
 
             const response = await chukkytechAxios.post('repair/repairorder', deviceData);
-            
+
             setOrderData(response.data?.repairOrder);
             setSuccessText(response.data?.message);
             setSuccessMessage(true);
             setShowForm(false);
-            
+
         } catch (err) {
             console.error("API error:", err);
             setErrorMessage(true);
@@ -127,12 +127,12 @@ const IphoneRepairForm = () => {
                             iPhone Repair Booking
                         </h2>
                         <p>
-                            Reserve a date and visit our  service center — 
+                            Reserve a date and visit our  service center —
                             we'll be ready to assist you with expert iPhone repairs.
                         </p>
                     </div>
 
-                     {/* <div className="container mt-3">
+                    {/* <div className="container mt-3">
                     <div className="alert alert-warning alert-dismissible fade show" role="alert">
                         Delivery and pickup are currently available in Abuja only. We’re working to bring our services to more cities soon — stay tuned! 
 
@@ -143,13 +143,13 @@ const IphoneRepairForm = () => {
                         {/* Device Type (Fixed as iPhone) */}
                         <div className="form-group">
                             <label className="form-label">Device Type</label>
-                            <input 
+                            <input
                                 type="text"
                                 className="form-input"
                                 value="iPhone"
                                 readOnly
                                 {...register("deviceType")}
-                                style={{background: '#e9ecef', color: '#6c757d'}}
+                                style={{ background: '#e9ecef', color: '#6c757d' }}
                             />
                         </div>
 
@@ -184,12 +184,14 @@ const IphoneRepairForm = () => {
                             )}
                         </div>
 
+
                         {/* Reservation Date & Time */}
                         <div className="form-group">
                             <label className="form-label">
                                 <IoCalendar className="me-2" />
-                                Preferred Date & Time
+                                Preferred Pickup / Repair Date & Time
                             </label>
+
                             <DatePicker
                                 selected={reserveDate}
                                 onChange={(date) => {
@@ -197,13 +199,19 @@ const IphoneRepairForm = () => {
                                     setValue("reserveDate", date);
                                 }}
                                 showTimeSelect
-                                timeFormat="HH:mm"
-                                timeIntervals={15}
-                                dateFormat="MMMM d, yyyy h:mm aa"
+                                timeFormat="hh:mm aa"           // AM / PM
+                                timeIntervals={30}              // Easier selection
+                                dateFormat="MMMM d, yyyy  •  h:mm aa"
                                 minDate={new Date()}
                                 className="form-input"
-                                placeholderText="Choose your preferred date and time"
+                                placeholderText="Select date, then choose time (AM / PM)"
+                                popperPlacement="bottom-start"
                             />
+
+                            <small className="text-muted d-block mt-1">
+                                Example: <strong>June 20, 2025 • 10:30 AM</strong>
+                            </small>
+
                             {errors.reserveDate && (
                                 <span className="text-danger small mt-1 d-block">
                                     {errors.reserveDate.message}
@@ -217,7 +225,7 @@ const IphoneRepairForm = () => {
                                 <IoPhonePortrait className="me-2" />
                                 Contact Number
                             </label>
-                            <input 
+                            <input
                                 type="tel"
                                 className="form-input"
                                 placeholder="Your phone number"
@@ -242,7 +250,7 @@ const IphoneRepairForm = () => {
                                 <IoLocation className="me-2" />
                                 Select Service Center
                             </label>
-                            <select 
+                            <select
                                 className="form-input"
                                 {...register("pickUpAddress", {
                                     required: 'Please select a service center'
@@ -268,7 +276,7 @@ const IphoneRepairForm = () => {
                                 <IoDocumentText className="me-2" />
                                 What's the issue?
                             </label>
-                            <textarea 
+                            <textarea
                                 className="form-input form-textarea"
                                 placeholder="Please describe the issue you're experiencing with your iPhone (e.g., cracked screen, battery replacement, water damage, etc.)"
                                 {...register("details", {
@@ -283,15 +291,15 @@ const IphoneRepairForm = () => {
                         </div>
 
                         {/* Submit Button */}
-                        <button 
-                            type="submit" 
+                        <button
+                            type="submit"
                             className="iphone-submit-btn"
                             disabled={loading || !selectedModel}
                         >
                             {loading ? (
                                 <>
                                     <span className="loader"></span>
-                                  
+
                                 </>
                             ) : (
                                 "Book iPhone Repair"
@@ -315,7 +323,7 @@ const IphoneRepairForm = () => {
                 </Modal.Header>
                 <Modal.Body>
                     <p>
-                        Please log in to book your iPhone repair appointment. 
+                        Please log in to book your iPhone repair appointment.
                         This helps us track your repair history and provide the best Apple-certified service.
                     </p>
                 </Modal.Body>
