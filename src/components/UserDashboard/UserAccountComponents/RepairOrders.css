@@ -473,13 +473,13 @@
 /* Dark mode support */
 @media (prefers-color-scheme: dark) {
   .repair-orders-container {
-    background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+    /* background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%); */
   }
   
   .orders-header,
   .orders-content,
   .order-card {
-    background: #2d3748;
+    /* background: #2d3748; */
     color: #e2e8f0;
   }
   

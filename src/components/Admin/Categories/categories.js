@@ -148,6 +148,10 @@ const ViewCategories = () => {
         setCategoryData(data);
     };
 
+
+    const isMobile = window.innerWidth < 768;
+
+
     return (
         <>
             <AdminDashboard />
@@ -371,25 +375,38 @@ const ViewCategories = () => {
                                                         {moment(category.createdDateTime).format("h:mm A")}
                                                     </small>
                                                 </td>
-                                                <td className="pe-4 text-center">
-                                                    <DropdownButton
-                                                        as={ButtonGroup}
-                                                        size="sm"
-                                                        title="Actions"
-                                                        variant="outline-primary"
-                                                        onClick={() => handleShowDropDown(category)}
-                                                    >
-                                                        <Dropdown.Divider />
-                                                        <Dropdown.Item 
-                                                            style={{ color: "red" }} 
-                                                            onClick={() => setShowDelete(true)}
-                                                            className="d-flex align-items-center"
-                                                        >
-                                                            <i className="fas fa-trash me-2"></i>
-                                                            Delete Category
-                                                        </Dropdown.Item>
-                                                    </DropdownButton>
-                                                </td>
+                                               <td className="pe-4 text-center">
+  {isMobile ? (
+    <Button
+      size="sm"
+      variant="outline-danger"
+      onClick={() => {
+        handleShowDropDown(category);
+        setShowDelete(true);
+      }}
+    >
+      <i className="fas fa-trash me-1"></i>
+      Delete
+    </Button>
+  ) : (
+    <DropdownButton
+      as={ButtonGroup}
+      size="sm"
+      title="Actions"
+      variant="outline-primary"
+      onClick={() => handleShowDropDown(category)}
+    >
+      <Dropdown.Item 
+        className="text-danger"
+        onClick={() => setShowDelete(true)}
+      >
+        <i className="fas fa-trash me-2"></i>
+        Delete Category
+      </Dropdown.Item>
+    </DropdownButton>
+  )}
+</td>
+
                                             </tr>
                                         ))
                                     )}

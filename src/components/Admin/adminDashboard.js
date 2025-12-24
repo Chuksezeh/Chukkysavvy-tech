@@ -6,7 +6,7 @@ import './adminDashboard.css';
 import "./adminDashboard.scss";
 import React, { useEffect, useState } from 'react';
 import { FaHome, FaBars, FaProductHunt } from "react-icons/fa";
-import { SlPeople } from "react-icons/sl";
+import { SlPeople, SlSettings } from "react-icons/sl";
 import { IoIosPeople } from "react-icons/io";
 import { IoPersonAddOutline } from "react-icons/io5";
 import { GoListOrdered } from "react-icons/go";
@@ -236,7 +236,9 @@ const AdminDashboard = () => {
                             </NavItem>
 
                             <NavItem eventKey="10">
-                                <NavIcon> <PiOfficeChairFill className="side-main-icon" />  </NavIcon>
+                                
+
+                                <NavIcon> <SlSettings className="side-main-icon" />  </NavIcon>
                                 <NavText>Settings   <MdOutlineKeyboardArrowRight size={20} /></NavText>
                                 <NavItem eventKey="10-1">
                                     <NavText className="move-side">

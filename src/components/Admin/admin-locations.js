@@ -191,6 +191,10 @@ const AdminLocations = () => {
         setLocationData(data);
     };
 
+
+    const isMobile = window.innerWidth < 768;
+
+
     return (
         <>
             <AdminDashboard />
@@ -436,32 +440,60 @@ const AdminLocations = () => {
                                                         {moment(location.createdDateTime).format("h:mm A")}
                                                     </small>
                                                 </td>
-                                                <td className="pe-4 text-center">
-                                                    <DropdownButton
-                                                        as={ButtonGroup}
-                                                        size="sm"
-                                                        title="Actions"
-                                                        variant="outline-primary"
-                                                        onClick={() => handleShowDropDown(location)}
-                                                    >
-                                                        <Dropdown.Item 
-                                                            onClick={() => setShowEditModal(true)}
-                                                            className="d-flex align-items-center"
-                                                        >
-                                                            <i className="fas fa-edit me-2"></i>
-                                                            Edit Location
-                                                        </Dropdown.Item>
-                                                        <Dropdown.Divider />
-                                                        <Dropdown.Item 
-                                                            style={{ color: "red" }} 
-                                                            onClick={() => setShowDelete(true)}
-                                                            className="d-flex align-items-center"
-                                                        >
-                                                            <i className="fas fa-trash me-2"></i>
-                                                            Delete Location
-                                                        </Dropdown.Item>
-                                                    </DropdownButton>
-                                                </td>
+                                               <td className="pe-4 text-center">
+    {isMobile ? (
+        <div className="d-flex gap-2 justify-content-center">
+            <Button
+                size="sm"
+                variant="outline-primary"
+                onClick={() => {
+                    handleShowDropDown(location);
+                    setShowEditModal(true);
+                }}
+            >
+                <i className="fas fa-edit"></i>
+            </Button>
+
+            <Button
+                size="sm"
+                variant="outline-danger"
+                onClick={() => {
+                    handleShowDropDown(location);
+                    setShowDelete(true);
+                }}
+            >
+                <i className="fas fa-trash"></i>
+            </Button>
+        </div>
+    ) : (
+        <DropdownButton
+            as={ButtonGroup}
+            size="sm"
+            title="Actions"
+            variant="outline-primary"
+            onClick={() => handleShowDropDown(location)}
+        >
+            <Dropdown.Item
+                onClick={() => setShowEditModal(true)}
+                className="d-flex align-items-center"
+            >
+                <i className="fas fa-edit me-2"></i>
+                Edit Location
+            </Dropdown.Item>
+
+            <Dropdown.Divider />
+
+            <Dropdown.Item
+                className="d-flex align-items-center text-danger"
+                onClick={() => setShowDelete(true)}
+            >
+                <i className="fas fa-trash me-2"></i>
+                Delete Location
+            </Dropdown.Item>
+        </DropdownButton>
+    )}
+</td>
+
                                             </tr>
                                         ))
                                     )}
