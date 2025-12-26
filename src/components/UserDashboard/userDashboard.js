@@ -8,6 +8,7 @@ import Modal from 'react-bootstrap/Modal';
 import useGetData from "../Utility/getFunction";
 import { GiAutoRepair } from "react-icons/gi";
 import { BsTools } from "react-icons/bs";
+import { LiaLuggageCartSolid } from "react-icons/lia";
 
 const UserDashBoard = () => {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -21,13 +22,15 @@ const UserDashBoard = () => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleShow = () => setShow(true);  
+
 
     const menuItems = [
         { name: "Dashboard", path: "/user-profile-dashboard", icon: <IoIosArrowForward />, sideIcon: <FaUser /> },
        { name: "My Repair Orders", path: "/repair-orders", icon: <IoIosArrowForward />, sideIcon: <BsTools /> },
-       { name: "Purchased Orders", path: "/user-product-orders", icon: <IoIosArrowForward />, sideIcon: <FaCartShopping /> },
+       { name: "My Product Orders", path: "/user-product-orders", icon: <IoIosArrowForward />, sideIcon:  <LiaLuggageCartSolid size={20} />},
         { name: "Book Device Repair", path: "/bookingpage", icon: <IoIosArrowForward />, sideIcon: <GiAutoRepair /> },
+         { name: "Continue Shopping", path: "/buy-products", icon: <IoIosArrowForward />, sideIcon: <FaCartShopping /> },
         
         { name: "Logout", path: "" }
       ];
