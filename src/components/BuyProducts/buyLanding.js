@@ -95,7 +95,7 @@ const BuyProducts = (() => {
       try {
         const response = await chukkytechAxios.get("/product/getAllActiveProducts");
         setProductData(response.data);
-        console.log("Products:", response.data);
+        // console.log("Products:", response.data);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -150,7 +150,6 @@ const BuyProducts = (() => {
     }, 3000);
   };
 
-  console.log("item added", item);
 
   // Show skeleton loader while loading
   if (loading) {

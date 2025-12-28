@@ -110,7 +110,7 @@ const CheckoutPage = () => {
   }).format(amount);
 };
 
-console.log("cartItems in checkout:", cartItems);
+// console.log("cartItems in checkout:", cartItems);
 
     const { data, isPending, error } = useGetData("general/getGeneralSettings");
     const generalData = data?.data;
@@ -141,7 +141,7 @@ console.log("cartItems in checkout:", cartItems);
                     const availableQuantity = currentProduct.productQuantity || 0;
                     const requestedQuantity = item.quantity || 1;
 
-                    console.log(`Product ${item.productName}: Available=${availableQuantity}, Requested=${requestedQuantity}`);
+            
 
                     return {
                         productId: item.productId,
@@ -320,7 +320,7 @@ console.log("cartItems in checkout:", cartItems);
             setSelectedStateLGA([]);
 
         } catch (err) {
-            console.log('Error creating address:', err);
+            // console.log('Error creating address:', err);
             setLoading(false);
             setErrorMessage(err.response?.data?.error || "Failed to save address. Please try again.");
         }
@@ -409,14 +409,14 @@ console.log("cartItems in checkout:", cartItems);
                 defaultAddress: addressForm.setAsDefault || false
             };
 
-            console.log("Updating address data:", updateData);
+            // console.log("Updating address data:", updateData);
 
             const response = await chukkytechAxios.put(`/general/updateAddress/${addressId}/${userDetails.userId}`, updateData);
 
             setEditLoading(false);
             setSuccessMessage("Address updated successfully!");
 
-            console.log("Response from update:", response.data);
+            // console.log("Response from update:", response.data);
             // Refresh addresses
             await fetchUserData();
 
@@ -449,7 +449,7 @@ console.log("cartItems in checkout:", cartItems);
         // First check product stock availability
         const stockCheck = await checkProductStock();
 
-        console.log("Stock referencet:>>>>>", reference);
+    
 
 
         if (!stockCheck.allAvailable) {
@@ -495,7 +495,7 @@ console.log("cartItems in checkout:", cartItems);
         try {
             const response = await chukkytechAxios.post("/order/orders/create", paymentData);
 
-            console.log("Checkout response:", response);
+            // console.log("Checkout response:", response);
             setShowPaymentReference(response.data.paymentReference)
             if (response.data && response.data.success) {
                 // Order created successfully
@@ -705,14 +705,10 @@ console.log("cartItems in checkout:", cartItems);
         paymentStatus: "attempted",
         
     };
-
-
-    console.log("review data>>>>>", payload)
-
-    await chukkytechAxios
+       await chukkytechAxios
     .post("/payments/paymentLog", payload)
     .then(res =>{
-         console.log("response>>>>", res)
+        //  console.log("response>>>>", res)
          transactionIdRef.current = res.data?.transactionId || null;
          orderPaymentIdRef.current =  res.data?.repairOrderPaymentId || null;
         //  setPendingPaymentData(false)
@@ -765,7 +761,7 @@ console.log("cartItems in checkout:", cartItems);
         setLoading(true);
         await handleFirstPaymentLog();
 
-        console.log("all====chechAmount", total)
+        // console.log("all====chechAmount", total)
 
 
         const handler = window.PaystackPop.setup({
@@ -776,7 +772,7 @@ console.log("cartItems in checkout:", cartItems);
             userId: userDetails?.userId,
             currency: 'NGN',
             callback: function (response) {
-                console.log("paystack", response)
+                
                 handleLastPaymentLog();
                 handleCheckout(response.reference);
             },

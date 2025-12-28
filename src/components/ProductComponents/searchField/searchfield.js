@@ -69,7 +69,7 @@ useEffect(() => {
         fetchCategories();
     }, []);
 
-console.log("..prod", allCategories)
+// console.log("..prod", allCategories)
 
 
   return (

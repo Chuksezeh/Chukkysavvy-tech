@@ -108,7 +108,7 @@ const AboutUs = (() => {
                 Trusted Tech Solutions Since Day One
               </h1>
               <p className="about-hero-subtitle">
-                Your reliable partner for all gadget repair, sales, and support services
+                Your reliable partner for all gadget repair, sales, and website/application development services
               </p>
             </div>
           </Fade>

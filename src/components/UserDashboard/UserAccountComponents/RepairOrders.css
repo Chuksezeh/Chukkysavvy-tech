@@ -361,6 +361,12 @@
   color: white;
   animation: pulse 2s infinite;
 }
+.cent-stage{
+  text-align: start !important;
+}
+.text-muted{
+  text-align: center;
+}
 
 .timeline-content-repair {
   flex: 1;
@@ -459,7 +465,7 @@
   }
   
   .orders-table {
-    font-size: 0.9em;
+    font-size: 1rem;
   }
   
   .action-buttons {

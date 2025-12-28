@@ -76,21 +76,21 @@ const CreateProduct = () => {
       if (selectedFiles.length > 0) {
         selectedFiles.forEach((file) => {
           formData.append("productImages", file);
-          console.log(`✔ Image ->`, file.name, file.size, file.type);
+          // console.log(`✔ Image ->`, file.name, file.size, file.type);
         });
       }
 
       // Debug: log formData entries
-      console.log("✔ FormData sending to backend:");
+      // console.log("✔ FormData sending to backend:");
       for (let pair of formData.entries()) {
-        console.log(`${pair[0]} :`, pair[1]);
+        // console.log(`${pair[0]} :`, pair[1]);
       }
 
       const res = await chukkytechAxios.post("product/createProducts", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      console.log("✔ Response from backend:", res.data);
+      
 
       setLoading(false);
       setSuccessMessage(true);
@@ -227,7 +227,7 @@ const CreateProduct = () => {
             id="survey-form"
             onSubmit={handleSubmit((data, event) => {
               event.preventDefault();
-              console.log("Form data on submit:", data);
+              
               handleSubmitData(data);
             })}
           >

@@ -40,10 +40,10 @@ const ProductOrderTable = () => {
         ...(search && { search })
       };
 
-      console.log("Fetching orders with params:", params);
+      // console.log("Fetching orders with params:", params);
 
       const response = await chukkytechAxios.get('/order/all-orders', { params });
-      console.log("API Response:", response.data);
+      // console.log("API Response:", response.data);
       
       setData(response.data);
       setFilteredOrders(response.data?.data || []);

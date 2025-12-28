@@ -312,7 +312,7 @@ const GeneralSettings = () => {
                             className="btn-delete"
                             onClick={() => {
                                 // Add delete functionality here
-                                console.log('Delete settings');
+                                // console.log('Delete settings');
                             }}
                         >
                             <FaTrash className="me-2" />

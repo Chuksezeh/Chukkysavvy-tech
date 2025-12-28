@@ -89,7 +89,7 @@ const ProductOrders = (() => {
     setPendingUserProductOrder(true);
     try {
       const response = await chukkytechAxios.get(`/order/orders/user/${userId}`);
-      console.log('User Products Response:', response.data);
+      // console.log('User Products Response:', response.data);
 
       if (response.data && response.data.data) {
         setUserProducts(response.data.data);
@@ -107,7 +107,7 @@ const ProductOrders = (() => {
   const fetchOrderDetails = async (orderId) => {
     try {
       const response = await chukkytechAxios.get(`/order/orders/${orderId}`);
-      console.log('Order Details Response:', response.data);
+      // console.log('Order Details Response:', response.data);
 
       setOrderItems(response.data.data);
 
@@ -315,7 +315,7 @@ const ProductOrders = (() => {
     await chukkytechAxios
       .put(`/order/orders/${selectedOrder?.order_id}/${status}`)
       .then(res => {
-        console.log('res', res);
+        // console.log('res', res);
         setStatusPending(false);
         fetchUserData();
         handleCloseDialog();
@@ -363,12 +363,10 @@ const handleShowReviewModal = (id)=>{
     };
 
 
-    console.log("review data>>>>>", payload)
-
     await chukkytechAxios
     .post("/review/createProductReview", payload)
     .then(res =>{
-         console.log("response>>>>", res)
+    
       setReviewSuccessMessage(true);
       setReviewModalShow(false);
       setShowOrderModal(false);

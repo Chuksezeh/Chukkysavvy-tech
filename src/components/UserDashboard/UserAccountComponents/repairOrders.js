@@ -86,7 +86,7 @@ const RepairOrders = (() => {
     try {
       const response = await chukkytechAxios.get(`repair/getUserRepairOrders/${users?.userId}`);
       setData(response.data);
-      console.log("show id", response)
+      // console.log("show id", response)
       setIsPending(false);
     } catch (error) {
       setIsPending(false);
@@ -255,7 +255,7 @@ const RepairOrders = (() => {
      await chukkytechAxios.put(`/repair/repair-order/status/${orderData.repairOrderId}`, payLoad)
       .then(res  =>{
         fetchData();
-        console.log("confirmation cancel", res)
+        // console.log("confirmation cancel", res)
         setOrderCancelSuccess(true)
         setLoadingCancel(false);
         setShowCancelOrderConfirmation(false)
@@ -269,7 +269,7 @@ const RepairOrders = (() => {
         setLoadingCancel(false)
          setShowCancelOrderConfirmation(false)
         setOrderCancelError(true)
-        console.log("err", err);
+        // console.log("err", err);
       })
 
 
@@ -531,9 +531,12 @@ const handleNavigateRepairCostPayment = (orderData) => {
                                 {truncateText(item.details, 8)}
                               </td>
                               <td data-label="Status">
-                                <Badge bg={getStatusVariant(item.status)}>
+                                {
+                                  item.status === "cancel" ?  <Badge className="bg-danger"> Cancelled</Badge> :  <Badge bg={getStatusVariant(item.status)}>
                                   {item.status}
                                 </Badge>
+                                }
+                               
                               </td>
                               
                                 <div className="action-buttons">
@@ -656,9 +659,9 @@ const handleNavigateRepairCostPayment = (orderData) => {
                  
                     <div className="timeline-content-repair">
                       <h6 className="stage-name">{stage.name}</h6>
-                     { stage.date &&  <div>  {stage.message} </div>   } 
+                     { stage.date &&  <div className="cent-stage">  {stage.message} </div>   } 
                       <p className="stage-date">
-                        {stage.date ? moment(stage.date).format("MMM D, YYYY h:mm A") : "Pending"}
+                        {stage.date ? moment(stage.date).format("MMM D, YYYY h:mm A") : "Pending..."}
                       </p>
                     </div>
                     {index < updatedStages.length - 1 && <div className="timeline-connector"></div>}

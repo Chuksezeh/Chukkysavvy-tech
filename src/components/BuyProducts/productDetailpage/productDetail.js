@@ -181,7 +181,7 @@ const ProductDetailPage = () => {
   const {data: productReviewData, isPending: isPendingReview, error: errorReview} = useGetData(`/review/getProductReviews/${productId}` )
   
 
-   console.log("...productReviewData", productReviewData)
+  //  console.log("...productReviewData", productReviewData)
 
   const fetchRelatedProducts = async () => {
     try {
@@ -190,7 +190,7 @@ const ProductDetailPage = () => {
 
       // Filter to show products from same category (optional)
     
-    console.log("...product", allProducts)
+    // console.log("...product", allProducts)
     } catch (err) {
       console.error('Error fetching related products:', err);
     }
@@ -226,7 +226,7 @@ const ProductDetailPage = () => {
   const handleAddToCart = () => {
     if (product) {
       // Add your cart logic here
-      console.log('Adding to cart:', product);
+      // console.log('Adding to cart:', product);
       alert(`${product.productName} added to cart!`);
     }
   };

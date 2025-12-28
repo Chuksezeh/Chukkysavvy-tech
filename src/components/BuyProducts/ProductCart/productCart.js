@@ -237,19 +237,19 @@ const ProductCart = () => {
     }
 
     dispatch(increase(productId)); 
-    console.log('Increase quantity for:', productId);
+    // console.log('Increase quantity for:', productId);
   };
 
   // Handle Decrease Quantity
   const decreaseQty = (productId) => {
     dispatch(decrease(productId));  
-    console.log('Decrease quantity for:', productId);
+    // console.log('Decrease quantity for:', productId);
   };
 
   // Remove Item
   const removeItem = (productId) => {
     dispatch(removeProduct(productId));
-    console.log('Remove item:', productId);
+    // console.log('Remove item:', productId);
   };
 
   const handleCheckout = () => {

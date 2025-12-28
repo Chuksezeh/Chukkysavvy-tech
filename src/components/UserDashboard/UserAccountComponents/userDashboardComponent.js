@@ -37,7 +37,7 @@ const UserDashBoardComponent =  (()=>{
 
 useEffect(() => {
 	  const userInfo = localStorage.getItem('userInfo');
-	  console.log('UserInfo:', userInfo);
+	  // console.log('UserInfo:', userInfo);
 	
 	  if (!userInfo) {
 		navigate('/user-login');

@@ -14,7 +14,7 @@ const AdminMainDashboard = () => {
    const { data:products, isPending: isPendingProduct, error: isPendingError } = useGetData("/order/all-orders");
 
 
-   console.log("all products", products.data)
+  //  console.log("all products", products.data)
 
 const filterPendingOrders = products.data && products.data?.filter((product)=>(
              product.orderStatus === "pending"  
@@ -130,7 +130,7 @@ const filterCanceledOders = products.data && products.data?.filter((product)=>(
   const ordersArray = Array.isArray(data.repairOrders) ? data.repairOrders : [];
   const latestOrders = getLatestRepairOrders(ordersArray);
   
-  console.log("Lateseeeee:", latestOrders);
+  // console.log("Lateseeeee:", latestOrders);
   
 const filterOrderProcessing = latestOrders.filter((data)=>(
     data.status == "Processing"
