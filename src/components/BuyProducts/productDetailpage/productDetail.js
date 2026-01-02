@@ -8,7 +8,7 @@ import Footer from "../../layouts/Footer";
 import { useEffect, useState } from "react";
 import SearchBar from "../../ProductComponents/searchField/searchfield";
 import { chukkytechAxios } from "../../Utility/axios";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCartProduct } from "../../redux/productCounter";
 
@@ -335,7 +335,8 @@ const ProductDetailPage = () => {
 
       {showAdded && 
         <div className="container mt-2 cart-alert">
-          <div className="row">
+          <NavLink to="/product-cart" style={{textDecoration:"none"}}>
+             <div className="row">
             <div className="col-sm-6">
               <div className="alert fade alert-success alert-dismissible text-left font__family-montserrat font__size-16 font__weight-light brk-library-rendered rendered show">
                 <i className="start-icon far fa-check-circle faa-tada animated"></i>
@@ -345,11 +346,13 @@ const ProductDetailPage = () => {
               </div>
             </div>
           </div>
+          </NavLink>
+       
         </div>
       }
 
       <div className="container product-details py-5">
-        <div className="row pt-5">
+        <div className="row ">
           {/* Left side - Images */}
           <div className="col-md-6 text-center">
             <div className="main-image">
@@ -385,8 +388,8 @@ const ProductDetailPage = () => {
           {/* Right side - Details */}
           <div className="col-md-6 product-info">
             <h2 className="product-title">{product.productName}</h2>
-            <p className="text-muted">Category: {product.categoryName}</p>
-            <p className="text-muted"> {product.companyName}</p>
+            <div className="text-mute">Category: {product.categoryName}</div>
+           
 
             {/* Status Badge */}
             <div className="mb-3">
@@ -438,6 +441,8 @@ const ProductDetailPage = () => {
               </span>
             </div>
 
+            {/* Sellers name */}
+           <div className="text-mute"> {product.companyName}</div>
             {/* Product Type */}
             <div className="product-type mb-3">
               <strong>Product Type: </strong>
@@ -457,7 +462,7 @@ const ProductDetailPage = () => {
               ) : (
                 <>
                   <button 
-                    className="btn btn-warning btn-lg" 
+                    className="btn btn-secondary btn-lg" 
                     onClick={() => handleDataProduct(product)}
                   >
                     Add to Cart
@@ -558,7 +563,7 @@ const ProductDetailPage = () => {
                         </button>
                       ) : (
                         <button 
-                          className="btn btn-warning bold-btn p-2" 
+                          className="btn btn-secondary bold-btn p-2" 
                           style={{color:"white", fontSize:"15px", padding:"5px"}}
                           onClick={() => navigateToProduct(relatedProduct.productId)}
                         >

@@ -92,7 +92,7 @@ const IpadDetails = (() => {
       <Header />
 
       <div className="container">
-        <Goback />
+        {/* <Goback /> */}
 
         <div className='fixlineDiv'>
           <div style={{ justifyContent: "start", textAlign: "start" }} className='container'> <Goback /></div>

@@ -140,7 +140,7 @@
 	width: calc(100% - 250px);
 	height: 100%;
 	margin-left: 250px;
-	padding: 5% 30px;
+	padding: 2% 10px;
 	
 }
 .main-content .panel-wrapper {
@@ -258,7 +258,7 @@
 	.main-content {
 		width: 100%;
 		margin-left: 0;
-		padding-top: 20%;
+		/* padding-top: 20%; */
 		/* z-index: -1; */
 		position: relative;
 	}

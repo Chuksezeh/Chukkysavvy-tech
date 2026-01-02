@@ -801,3 +801,178 @@ color: white;
   }
   } 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /* ================================
+   CHUKKYTECH NAVBAR STYLES
+   Prefix: ct-nav-
+================================ */
+
+/* Root wrapper */
+.ct-nav-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  height: 70px;
+  background: #011B58;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Hide checkbox */
+.ct-nav-toggle {
+  display: none;
+}
+
+/* Logo */
+.ct-nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.ct-nav-logo img {
+  height: 40px;
+  width: auto;
+}
+
+.ct-nav-logo span {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.5px;
+}
+
+/* Desktop nav */
+.ct-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.ct-nav-links button {
+  background: none;
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: white;
+  cursor: pointer;
+  padding: 8px 10px;
+  transition: color 0.3s ease, background 0.3s ease;
+}
+
+.ct-nav-links button:hover {
+  color: #0d6efd;
+}
+
+/* Account button */
+.ct-nav-account-btn {
+  background: #0d6efd !important;
+  color: #fff !important;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.ct-nav-account-btn:hover {
+  background: #0b5ed7;
+  transform: translateY(-1px);
+}
+
+/* ==========================
+   HAMBURGER (MOBILE)
+========================== */
+.ct-nav-hamburger {
+  display: none;
+}
+
+.ct-nav-hamburger label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.ct-nav-hamburger span {
+  width: 25px;
+  height: 3px;
+  background: #fff;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+/* ==========================
+   MOBILE MENU
+========================== */
+@media (max-width: 992px) {
+  .ct-nav-hamburger {
+    display: block;
+  }
+
+  .ct-nav-links {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 70px);
+    background: #011B58;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.5rem;
+    gap: 1rem;
+    transform: translateX(-100%);
+    transition: transform 0.35s ease;
+  }
+
+  .ct-nav-links button {
+    width: 100%;
+    text-align: left;
+    padding: 12px 0;
+    font-size: 1rem;
+    border-bottom: 1px solid #f1f1f1;
+  }
+
+  .ct-nav-account-btn {
+    width: 100%;
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  /* Toggle menu */
+  #ct-nav-toggle:checked ~ .ct-nav-links {
+    transform: translateX(0);
+  }
+}
+
+/* ==========================
+   SMALL SCREENS
+========================== */
+@media (max-width: 480px) {
+  .ct-nav-logo span {
+    font-size: 1rem;
+  }
+
+  .ct-nav-wrapper {
+    padding: 0 1rem;
+  }
+}
+
+

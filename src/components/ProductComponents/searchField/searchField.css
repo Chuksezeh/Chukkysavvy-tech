@@ -714,7 +714,7 @@ z-index: 200 !important;
   background-color: #002b57ef;
   color: white;
   flex-wrap: wrap;
-   top: 60px; 
+   /* top: 60px;  */
 justify-content: center;
  
 }
@@ -1629,11 +1629,11 @@ margin-top: 10%;
   .cart-Mycart-div{
   background-color: transparent;
   padding: 10px;
-  margin-left: 20px;
+  /* margin-left: 0px; */
   border-radius: 5px;
   position: fixed;
-  top: 5px;
-  right: 90px;
+  top: 13px;
+  right: 220px;
   z-index: 1000;
   
 }

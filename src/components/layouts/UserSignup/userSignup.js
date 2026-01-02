@@ -93,8 +93,7 @@ const UserSignUp = (() => {
 			<div>
 				<Header />
 			</div>
-			<br />
-			<br />
+			
           <div className="form_wrapper">
 				<div className="form_container">
 					<div className="title_container">

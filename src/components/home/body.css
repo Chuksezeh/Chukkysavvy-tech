@@ -809,7 +809,7 @@ margin-top: 40px;
 }
 .respom{
   text-align: center;
-  padding-top: 5%;
+  padding-top: 2%;
 }
 .oursolutions-line{
     border: #606060 solid;
@@ -1352,12 +1352,12 @@ figure.snip1139 .author h5 span {
   }
 
 
-@media(max-width: 993px){
+/* @media(max-width: 993px){
   .respom{
     text-align: center;
     padding-top: 10%;
   }
-}
+} */
 
 
 
@@ -1401,10 +1401,10 @@ figure.snip1139 .author h5 span {
       opacity: 0;
       cursor: pointer;
   }
-  .respom{
+  /* .respom{
     text-align: center;
     padding-top: 20%;
-  }
+  } */
 
   .navbar-container .hamburger-lines{
       display: block;

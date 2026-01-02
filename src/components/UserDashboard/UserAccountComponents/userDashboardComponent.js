@@ -51,7 +51,7 @@ useEffect(() => {
 
         <>
            <div id="root">
-  <div className="container pt-5">
+  <div className="container ">
     <div className="row align-items-stretch">
       <div className="c-dashboardInfo col-lg-12 col-md-12">
         <div className="wrap">

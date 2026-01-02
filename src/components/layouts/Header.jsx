@@ -1,176 +1,87 @@
 import React, { useRef, useState } from "react";
-import logo from "./../images/my.jpg";
-
-import {PiListPlusThin} from "react-icons/pi";
 import { NavLink, useNavigate } from "react-router-dom";
-import { BsFillPersonFill, BsList, BsPersonCircle } from "react-icons/bs";
+import { BsList } from "react-icons/bs";
 import brandlogo from "../images/CHUKKY-BRAND-BACKGROUND.png";
-import { MdOutlineShoppingCart } from "react-icons/md";
+import "./layout.css"
 
-const Header = ({ onFeedbackClick })=>{
-
-  const scrollRef = useRef(); 
-  const scrollTesmony = useRef();
-  const contactScroll = useRef();
-
+const Header = ({ onFeedbackClick }) => {
   const navigate = useNavigate();
 
-  const scrollBottom = (e) => {
-    e.current.scrollIntoView({
-      behavior: "smooth"
-    });
-  };
-  const scrollTes = (e) => {
-    e.current.scrollIntoView({
-      behavior: "smooth"
-    });
-  };
-  const scrollContact = (e) => {
-    e.current.scrollIntoView({
-      behavior: "smooth"
-    });
-  };
-
-  const [showBasic, setShowBasic] = useState(false);
-
-
-  const navigateHome = (()=>{
-    navigate('/') 
-  })
-
-  const navigateAdmin = (()=>{
-    navigate("/admin-login")
-  })
-  const navigateUserLogin = (()=>{
-    navigate("/user-login")
-  })
-  const navigateSignUp = (()=>{
-    navigate("/user-signUp")
-  })
-
-  const navigateTracking = (()=>{
-    navigate("/track-repair")
-  });
-
-  const navigateShoppingCart = (()=>{
-    navigate("/product-cart")
-  })
-
-  const navigateProfilePage = (()=>{
-
-    navigate("/user-profile")
-  })
-
-const navigateFindLocation = (()=>{
-  navigate("/find-location")
-})
-
-const navigateContactus = (()=>{
-  navigate("/about-us")
-})
-
-const navigateHomeFeedback = (()=>{
-  navigate("/")
-  onFeedbackClick()
-})
-
-const handleBuyDevice = (()=>{
-  navigate("/buy-products")
-})
-const handleRepairDevice = (()=>{
-  navigate("/bookingpage")
-})
-
-const handleChukkytechAi = (()=>{
-  navigate("/chukkytechai")
-})
-
-
-  
-  
-  const userInfo = localStorage.getItem('userInfo');
+  const userInfo = localStorage.getItem("userInfo");
   const userData = JSON.parse(userInfo);
 
+  const navigateHome = () => navigate("/");
+  const navigateUserLogin = () => navigate("/user-login");
+  const navigateProfilePage = () => navigate("/user-profile");
+  const navigateTracking = () => navigate("/track-repair");
+  const navigateFindLocation = () => navigate("/find-location");
+  const navigateContactus = () => navigate("/about-us");
+  const handleBuyDevice = () => navigate("/buy-products");
+  const handleRepairDevice = () => navigate("/bookingpage");
+  const handleChukkytechAi = () => navigate("/chukkytechai");
 
-
-  // Close nav dropdown when clicking Feedback
-  const closeNavDropdown = () => {
-    const navCheck = document.getElementById("nav-check");
+  // Close mobile menu
+  const closeMobileMenu = () => {
+    const navCheck = document.getElementById("ct-nav-toggle");
     if (navCheck && navCheck.checked) {
       navCheck.checked = false;
     }
   };
 
-  const handleFeedbackClick = () => {
-    closeNavDropdown();
-    navigateHomeFeedback();
+  const handleNavigate = (callback) => {
+    closeMobileMenu();
+    callback();
   };
 
+  return (
+    <>
+      <header className="ct-nav-wrapper">
+        <input type="checkbox" id="ct-nav-toggle" className="ct-nav-toggle" />
 
+        {/* Mobile Hamburger */}
+        <div className="ct-nav-hamburger">
+          <label htmlFor="ct-nav-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+          </label>
+        </div>
 
-    return (
-        <>
-      {/* <nav className="nav-container-c">
-      <input type="checkbox" id="check"/>
-      <label for="check" className="checkbtn">
-      <i className="checkbtn"><BsList size={35} /></i>
-      </label>
-      <label className="logo"><img className="logo-img" src={brandlogo}/></label>
-      <ul className="navlist-li">
-      <NavLink to="/" className="navlink-style" > <li><a className="active">Home</a></li></NavLink>
-        <li><a >About</a></li>
-        <li onClick={() =>scrollBottom(scrollRef)} ><a >Services</a></li>
-        <li  onClick={() =>scrollContact(contactScroll)}><a >Contact</a></li>
-        <li onClick={() =>scrollTes(scrollTesmony)} ><a >Feedback</a></li>
-        <NavLink to="/signinpage" className="navlink-style" ><i><BsPersonCircle/></i></NavLink>
-        
-      
-      </ul>
-    </nav>
-    */}
+        {/* Logo */}
+        <div className="ct-nav-logo" onClick={navigateHome}>
+          <img src={brandlogo} alt="Chukkytech Logo" />
+          <span>Chukkytech</span>
+        </div>
 
+        {/* Navigation Links */}
+        <nav className="ct-nav-links">
+          <button onClick={() => handleNavigate(navigateHome)}>Home</button>
+          <button onClick={() => handleNavigate(handleRepairDevice)}>Repair Device</button>
+          <button onClick={() => handleNavigate(handleBuyDevice)}>Buy Device</button>
+          <button onClick={() => handleNavigate(navigateTracking)}>Track Repair</button>
+          <button onClick={() => handleNavigate(navigateFindLocation)}>Find Location</button>
+          <button onClick={() => handleNavigate(navigateContactus)}>Contact Us</button>
+          <button onClick={() => handleNavigate(handleChukkytechAi)}>Assistant</button>
 
-<div className="nav-main-NAv">
-  <input type="checkbox" id="nav-check"/>
-  <div className="nav-header">
-  </div>
-  <div className="nav-btn" >
-    <label for="nav-check">
-      <span></span>
-      <span></span>
-      <span></span>
-    </label>
-  </div>
-  
-  <div className="logoDiv" onClick={navigateHome}>       
-    
-    <a> <img src={brandlogo} className="logo-SElf"/> Chukkytech</a>
-  </div>
-  
-  <div className="nav-links">
-    <a onClick={navigateHome} >Home</a>
-    <a onClick={handleRepairDevice} style={{ cursor: "pointer" }}>Repair Device</a> 
-    <a onClick={handleBuyDevice} style={{ cursor: "pointer" }}>Buy Device</a> 
-    <a onClick={navigateTracking}>Track  repair</a>
-    <a onClick={navigateFindLocation}>Find location</a>
-    <a onClick={navigateContactus}>Contact us</a>
-     <a onClick={handleChukkytechAi}>Assistant</a>
-     
+          {userData ? (
+            <button
+              className="ct-nav-account-btn"
+              onClick={() => handleNavigate(navigateProfilePage)}
+            >
+              My Account
+            </button>
+          ) : (
+            <button
+              className="ct-nav-account-btn"
+              onClick={() => handleNavigate(navigateUserLogin)}
+            >
+              Login
+            </button>
+          )}
+        </nav>
+      </header>
+    </>
+  );
+};
 
-    {
-      userData ? <span  onClick={navigateProfilePage} className="btn-log-Sign">My Account</span> : <span  onClick={navigateUserLogin}  className="btn-log-Sign">Login</span>
-    }
-    
-    {/* <a onClick={ navigateAdmin}>Admin</a> */}
-   
-    {/* <span className="badgeMain" onClick={navigateShoppingCart}><span>  <MdOutlineShoppingCart  /></span>  My Cart <span className="badge0">2</span></span> */}
-  </div>
- </div>
-
-
-
-
-        </>
-    )
-}
 export default Header;

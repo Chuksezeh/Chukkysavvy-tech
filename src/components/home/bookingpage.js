@@ -1,3 +1,4 @@
+
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -10,9 +11,10 @@ import samsung from '../images/samsung.png';
 import otherPhones from '../images/other-phones.jpg';
 import laptop from '../images/laptops1.avif';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Goback from '../layouts/goBack';
 import ServicesComponent from './services-component';
+import "./body.css"
 
 
 

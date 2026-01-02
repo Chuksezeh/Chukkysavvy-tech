@@ -29,12 +29,12 @@ $danger-color: #e74c3c;
   box-sizing: border-box;
 }
 
-body {
-  font-family: 'Poppins', sans-serif;
-  background-color: $background-color;
-  color: $text-primary;
-  line-height: 1.6;
-}
+// body {
+//   font-family: 'Poppins', sans-serif;
+//   background-color: $background-color;
+//   color: $text-primary;
+//   line-height: 1.6;
+// }
 
 .dashboard {
   display: flex;
@@ -95,7 +95,7 @@ body {
 
 .main-content {
   flex: 1;
-  padding: 20px;
+  padding: 5px;
   overflow-y: auto;
 }
 
@@ -394,9 +394,7 @@ table {
     padding: 10px;
   }
 
-  .main-content {
-    padding: 10px;
-  }
+  
 
   .charts-container, .data-tables {
     grid-template-columns: 1fr;

@@ -2,7 +2,7 @@ import "./productBuy.css";
 import commingImage from "../../components/images/coming-img-removebg-preview.png";
 import { useEffect, useState } from "react";
 import Header from "../layouts/Header";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import SearchBar from "../ProductComponents/searchField/searchfield";
 import useGetData from "../Utility/getFunction";
 import noproductimage from "../images/notinfound.jpeg"
@@ -163,6 +163,9 @@ const BuyProducts = (() => {
 
       {showAdded && 
         <div className="container mt-2 cart-alert">
+
+          <NavLink to="/product-cart"  style={{textDecoration:"none"}}>
+
           <div className="row">
             <div className="col-sm-6">
               <div className="alert fade  alert-success alert-dismissible text-left font__family-montserrat font__size-16 font__weight-light brk-library-rendered rendered show">
@@ -173,6 +176,9 @@ const BuyProducts = (() => {
               </div>
             </div>
           </div>
+
+          </NavLink>
+          
         </div>
       }
 

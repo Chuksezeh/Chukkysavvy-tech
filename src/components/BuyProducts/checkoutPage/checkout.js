@@ -324,10 +324,10 @@ const CheckoutPage = () => {
             setLoading(false);
             setErrorMessage(err.response?.data?.error || "Failed to save address. Please try again.");
         }
-    };
+     };
 
-    // Handle delete address
-    const handleDeleteAddress = async (addressId) => {
+       // Handle delete address
+       const handleDeleteAddress = async (addressId) => {
         setPendingDeleteAddress(true);
         try {
             await chukkytechAxios.delete(`/general/deleteAddress/${addressId}/${userDetails.userId}`);
@@ -619,9 +619,9 @@ const CheckoutPage = () => {
             <>
                 <Header />
                 <SearchBar />
-                <Goback />
+                {/* <Goback /> */}
                 <div className="container checkout-page my-5">
-                    <div className="row pt-4">
+                    <div className="row ">
                         <div className="col-12 text-center py-5">
                             <div className="empty-cart-icon mb-3">
                                 <i className="fas fa-shopping-cart fa-3x text-muted"></i>
@@ -629,7 +629,7 @@ const CheckoutPage = () => {
                             <h3 className="text-muted">No Items in Cart</h3>
                             <p className="text-muted mb-4">Please add some items to your cart before checkout.</p>
                             <button
-                                className="btn btn-warning btn-lg"
+                                className="btn btn-primary btn-lg"
                                 onClick={() => navigate('/cart')}
                             >
                                 Return to Cart
@@ -802,11 +802,11 @@ const handleHideModalLOgin = (() => {
             <Header />
             <SearchBar />
 
-            <Goback />
+            {/* <Goback /> */}
 
             {/* Success/Error Messages */}
             {successMessage && (
-                <div className="container mt-3">
+                <div className="container ">
                     <div className="alert alert-success alert-dismissible fade show" role="alert">
                         {successMessage}
                         <button type="button" className="btn-close" onClick={() => setSuccessMessage("")}></button>
@@ -815,7 +815,7 @@ const handleHideModalLOgin = (() => {
             )}
 
             {errorMessage && (
-                <div className="container mt-3">
+                <div className="container pt-2">
                     <div className="alert alert-danger alert-dismissible fade show" role="alert">
                         {errorMessage}
                         {showLogin && <button className="loginSetStle btn btn-primary" onClick={handleNavigateLogin}>Login</button>}
@@ -826,12 +826,12 @@ const handleHideModalLOgin = (() => {
             )}
 
             <div className="container checkout-page my-5">
-                <div className="row pt-4">
+                <div className="row ">
                     {/* Checkout Form */}
                     <div className="col-lg-8">
                         <form className="checkout-form shadow-sm p-4 rounded">
                             <h5 className="mb-3">Delivery Information</h5>
-                <div className="container mt-3">
+                <div className="container ">
                     <div className="alert bg-light alert-dismissible fade show" role="alert">
                         Delivery and pickup are currently available in Abuja only. We’re working to bring our services to more cities soon — stay tuned! 
 
@@ -1130,7 +1130,7 @@ const handleHideModalLOgin = (() => {
                             {
                                 payment === "credit-paid" ? <button
                                     type="button"
-                                    className="btn btn-warning w-100 mt-4 p-3 fw-bold"
+                                    className="btn btn-primary w-100 mt-4 p-3 fw-bold"
                                     // onClick={handleCheckout}
                                     onClick={payWithPaystack}
 
@@ -1149,7 +1149,7 @@ const handleHideModalLOgin = (() => {
                                     )}
                                 </button> : <button
                                     type="button"
-                                    className="btn btn-warning w-100 mt-4 p-3 fw-bold"
+                                    className="btn btn-primary w-100 mt-4 p-3 fw-bold"
                                     onClick={handleCheckout}
 
 

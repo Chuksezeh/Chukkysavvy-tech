@@ -293,7 +293,7 @@ const handleCall = () => {
                   <p>Follow each repair stage</p>
                 </div>
               </div>
-              <div className="feature-item">
+              {/* <div className="feature-item">
                 <div className="feature-icon">
                   <FaPhoneAlt />
                 </div>
@@ -301,7 +301,7 @@ const handleCall = () => {
                   <h4>Support</h4>
                   <p>Help when you need it</p>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

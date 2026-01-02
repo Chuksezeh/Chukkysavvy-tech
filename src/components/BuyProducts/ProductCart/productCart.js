@@ -325,8 +325,8 @@ const ProductCart = () => {
         {/* <Goback/> */}
       
       <div className="container cart-page my-5">
-        <div className="row mt-4">
-          <h2 className="mt-4">Your Shopping Cart</h2>
+        <div className="row ">
+          <h2 className="">Your Shopping Cart</h2>
           <hr />
           
           <div className="col-lg-8">
@@ -373,7 +373,7 @@ const ProductCart = () => {
                         <h5 className="mb-2">{item.productName}</h5>
                        <span style={{marginLeft:"10px"}}> {renderAvailabilityBadge(item.productId)}  </span> 
                       </div>
-                      <p className="text-muted mb-1">{item.categoryName}</p>
+                      {/* <p className="text-mute mb-1">{item.categoryName}</p> */}
                       <p className="fw-bold text-primary mb-2">
                          <span className="item-major_price">Item price: </span>
                         {formatCurrency(item.productPrice)}
@@ -469,7 +469,7 @@ const ProductCart = () => {
               </div>
               
               <button 
-                className="btn btn-warning w-100 py-3 fw-bold"
+                className="btn btn-primary w-100 py-3 fw-bold"
                 onClick={handleCheckout}
                 disabled={!productItems || productItems.length === 0 || 
                   productItems.some(item => !getProductStatus(item.productId).isAvailable)}
@@ -573,7 +573,7 @@ const ProductCart = () => {
                           </button>
                         ) : (
                           <button 
-                            className="btn btn-warning btn-sm"
+                            className="btn btn-primary btn-sm"
                             onClick={() => navigateToProduct(product.productId)}
                           >
                             View Details

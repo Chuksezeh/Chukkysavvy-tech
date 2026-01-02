@@ -172,8 +172,7 @@ const UserLogin = (() => {
 
 
       <div className="login-page-LOGi">
-        <br/>
-        <br/>
+       
         
 
         <div className="form">

@@ -157,68 +157,13 @@ const FindLocation = (() => {
           </div>
         </div>
       </div>
+{/* main location section */}
 
-      {/* Introduction Section */}
-      <div className="intro-section">
-        <div className="locations-container">
-          <div className="intro-content">
-            <div className="intro-text">
-              <h2>Convenient Repair Services Near You</h2>
-              <p>
-                Here are our active service centers, in case you'd like to visit us in person.
-                But if you're too busy or can't make it, no worries — we're just one click away!
-              </p>
-              <p>
-                Book a repair online, and we'll pick up your device, diagnose the issue, fix it promptly, 
-                and deliver it back to you — all without you leaving your home or office.
-              </p>
-              <p className="highlight-text">
-                With our tracking system, you can monitor the repair progress every step of the way, 
-                right up until we deliver your device.
-              </p>
-              <p className="cta-text">
-                Try us today and experience fast, reliable, and convenient repair service!
-              </p>
-            </div>
-            <div className="intro-features">
-              <div className="feature-card">
-                <div className="feature-icon">
-                  <FaCarSide />
-                </div>
-                <div className="feature-content">
-                  <h4>Pickup & Delivery</h4>
-                  <p>We come to you for device collection and return</p>
-                </div>
-              </div>
-              <div className="feature-card">
-                <div className="feature-icon">
-                  <GiSmartphone />
-                </div>
-                <div className="feature-content">
-                  <h4>Online Booking</h4>
-                  <p>Schedule repairs from anywhere, anytime</p>
-                </div>
-              </div>
-              <div className="feature-card">
-                <div className="feature-icon">
-                  <FaDirections />
-                </div>
-                <div className="feature-content">
-                  <h4>Easy Directions</h4>
-                  <p>Get turn-by-turn navigation to our centers</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Locations Grid */}
-      <div className="locations-section">
+ <div className="locations-section">
         <div className="locations-container">
           <div className="section-header">
             <h2>Our Service Centers</h2>
-            <p>Find the nearest location to visit us in person</p>
+            <p className="text-center">Find the nearest location to visit us in person</p>
           </div>
 
           {isPending ? (
@@ -320,6 +265,66 @@ const FindLocation = (() => {
           )}
         </div>
       </div>
+
+
+
+      {/* Introduction Section */}
+      <div className="intro-section">
+        <div className="locations-container">
+          <div className="intro-content">
+            <div className="intro-text">
+              <h2 className="text-center">Convenient Repair Services Near You</h2>
+              <p>
+                Here are our active service centers, in case you'd like to visit us in person.
+                But if you're too busy or can't make it, no worries — we're just one click away!
+              </p>
+              <p>
+                Book a repair online, and we'll pick up your device, diagnose the issue, fix it promptly, 
+                and deliver it back to you — all without you leaving your home or office.
+              </p>
+              <p className="highlight-text">
+                With our tracking system, you can monitor the repair progress every step of the way, 
+                right up until we deliver your device.
+              </p>
+              <p className="cta-text">
+                Try us today and experience fast, reliable, and convenient repair service!
+              </p>
+            </div>
+            <div className="intro-features">
+              <div className="feature-card">
+                <div className="feature-icon">
+                  <FaCarSide />
+                </div>
+                <div className="feature-content">
+                  <h4>Pickup & Delivery</h4>
+                  <p>We come to you for device collection and return</p>
+                </div>
+              </div>
+              <div className="feature-card">
+                <div className="feature-icon">
+                  <GiSmartphone />
+                </div>
+                <div className="feature-content">
+                  <h4>Online Booking</h4>
+                  <p>Schedule repairs from anywhere, anytime</p>
+                </div>
+              </div>
+              <div className="feature-card">
+                <div className="feature-icon">
+                  <FaDirections />
+                </div>
+                <div className="feature-content">
+                  <h4>Easy Directions</h4>
+                  <p>Get turn-by-turn navigation to our centers</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Locations Grid */}
+     
 
       {/* CTA Section */}
       <div className="cta-section">
