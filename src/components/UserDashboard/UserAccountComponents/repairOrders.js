@@ -641,7 +641,7 @@ const handleNavigateRepairCostPayment = (orderData) => {
           ) : (
             <div className="tracking-container">
               <div className="tracking-header">
-                <h5>{getRepairData?.deviceType} {getRepairData?.deviceModel}</h5>
+                <h5>{getRepairData?.deviceType}: {getRepairData?.deviceModel}</h5>
                 <p className="text-muted">Order: {getRepairData?.repairOrderCode}</p>
               </div>
               

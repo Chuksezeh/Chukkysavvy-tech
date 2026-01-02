@@ -339,7 +339,7 @@ const handleCall = () => {
                   <img src={logo} alt="Chukkytech" className="order-logo" />
                 </div>
                 <div className="order-info " style={{borderLeft: `4px solid ${getStatusColor(latestOrder?.status)}`, paddingLeft: '10px'}}>
-                  <h3>{getRepairData?.deviceType} {getRepairData?.deviceModel}</h3>
+                  <h3>{getRepairData?.deviceType}: {getRepairData?.deviceModel}</h3>
                   <p className="order-code">Order: {getRepairData?.repairOrderCode}</p>
                   <div className="order-meta">
                     <span className="order-date">
