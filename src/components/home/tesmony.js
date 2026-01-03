@@ -8,7 +8,7 @@ const Testmony = forwardRef((props, ref) => {
   return (
     <div ref={ref}>
 
-<h1 className="testmony-head">Tesmonies/Feedback</h1>
+<h1 className="testmony-head">Tesmonies/Feedback on Repairs and Services</h1>
       <div className="line-testmony"></div>
       {isPending ? (
         <div className="container">

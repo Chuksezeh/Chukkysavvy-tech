@@ -819,6 +819,11 @@
   font-size: 1.2rem;
   color: #60a5fa;
 }
+.wht-show-home{
+  font-size: 20px;
+  font-weight: 600;
+  padding: 5px;
+}
 
 .benefit-content h4 {
   font-size: 1rem;

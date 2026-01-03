@@ -945,7 +945,8 @@ color: white;
   .ct-nav-links button {
     width: 100%;
     text-align: left;
-    padding: 12px 0;
+    
+    padding: 12px 5px;
     font-size: 1rem;
     border-bottom: 1px solid #f1f1f1;
   }
@@ -960,6 +961,11 @@ color: white;
   #ct-nav-toggle:checked ~ .ct-nav-links {
     transform: translateX(0);
   }
+  .ct-nav-logo img {
+  height: 25px;
+  width: auto;
+}
+
 }
 
 /* ==========================

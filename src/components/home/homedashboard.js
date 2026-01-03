@@ -141,7 +141,7 @@ const LandingHero = () => {
  </div>
           <div className="floating-icon icon-2">💻</div>
           <div className="floating-icon icon-3">🔧</div>
-          <div className="floating-icon icon-4">⚡</div>
+          <div className="floating-icon icon-4">🔧</div>
         </div>
       </div>
 
@@ -170,7 +170,7 @@ const LandingHero = () => {
             </div>
 
 
-
+               <div className="wht-show-home"> ...What are we doing today?</div>
              <div className="hero-actions-section">
               <NavLink 
                 to='/bookingpage' 
@@ -234,7 +234,7 @@ const LandingHero = () => {
                 </div>
                 <div className="benefit-content">
                   <h4>Quality Guaranteed</h4>
-                  <p>6-month warranty on all repairs</p>
+                 <p>Quality is our priority</p>
                 </div>
               </div>
               <div className="benefit-item">
