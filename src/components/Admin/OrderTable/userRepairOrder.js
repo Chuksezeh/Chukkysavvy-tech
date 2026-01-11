@@ -429,15 +429,17 @@ const RepairOrderTable = () => {
               <table className="table table-hover mb-0">
                 <thead className="bg-light">
                   <tr>
-                    <th className="ps-4 py-3 fw-semibold">#</th>
+                    <th className="ps-4 py-3 fw-semibold">SN</th>
                     <th className="py-3 fw-semibold">Order Code</th>
                     <th className="py-3 fw-semibold">Device</th>
                     <th className="py-3 fw-semibold">Fault</th>
                     <th className="py-3 fw-semibold">Type</th>
+                     
                     <th className="py-3 fw-semibold">Scheduled Date</th>
                     <th className="py-3 fw-semibold">Total Amount</th>
                     <th className="py-3 fw-semibold">Payment Status</th>
                     <th className="py-3 fw-semibold">Status</th>
+                     <th className="py-3 fw-semibold">Last updated</th>
 
                     <th className="pe-4 py-3 fw-semibold text-center">Actions</th>
                     {
@@ -498,14 +500,12 @@ const RepairOrderTable = () => {
                         <td data-label="Type">
                           <span className="badge bg-light text-dark">{item.repairOrderType}</span>
                         </td>
+                      
                         <td data-label="Scheduled Date">
                           <span className="text-muted">
-                            {moment(item.reserveDate).format("MMM DD")}
+                            {moment(item.reserveDate).format("lll")}
                           </span>
-                          <br />
-                          <small className="text-muted">
-                            {moment(item.reserveDate).format("h:mm A")}
-                          </small>
+                         
                         </td>
                         <td data-label="Total Amount">
                           <strong>
@@ -526,6 +526,13 @@ const RepairOrderTable = () => {
                         </td>
                         <td data-label="Status">
                           {getStatusBadge(item.status)}
+                        </td>
+
+                           <td data-label="Last updated">
+                          <span className="text-muted">
+                            {moment(item.createdDateTime).format("lll")}
+                          </span>
+                         
                         </td>
 
                         <td className="pe-4 text-center">

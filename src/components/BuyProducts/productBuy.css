@@ -453,7 +453,7 @@
   font-size: 1rem;
   font-weight: 700 !important;
   /* padding: 0.5rem 0.75rem; */
-  color: black;
+  color: black !important;
 }
 
 .add-to-cart-btn {

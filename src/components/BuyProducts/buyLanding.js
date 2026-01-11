@@ -231,13 +231,7 @@ const BuyProducts = (() => {
                     </a>
 
                     <div className="">
-                      <div className="clearfix ">
-                        <span className="float-start badge  price-badge">
-                          
-                          {formatCurrency(product.productPrice)  }
-                          {/* ₦{parseFloat(product.productPrice).toFixed(2)} */}
-                        </span>
-                      </div>
+                     
 
                       <div className="titleText product-name">
                         <a 
@@ -247,7 +241,13 @@ const BuyProducts = (() => {
                           {product?.productName} 
                         </a>
                       </div>
-                      
+                       <div className="clearfixf ">
+                        <span className="float-start badge  price-badge">
+                          
+                          {formatCurrency(product.productPrice)  }
+                         
+                        </span>
+                      </div>
                       {/* <div 
                         className="titleText product-description"   
                         dangerouslySetInnerHTML={{ __html: product.shortDiscription }}

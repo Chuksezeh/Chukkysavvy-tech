@@ -405,12 +405,12 @@ const ProductDetailPage = () => {
             
 
             {/* Ratings */}
-            <div className="rating mb-3" style={{fontSize: "18px", color: "#ffc107", cursor: "pointer"}} onClick={handleShowReview}>
+            <span className="rating mb-3" style={{fontSize: "18px", color: "#ffc107", cursor: "pointer"}} onClick={handleShowReview}>
               See customer reviews &nbsp;
              
                
               <span className="text-muted">({productReviewData?.count} reviews)</span>
-            </div>
+            </span>
 
             {/* Price */}
             <div className="price-section mb-3">

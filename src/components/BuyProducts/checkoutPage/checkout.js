@@ -795,7 +795,9 @@ const handleHideModalLOgin = (() => {
     setErrorMessage("")
 })
 
-
+ const navigateToProductDetails = (productId) => { 
+    navigate(`/product-details/${productId}`);
+  };
 
     return (
         <>
@@ -1183,9 +1185,10 @@ const handleHideModalLOgin = (() => {
                                 <div className="d-flex align-items-center mb-3" key={item.productId}>
                                     <img
                                         src={getProductImage(item)}
+                                        onClick={() => navigateToProductDetails(item.productId)} 
                                         alt={item.productName}
                                         className="summary-img me-3 rounded"
-                                        style={{ width: "60px", height: "60px", objectFit: "cover" }}
+                                        style={{ width: "60px", height: "60px", objectFit: "cover", cursor: "pointer" }}
                                     />
                                     <div className="flex-grow-1">
                                         <p className="mb-1 fw-semibold">

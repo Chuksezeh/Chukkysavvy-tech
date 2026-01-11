@@ -220,9 +220,11 @@ const SearchResults = () => {
                     </a>
 
                     <div className="">
-                      <div className="clearfix ">
+                    <div className="clearfixf ">
                         <span className="float-start badge  price-badge">
-                          {formatCurrency(product.productPrice)}
+                          
+                          {formatCurrency(product.productPrice)  }
+                         
                         </span>
                       </div>
 

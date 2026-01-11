@@ -188,7 +188,7 @@ const AboutUs = (() => {
                   <div className="image-overlay">
                     <div className="experience-badge">
                       <FaAward />
-                      <span>Trusted Since 2019</span>
+                      <span>Trusted Since 2020</span>
                     </div>
                   </div>
                 </div>

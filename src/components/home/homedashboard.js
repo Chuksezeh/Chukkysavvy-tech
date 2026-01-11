@@ -264,11 +264,11 @@ const LandingHero = () => {
             <div className="hero-trust-indicators">
               <div className="trust-stats">
                 <div className="trust-stat">
-                  <div className="stat-num">5,000+</div>
+                  <div className="stat-num">8,000+</div>
                   <div className="stat-label">Devices Repaired</div>
                 </div>
                 <div className="trust-stat">
-                  <div className="stat-num">99%</div>
+                  <div className="stat-num">98%</div>
                   <div className="stat-label">Satisfaction Rate</div>
                 </div>
                 <div className="trust-stat">

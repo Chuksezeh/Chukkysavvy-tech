@@ -318,6 +318,12 @@ const ProductCart = () => {
     return <CartSkeletonLoader />;
   }
 
+
+
+  const navigateToProductDetails = (productId) => { 
+    navigate(`/product-details/${productId}`);
+  };
+
   return (
     <>
       <Header />
@@ -358,19 +364,25 @@ const ProductCart = () => {
                   >
                     <img 
                       src={getProductImage(item)} 
-                      alt={item.productName} 
+                      alt={item.productName}
+                      onClick={() => navigateToProductDetails(item.productId)} 
                       className="cart-img rounded"
                       style={{ 
                         width: "120px", 
                         height: "120px", 
                         objectFit: "cover",
+                        cursor: "pointer",
                         opacity: !isAvailable ? 0.5 : 1 
                       }}
                     />
                     
                     <div className="cart-details ms-3 flex-grow-1">
                       <div className="d-flex justify-content-between align-items-start">
-                        <h5 className="mb-2">{item.productName}</h5>
+                        <h5 className="mb-2">{<p className="mb-1 fw-semibold">
+                                            {item.productName?.length > 25
+                                                ? `${item.productName.slice(0, 30)}...`
+                                                : item.productName}
+                                        </p>}</h5>
                        <span style={{marginLeft:"10px"}}> {renderAvailabilityBadge(item.productId)}  </span> 
                       </div>
                       {/* <p className="text-mute mb-1">{item.categoryName}</p> */}
