@@ -220,21 +220,22 @@ const SearchResults = () => {
                     </a>
 
                     <div className="">
-                    <div className="clearfixf ">
+                    
+
+                       <div className="titleText product-name">
+                        <a 
+                          onClick={() => navigateProductDetails(product.productId)} 
+                          style={{ cursor: 'pointer', textDecoration: 'none' }}
+                        >
+                          {product?.productName} 
+                        </a>
+                      </div>
+                       <div className="clearfixf ">
                         <span className="float-start badge  price-badge">
                           
                           {formatCurrency(product.productPrice)  }
                          
                         </span>
-                      </div>
-
-                      <div className="titleText product-name">
-                        <a
-                          onClick={() => navigateProductDetails(product.productId)}
-                          style={{ cursor: "pointer", textDecoration: "none" }}
-                        >
-                          {product?.productName?.slice(0, 25)}
-                        </a>
                       </div>
 
                       <div className="product-meta mt-2">

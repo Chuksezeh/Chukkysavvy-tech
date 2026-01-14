@@ -73,8 +73,8 @@
 
 .card-img-top {
     width: 100%;
-    min-height: 250px;
-    max-height: 250px;
+    min-height: 350px;
+    max-height: 350px;
     object-fit: contain;
     padding: 30px;
 }
