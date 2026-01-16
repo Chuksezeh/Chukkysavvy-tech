@@ -77,7 +77,7 @@ const scrolltop = () => {
 
    <div className="card" >
    <div onClick={handleDetailsIphone}>
-		<h3 className="card-title" style={{fontWeight: 'bold', width: '250px'}}>Iphone</h3>
+		<h3 className="card-title" style={{fontWeight: 'bold', width: '250px', textAlign:"center"}}>Iphone</h3>
 	<img className='card-mg' src={iphoneImage} />
 	{/* <button className="card-btn">SELECT</button> */}
   </div>
@@ -86,7 +86,7 @@ const scrolltop = () => {
  
 	<div className="card">
   <div  onClick={handleNavigateISamsung}>
-		<h3 className="card-title" style={{fontWeight: 'bold'}}>Samsung</h3>
+		<h3 className="card-title" style={{fontWeight: 'bold', textAlign:"center"}}>Samsung</h3>
     <img className='card-mg' src={samsung}/>
 		{/* <p className="card-content">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p> */}
 	
@@ -95,19 +95,19 @@ const scrolltop = () => {
   
 	<div className="card" onClick={navigateIpad}>
     
-		<h3 className="card-title" style={{fontWeight: 'bold'}}>Ipad</h3>
+		<h3 className="card-title" style={{fontWeight: 'bold', textAlign:"center"}}>Ipad</h3>
     <img className='' src={ipadImage}/>
 		{/* <p className="card-content">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p> */}
 		
 	</div>
   <div className="card" onClick={navigateOtherPhones}>
-		<h3 className="card-title" style={{fontWeight: 'bold'}}>Other phones</h3>
+		<h3 className="card-title" style={{fontWeight: 'bold', textAlign:"center"}}>Other phones</h3>
     <img className='' src={otherPhones}/>
 		{/* <p className="card-content">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p> */}
 		
 	</div>
 	<div className="card" onClick={navigateLaptopDetails}>
-		<h3 className="card-title" style={{fontWeight: 'bold'}}>Laptops</h3>
+		<h3 className="card-title" style={{fontWeight: 'bold', textAlign:"center"}}>Laptops</h3>
 	
 		<img className='' src={laptop}/>
 		

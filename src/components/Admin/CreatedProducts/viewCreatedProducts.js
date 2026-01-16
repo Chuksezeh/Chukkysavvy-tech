@@ -16,7 +16,7 @@ const ViewCreatedProducts = () => {
         reset,
         formState: { errors, isDirty, isValid },
     } = useForm();
-    
+
     const [showDropDown, setShowDropDown] = useState("");
     const [showModal, setShowModal] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -54,7 +54,7 @@ const ViewCreatedProducts = () => {
     // Filter products based on search term and status
     const filteredProducts = allLocations.filter(product => {
         const searchLower = searchTerm.toLowerCase();
-        const matchesSearch = 
+        const matchesSearch =
             product.productName?.toLowerCase().includes(searchLower) ||
             product.companyName?.toLowerCase().includes(searchLower);
 
@@ -90,12 +90,12 @@ const ViewCreatedProducts = () => {
             setSuccessText(response.data.message || "Product deleted successfully");
             setShowDelete(false);
             await fetchLocation();
-            
+
         } catch (err) {
             console.error('Deletion failed:', err);
-            const errorMsg = err.response?.data?.message || 
-                            err.response?.data?.error || 
-                            "Failed to delete product";
+            const errorMsg = err.response?.data?.message ||
+                err.response?.data?.error ||
+                "Failed to delete product";
             setErrorMessage(true);
             setErrMessage(errorMsg);
         } finally {
@@ -123,10 +123,12 @@ const ViewCreatedProducts = () => {
         setLocationData(data);
     };
 
+    const isMobile = window.innerWidth < 768;
+
     return (
         <>
             <AdminDashboard />
-            
+
             {/* Header Section */}
             <div className="container-fluid py-4" style={{ backgroundColor: '#f8f9fa', marginTop: '-20px' }}>
                 <div className="row align-items-center">
@@ -142,7 +144,7 @@ const ViewCreatedProducts = () => {
                         <p className="text-muted mb-0">View and manage all products in the system</p>
                     </div>
                     <div className="col-auto">
-                        <button 
+                        <button
                             className="btn btn-outline-primary d-flex align-items-center"
                             onClick={handleRefresh}
                             disabled={pendingLocation}
@@ -196,7 +198,7 @@ const ViewCreatedProducts = () => {
                                     <div>
                                         <h6 className="card-title text-muted mb-2">Low Stock</h6>
                                         <h3 className="mb-0">
-                                            {allLocations.filter(product => 
+                                            {allLocations.filter(product =>
                                                 parseInt(product.productQuantity) <= 5
                                             ).length}
                                         </h3>
@@ -215,7 +217,7 @@ const ViewCreatedProducts = () => {
                                     <div>
                                         <h6 className="card-title text-muted mb-2">Out of Stock</h6>
                                         <h3 className="mb-0">
-                                            {allLocations.filter(product => 
+                                            {allLocations.filter(product =>
                                                 parseInt(product.productQuantity) === 0
                                             ).length}
                                         </h3>
@@ -256,7 +258,7 @@ const ViewCreatedProducts = () => {
                             </div>
                             <div className="col-lg-6">
                                 <label className="form-label fw-semibold">Product Status</label>
-                                <select 
+                                <select
                                     className="form-select"
                                     value={selectedStatus}
                                     onChange={(e) => {
@@ -288,7 +290,7 @@ const ViewCreatedProducts = () => {
                             <table className="table table-hover mb-0">
                                 <thead className="bg-light">
                                     <tr>
-                                        <th className="ps-4 py-3 fw-semibold">#</th>
+                                        <th className="ps-4 py-3 fw-semibold">SN</th>
                                         <th className="py-3 fw-semibold">Product Name</th>
                                         <th className="py-3 fw-semibold">Company</th>
                                         <th className="py-3 fw-semibold">Price</th>
@@ -315,7 +317,7 @@ const ViewCreatedProducts = () => {
                                                     <i className="fas fa-cube fa-3x mb-3"></i>
                                                     <p>{searchTerm || selectedStatus !== "all" ? "No products match your filters" : "No products found"}</p>
                                                     {(searchTerm || selectedStatus !== "all") && (
-                                                        <button 
+                                                        <button
                                                             className="btn btn-outline-primary mt-2"
                                                             onClick={() => {
                                                                 setSearchTerm("");
@@ -331,24 +333,23 @@ const ViewCreatedProducts = () => {
                                     ) : (
                                         currentProducts.map((product, index) => (
                                             <tr key={product.productId} className="align-middle">
-                                                <td className="ps-4" data-label = "SN">{(currentPage - 1) * productsPerPage + index + 1}</td>
-                                                <td data-label = "Product Name:">
+                                                <td className="ps-4" data-label="SN">{(currentPage - 1) * productsPerPage + index + 1}</td>
+                                                <td data-label="Product Name:">
                                                     <div className="fw-semibold">{product.productName}</div>
                                                     <small className="text-muted">{product.categoryName}</small>
                                                 </td>
-                                                <td data-label = "Company">
+                                                <td data-label="Company">
                                                     <span className="text-muted">{product.companyName}</span>
                                                 </td>
-                                                <td data-label = "Price">
+                                                <td data-label="Price">
                                                     <span className="fw-semibold text-success">
                                                         ₦{parseFloat(product.productPrice).toLocaleString()}
                                                     </span>
                                                 </td>
-                                                <td data-label = "Quantity">
-                                                    <span className={`fw-semibold ${
-                                                        parseInt(product.productQuantity) === 0 ? 'text-danger' :
-                                                        parseInt(product.productQuantity) <= 5 ? 'text-warning' : 'text-success'
-                                                    }`}>
+                                                <td data-label="Quantity">
+                                                    <span className={`fw-semibold ${parseInt(product.productQuantity) === 0 ? 'text-danger' :
+                                                            parseInt(product.productQuantity) <= 5 ? 'text-warning' : 'text-success'
+                                                        }`}>
                                                         {product.productQuantity}
                                                     </span>
                                                     {parseInt(product.productQuantity) <= 5 && parseInt(product.productQuantity) > 0 && (
@@ -358,10 +359,10 @@ const ViewCreatedProducts = () => {
                                                         <small className="text-danger d-block">Out of Stock</small>
                                                     )}
                                                 </td>
-                                                <td data-label = "Status">
+                                                <td data-label="Status">
                                                     {getStatusBadge(product.status)}
                                                 </td>
-                                                <td data-label = "Created date">
+                                                <td data-label="Created date">
                                                     <span className="text-muted">
                                                         {moment(product.createdDateTime).format("MMM DD, YYYY")}
                                                     </span>
@@ -371,15 +372,74 @@ const ViewCreatedProducts = () => {
                                                     </small>
                                                 </td>
                                                 <td className="pe-4 text-center">
-                                                    <DropdownButton
+
+                                                    {isMobile ? (
+                                                        <div className="d-flex gap-2 justify-content-center">
+                                                            <Button
+                                                                size="sm"
+                                                                variant="outline-primary"
+                        
+                                                                 as={Link}
+                                                                to={`/product/${product.productId}`}
+                                                            >
+                                                                <i className="fas fa-edit"></i>
+                                                            </Button>
+
+                                                            <Button
+                                                                size="sm"
+                                                                variant="outline-danger"
+                                                                onClick={() => {
+                                                                    setLocationData(product);
+                                                                    setShowDelete(true);
+                                                                }}
+                                                            >
+                                                                <i className="fas fa-trash"></i>
+                                                            </Button>
+                                                        </div>
+                                                    ) : (
+                                                        <DropdownButton
+                                                            as={ButtonGroup}
+                                                            size="sm"
+                                                            title="Actions"
+                                                            variant="outline-primary"
+                                                            onClick={() => handleShowDropDown(product)}
+                                                        >
+                                                            <Dropdown.Item
+                                                                as={Link}
+                                                                to={`/product/${product.productId}`}
+                                                                className="d-flex align-items-center"
+                                                            >
+                                                                <i className="fas fa-eye me-2"></i>
+                                                                View Details
+                                                            </Dropdown.Item>
+                                                            <Dropdown.Divider />
+                                                            <Dropdown.Item
+                                                                style={{ color: "red" }}
+                                                                onClick={() => {
+                                                                    setLocationData(product);
+                                                                    setShowDelete(true);
+                                                                }}
+                                                                className="d-flex align-items-center"
+                                                            >
+                                                                <i className="fas fa-trash me-2"></i>
+                                                                Delete Product
+                                                            </Dropdown.Item>
+                                                        </DropdownButton>
+                                                    )}
+
+
+
+
+
+                                                    {/* <DropdownButton
                                                         as={ButtonGroup}
                                                         size="sm"
                                                         title="Actions"
                                                         variant="outline-primary"
                                                         onClick={() => handleShowDropDown(product)}
                                                     >
-                                                        <Dropdown.Item 
-                                                            as={Link} 
+                                                        <Dropdown.Item
+                                                            as={Link}
                                                             to={`/product/${product.productId}`}
                                                             className="d-flex align-items-center"
                                                         >
@@ -387,8 +447,8 @@ const ViewCreatedProducts = () => {
                                                             View Details
                                                         </Dropdown.Item>
                                                         <Dropdown.Divider />
-                                                        <Dropdown.Item 
-                                                            style={{ color: "red" }} 
+                                                        <Dropdown.Item
+                                                            style={{ color: "red" }}
                                                             onClick={() => {
                                                                 setLocationData(product);
                                                                 setShowDelete(true);
@@ -398,7 +458,7 @@ const ViewCreatedProducts = () => {
                                                             <i className="fas fa-trash me-2"></i>
                                                             Delete Product
                                                         </Dropdown.Item>
-                                                    </DropdownButton>
+                                                    </DropdownButton> */}
                                                 </td>
                                             </tr>
                                         ))
@@ -418,7 +478,7 @@ const ViewCreatedProducts = () => {
                                 <nav>
                                     <ul className="pagination mb-0">
                                         <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-                                            <button 
+                                            <button
                                                 className="page-link"
                                                 onClick={() => setCurrentPage(currentPage - 1)}
                                                 disabled={currentPage === 1}
@@ -428,7 +488,7 @@ const ViewCreatedProducts = () => {
                                         </li>
                                         {[...Array(totalPages)].map((_, index) => (
                                             <li key={index} className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}>
-                                                <button 
+                                                <button
                                                     className="page-link"
                                                     onClick={() => setCurrentPage(index + 1)}
                                                 >
@@ -437,7 +497,7 @@ const ViewCreatedProducts = () => {
                                             </li>
                                         ))}
                                         <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-                                            <button 
+                                            <button
                                                 className="page-link"
                                                 onClick={() => setCurrentPage(currentPage + 1)}
                                                 disabled={currentPage === totalPages}
@@ -482,8 +542,8 @@ const ViewCreatedProducts = () => {
                 </Modal.Header>
                 <Modal.Body>
                     <div className="text-center">
-                        <div className="bg-danger bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" 
-                             style={{ width: '60px', height: '60px' }}>
+                        <div className="bg-danger bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                            style={{ width: '60px', height: '60px' }}>
                             <i className="fas fa-trash text-danger fa-lg"></i>
                         </div>
                         <h5>Delete Product</h5>
@@ -497,8 +557,8 @@ const ViewCreatedProducts = () => {
                     <Button variant="outline-secondary" onClick={() => setShowDelete(false)}>
                         Cancel
                     </Button>
-                    <Button 
-                        variant="danger" 
+                    <Button
+                        variant="danger"
                         onClick={handleSubmitDelete}
                         disabled={loading}
                     >
@@ -514,9 +574,9 @@ const ViewCreatedProducts = () => {
                 </Modal.Footer>
             </Modal>
 
-             <section style={{marginTop: "5%" }}>
-                          <Footer/>
-                        </section>
+            <section style={{ marginTop: "5%" }}>
+                <Footer />
+            </section>
         </>
     );
 };
