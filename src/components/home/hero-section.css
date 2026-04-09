@@ -804,8 +804,13 @@
 }
 
 .benefit-item:hover .benefit-content h4 {
- color: white !important;
+ /* color: white !important; */
+ text-align: start !important;
  
+}
+.benefit-title-strong{
+  /* color: white !important; */
+  text-align: start !important;
 }
 
 .benefit-icon {

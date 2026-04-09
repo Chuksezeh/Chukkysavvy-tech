@@ -224,7 +224,7 @@ const LandingHero = () => {
                   <FaTools />
                 </div>
                 <div className="benefit-content">
-                  <h4>Same-Day Repair</h4>
+                  <h4 className="benefit-title-strong">Same-Day Repair</h4>
                   <p>Most repairs completed within hours</p>
                 </div>
               </div>
