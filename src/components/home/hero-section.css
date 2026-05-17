@@ -617,7 +617,7 @@
   display: flex;
   align-items: center;
   overflow: hidden;
-  padding: 80px 0;
+  padding: 40px 0;
 }
 
 /* Background Elements */
@@ -787,8 +787,9 @@
   display: flex;
   /* align-items: center; */
   gap: 16px;
+  background-color: #17203B !important;
   padding: 20px;
-  background: rgba(255, 255, 255, 0.03);
+  /* background: rgba(255, 255, 255, 0.03); */
   backdrop-filter: blur(10px);
  
   border-radius: 16px;
@@ -833,13 +834,13 @@
 .benefit-content h4 {
   font-size: 1rem;
   margin-bottom: 4px;
-  color: black;
+  color: white;
   font-weight: 600;
 }
 
 .benefit-content p {
   font-size: 0.85rem;
-  color: #94a3b8;
+  color: white;
   margin: 0;
 }
 
@@ -1235,7 +1236,7 @@
   }
   
   .hero-visual-content {
-    order: -1;
+    /* order: -1; */
   }
   
   .hero-benefits-grid {
