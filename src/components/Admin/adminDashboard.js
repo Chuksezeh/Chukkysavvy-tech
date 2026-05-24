@@ -312,14 +312,14 @@ const AdminDashboard = () => {
                             <NavItem eventKey="3">
                                 <NavIcon><GoListOrdered className="side-main-icon" /></NavIcon>
                                 <NavText>Orders <MdOutlineKeyboardArrowRight size={20} /> </NavText>
-                                <NavItem eventKey="3-1">
+                                {/* <NavItem eventKey="3-1">
                                     <NavText className="move-side">
                                         <li className="shift-nav p-1" onClick={() => navigate("/user-repair-orders")}>
                                             <IoIosPeople className="inicon" size={18} />
                                             <span className="p-2" style={{ fontSize: "16px" }} >Repair Order</span>
                                         </li>
                                     </NavText>
-                                </NavItem>
+                                </NavItem> */}
                                 <NavItem eventKey="3-2">
                                     <NavText className="move-side">
                                         <li className="shift-nav p-1" onClick={() => navigate("/product-orders")}>

@@ -40,7 +40,7 @@ const ProductOrderTable = () => {
         ...(search && { search })
       };
 
-      // console.log("Fetching orders with params:", params);
+      console.log("Fetching admin name:", JSON.parse(localStorage.getItem('adminsInfo')));
 
       const response = await chukkytechAxios.get('/order/all-orders', { params });
       // console.log("API Response:", response.data);
@@ -61,6 +61,10 @@ const ProductOrderTable = () => {
   useEffect(() => {
     fetchAllProductOrders(1, selectedStatus, searchTerm);
   }, []);
+
+
+
+  console.log("Filtered Orders:", filteredOrders);
 
   // Handle filter changes - reset to page 1
   useEffect(() => {

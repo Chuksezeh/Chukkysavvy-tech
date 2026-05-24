@@ -953,7 +953,8 @@ color: white;
 
   .ct-nav-account-btn {
     width: 100%;
-    text-align: center;
+    text-align: center !important;
+    justify-content: center !important;
     margin-top: 1rem;
   }
 

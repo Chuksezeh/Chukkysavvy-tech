@@ -121,7 +121,7 @@ function App() {
             <Route path="/view-categories" element={<ViewCategories />} />
             <Route path="/product/:productId" element={<ProductDetail />} />
             <Route path="/view-companies" element={<ViewCompanies />} />
-            <Route path="/admin-product-order-management/:orderId" element={<ProductManagementPage />} />
+            
             <Route path="/view-created-products" element={<ViewCreatedProducts />} />
             <Route path="/admin-general-update" element={<GeneralSettings />} />
             <Route path="/add-view-payment" element={<AddViewPayment />} />
@@ -134,6 +134,7 @@ function App() {
             <Route path="/admin-dashboard-card" element={<AdminMainDashboard />} />
             <Route path="/user-repair-orders" element={<RepairOrderTable />} />
             <Route path="/product-orders" element={<ProductOrderTable />} />
+            <Route path="/admin-product-order-management/:orderId" element={<ProductManagementPage />} />
           </Route>
 
           {/* 404 Page */}

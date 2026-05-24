@@ -93,7 +93,7 @@ const CheckoutPage = () => {
     } = location.state || {};
 
 
-   
+   console.log("Checkout source:", cartItems);
 
   // Check if any product has payOnDelivery = "No"
   const hasNoPayOnDelivery = cartItems.some(

@@ -148,18 +148,18 @@ const ServicesComponent = () => {
                     <p className="service-description">{service.description}</p>
                     
                     <div className="service-benefits">
-                      <div className="benefit-item">
+                      <div className="benefit-item" id="fast-service">
                         <FaClock className="benefit-icon" />
                         <span>Fast Service</span>
                       </div>
-                      <div className="benefit-item">
+                      <div className="benefit-item" id="fast-service">
                         <FaShieldAlt className="benefit-icon" />
                         <span>Quality Guarantee</span>
                       </div>
-                      <div className="benefit-item">
+                      {/* <div className="benefit-item">
                         <LiaToolsSolid className="benefit-icon" />
                         <span>Expert Technicians</span>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                   
