@@ -9,9 +9,12 @@ import "./userLogin.css";
 import { useForm, SubmitHandler } from "react-hook-form"
 import useGetData from "../../Utility/getFunction";
 import { chukkytechAxios } from "../../Utility/axios";
+import { AiTwotoneMail } from "react-icons/ai";
+
 import Footer from "../Footer";
 
 import logo from "../../images/CHUKKY-BRAND-BACKGROUND-removebg-preview.png"
+import { MdOutlineEmail } from "react-icons/md";
 
 
 const DirectLogin = (({ onLoginSuccess }) => {
@@ -31,6 +34,7 @@ const DirectLogin = (({ onLoginSuccess }) => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
+    const [showSignInWithEmail, setShowSignInWithEmail] = useState(false);
     const [loadingGoogle, setLoadingGoogle] = useState(false);
     const {
         register,
@@ -49,6 +53,10 @@ const DirectLogin = (({ onLoginSuccess }) => {
     const navigateForgotPassword = (() => {
         navigate("/forgot-password")
 
+    })
+
+    const showEmailSignIn = (() => {
+        setShowSignInWithEmail(true);
     })
 
 
@@ -182,60 +190,79 @@ const DirectLogin = (({ onLoginSuccess }) => {
                         // console.log('seedataNow', data);
                         handleSubmitLoginData(data);
                     })}>
-                        <p>Email Address</p>
-                        <input type="email" placeholder="Enter your email address" {...register("email", {
-                            required: 'Email is required',
-                            maxLength: {},
-                        })} />
-                        <span className="cum-error">{errors.email?.message}</span>
 
-                        <p>Password</p>
-                        <div style={{ position: 'relative' }}>
-                            <input
-                                type={passwordVisible ? "text" : "password"}
-                                placeholder="Enter your password"
-                                {...register("password", {
-                                    required: 'password is required',
-                                    maxLength: {},
-                                })}
-                            />
-                            <span
-                                style={{
-                                    position: 'absolute',
-                                    right: '10px',
-                                    top: '40%',
-                                    transform: 'translateY(-50%)',
-                                    cursor: 'pointer'
-                                }}
-                                onClick={() => setPasswordVisible(!passwordVisible)}
-                            >
-                                {passwordVisible ? '👁️' : '👁️‍🗨️'}
-                            </span>
-                        </div>
-                        <span className="cum-error">{errors.password?.message}</span>
+                        {
+                            showSignInWithEmail ?
+                            <div className="email-signin-container">
+                               
+                                  <div >
+                            <p>Email Address</p>
+                            <input type="email" placeholder="Enter your email address" {...register("email", {
+                                required: 'Email is required',
+                                maxLength: {},
+                            })} />
+                            <span className="cum-error">{errors.email?.message}</span>
 
-                        <div style={{ cursor: "pointer" }} onClick={navigateForgotPassword}>Forgot your password?</div>
-                        <div className="message" style={{ fontSize: "15px" }}>
-                            Not registered? <a href="#"><span onClick={navigateSignUp} style={{ color: "#011B58", fontWeight: "bold" }}>Create an account</span></a>
-                        </div>
-                        <br />
+                            <p>Password</p>
+                            <div style={{ position: 'relative' }}>
+                                <input
+                                    type={passwordVisible ? "text" : "password"}
+                                    placeholder="Enter your password"
+                                    {...register("password", {
+                                        required: 'password is required',
+                                        maxLength: {},
+                                    })}
+                                />
+                                <span
+                                    style={{
+                                        position: 'absolute',
+                                        right: '10px',
+                                        top: '40%',
+                                        transform: 'translateY(-50%)',
+                                        cursor: 'pointer'
+                                    }}
+                                    onClick={() => setPasswordVisible(!passwordVisible)}
+                                >
+                                    {passwordVisible ? '👁️' : '👁️‍🗨️'}
+                                </span>
+                            </div>
+                            <span className="cum-error">{errors.password?.message}</span>
 
-                        {errorMessage &&
-                            <div className="container mt-2">
-                                <div className="row">
-                                    <div class="col-sm-12">
-                                        <div className="alert alert-danger" role="alert">
-                                            <span>{errMessage?.message || "Something went wrong, Please try again later"}</span>
+                            <div style={{ cursor: "pointer" }} onClick={navigateForgotPassword}>Forgot your password?</div>
+                            <div className="message" style={{ fontSize: "15px" }}>
+                                Not registered? <a href="#"><span onClick={navigateSignUp} style={{ color: "#011B58", fontWeight: "bold" }}>Create an account</span></a>
+                            </div>
+
+
+                            <br />
+
+                            {errorMessage &&
+                                <div className="container mt-2">
+                                    <div className="row">
+                                        <div class="col-sm-12">
+                                            <div className="alert alert-danger" role="alert">
+                                                <span>{errMessage?.message || "Something went wrong, Please try again later"}</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        }
+                            }
 
-                        {loading ?
-                            <button disabled><span class="loader" ></span></button> :
-                            <button type="submit">Login</button>
+                            {loading ?
+                                <button disabled><span class="loader" ></span></button> :
+                                <button type="submit">Login</button>
+                            }
+
+
+                        </div>
+                            </div>:
+                            <button type="submit" onClick={showEmailSignIn}> <i><MdOutlineEmail size={25}/>
+                        </i> Sign in with email</button>
+                            
                         }
+                      
+
+                        
 
                         <div className="social-login">
                             <p className="divider"> <hr /> </p>

@@ -12,8 +12,6 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@trendmicro/react-sidenav": "^0.5.0",
-    "@types/react": "^19.2.0",
-    "@types/react-dom": "^19.2.0",
     "axios": "^1.7.9",
     "bootstrap": "^5.3.0",
     "classnames": "^2.5.1",
@@ -70,6 +68,9 @@
     ]
   },
   "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "baseline-browser-mapping": "^2.11.27",
     "tailwindcss": "^3.3.3"
   }
 }

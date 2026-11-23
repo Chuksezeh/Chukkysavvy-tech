@@ -61,7 +61,6 @@ const scrolltop = () => {
     return (
         <>
         <Header/>
- 
 
             
 <h1 className='respom '>I want to Fix</h1>
@@ -71,49 +70,56 @@ const scrolltop = () => {
   <div className='fixLine' ></div>
 </div>
 
-<div className="wrapper">
+<div className="wrapper mobile-display-wrapper card-container" >
  
     
-
-   <div className="card" >
-   <div onClick={handleDetailsIphone}>
-		<h3 className="card-title" style={{fontWeight: 'bold', width: '250px', textAlign:"center"}}>Iphone</h3>
-	<img className='card-mg' src={iphoneImage} />
-	{/* <button className="card-btn">SELECT</button> */}
+   <div className=" card-paper card-mobile" onClick={handleDetailsIphone}>
+   <div >
+		<h3 className="card-title" style={{fontWeight: 'bold', textAlign:"center"}}>
+      Iphone
+      </h3>
+      <p></p>
+      <p></p>
+	<img className='card-mg mobile-image' src={iphoneImage} />
   </div>
 	</div>
  
  
-	<div className="card">
-  <div  onClick={handleNavigateISamsung}>
-		<h3 className="card-title" style={{fontWeight: 'bold', textAlign:"center"}}>Samsung</h3>
-    <img className='card-mg' src={samsung}/>
-		{/* <p className="card-content">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p> */}
+	<div className="card-paper card-mobile" onClick={handleNavigateISamsung}>
+  <div  >
+		<h3 className="card-title" style={{fontWeight: 'bold', textAlign:"center"}}>
+      Samsung
+      </h3>
+       <p></p>
+      <p></p>
+    <img className='card-mg mobile-image' src={samsung}/>
 	
     </div>
 	</div>
   
-	<div className="card" onClick={navigateIpad}>
+	<div className="card-paper card-mobile" onClick={navigateIpad}>
     
-		<h3 className="card-title" style={{fontWeight: 'bold', textAlign:"center"}}>Ipad</h3>
-    <img className='' src={ipadImage}/>
-		{/* <p className="card-content">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p> */}
+		<h3 className="card-title" style={{fontWeight: 'bold', textAlign:"center"}}>
+      Ipad
+      </h3>
+    <img className='mobile-image' src={ipadImage}/>
 		
 	</div>
-  <div className="card" onClick={navigateOtherPhones}>
-		<h3 className="card-title" style={{fontWeight: 'bold', textAlign:"center"}}>Other phones</h3>
-    <img className='' src={otherPhones}/>
-		{/* <p className="card-content">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p> */}
+  <div className="card-paper card-mobile" onClick={navigateOtherPhones}>
+		<h3 className="card-title" style={{fontWeight: 'bold', textAlign:"center"}}>
+      Other phones
+      </h3>
+    <img className='mobile-image' src={otherPhones}/>
 		
 	</div>
-	<div className="card" onClick={navigateLaptopDetails}>
-		<h3 className="card-title" style={{fontWeight: 'bold', textAlign:"center"}}>Laptops</h3>
+	<div className="card-paper card-mobile" onClick={navigateLaptopDetails}>
+		<h3 className="card-title" style={{fontWeight: 'bold', textAlign:"center"}}>
+      Laptops
+      </h3>
 	
-		<img className='' src={laptop}/>
+		<img className='mobile-image' src={laptop}/>
 		
    
-		{/* <p className="card-content">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p> */}
-		{/* <button className="card-btn">SELECT</button> */}
 	</div>
 	
 </div>

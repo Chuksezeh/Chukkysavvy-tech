@@ -181,21 +181,7 @@ const ProductOrderTable = () => {
       {/* Stats Cards */}
       <div className="container-fluid mt-4">
         <div className="row g-3 mb-4">
-          <div className="col-xl-3 col-md-6">
-            <div className="card border-0 shadow-sm h-100">
-              <div className="card-body">
-                <div className="d-flex justify-content-between align-items-center">
-                  <div>
-                    <h6 className="card-title text-muted mb-2">Total Orders</h6>
-                    <h3 className="mb-0">{totalOrders}</h3>
-                  </div>
-                  <div className="bg-primary bg-opacity-10 p-3 rounded">
-                    <i className="fas fa-shopping-cart text-primary"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          
           <div className="col-xl-3 col-md-6">
             <div className="card border-0 shadow-sm h-100">
               <div className="card-body">
@@ -247,6 +233,22 @@ const ProductOrderTable = () => {
               </div>
             </div>
           </div>
+
+          <div className="col-xl-3 col-md-6">
+            <div className="card border-0 shadow-sm h-100">
+              <div className="card-body">
+                <div className="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 className="card-title text-muted mb-2">Total Orders</h6>
+                    <h3 className="mb-0">{totalOrders}</h3>
+                  </div>
+                  <div className="bg-primary bg-opacity-10 p-3 rounded">
+                    <i className="fas fa-shopping-cart text-primary"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Filters Section */}
@@ -276,8 +278,7 @@ const ProductOrderTable = () => {
                 <select 
                   className="form-select"
                   value={selectedStatus}
-                  onChange={(e) => setSelectedStatus(e.target.value)}
-                >
+                  onChange={(e) => setSelectedStatus(e.target.value)}>
                   <option value="all">All Statuses</option>
                   <option value="pending">Pending</option>
                   <option value="confirmed">Confirmed</option>

@@ -32,9 +32,9 @@ const RepairOrderTable = () => {
 
   const navigate = useNavigate();
 
- const adminsInfo = localStorage.getItem('adminsInfo');
+  const adminsInfo = localStorage.getItem('adminsInfo');
 
- const parsedAdminsInfo = JSON.parse(adminsInfo);
+  const parsedAdminsInfo = JSON.parse(adminsInfo);
   useEffect(() => {
 
     if (!parsedAdminsInfo) {
@@ -158,6 +158,22 @@ const RepairOrderTable = () => {
     }
   };
 
+
+  const fetchCustomerOrderName = async () => {
+    setIsPending(true);
+    try {
+      const response = await chukkytechAxios.get("adminRepair/getAllRepairOrder");
+      setData(response.data);
+      setIsPending(false);
+    } catch (error) {
+      setIsPending(false);
+      console.error('Error fetching repair orders:', error);
+    }
+  };
+
+
+
+
   const handleUpdateDeviceData = async () => {
     try {
       setLoading(true);
@@ -239,19 +255,19 @@ const RepairOrderTable = () => {
     navigate("/add-view-payment", { state: { item } });
   };
 
-   const formatCurrency = (amount) => {
-        return new Intl.NumberFormat("en-NG", {
-            style: "currency",
-            currency: "NGN",
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0,
-        }).format(amount);
-    };
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat("en-NG", {
+      style: "currency",
+      currency: "NGN",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(amount);
+  };
 
   const { data: paymentGetAllData, isPending: orderPendingPayment, error } = useGetData('/repairPayment/getAllPayments');
 
+  console.log('itemData>>>>>>:', itemData);
 
- 
 
   return (
     <>
@@ -287,21 +303,7 @@ const RepairOrderTable = () => {
       {/* Stats Cards */}
       <div className="container-fluid mt-4">
         <div className="row g-3 mb-4">
-          <div className="col-xl-3 col-md-6">
-            <div className="card border-0 shadow-sm h-100">
-              <div className="card-body">
-                <div className="d-flex justify-content-between align-items-center">
-                  <div>
-                    <h6 className="card-title text-muted mb-2">Total Orders</h6>
-                    <h3 className="mb-0">{latestOrders.length}</h3>
-                  </div>
-                  <div className="bg-primary bg-opacity-10 p-3 rounded">
-                    <i className="fas fa-tools text-primary"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+         
           <div className="col-xl-3 col-md-6">
             <div className="card border-0 shadow-sm h-100">
               <div className="card-body">
@@ -354,6 +356,23 @@ const RepairOrderTable = () => {
                   </div>
                   <div className="bg-danger bg-opacity-10 p-3 rounded">
                     <i className="fas fa-exclamation-triangle text-danger"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+           <div className="col-xl-3 col-md-6">
+            <div className="card border-0 shadow-sm h-100">
+              <div className="card-body">
+                <div className="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 className="card-title text-muted mb-2">Total Orders</h6>
+                    <h3 className="mb-0">{latestOrders.length}</h3>
+                  </div>
+                  <div className="bg-primary bg-opacity-10 p-3 rounded">
+                    <i className="fas fa-tools text-primary"></i>
                   </div>
                 </div>
               </div>
@@ -434,18 +453,18 @@ const RepairOrderTable = () => {
                     <th className="py-3 fw-semibold">Device</th>
                     <th className="py-3 fw-semibold">Fault</th>
                     <th className="py-3 fw-semibold">Type</th>
-                     
+
                     <th className="py-3 fw-semibold">Scheduled Date</th>
                     <th className="py-3 fw-semibold">Total Amount</th>
                     <th className="py-3 fw-semibold">Payment Status</th>
                     <th className="py-3 fw-semibold">Status</th>
-                     <th className="py-3 fw-semibold">Last updated</th>
+                    <th className="py-3 fw-semibold">Last updated</th>
 
                     <th className="pe-4 py-3 fw-semibold text-center">Actions</th>
                     {
-                       parsedAdminsInfo?.role === 'super-admin' && <th className="py-3 fw-semibold">Add/view payment</th>
+                      parsedAdminsInfo?.role === 'super-admin' && <th className="py-3 fw-semibold">Add/view payment</th>
                     }
-                    
+
                   </tr>
                 </thead>
                 <tbody>
@@ -500,12 +519,12 @@ const RepairOrderTable = () => {
                         <td data-label="Type">
                           <span className="badge bg-light text-dark">{item.repairOrderType}</span>
                         </td>
-                      
+
                         <td data-label="Scheduled Date">
                           <span className="text-muted">
                             {moment(item.reserveDate).format("lll")}
                           </span>
-                         
+
                         </td>
                         <td data-label="Total Amount">
                           <strong>
@@ -522,17 +541,17 @@ const RepairOrderTable = () => {
 
                         </td>
                         <td data-label="Payment Status">
-                          {getStatusBadge(item.paymentStatus || "Pending")} 
+                          {getStatusBadge(item.paymentStatus || "Pending")}
                         </td>
                         <td data-label="Status">
                           {getStatusBadge(item.status)}
                         </td>
 
-                           <td data-label="Last updated">
+                        <td data-label="Last updated">
                           <span className="text-muted">
                             {moment(item.createdDateTime).format("lll")}
                           </span>
-                         
+
                         </td>
 
                         <td className="pe-4 text-center">
@@ -555,10 +574,10 @@ const RepairOrderTable = () => {
 
                         {
                           parsedAdminsInfo?.role === 'super-admin' && (
-                        <td data-label="Add/view payment" onClick={() => navigatePaymentData(item)} style={{ cursor: 'pointer' }}>
-                          <FaPlus />
-                        </td>
-                      )}
+                            <td data-label="Add/view payment" onClick={() => navigatePaymentData(item)} style={{ cursor: 'pointer' }}>
+                              <FaPlus />
+                            </td>
+                          )}
 
                         {/* <td data-label="Add/view payment" onClick={() => navigatePaymentData(item)} style={{ cursor: 'pointer' }}>
                           <FaPlus />
@@ -695,39 +714,53 @@ const RepairOrderTable = () => {
           <div className="row">
             <div className="col-md-6">
               <div className="mb-3">
-                <label className="form-label fw-semibold text-muted">Order Code</label>
+                <label className="form-label fw-semibold ">Order Code</label>
                 <p className="mb-0">{itemData.repairOrderCode}</p>
               </div>
               <div className="mb-3">
-                <label className="form-label fw-semibold text-muted">Device Type</label>
+                <label className="form-label fw-semibold ">Device Type</label>
                 <p className="mb-0">{itemData.deviceType}</p>
               </div>
               <div className="mb-3">
-                <label className="form-label fw-semibold text-muted">Device Model</label>
+                <label className="form-label fw-semibold ">Device Model</label>
                 <p className="mb-0">{itemData.deviceModel}</p>
               </div>
               <div className="mb-3">
-                <label className="form-label fw-semibold text-muted">Order Type</label>
+                <label className="form-label fw-semibold ">Order Type</label>
                 <p className="mb-0">{itemData.repairOrderType}</p>
+              </div>
+                <div className="mb-3">
+                <label className="form-label fw-semibold ">Status</label>
+                <p className="mb-0">{getStatusBadge(itemData.status)}</p>
               </div>
             </div>
             <div className="col-md-6">
               <div className="mb-3">
-                <label className="form-label fw-semibold text-muted">Scheduled Date</label>
+                <label className="form-label fw-semibold ">Scheduled Date</label>
                 <p className="mb-0">{moment(itemData.reserveDate).format("MMM DD, YYYY h:mm A")}</p>
               </div>
               <div className="mb-3">
-                <label className="form-label fw-semibold text-muted">Phone Number</label>
+                <label className="form-label fw-semibold ">Phone Number</label>
                 <p className="mb-0">{itemData.phone}</p>
               </div>
               <div className="mb-3">
-                <label className="form-label fw-semibold text-muted">Pickup Address</label>
+                <label className="form-label fw-semibold ">Pickup Address</label>
                 <p className="mb-0">{itemData.pickUpAddress}</p>
               </div>
+
               <div className="mb-3">
-                <label className="form-label fw-semibold text-muted">Status</label>
-                <p className="mb-0">{getStatusBadge(itemData.status)}</p>
+                <label className="form-label fw-semibold ">Date Booked</label>
+                <p className="mb-0">{moment(itemData.createdDateTime).format("MMM DD, YYYY h:mm A")}</p>
               </div>
+
+               <div className="mb-3">
+                <label className="form-label fw-semibold ">Customer ID</label>
+                <p className="mb-0">{itemData.userId}</p>
+              </div>
+              
+            
+
+              
             </div>
           </div>
           <div className="mt-3">
